@@ -1,0 +1,59 @@
+.top-nav
+  background: $white
+  padding: $space-md $space-xl
+  box-shadow: 0 0 40px 0 $shadow
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  z-index: 5
+  @include until($tablet)
+    padding: $space-md
+  
+  h1
+    font-size: 28px
+    font-weight: 600
+    font-family: $header-font-family
+
+  .inner
+    display: flex
+    align-items: center
+    
+
+  #hamburger
+    margin-left: 0
+
+  @include until($tablet)
+    .logo
+      display: none
+  
+  .menu
+    flex-grow: 1
+  
+  .menu .top-buttons
+    text-align: right
+    margin-bottom: $space-sm
+    margin-top: $space-xs
+    @include until($desktop)
+      display: none
+    .button
+      margin-left: $space-lg
+  
+  .menu .navigation
+    text-align: right
+    margin-bottom: $space-sm
+    .link
+      border: none
+      display: inline-block
+      padding: $space-sm $space-md
+      color: $colorOne
+      margin-right: $space-xs
+      line-height: $space-xxl
+      height: $space-xxl
+      vertical-align: middle
+      height: 46px
+      &:hover:not(.no-hover)
+        border-bottom: 2px solid $greenNeuron
+      @include until($tablet)
+        &.user-link
+          display: none
