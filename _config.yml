@@ -1,0 +1,2 @@
+exclude:
+  - "html/src/better-docs/node_modules"
