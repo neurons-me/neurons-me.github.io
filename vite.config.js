@@ -11,7 +11,7 @@ export default defineConfig({
 
   // If you are deploying to https://<USERNAME>.github.io/<REPO_NAME>/, for example your repository is at https://github.com/<USERNAME>/<REPO_NAME>, then set base to '/<REPO_NAME>/'.
 
-  base: '/portfolio/',
+  base: '/',
   plugins: [
     react(),
     VitePWA({
@@ -21,8 +21,8 @@ export default defineConfig({
       },
       includeAssets: ['logo.png'],
       manifest: {
-        name: 'GitHub Repositories',
-        short_name: 'Repositories',
+        name: 'neurons-me.github.io',
+        short_name: 'neurons.github',
         description: 'Source Code',
         icons: [
           {
