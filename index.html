@@ -1,32 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>code.me</title>
-    <link rel="stylesheet" href="./html/css/styles.css"> <!-- Link to external CSS -->
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-KTQ8NMH"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    <div class="video-background">
-        <video autoplay loop muted playsinline>
-            <source src="./html/media/neurons.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <div class="overlay"></div>
-
-    <div class="modal">
-        <img src="./html/media/neurons-grey.png" width="89">
-        <h1>Welcome to</h1>
-        <h2><strong>code.neurons.me</strong></h2>
-        <p>Start Developing</p>
-
-        <div class="buttons">
-            <a href="https://neurons-me.github.io/portfolio" class="btn">Source Code</a>
-            <a href="https://neurons.me/" class="btn">Home</a>
-        </div>
-    </div>
-</body>
+  gtag('config', 'GTM-KTQ8NMH');
+</script>
+    <title>code.neurons</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
