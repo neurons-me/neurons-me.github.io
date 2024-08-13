@@ -19,7 +19,7 @@ const LandingPage = () => {
         <p>Start Developing</p>
 
         <div className="buttons">
-          <a href="/repositories" className="btn">Source Code</a>
+          <a href="/git" className="btn">Source Code</a>
           <a href="https://neurons.me/" className="btn">Home</a>
         </div>
       </div>
