@@ -61,7 +61,7 @@
     "react-icons": "^4.3.1",
     "tailwindcss": "^3.0.23",
     "vite": "^4.0.3",
-    "vite-plugin-pwa": "^0.16.3"
+    "vite-plugin-pwa": "^0.20.5"
   },
   "keywords": [
     "git-profile",
