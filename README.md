@@ -1,14 +1,18 @@
 # **Welcome to Neurons.me**
 > **Self-Sovereign AI**
->
-> **Actively build and control** the intelligence that works for you.
 
 <img src="https://docs.neurons.me/media/neurons-me.png" alt="neurons.me cover" width="277" style="float: right; margin-left: 10px;" align="right">
 
 ## **Go Algorithmic.**
-Build **artificial intelligence** that exposes its logic — **evolve it** consciously and **collectively.**
+Build **artificial intelligence** that reveals its logic — **evolve it** consciously and **collectively.**
 
-**How It Works**: A **user** gathers and structures their data through normal web navigation then feed it to **neurons.me** for deep learning. **AI** training and adaptation remain **fully visible to the user**, ensuring they understand and **control their own learning processes and relationships .**
+###### **How it works:** 
+
+Each **user** gathers and structures their data through everyday web, then feeds it to **neurons.me** for deep learning.
+
+The entire process of **AI training** and adaptation remains **fully transparent**, allowing users to understand, audit, and **control their own learning systems and relationships.**
+
+Actively **build, evolve, and direct** the intelligence that works for **.me.**
 
 | <a href="https://github.com/neurons-me/neurons.me"><img src="https://www.neurons.me/neurons.me.png" width="89"/></a> | [**neurons.me**](https://github.com/neurons-me/neurons.me) | DeepLearning Proccesses. |
 |-----------|--------------|-------------|
