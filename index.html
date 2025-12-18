@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>neurons.me :: Modules</title>
+    <link rel="icon" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+        :root {
+            --background-color: #121212;
+            --surface-color: #1E1E1E;
+            --primary-text-color: #E0E0E0;
+            --secondary-text-color: #B0B0B0;
+            --accent-color: #00A3FF;
+            --border-color: #333333;
+            --code-bg-color: #2A2A2A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        header {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--secondary-text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        #search-input {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--primary-text-color);
+            padding: 8px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            width: 280px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 163, 255, 0.2);
+        }
+        
+        .logo {
+            max-width: 80px;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .title span {
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--secondary-text-color);
+            margin-top: 8px;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .category-section.hidden {
+            display: none;
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--primary-text-color);
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .module-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+        }
+        
+        .module-card.hidden {
+            display: none;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-right: 15px;
+            object-fit: cover;
+            object-position: center; /* Explicitly center the image content */
+            flex-shrink: 0;
+            background-color: #333;
+            border: 1px solid var(--border-color); /* Add a consistent frame */
+        }
+        
+        .card-logo-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-right: 15px;
+            background-color: var(--code-bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 1.5rem;
+            color: var(--secondary-text-color);
+            flex-shrink: 0;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .module-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .module-description {
+            color: var(--secondary-text-color);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .card-bottom {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .module-card-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .icon-link {
+            color: var(--secondary-text-color);
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .icon-link:hover {
+            color: var(--accent-color);
+        }
+
+        .icon-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer a {
+            color: var(--secondary-text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--primary-text-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <nav>
+                <div class="nav-links">
+                    <a href="#">Docs</a>
+                    <a href="#">All.This</a>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search modules...">
+                </div>
+            </nav>
+            <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me logo" class="logo">
+            <h1 class="title">neurons<span>.</span>me</h1>
+            <p class="subtitle">Official Module Index</p>
+        </header>
+
+        <main id="module-container">
+            <!-- Categories and modules will be injected here by script -->
+        </main>
+    </div>
+
+    <footer>
+        <a href="https://neurons.me" target="_blank">© 2025 sui Gn. MIT LICENSE. admin@neurons.me</a>
+    </footer>
+
+    <script>
+        const categories = [
+            {
+                name: 'Core',
+                modules: [
+                    { name: 'neurons.me', description: 'The core framework for building and connecting intelligent, autonomous agents.', path: '/modules/neurons/dist/neurons.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629040/media.neurons.me_copy_tgilfg.png' },
+                    { name: 'cleaker', description: 'A minimalist, decentralized information sharing module for secure and private data exchange.', path: '/modules/cleaker/dist/cleaker.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765054949/cleaker.me_gusn1q.png' },
+                    { name: '.me', description: 'User identity and profile management module.', path: '/modules/this.me/dist/this.me.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760915741/this.me-removebg-preview_1_nrj6pe.png' },
+                    { name: 'netget', description: 'A universal resource fetcher for web and decentralized networks, simplifying data retrieval.', path: '/modules/netget/dist/netget.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761151241/elements6_qx51nc.jpg' },
+                    { name: 'pixelgrid.me', description: 'A lightweight module for creating and manipulating pixel-based grids.', path: '/modules/pixelgrid.me/dist/pixelgrid.me.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761151241/elements5_odrgdm.jpg' },
+                ]
+            },
+            {
+                name: 'monad.ai',
+                modules: [
+                    { name: 'monadlisa', description: 'A generative art module inspired by classic aesthetics.', path: '/modules/monadlisa/dist/monadlisa.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629051/monadlisa.me_gnzbne.png' },
+                    { name: 'haiku', description: 'A module for generating poetic, structured text.', path: '/modules/haiku/dist/haiku.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765855382/haiku_fty4pi.png' },
+                    { name: 'tetragrammaton', description: 'A module for exploring esoteric and symbolic computation.', path: '/modules/tetragrammaton/dist/tetragrammaton.js', image:'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761151247/elementsTriangle_fuzgym.jpg' },
+                ]
+            },
+            {
+                name: 'all.this',
+                modules: [
+                    { name: 'this.GUI', description: 'A graphical user interface framework for decentralized applications.', path: '/modules/this.gui/dist/this.gui.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629119/this.gui.neurons.me_mkapde.png' },
+                    { name: 'this.wallet', description: 'A secure, client-side wallet for managing digital assets and identities.', path: '/modules/this.wallet/dist/this.wallet.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629144/this.wallet_wqa7bc.png' },
+                    { name: 'this.img', description: 'Client-side image manipulation and processing.', path: '/modules/this.img/dist/this.img.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760760267/5f245557d13d70030a2966d4aad9778f368c01924f963360f5d05359668794aa_yhwf6a.png' },
+                    { name: 'this.audio', description: 'Tools for audio playback, analysis, and synthesis.', path: '/modules/this.audio/dist/this.audio.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1762922602/this.audio.png' },
+                    { name: 'this.video', description: 'Utilities for video playback and stream handling.', path: '/modules/this.video/dist/this.video.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629141/this.video_xfuqko.png' },
+                    { name: 'this.dom', description: 'A declarative DOM manipulation and templating library.', path: '/modules/this.dom/dist/this.dom.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629112/this.DOM_vrummx.png' },
+                    { name: 'this.text', description: 'Advanced text processing and manipulation utilities.', path: '/modules/this.text/dist/this.text.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765912462/ba215ecba812e6e8be29b6488504e5015ad273fc77dd14a01cd1a0789713234a_vzqrc5.png' },
+                    { name: 'this.env', description: 'Environment variable management for web clients.', path: '/modules/this.env/dist/this.env.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765900321/this.env_u1xhcb.png' },
+                    { name: 'this.url', description: 'A powerful URL parsing and manipulation library.', path: '/modules/this.url/dist/this.url.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629140/this.url_ha1nyg.png' },
+                    { name: 'this.pixel', description: 'Low-level pixel manipulation for canvas and image data.', path: '/modules/this.pixel/dist/this.pixel.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629131/this.pixel_fily3c.png' },
+                    { name: 'this.dictionaries', description: 'A collection of useful dictionaries and word lists.', path: '/modules/this.dictionaries/dist/this.dictionaries.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629105/this.dictionaries_vmvwuf.png' },
+                    { name: 'this.dir', description: 'Virtual directory and file system simulation.', path: '/modules/this.dir/dist/this.dir.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629109/this.dir_oth3zy.png' },
+                    { name: 'this.document', description: 'Tools for interacting with document metadata and structure.', path: '/modules/this.document/dist/this.document.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629136/this.text_a1ru9p.png' },
+                    { name: 'this.blockchain', description: 'Utilities for interacting with various blockchains.', path: '/modules/this.blockchain/dist/this.blockchain.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765912205/1fb32c08a880fd624a50a40386fd50887163b9b9b79aae709ea38291aa1f8d53_bns3mf.png' },
+                ]
+            },
+            {
+                name: 'mlearning.studio',
+                modules: [
+                    { name: 'mlearning.studio', description: 'A comprehensive suite for building, training, and deploying machine learning models in the browser.', path: '/modules/mlearning.studio/dist/mlearning.studio.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629049/contribute_neurons_zjwzij.png' },
+                    { name: 'i.mlearning', description: 'Core interfaces for machine learning models.', path: '/modules/i.mlearning/dist/i.mlearning.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765899745/mlearning.studio_xxwc18.png'},
+                    { name: 'mlearning.me', description: 'A personal toolkit for experimenting with machine learning concepts and algorithms.', path: '/modules/mlearning.me/dist/mlearning.me.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1762832023/me.profile-removebg-preview_1_bskwyz.png' },
+                ]
+            },
+            {
+                name: 'Labs',
+                modules: [
+                    { name: 'music.lab', description: 'Experimental tools for generative music and sound design.', path: '/modules/music.lab/dist/music.lab.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629071/this.audio_o2xgiy.png' },
+                ]
+            }
+        ];
+
+        const container = document.getElementById('module-container');
+        const copyIconSvg = `<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg>`;
+        const copiedText = `Copied!`;
+        const homeIconSvg = `<svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>`;
+        const docsIconSvg = `<svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm-2.5.5H10v-1H9v1zm3.5-1c0-.83.67-1.5 1.5-1.5h1v-2H12.5v6H14v-2h1.5c.83 0 1.5-.67 1.5-1.5v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"></path></svg>`;
+        const githubIconSvg = `<svg viewBox="0 0 24 24"><path d="M12 1.27a11 11 0 0 0-3.48 21.46c.55.1.73-.24.73-.54V20c-3.33.73-4.04-1.61-4.04-1.61-.5-1.27-1.22-1.61-1.22-1.61-1-.68.08-.67.08-.67 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.56 1.2 3.18.92.1-.72.38-1.2.7-1.48-2.43-.28-4.97-1.21-4.97-5.4 0-1.2.43-2.18 1.13-2.95-.1-.28-.5-1.4.1-2.9 0 0 .9-.3 3 1.1.86-.24 1.78-.36 2.7-.36s1.84.12 2.7.36c2.08-1.4 3-1.1 3-1.1.6 1.5.2 2.62.1 2.9.7.77 1.13 1.75 1.13 2.95 0 4.2-2.55 5.12-5 5.4.4.35.73 1.03.73 2.08v3.08c0 .3.2.64.73.54A11 11 0 0 0 12 1.27Z"></path></svg>`;
+
+        categories.forEach(category => {
+            const section = document.createElement('section');
+            section.className = 'category-section';
+
+            const title = document.createElement('h2');
+            title.className = 'category-title';
+            title.textContent = category.name;
+            section.appendChild(title);
+
+            const grid = document.createElement('div');
+            grid.className = 'module-grid';
+            
+            category.modules.forEach(module => {
+                const card = document.createElement('div');
+                card.className = 'module-card';
+                
+                const scriptTag = `<script type="module" src="https://neurons.me${module.path}"><\/script>`;
+
+                const imageTag = module.image 
+                    ? `<img src="${module.image}" alt="${module.name} logo" class="card-logo">`
+                    : `<div class="card-logo-placeholder">${module.name.charAt(0)}</div>`;
+
+                card.innerHTML = `
+                    <div class="card-top">
+                        ${imageTag}
+                        <div class="card-info">
+                            <h2 class="module-name">${module.name}</h2>
+                            <p class="module-description">${module.description}</p>
+                        </div>
+                    </div>
+
+                    <div class="card-bottom">
+                        <div class="module-card-actions">
+                            <a href="#" class="icon-link" title="Homepage">${homeIconSvg}</a>
+                            <a href="#" class="icon-link" title="Documentation">${docsIconSvg}</a>
+                            <a href="#" class="icon-link" title="GitHub Repository">${githubIconSvg}</a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            section.appendChild(grid);
+            container.appendChild(section);
+        });
+
+        container.addEventListener('click', function(e) {
+            const button = e.target.closest('.copy-button');
+            if (button) {
+                const pre = button.nextElementSibling;
+                const code = pre.querySelector('code');
+                const scriptTag = code.textContent.replace(/</g, "<").replace(/>/g, ">");
+                
+                navigator.clipboard.writeText(scriptTag).then(() => {
+                    const originalContent = button.innerHTML;
+                    button.innerHTML = `<span>${copiedText}</span>`;
+                    setTimeout(() => {
+                        button.innerHTML = originalContent;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            }
+        });
+
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const sections = document.getElementsByClassName('category-section');
+
+            Array.from(sections).forEach(section => {
+                const moduleCards = section.getElementsByClassName('module-card');
+                let visibleCards = 0;
+
+                Array.from(moduleCards).forEach(card => {
+                    const moduleName = card.querySelector('.module-name').textContent.toLowerCase();
+                    const moduleDescription = card.querySelector('.module-description').textContent.toLowerCase();
+                    
+                    const isMatch = moduleName.includes(searchTerm) || moduleDescription.includes(searchTerm);
+                    
+                    if (isMatch) {
+                        card.classList.remove('hidden');
+                        visibleCards++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                if (visibleCards > 0) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
