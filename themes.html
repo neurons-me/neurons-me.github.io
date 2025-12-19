@@ -13,7 +13,6 @@
 </style>
 </head>
 <body>
-<div id="root"></div>
 <script>
   window.process = {
     env: {
@@ -22,10 +21,36 @@
   };
 </script>
 <script type="module">
-  // Use an ESM CDN so browser can load the package + its dependencies.
+  // Load React + ReactDOM as ESM so the rest of this page can call React.createElement / ReactDOM.createRoot.
+  import React from 'https://esm.sh/react@18';
+  import ReactDOM from 'https://esm.sh/react-dom@18/client';
+
+  // Load this.gui as ESM (esm.sh resolves deps for the browser).
   import GUI_NS from 'https://esm.sh/this.gui@latest';
-  // Attach to window for the rest of this page.
-  window.GUI = GUI_NS?.default ?? GUI_NS;
+
+  // Expose globals expected by the non-module script below.
+  window.React = React;
+  window.ReactDOM = ReactDOM;
+
+  const GUI = GUI_NS?.default ?? GUI_NS;
+
+  // Back-compat: alias the themes catalog UI to `GUI.Catalog` if it exists under another name.
+  const catalogCandidate =
+    GUI?.Catalog ||
+    GUI?.ThemesCatalog ||
+    GUI?.Theme?.Catalog ||
+    GUI?.Theme?.ThemesCatalog ||
+    GUI?.molecules?.Catalog ||
+    GUI?.molecules?.ThemesCatalog ||
+    GUI?.organisms?.Catalog ||
+    GUI?.organisms?.ThemesCatalog ||
+    null;
+
+  if (!GUI.Catalog && catalogCandidate) {
+    GUI.Catalog = catalogCandidate;
+  }
+
+  window.GUI = GUI;
 </script>
 <script>
   (function () {
@@ -96,9 +121,15 @@
     const GuiProvider = GUI.GuiProvider || GUI.GuiProvider?.default || GUI.default?.GuiProvider;
     const Catalog =
       GUI.Catalog ||
+      GUI.ThemesCatalog ||
+      GUI.Theme?.Catalog ||
+      GUI.Theme?.ThemesCatalog ||
       GUI.organisms?.Catalog ||
+      GUI.organisms?.ThemesCatalog ||
       GUI.molecules?.Catalog ||
+      GUI.molecules?.ThemesCatalog ||
       GUI.default?.Catalog ||
+      GUI.default?.ThemesCatalog ||
       GUI.default?.organisms?.Catalog ||
       null;
     const Box = GUI.Box || GUI.atoms?.Box || GUI.default?.atoms?.Box;
