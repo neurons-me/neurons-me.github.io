@@ -14,11 +14,6 @@
 </head>
 <body>
 <div id="root"></div>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/react@18/umd/react-jsx-runtime.production.min.js"></script>
-<script src="https://unpkg.com/react-router@6/umd/react-router.production.min.js"></script>
-<script src="https://unpkg.com/react-router-dom@6/umd/react-router-dom.production.min.js"></script>
 <script>
   window.process = {
     env: {
@@ -26,7 +21,12 @@
     }
   };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/this.gui@latest/dist/this.gui.umd.js"></script>
+<script type="module">
+  // Use an ESM CDN so browser can load the package + its dependencies.
+  import GUI_NS from 'https://esm.sh/this.gui@latest';
+  // Attach to window for the rest of this page.
+  window.GUI = GUI_NS?.default ?? GUI_NS;
+</script>
 <script>
   (function () {
     const GUI = window.GUI;
