@@ -1,0 +1,1 @@
+import{r,j as s}from"./iframe-BjgD0zu8.js";import{S as i}from"./Switch-DowFY6Y6.js";const c=r.forwardRef(function(t,o){return s.jsx(i,{ref:o,...t})});c.__docgenInfo={description:"",methods:[],displayName:"Switch"};export{c as S};
