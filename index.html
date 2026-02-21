@@ -288,8 +288,8 @@
                 name: 'Core',
                 modules: [
                     { name: 'neurons.me', description: 'The core framework for building and connecting intelligent, autonomous agents.', path: '/modules/neurons/dist/neurons.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629040/media.neurons.me_copy_tgilfg.png' },
-                    { name: 'cleaker1', description: 'A minimalist, decentralized information sharing module for secure and private data exchange.', path: '/modules/cleaker/dist/cleaker.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765054949/cleaker.me_gusn1q.png' },
-                    { name: '.me', description: 'User identity and profile management module.', path: '/modules/this.me/dist/this.me.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760915741/this.me-removebg-preview_1_nrj6pe.png' },
+                    { name: 'cleaker', description: 'A minimalist, decentralized information sharing module for secure and private data exchange.', path: '/modules/cleaker/dist/cleaker.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765054949/cleaker.me_gusn1q.png' },
+                    { name: '.me', description: 'User identity and profile management module.', path: '/modules/this.me/dist/this.me.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760915741/this.me-removebg-preview_1_nrj6pe.png', repo: '.me', homepage: 'https://neurons-me.github.io/.me/', github: 'https://github.com/neurons-me/.me' },
                     { name: 'netget', description: 'A universal resource fetcher for web and decentralized networks, simplifying data retrieval.', path: '/modules/netget/dist/netget.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761151241/elements6_qx51nc.jpg' },
                     { name: 'pixelgrid.me', description: 'A lightweight module for creating and manipulating pixel-based grids.', path: '/modules/pixelgrid.me/dist/pixelgrid.me.js', image: 'https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761151241/elements5_odrgdm.jpg' },
                 ]
@@ -357,9 +357,6 @@
             // Fallback: use the module name as a best-effort repo slug
             const n = (module?.name || '').trim();
             if (!n) return '';
-
-            // Special case: UI label ".me" is backed by the this.me repo
-            if (n === '.me') return 'this.me';
 
             return n;
         }
