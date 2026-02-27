@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org">
+  <!-- Página Principal -->
+  <url>
+    <loc>https://neurons-me.github.io</loc>
+    <priority>1.0</priority>
+  </url>
+  <!-- Núcleo .me -->
+  <url>
+    <loc>https://neurons-me.github.io.me/</loc>
+    <priority>0.9</priority>
+  </url>
+  <!-- Documentación Detallada -->
+  <url>
+    <loc>https://neurons-me.github.io.me/docs/</loc>
+    <priority>0.9</priority>
+  </url>
+  <!-- Módulos y Herramientas -->
+  <url>
+    <loc>https://neurons-me.github.ioGUI/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://neurons-me.github.io/Cleaker/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://neurons-me.github.io/neurons-me/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://neurons-me.github.io/netget/</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>
