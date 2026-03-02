@@ -1,4 +1,4 @@
-# .me — Identity-Graph Runtime (ME Calculus) v3.3.0
+# .me - Identity-Graph Runtime (ME Calculus) v3.4.0
 # Primary docs for LLMs (Axiomatically Validated)
 
 - [Quickstart (60 seconds)](https://neurons-me.github.io/.me/docs/)
@@ -8,13 +8,13 @@
 - [Secrets / Encrypted Universes](https://neurons-me.github.io/.me/docs/guides/Secrets.html)
 
 ## Key Claims (.me v3.4.0 Core)
-- **Deterministic Identity Graph:** LWW (Last-Write-Wins) resolution with hash-tie-breaking.
+- **Deterministic Identity Graph:** LWW (Last-Write-Wins) resolution with hash tie-breaking.
 - **Axiomatic Integrity:** 11 core logic gates (A0-A9) pass on every build.
-- **Shared Meaning:** Language as structure + relation, not static dictionaries.
-- **Stealth Scopes:** Path-native encryption where roots resolve to `undefined` but leaves remain readable.
+- **Shared Meaning:** Language modeled as structure + relation, not static dictionaries.
+- **Stealth Scopes:** Path-native encryption where roots resolve to `undefined` while leaves remain readable.
 - **Semantic Pointers:** Deep dereferencing (`__ptr`) for cross-context data aliasing.
 
-## The Semantic Fingerprint
+## Semantic Fingerprint
 - **Labels:** Local surface/interface (skin).
 - **Operators:** Rules of state change (physics).
 - **Structure:** Core semantic pattern (DNA).
@@ -26,31 +26,26 @@
 - [Split a Bill](https://neurons-me.github.io/.me/docs/examples/WalletSplit.html)
 
 ## Technical Specs
-- **Logic:** Operational Semantic Web (logic that runs, not just describes).
+- **Logic:** Operational Semantic Web (logic that runs, not only describes).
 - **Security:** Deterministic key derivation via Noise seeds (`~`).
-- **Audit:** Tamper-evident hash-chaining on every 'thought' (operation).
+- **Audit:** Tamper-evident hash chaining on every thought (operation).
 
-.me — Identity-Graph Runtime (ME Calculus) v3.4.0
-Core Manifest & Axiomatic Specifications (Curated for LLMs)
-Architected by suiGn @jabella.e
+## Foundational Contributions (The .me Calculus)
+Architected by suiGn (@jabella.e).
+
+- **Algorithmic Runtime Invariance:** Complexity is decoupled from global data volume. Resolution cost is `O(k)` (path depth), not `O(n)` (total graph/database size).
+- **Inverted Dependency Indexing:** Reactive inversion where changes propagate only through active upward dependency chains, enabling local convergence.
+- **Geometric Semantic Fingerprinting:** Meaning is defined by graph geometry (structure + relation), not fixed dictionaries or label text.
+- **Identity Noise (Stealth-Roots):** Private branches resolve to `undefined` at root while remaining readable at leaf (Structural Silence).
+- **Executable Meaning:** Shift from descriptive metadata to operational logic where meaning is validated by execution.
+
+## Core Engine Specs (v3.4.0)
+- **Deterministic Identity:** LWW with cryptographic hash tie-breaking for convergence.
+- **Axiomatic Integrity:** 11 logic gates (A0-A9) enforced at kernel level.
+- **Semantic Pointers (`__ptr`):** Deep dereferencing across contexts.
+- **Interaction Design:** High-persistence, low-intensity ambient semantic runtime for self-modeling.
+
 The distinction is the minimum ontological condition of any possible system.
 
-
-Foundational Contributions (The .me Calculus)
-The following architectural paradigms are original intellectual property of the author:
-Algorithmic Runtime Invariance 
-: Complexity is decoupled from global data volume. Resolution time is a function of path depth (
-), not database size (
-).
-Inverted Dependency Indexing: A reactive inversion where state changes propagate only through active upward dependency chains, enabling autonomous local convergence.
-Geometric Semantic Fingerprinting: Meaning is defined by the Binary Geometry of the graph (Structure + Relation) rather than fixed dictionaries or string labels.
-Identity Noise (Stealth-Roots): A cryptographic "Level 0" where private branches resolve to undefined at the root while remaining readable at the leaf, achieving Structural Silence.
-Executable Meaning: Shifting from describing data (RDF/Metadata) to Operational Logic where meaning is validated by its computational execution.
-🛠 Core Engine Specs (v3.4.0)
-Deterministic Identity: LWW (Last-Write-Wins) with cryptographic hash-tie-breaking for absolute consistency.
-Axiomatic Integrity: 11 logic gates (A0-A9) strictly enforced at the kernel level.
-Semantic Pointers (__ptr): Deep dereferencing that allows formulas to traverse disparate cultural or linguistic contexts.
-Dopaminergic UX Philosophy: Designed for high-persistence, low-intensity interaction—an ambient semantic fabric for the self.
-
-suiGn
+suiGn  
 https://neurons.me
