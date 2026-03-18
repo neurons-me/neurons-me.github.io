@@ -109,3 +109,4 @@ The axiom that data must be invariant under criterion. Recorded observation rema
 
 ### **Pre-Symbolic Logic**
 Relational constraints exist before formal language. The boundary between possible and impossible configurations is foundational logic, not a product of syntax.
+

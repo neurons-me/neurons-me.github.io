@@ -171,3 +171,537 @@ Further reduce secret read p95 under high node counts by:
 increasing chunk locality for hot-read paths,
 optional multi-read amortization benchmarks (reads_per_mutation),
 and tuning chunk size/hash-bucket parameters with empirical thresholds.
+
+---
+
+Va. Te lo dejo como spec limpio, sin ruido, listo para integrar.
+
+⸻
+
+.Me — Semantic Architecture Spec (Draft)
+
+⸻
+
+1. Semantic Runtime (.me)
+
+.me is not a storage system.
+
+.me is a semantic runtime that:
+	•	declares meaning
+	•	composes structures
+	•	navigates relationships
+	•	resolves intent
+
+It operates over semantic expressions, not physical locations.
+
+<subject>/<attribute>
+@user/device/laptop/profile
+
+.me does not persist state by itself.
+It interprets and reconstructs semantic structures from external sources.
+
+⸻
+
+2. Global Semantic Root
+
+A root namespace defines the base semantic surface:
+
+cleaker.me/
+
+This root acts as a:
+	•	shared semantic foundation
+	•	global ontology
+	•	canonical base dictionary
+
+All derived namespaces inherit from this root.
+
+⸻
+
+3. Refinement Inheritance
+
+Namespaces form a hierarchical refinement system.
+
+Rule:
+
+More specific ⇒ subset
+
+Formally:
+
+B ⊆ A  ⇔  B ⊑ A
+
+Where B adds coordinates (subdomain, path, etc.) to A.
+
+⸻
+
+Examples:
+
+username.cleaker.me ⊆ cleaker.me
+username.cleaker.me/profile ⊆ username.cleaker.me
+
+Each refinement:
+	•	inherits parent semantics
+	•	adds local meaning
+	•	does not break global definitions
+
+⸻
+
+Interpretation:
+
+cleaker.me/
+  = global semantic root
+
+username.cleaker.me/
+  = cleaker.me + identity layer
+
+username.cleaker.me/profile
+  = refinement of identity surface
+
+
+⸻
+
+4. Operational Dictionary (Cleaker)
+
+Cleaker defines a canonical operational dictionary within .me.
+
+It does not invent the language.
+It defines a shared semantic mapping used by all participants.
+
+Examples of defined concepts:
+	•	device
+	•	profile
+	•	relation
+	•	viewer
+	•	namespace
+
+⸻
+
+Role of Cleaker:
+	•	anchors global semantics
+	•	defines default meanings
+	•	ensures cross-node consistency
+	•	acts as a hydration source
+
+⸻
+
+Important:
+
+Cleaker is not the language.
+Cleaker is a canonical realization of meaning within the language.
+
+⸻
+
+5. Persistent Declaration
+
+Semantic structures are not ephemeral.
+
+When declared and materialized, they become:
+	•	reusable
+	•	composable
+	•	rehydratable
+
+Persistence lives outside .me, typically in:
+	•	monad.ai (ledger / surfaces)
+	•	cleaker semantic root
+	•	distributed caches
+
+⸻
+
+Principle:
+
+We do not store .me.
+We store semantic declarations that .me can reconstruct.
+
+⸻
+
+6. Hydration Model
+
+On runtime initialization:
+
+.me → connects to semantic hubs → reconstructs structure
+
+Flow:
+	1.	.me starts as empty runtime capability
+	2.	connects to cleaker / monad
+	3.	loads semantic declarations
+	4.	rebuilds navigation tree
+	5.	enables full semantic traversal
+
+⸻
+
+Result:
+
+The system does not “remember”.
+It rehydrates.
+
+⸻
+
+7. Semantic Resolution Pipeline
+
+A semantic expression is resolved in stages:
+
+semantic expression
+→ resolver
+→ material address
+→ surface access
+
+
+⸻
+
+Example:
+
+@user/device/laptop/profile
+↓
+resolver
+↓
+host:port + namespace
+↓
+HTTP / WS / local access
+
+
+⸻
+
+Key property:
+
+Meaning is resolved to location — not defined by it.
+
+⸻
+
+8. Layer Separation
+
+The system is composed of distinct layers:
+
+.me        → WHAT (semantic meaning)
+cleaker    → WHERE (resolution / mapping)
+transport  → HOW (HTTP, WS, etc.)
+monad      → STATE (persistence / surfaces)
+
+
+⸻
+
+9. Identity and Existence Separation
+
+Existence is independent of observer:
+
+cleaker.me/
+
+Relations introduce perspective:
+
+cleaker.me/?
+
+
+⸻
+
+Principle:
+
+Identity does not depend on observation.
+Relations map observer → target.
+
+⸻
+
+10. System Invariant
+
+Semantic structure must remain stable regardless of:
+	•	storage location
+	•	network topology
+	•	transport protocol
+
+⸻
+
+Final Statement
+
+.me defines a semantic universe where:
+	•	namespaces are regions
+	•	relations are functions
+	•	refinement defines inheritance
+	•	meaning is independent of location
+
+Cleaker provides a canonical shared root.
+Monad provides material persistence.
+.me provides the language and runtime that binds them.
+
+⸻
+
+Sí. Ya tienes los operadores.
+Pero lo que te falta —y es justo el siguiente nivel— es formalizarlos como álgebra + definir el resolver como sistema separado.
+
+Voy a hacer ambas cosas limpio, como spec real.
+
+⸻
+
+🧠 I. OPERATOR ALGEBRA (Formal Spec)
+me.ts, expresado como álgebra del sistema.
+
+⸻
+
+1. Operator Space
+
+Sea:
+Σ = conjunto de operadores
+Actualmente:
+Σ = { +, _, ~, __, ->, @, =, ?, - }
+Cada operador pertenece a un tipo semántico:
+Operador	Kind	Rol
++	define	Extiende el lenguaje
+_	secret	Define scope privado
+~	noise	Resetea raíz criptográfica
+__	pointer	Referencia estructural
+@	identity	Identidad canónica
+=	eval	Derivación
+?	query	Observación
+-	remove	Eliminación
+
+⸻
+
+2. Algebraic Model
+Una operación .me es:
+⟨P, O, E⟩
+Donde:
+	•	P = Semantic Path
+	•	O = Operator ∈ Σ
+	•	E = Expression
+
+⸻
+
+3. Core Transformations
+3.1 Assignment (default)
+⟨P, ∅, E⟩ → Memory(P, value = E)
+
+⸻
+
+3.2 Pointer
+⟨P, __, "a.b"⟩ → P ↦ ref(a.b)
+
+Resolución:
+read(P) → read(a.b)
+
+⸻
+
+3.3 Identity
+⟨P, @, id⟩ → P ↦ identity(id)
+
+Propiedad:
+id ∈ canonical namespace
+
+⸻
+
+3.4 Eval (Derivation)
+⟨P, =, expr⟩
+
+Define:
+P := f(refs(expr))
+
+Donde:
+	•	refs(expr) = dependencias extraídas
+	•	f = evaluador RPN determinístico
+
+⸻
+
+3.5 Query (Observation)
+
+⟨P, ?, [paths], fn?⟩
+result = fn(read(paths...)) | read(paths...)
+
+Propiedad:
+❗ No modifica semántica → solo observa
+
+⸻
+
+3.6 Secret Scope
+
+⟨P._, value⟩
+Define:
+secret(P) = value
+Y:
+∀ Q ⊆ P:
+  value(Q) = encrypted
+
+
+⸻
+
+3.7 Noise (Re-rooting)
+
+⟨P.~, noise⟩
+Define nueva raíz:
+seed(P) = hash(noise)
+Rompe herencia anterior.
+
+⸻
+
+3.8 Remove
+⟨P, -, ∅⟩
+∀ Q ⊇ P → delete(Q)
+
+
+⸻
+
+3.9 Operator Extension
+⟨+, [op, kind]⟩
+Extiende:
+Σ := Σ ∪ {op}
+
+⸻
+
+🔥 Propiedad clave del sistema
+.me es un álgebra composable de transformaciones sobre un grafo semántico persistente
+No es CRUD.
+Es rewriting system + dependency graph + cryptographic scoping.
+
+⸻
+
+⚙️ II. RESOLVER SPEC (cleaker layer)
+Ahora lo importante: cómo resuelves .me → runtime (host/device/port)
+Esto NO está en me.ts.
+Esto es cleaker.
+
+⸻
+
+1. Problem
+
+Dado:
+cleaker.me/@user/device/macbook/profile
+Necesitas resolver:
+→ user.cleaker.me:macbook:8161/profile
+
+⸻
+
+2. Resolver Function
+resolve: SemanticPath → TransportAddress
+
+⸻
+
+3. Resolution Pipeline
+STEP 1 — Identity Extraction
+@user → identity root
+
+
+⸻
+
+STEP 2 — Namespace Binding
+cleaker.me/@user ⊆ user.cleaker.me
+Regla:
+@user ∈ cleaker → subdomain
+
+
+⸻
+
+STEP 3 — Device Resolution
+device/macbook → host selector
+Opciones:
+	•	DNS
+	•	registry
+	•	.me memory
+
+⸻
+
+STEP 4 — Port Resolution
+PORT → runtime binding
+Puede venir de:
+	•	.me
+	•	default config
+	•	discovery
+
+⸻
+
+STEP 5 — Final Address
+
+TransportAddress = {
+  protocol,
+  host,
+  port,
+  path
+}
+
+
+⸻
+
+4. Selector Channel (tu idea)
+
+Extensión:
+username.cleaker.me:macbook:8161/profile
+Formalmente:
+URI := host : selector*
+Donde:
+selector = device | port | transport | intent
+
+
+⸻
+
+5. Semantic vs Physical Split
+Declarativo (.me)
+cleaker.me/@user/device/macbook/profile
+Operativo (resolver)
+user.cleaker.me:macbook:8161/profile
+
+
+⸻
+
+🔥 6. Key Insight
+
+.me → WHAT
+cleaker → WHERE
+transport → HOW
+
+
+⸻
+
+🧬 III. Hydration + Resolver Unification
+
+Esto conecta todo:
+
+⸻
+
+Hydration Source
+
+HydrationSource := {
+  memories,
+  operators,
+  secrets
+}
+
+
+⸻
+
+Full Boot
+
+.me (empty runtime)
+    ↓
+connect(cleaker)
+    ↓
+fetch(memories)
+    ↓
+rehydrate()
+    ↓
+resolve(paths)
+
+
+⸻
+
+🔥 Resultado
+.me no sabe dónde están las cosas
+cleaker no sabe qué significan
+juntos reconstruyen el sistema
+
+⸻
+
+🧠 Conclusión fuerte
+
+Ya tienes:
+
+✅ Runtime semántico (me.ts)
+✅ Álgebra de operadores (aunque no formalizada)
+❗ Te faltaba: resolver como sistema independiente
+
+⸻
+
+🚀 Si quieres siguiente paso
+
+Puedo hacerte:
+
+1. resolver.ts
+
+Implementación real:
+resolve("cleaker.me/@user/device/macbook/profile")
+→ fetch(...)
+
+“We don’t store data. We reconstruct it.”
+
