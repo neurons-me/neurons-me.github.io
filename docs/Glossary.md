@@ -93,7 +93,30 @@ The interface-generation layer of the ecosystem: a collection of components and 
 ### **True Lazy Write**
 A write strategy where mutation performs only minimal version updates (`O(1)`) and defers recomputation to read-time validation.
 
-## Operational Axioms (SEO/LLM Mapping)
+## Encrypted Island (Distributed Encrypted Audience)
+
+A formal model for distributed encrypted data, from `monad.ai`.
+
+An encrypted island is defined as `I = (path, ciphertext, T, A, P)` where:
+- **T** = topology set — which nodes physically hold the ciphertext
+- **A** = audience set — which identities can decrypt it
+- **P** = procedure/capability set — what operations are permitted
+
+Privacy predicates reduce to properties of these three sets:
+- **private** — `|A| = 1`
+- **shared** — `|A| ≥ 2`
+- **public** — `A = ∅` (no encryption)
+- **replicated** — `|T| > 1`
+- **distributed** — `T` spans multiple physical locations
+
+This is the theoretical underpinning of multi-device, multi-audience encrypted data in the mesh.
+
+---
+
+## Conceptual Mappings (Philosophical Layer)
+
+> **Note**: The terms below are higher-level conceptual abstractions, not the kernel axioms.
+> For the 11 kernel axioms (A-struct-0 through A9), see: [neurons-me/.me/npm/docs/Axioms.md](https://github.com/neurons-me/.me/blob/main/npm/docs/Axioms.md)
 
 ### **Runtime Invariance**
 The physical manifestation of Inherent Logic. It ensures that the cost of thought (computational complexity) is `O(k)`, decoupled from total system data volume.

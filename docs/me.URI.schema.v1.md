@@ -64,6 +64,27 @@ token      = 1*( ALPHA / DIGIT )
 path       = *( VCHAR / "/" )
 ```
 
+### Daemon Command Surface (monad.ai)
+
+`me://` also serves as an internal command surface for the `monad.ai` daemon, using a colon-separated operation form:
+
+```
+me://[namespace]:[operation]/[path]
+```
+
+| Example | Meaning |
+|---------|---------|
+| `me://self:read/profile` | Read `profile` on the local monad |
+| `me://self:write/profile.name` | Write `profile.name` on the local monad |
+| `me://kernel:export/snapshot` | Export a kernel snapshot |
+| `me://kernel:replay/memory` | Replay the memory ledger |
+| `me://kernel:rehydrate/snapshot` | Rehydrate from snapshot |
+| `me://kernel[device:localhost\|protocol:http\|port:8161]:export/snapshot` | Targeted export with selector |
+
+This form is distinct from the NRP canonical resource URI above — it routes internally within a running monad rather than across the mesh.
+
+---
+
 # Purpose of the Standard
 The **.me:// URI scheme** is a **semantic addressing system** designed for sovereign identities and **distributed surface networks (Mesh).**
 Unlike traditional URLs, a **.me** URI does not merely point to a static resource. Instead, it describes where and how to resolve information within a distributed personal identity.
