@@ -6,15 +6,9 @@
 # neurons.me
 
 ###### Go Algorithmic.
-A modular ecosystem for **sovereign subjects, distributed memory, and explainable AI interfaces** built on graphs and derivatives.
-
-https://neurons.me
-
-
+[neurons.me]: https://neurons.me	"neurons.me"
 
 **∴ Witness our seal**
-
-**MIT License**
 
 **suiGn**
 
