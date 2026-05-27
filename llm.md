@@ -1,15 +1,16 @@
 ∴ Your mind, running locally.
-Robots that Understand Context
+
+**Robots that Understand Context**
 Same object means something completely different depending on who is looking at it.
 Image: ./media/robots_that_understand_context_gif.gif
 Learn more: https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html
 
-Smart Cities
+**Smart Cities**
 Living infrastructure coordinated through semantic systems.
 Image: ./media/smart_cities.gif
 Learn more: https://neurons-me.github.io/.me/docs/Smart-Cities.html
 
-Social Graph
+**Social Graph**
 Explainable relationship networks built on human connection.
 Image: ./media/SocialGraph.jpg
 
