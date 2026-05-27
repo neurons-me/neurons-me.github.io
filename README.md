@@ -5,7 +5,6 @@
 </p>
 
 # neurons.me
-> Deep Learning .me
 **Go Algorithmic.**
 
 
