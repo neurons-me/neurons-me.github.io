@@ -8,14 +8,19 @@
 **Go Algorithmic.**
 
 https://neurons-me.github.io/.me/
-https://neurons-me.github.io/.me/docs/  <!- TODO: Edit docs index.
+https://neurons-me.github.io/.me/docs/  
 https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html
 https://neurons-me.github.io/.me/docs/Smart-Cities.html <!-- not found>
-https://neurons-me.github.io/.me/npm/typedocs/
+https://neurons-me.github.io/.me/Typescript/
+https://neurons-me.github.io/.me/Typescript/docs/
+https://neurons-me.github.io/.me/Typescript/typedocs/
 
 https://neurons-me.github.io/monad/
-https://neurons-me.github.io/monad/docs/ <!- not found
-https://neurons-me.github.io/monad/npm/typedocs/
+https://neurons-me.github.io/monad/docs/
+https://neurons-me.github.io/monad/Typescript/
+https://neurons-me.github.io/monad/Typescript/docs/
+https://neurons-me.github.io/monad/Typescript/docs/api
+https://neurons-me.github.io/monad/Typescript/typedocs/
 
 https://neurons-me.github.io/netget/  <!- old layout theme (lack of the current one)
 https://neurons-me.github.io/netget/docs/ <!- need attention
