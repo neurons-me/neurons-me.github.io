@@ -7,11 +7,37 @@
 # neurons.me
 **Go Algorithmic.**
 
-
-
 https://neurons-me.github.io/.me/
-https://neurons-me.github.io/.me/docs/  <- TODO: Edit docs index.
+https://neurons-me.github.io/.me/docs/  <!- TODO: Edit docs index.
+https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html
+https://neurons-me.github.io/.me/docs/Smart-Cities.html <!-- not found>
 https://neurons-me.github.io/.me/npm/typedocs/
 
+https://neurons-me.github.io/monad/
+https://neurons-me.github.io/monad/docs/ <!- not found
+https://neurons-me.github.io/monad/npm/typedocs/
+
+https://neurons-me.github.io/netget/  <!- old layout theme (lack of the current one)
+https://neurons-me.github.io/netget/docs/ <!- need attention
+https://neurons-me.github.io/netget/npm/typedocs/ <!- not found
+
+https://neurons-me.github.io/cleaker/ <!- old layout theme (lack of the current one)
+https://neurons-me.github.io/cleaker/docs/  <!- not found
+https://neurons-me.github.io/cleaker/npm/typedocs/ <!- not found
+
+https://neurons-me.github.io/GUI/ <!- needs attention >
+https://neurons-me.github.io/GUI/docs/ <!- not found >
+https://neurons-me.github.io/GUI/npm/typedocs/ <!- not found >
+https://neurons-me.github.io/GUI/ <!- storybook >
+
+https://neurons-me.github.io/all.this/ <!- old layout theme (lack of the current one)
+https://neurons-me.github.io/all.this/docs/ <!- not found >
+https://neurons-me.github.io/all.this/npm/typedocs/ <!- not found >
+
+https://neurons-me.github.io/PixelGrid.me/ <!- needs attention >
+https://neurons-me.github.io/neurons-me/ <!- needs attention, bug not loading light mode, welcome to me link on menu does nothing. >
+
+---
 
 
+Ojo mira mucho cuidado, necesitamos actualziar todos los docs que apuntaban a un link npm y ahora se va a cambiar por Typescript, Python, Rust.
