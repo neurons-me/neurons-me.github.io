@@ -21,6 +21,10 @@
     .card:hover { box-shadow: 0 4px 18px rgba(15,23,32,0.10); border-color: #0f6a78; transform: translateY(-1px); }
     .card-icon { width: 56px; height: 56px; border-radius: 12px; background: rgba(15,106,120,0.09); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; overflow: hidden; }
     .card-icon img { width: 44px; height: 44px; object-fit: contain; }
+    .grid-stack .card-icon { width: 68px; height: 68px; border-radius: 14px; }
+    .grid-stack .card-icon img { width: 56px; height: 56px; }
+    .grid-resources .card-icon { width: 50px; height: 50px; border-radius: 10px; }
+    .grid-resources .card-icon img { width: 38px; height: 38px; }
     .card-title { font-size: 0.95rem; font-weight: 700; }
     .card-desc { font-size: 0.825rem; color: #51606d; line-height: 1.5; }
     footer { margin-top: 64px; padding: 24px 0; text-align: center; border-top: 1px solid rgba(15,23,32,0.08); }
@@ -50,7 +54,7 @@
     </div>
 
     <p class="section-label">Stack</p>
-    <div class="grid">
+    <div class="grid grid-stack">
 
       <a class="card" href="https://neurons-me.github.io/.me/">
         <div class="card-icon">
@@ -101,7 +105,7 @@
     </div>
 
     <p class="section-label">Resources</p>
-    <div class="grid">
+    <div class="grid grid-resources">
 
       <a class="card" href="https://www.npmjs.com/org/neurons-me">
         <div class="card-icon">
