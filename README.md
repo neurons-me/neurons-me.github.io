@@ -38,10 +38,13 @@ https://neurons-me.github.io/netget/  <!- old layout theme (lack of the current 
 https://neurons-me.github.io/netget/docs/ <!- need attention
 https://neurons-me.github.io/netget/npm/typedocs/ <!- not found
 
-https://neurons-me.github.io/GUI/ <!- needs attention >
-https://neurons-me.github.io/GUI/docs/ <!- not found >
-https://neurons-me.github.io/GUI/npm/typedocs/ <!- not found >
-https://neurons-me.github.io/GUI/ <!- storybook >
+https://neurons-me.github.io/GUI/ 
+https://neurons-me.github.io/GUI/docs/ 
+https://neurons-me.github.io/GUI/docs/storybook
+https://neurons-me.github.io/GUI/Typescript/
+https://neurons-me.github.io/GUI/Typescript/docs/
+https://neurons-me.github.io/GUI/Typescript/docs/api/
+https://neurons-me.github.io/GUI/Typescript/typedocs/
 
 https://neurons-me.github.io/all.this/ <!- old layout theme (lack of the current one)
 https://neurons-me.github.io/all.this/docs/ <!- not found >
