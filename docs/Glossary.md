@@ -116,7 +116,7 @@ This is the theoretical underpinning of multi-device, multi-audience encrypted d
 ## Conceptual Mappings (Philosophical Layer)
 
 > **Note**: The terms below are higher-level conceptual abstractions, not the kernel axioms.
-> For the 11 kernel axioms (A-struct-0 through A9), see: [neurons-me/.me/npm/docs/Axioms.md](https://github.com/neurons-me/.me/blob/main/npm/docs/Axioms.md)
+> For the 11 kernel axioms (A-struct-0 through A9), see: [neurons-me/.me/npm/docs/Axioms.md](https://github.com/neurons-me/.me/blob/main/Typescript/docs/Axioms.md)
 
 ### **Runtime Invariance**
 The physical manifestation of Inherent Logic. It ensures that the cost of thought (computational complexity) is `O(k)`, decoupled from total system data volume.
