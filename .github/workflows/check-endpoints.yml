@@ -1,0 +1,41 @@
+name: Check endpoints
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 9 * * 1"
+
+jobs:
+  endpoints:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check README endpoints
+        run: |
+          node scripts/check-endpoints.mjs \
+            --source README.md \
+            --markdown endpoint-check.md \
+            --json endpoint-check.json
+
+      - name: Add report to summary
+        if: always()
+        run: cat endpoint-check.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload endpoint report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: endpoint-check
+          path: |
+            endpoint-check.md
+            endpoint-check.json
