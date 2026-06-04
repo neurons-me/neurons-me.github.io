@@ -33,7 +33,7 @@ https://neurons-me.github.io/Cleaker/Typescript/docs/api/ 𓋹𓂀 𓋹 𓅓
 https://neurons-me.github.io/Cleaker/Python/ 𓎛 𓆙 𓅱 𓏏 
 https://neurons-me.github.io/Cleaker/Rust/ 𓋹𓂀 𓇯 𓁹 𓎛  𓅱 𓏏  𓋹 𓅓 
 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭
-## 𓆙 monad 𓆙 𓇯 𓅱𓆙 𓇯 𓅱𓆙 𓎛 𓆙 𓅱  𓋹𓂀 𓋹 𓅓  𓏏 𓍢 𓈖  𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀
+## 𓆙 monad 𓆙 𓇯 𓅱𓆙 𓇯 𓅱𓆙 𓎛 𓆙 𓅱  𓋹𓂀 𓋹 𓅓 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀
 https://neurons-me.github.io/monad/ 𓃭 𓆀 𓆣 𓇯 𓁹 𓎛 𓆙  𓂃 
 https://neurons-me.github.io/monad/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/monad/docs/Notes.html 𓃭 𓆣 𓇯 𓁹 𓎛 𓆙   𓆀 𓂃 
@@ -62,7 +62,7 @@ https://neurons-me.github.io/GUI/Typescript/docs/api/ 𓎛 𓆙 𓅱 𓏏
 https://neurons-me.github.io/GUI/Typescript/typedocs/ 𓃭 𓆣 𓇯 𓁹 𓎛 𓆙 𓆀 𓂃 
 https://neurons-me.github.io/GUI/Python/ 𓇯 𓁹 𓎛  𓅱 𓏏 
 https://neurons-me.github.io/GUI/Rust/ 𓎛 𓆙 𓅱 𓏏 
-## 𓃭 all.this 𓆉𓈖 𓃭 𓆀  𓀭 𓂀 𓁹 𓏏 𓍢 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭  𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀 𓄃
+## 𓃭 all.this 𓆉𓈖 𓃭 𓆀  𓀭 𓂀 𓁹 𓇼 𓁐 𓀭  𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀 𓄃
 https://neurons-me.github.io/all.this/  𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/all.this/docs/ 𓃭 𓆀 𓂃 𓆣 𓇯 𓁹 𓎛 𓆙 
 𓂀 𓁹  𓀭𓂀 𓁹  𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖 𓃭
