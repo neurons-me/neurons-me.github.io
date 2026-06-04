@@ -46,11 +46,11 @@ https://neurons-me.github.io/monad/Rust/ 𓎛 𓆙 𓅱 𓏏
 𓁹 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖
 ## 𓈖 netget 𓇼 𓁐 𓀭 𓇼 𓁐 𓀭 𓄀𓄀 𓋹𓂀 𓋹 𓅓 𓏏 𓍢 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 
 https://neurons-me.github.io/netget/ 𓃭 𓆀 𓂃 𓃭 𓆀 𓂃 
-https://neurons-me.github.io/netget/docs/ <!-- needs attention --> 𓆣 𓇯 𓁹 𓎛 𓆙 
-https://neurons-me.github.io/netget/Typescript/ <!-- pending --> 𓎛 𓆙 𓅱 𓏏 
-https://neurons-me.github.io/netget/Typescript/typedocs/ <!-- pending --> 𓆣 𓇯 𓁹 𓎛 𓆙 
-https://neurons-me.github.io/netget/Python/ <!-- pending --> 𓃭 𓆀 𓂃 
-https://neurons-me.github.io/netget/Rust/ <!-- pending --> 𓎛 𓆙 𓅱 𓏏 
+https://neurons-me.github.io/netget/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 
+https://neurons-me.github.io/netget/Typescript/ 𓎛 𓆙 𓅱 𓏏 
+https://neurons-me.github.io/netget/Typescript/typedocs/ 𓆣 𓇯 𓁹 𓎛 𓆙 
+https://neurons-me.github.io/netget/Python/ 𓃭 𓆀 𓂃 
+https://neurons-me.github.io/netget/Rust/ 𓎛 𓆙 𓅱 𓏏 
 𓂀 𓁹  𓀭𓂀 𓁹 
 ## 𓏏 .GUI𓏏  𓇌 𓆉𓈖𓂃 𓇼 𓁐 𓀭 𓃭 𓆀 𓁐 𓀭 𓇼 𓁐 𓀭  𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀
 https://neurons-me.github.io/GUI/ 𓎛 𓆙 𓅱 𓏏 
