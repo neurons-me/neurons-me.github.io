@@ -19,7 +19,7 @@ https://neurons-me.github.io/.me/Typescript/docs/api/ 𓎛 𓆙 𓅱 𓏏
 https://neurons-me.github.io/.me/Python/ 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/.me/Rust/ 𓎛 𓆙 𓅱 𓏏 
 𓍢 𓎛 𓆣 𓍢 𓎛 
-## 𓍢 cleaker 𓍢 𓎛 𓆣 𓍢 𓎛 
+## 𓍢 cleaker 𓍢 𓎛 𓆣 𓍢 𓎛 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆣 𓇯 𓁹 𓎛 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/Cleaker/ 𓆣 𓇯 𓁹  𓎛 𓆙 
 https://neurons-me.github.io/Cleaker/docs/. 𓃭 𓆀 𓂃  𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/Cleaker/docs/en/Cleaker.html 𓋹𓂀 𓋹 𓅓 
@@ -33,7 +33,7 @@ https://neurons-me.github.io/Cleaker/Typescript/docs/api/ 𓋹𓂀 𓋹 𓅓
 https://neurons-me.github.io/Cleaker/Python/ 𓎛 𓆙 𓅱 𓏏 
 https://neurons-me.github.io/Cleaker/Rust/ 𓋹𓂀 𓇯 𓁹 𓎛  𓅱 𓏏  𓋹 𓅓 
 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭
-## 𓆙 monad 𓆙 𓇯 𓅱𓆙 𓇯 𓅱𓆙 
+## 𓆙 monad 𓆙 𓇯 𓅱𓆙 𓇯 𓅱𓆙 𓎛 𓆙 𓅱  𓋹𓂀 𓋹 𓅓  𓏏 𓍢 𓈖  𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀
 https://neurons-me.github.io/monad/ 𓃭 𓆀 𓆣 𓇯 𓁹 𓎛 𓆙  𓂃 
 https://neurons-me.github.io/monad/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/monad/docs/Notes.html 𓃭 𓆣 𓇯 𓁹 𓎛 𓆙   𓆀 𓂃 
@@ -44,7 +44,7 @@ https://neurons-me.github.io/monad/Typescript/typedocs/ 𓎛 𓆙 𓅱 𓏏
 https://neurons-me.github.io/monad/Python/ 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/monad/Rust/ 𓎛 𓆙 𓅱 𓏏 
 𓁹 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖
-## 𓈖 netget 𓇼 𓁐 𓀭 𓇼 𓁐 𓀭 𓄀𓄀
+## 𓈖 netget 𓇼 𓁐 𓀭 𓇼 𓁐 𓀭 𓄀𓄀 𓋹𓂀 𓋹 𓅓 𓏏 𓍢 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 
 https://neurons-me.github.io/netget/ 𓃭 𓆀 𓂃 <!-- old layout — needs update --> 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/netget/docs/ <!-- needs attention --> 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/netget/Typescript/ <!-- pending --> 𓎛 𓆙 𓅱 𓏏 
@@ -52,7 +52,7 @@ https://neurons-me.github.io/netget/Typescript/typedocs/ <!-- pending --> 𓆣 �
 https://neurons-me.github.io/netget/Python/ <!-- pending --> 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/netget/Rust/ <!-- pending --> 𓎛 𓆙 𓅱 𓏏 
 𓂀 𓁹  𓀭𓂀 𓁹 
-## 𓏏 .GUI𓏏  𓇌 𓆉𓈖𓂃 𓇼 𓁐 𓀭 𓃭 𓆀 
+## 𓏏 .GUI𓏏  𓇌 𓆉𓈖𓂃 𓇼 𓁐 𓀭 𓃭 𓆀 𓁐 𓀭 𓇼 𓁐 𓀭  𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀
 https://neurons-me.github.io/GUI/ 𓎛 𓆙 𓅱 𓏏 
 https://neurons-me.github.io/GUI/docs/ 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/GUI/docs/storybook/ 𓋹𓂀 𓋹 𓅓 
@@ -62,7 +62,7 @@ https://neurons-me.github.io/GUI/Typescript/docs/api/ 𓎛 𓆙 𓅱 𓏏
 https://neurons-me.github.io/GUI/Typescript/typedocs/ 𓃭 𓆣 𓇯 𓁹 𓎛 𓆙 𓆀 𓂃 
 https://neurons-me.github.io/GUI/Python/ 𓇯 𓁹 𓎛  𓅱 𓏏 
 https://neurons-me.github.io/GUI/Rust/ 𓎛 𓆙 𓅱 𓏏 
-## 𓃭 all.this 𓆉𓈖 𓃭 𓆀  𓀭 𓂀 𓁹 
+## 𓃭 all.this 𓆉𓈖 𓃭 𓆀  𓀭 𓂀 𓁹 𓏏 𓍢 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭  𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀 𓄃
 https://neurons-me.github.io/all.this/  𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/all.this/docs/ 𓃭 𓆀 𓂃 𓆣 𓇯 𓁹 𓎛 𓆙 
 𓂀 𓁹  𓀭𓂀 𓁹  𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖 𓃭
