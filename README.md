@@ -21,9 +21,9 @@ https://neurons-me.github.io/.me/Rust/ 𓎛 𓆙 𓅱 𓏏
 𓍢 𓎛 𓆣 𓍢 𓎛 
 ## 𓍢 cleaker 𓍢 𓎛 𓆣 𓍢 𓎛 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆣 𓇯 𓁹 𓎛 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/Cleaker/ 𓆣 𓇯 𓁹  𓎛 𓆙 
-https://neurons-me.github.io/Cleaker/docs/. 𓃭 𓆀 𓂃  𓆣 𓇯 𓁹 𓎛 𓆙 
+https://neurons-me.github.io/Cleaker/docs/ 𓃭 𓆀 𓂃  𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/Cleaker/docs/en/Cleaker.html 𓋹𓂀 𓋹 𓅓 
-https://neurons-me.github.io/Cleaker/docs/en/The-Model.html. 𓃭 𓆀 𓆣 𓇯 𓁹 𓎛 𓆙 𓂃 
+https://neurons-me.github.io/Cleaker/docs/en/The-Model.html 𓃭 𓆀 𓆣 𓇯 𓁹 𓎛 𓆙 𓂃 
 https://neurons-me.github.io/Cleaker/docs/en/The-Algebra-of-Me.html 𓎛 𓆙 𓅱 𓏏 
 https://neurons-me.github.io/Cleaker/docs/en/The-Flat-Universe.html 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/Cleaker/Typescript/ 𓆣 𓇯 𓁹 𓎛 𓆙 
@@ -48,6 +48,8 @@ https://neurons-me.github.io/monad/Rust/ 𓎛 𓆙 𓅱 𓏏
 https://neurons-me.github.io/netget/ 𓃭 𓆀 𓂃 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/netget/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/netget/Typescript/ 𓎛 𓆙 𓅱 𓏏 
+https://neurons-me.github.io/netget/Typescript/docs/ 𓃭 𓆀 𓂃 
+https://neurons-me.github.io/netget/Typescript/docs/api/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/netget/Typescript/typedocs/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/netget/Python/ 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/netget/Rust/ 𓎛 𓆙 𓅱 𓏏 
