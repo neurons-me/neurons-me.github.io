@@ -25,6 +25,47 @@
     .grid-stack .card-icon img { width: 56px; height: 56px; }
     .grid-resources .card-icon { width: 50px; height: 50px; border-radius: 10px; }
     .grid-resources .card-icon img { width: 38px; height: 38px; }
+
+    .grid-demos .card {
+      flex-direction: row;
+      padding: 0;
+      gap: 0;
+      min-height: 140px;
+      overflow: hidden;
+      align-items: stretch;
+    }
+
+    .grid-demos .card-icon {
+      width: 50%;
+      height: auto;
+      min-height: 140px;
+      border-radius: 0;
+      background: transparent;
+      flex-shrink: 0;
+    }
+
+    .grid-demos .card-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .grid-demos .card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+      text-align: left;
+      flex: 1;
+    }
+
+    .grid-demos .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
     .card-title { font-size: 0.95rem; font-weight: 700; }
     .card-desc { font-size: 0.825rem; color: #51606d; line-height: 1.5; }
     footer { margin-top: 64px; padding: 24px 0; text-align: center; border-top: 1px solid rgba(15,23,32,0.08); }
@@ -103,8 +144,10 @@
       </a>
 
       <a class="card" href="https://github.com/neurons-me">
-        <div class="card-icon">→</div>
-        <div class="card-title">Explore the Stack</div>
+        <div class="card-icon">
+          <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765903003/all.this_sr55ml.webp" alt="All.This" />
+        </div>
+        <div class="card-title">Explore All.This</div>
         <div class="card-desc">Additional runtimes, libraries, protocols, and experiments across the neurons.me ecosystem.</div>
       </a>
 
@@ -143,15 +186,17 @@
     </div>
 
     <p class="section-label">Demos</p>
-    <div class="grid">
+    <div class="grid grid-demos">
 
       <a class="card" href="https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html">
         <div class="card-icon">
           <img src="https://neurons-me.github.io/neurons-me/media/robots_that_understand_context_gif.gif" alt="Robots that Understand Context" />
         </div>
-        <div class="card-title">Robots that Understand Context</div>
-        <div class="card-desc">
-          Context transforms meaning. Reactive intelligence adapts without retraining.
+        <div class="card-content">
+          <div class="card-title">Robots that Understand Context</div>
+          <div class="card-desc">
+            Context transforms meaning. Reactive intelligence adapts without retraining.
+          </div>
         </div>
       </a>
 
@@ -159,9 +204,11 @@
         <div class="card-icon">
           <img src="https://neurons-me.github.io/neurons-me/media/smart_cities.gif" alt="Smart Cities" />
         </div>
-        <div class="card-title">Smart Cities</div>
-        <div class="card-desc">
-          Infrastructure that coordinates itself through distributed semantic systems.
+        <div class="card-content">
+          <div class="card-title">Smart Cities</div>
+          <div class="card-desc">
+            Infrastructure that coordinates itself through distributed semantic systems.
+          </div>
         </div>
       </a>
 
@@ -169,9 +216,11 @@
         <div class="card-icon">
           <img src="https://neurons-me.github.io/neurons-me/media/SocialGraph.jpg" alt="Social Networks" />
         </div>
-        <div class="card-title">Social Networks</div>
-        <div class="card-desc">
-          Human relationships represented as explainable and evolving knowledge graphs.
+        <div class="card-content">
+          <div class="card-title">Social Networks</div>
+          <div class="card-desc">
+            Human relationships represented as explainable and evolving knowledge graphs.
+          </div>
         </div>
       </a>
 
