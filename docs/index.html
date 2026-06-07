@@ -19,12 +19,65 @@
     @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
     .card { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px; border-radius: 12px; border: 1px solid rgba(15,23,32,0.12); background: #fff; text-decoration: none; color: inherit; transition: box-shadow 130ms ease, border-color 130ms ease, transform 130ms ease; }
     .card:hover { box-shadow: 0 4px 18px rgba(15,23,32,0.10); border-color: #0f6a78; transform: translateY(-1px); }
+    .allthis-card {
+      background: linear-gradient(180deg, rgba(15,23,32,0.01), rgba(15,23,32,0.025));
+      border-color: rgba(15,23,32,0.22);
+    }
+
+    .allthis-card .card-title {
+      font-weight: 800;
+    }
+
+    .allthis-card:hover {
+      border-color: #0f1720;
+    }
     .card-icon { width: 56px; height: 56px; border-radius: 12px; background: rgba(15,106,120,0.09); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; overflow: hidden; }
     .card-icon img { width: 44px; height: 44px; object-fit: contain; }
     .grid-stack .card-icon { width: 68px; height: 68px; border-radius: 14px; }
     .grid-stack .card-icon img { width: 56px; height: 56px; }
     .grid-resources .card-icon { width: 50px; height: 50px; border-radius: 10px; }
     .grid-resources .card-icon img { width: 38px; height: 38px; }
+
+    .grid-resources {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-resources .card {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      min-height: 78px;
+    }
+
+    .grid-resources .card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .grid-resources .card-title {
+      margin-bottom: 2px;
+    }
+
+    .grid-resources .card-desc {
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    @media (max-width: 720px) {
+      .grid-resources {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid-resources {
+        grid-template-columns: 1fr;
+      }
+    }
 
     .grid-demos .card {
       flex-direction: row;
@@ -36,7 +89,7 @@
     }
 
     .grid-demos .card-icon {
-      width: 50%;
+      width: clamp(140px, 45%, 240px);
       height: auto;
       min-height: 140px;
       border-radius: 0;
@@ -54,16 +107,20 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 20px;
+      padding: clamp(14px, 2vw, 20px) clamp(20px, 3vw, 40px) clamp(14px, 2vw, 20px) clamp(14px, 2vw, 24px);
       text-align: left;
       flex: 1;
+      min-width: 0;
     }
 
     .grid-demos .card-title {
-      font-size: 1.35rem;
+      font-size: clamp(0.95rem, 1vw + 0.75rem, 1.2rem);
       font-weight: 900;
       line-height: 1.15;
       margin-bottom: 0;
+      overflow-wrap: normal;
+      word-break: keep-all;
+      hyphens: none;
     }
 
     .card-title { font-size: 0.95rem; font-weight: 700; }
@@ -79,6 +136,14 @@
       .card:hover { border-color: #4fd1c5; box-shadow: 0 4px 18px rgba(0,0,0,0.3); }
       .card-icon { background: rgba(79,209,197,0.10); }
       footer { border-top-color: rgba(232,237,237,0.08); }
+      .allthis-card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03));
+        border-color: rgba(255,255,255,0.18);
+      }
+
+      .allthis-card:hover {
+        border-color: rgba(255,255,255,0.35);
+      }
     }
   </style>
   <link rel="icon" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
@@ -143,7 +208,7 @@
         <div class="card-desc">A Gateway To the Web. Routes hostnames to monads via OpenResty.</div>
       </a>
 
-      <a class="card" href="https://github.com/neurons-me">
+      <a class="card allthis-card" href="https://github.com/neurons-me">
         <div class="card-icon">
           <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765903003/all.this_sr55ml.webp" alt="All.This" />
         </div>
@@ -160,8 +225,10 @@
         <div class="card-icon">
           <img src="https://static.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png" alt="npm" />
         </div>
-        <div class="card-title">npm</div>
-        <div class="card-desc">All packages published under the neurons-me org.</div>
+        <div class="card-content">
+          <div class="card-title">npm</div>
+          <div class="card-desc">All packages published under the neurons-me org.</div>
+        </div>
       </a>
 
       <a class="card" href="https://github.com/neurons-me">
@@ -171,16 +238,20 @@
             <img src="https://cdn.simpleicons.org/github/0f1720" alt="GitHub" />
           </picture>
         </div>
-        <div class="card-title">GitHub</div>
-        <div class="card-desc">Open source repositories.</div>
+        <div class="card-content">
+          <div class="card-title">GitHub</div>
+          <div class="card-desc">Open source repositories.</div>
+        </div>
       </a>
 
       <a class="card" href="https://neurons.me">
         <div class="card-icon" style="background:#e8edf2;">
           <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629040/media.neurons.me_copy_tgilfg.png" alt="neurons.me" />
         </div>
-        <div class="card-title">neurons.me</div>
-        <div class="card-desc">The live network. Run a monad. Claim your namespace.</div>
+        <div class="card-content">
+          <div class="card-title">neurons.me</div>
+          <div class="card-desc">The live network. Run a monad. Claim your namespace.</div>
+        </div>
       </a>
 
     </div>
@@ -206,12 +277,56 @@
         </div>
       </a>
 
-      <a class="card" href="#">
+      <a class="card" href="https://neurons-me.github.io/.me/Typescript/typedocs/examples/Social_Graph.html">
         <div class="card-icon">
           <img src="https://neurons-me.github.io/neurons-me/media/SocialGraph.jpg" alt="Social Networks" />
         </div>
         <div class="card-content">
           <div class="card-title">Social Networks</div>
+        </div>
+      </a>
+
+    </div>
+
+    <p class="section-label">Benchmarks</p>
+    <div class="grid grid-resources">
+
+      <a class="card" href="https://github.com/neurons-me/.me/tree/main/Typescript/tests/Phases">
+        <div class="card-icon">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://cdn.simpleicons.org/speedtest/ffffff" />
+            <img src="https://cdn.simpleicons.org/speedtest/0f1720" alt="Phase benchmarks" />
+          </picture>
+        </div>
+        <div class="card-content">
+          <div class="card-title">Phase 2 · Disk & Write Pressure</div>
+          <div class="card-desc">Incremental disk persistence, explain-lookup latency, and sustained write/rewrite pressure on the kernel.</div>
+        </div>
+      </a>
+
+      <a class="card" href="https://github.com/neurons-me/.me/tree/main/Typescript/tests/Phases">
+        <div class="card-icon">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://cdn.simpleicons.org/chartdotjs/ffffff" />
+            <img src="https://cdn.simpleicons.org/chartdotjs/0f1720" alt="Vector search benchmarks" />
+          </picture>
+        </div>
+        <div class="card-content">
+          <div class="card-title">Phase 3 · Vector Search</div>
+          <div class="card-desc">Exact vs. IVF semantic search at scale — corpus, tuning, and cascade-dependency benchmarks.</div>
+        </div>
+      </a>
+
+      <a class="card" href="https://github.com/neurons-me/.me/tree/main/Typescript/tests/Benchmarks">
+        <div class="card-icon">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://cdn.simpleicons.org/googleanalytics/ffffff" />
+            <img src="https://cdn.simpleicons.org/googleanalytics/0f1720" alt="Secret scope benchmarks" />
+          </picture>
+        </div>
+        <div class="card-content">
+          <div class="card-title">Secret Scope & Scaling</div>
+          <div class="card-desc">Push vs. pull and public vs. secret-scope cost — p50/p95/p99 latency baselines across node counts.</div>
         </div>
       </a>
 
