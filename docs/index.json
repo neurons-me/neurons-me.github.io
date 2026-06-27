@@ -706,5 +706,33 @@
     "repo": "cleaker",
     "icon": "",
     "kind": "source"
+  },
+
+  {
+    "id": "network-glossary",
+    "title": "Glossary",
+    "desc": "Core terms across the neurons.me ecosystem — O(k), axiomatic integrity, and more.",
+    "url": "https://neurons-me.github.io/Glossary.html",
+    "repo": null,
+    "icon": "📖",
+    "kind": "doc"
+  },
+  {
+    "id": "network-secretos-me",
+    "title": "El modelo de visibilidad de .me",
+    "desc": "Todo es público por defecto — el modelo de secretos explicado en español.",
+    "url": "https://neurons-me.github.io/Secretos-me.html",
+    "repo": null,
+    "icon": "🇪🇸",
+    "kind": "doc"
+  },
+  {
+    "id": "network-me-uri-schema",
+    "title": ".me URI Scheme (v1)",
+    "desc": "me://[namespace][selector]/[path] — the semantic, sovereign addressing protocol.",
+    "url": "https://neurons-me.github.io/me.URI.schema.html",
+    "repo": null,
+    "icon": "🛰️",
+    "kind": "doc"
   }
 ]
