@@ -236,6 +236,33 @@
     "icon": "🤝",
     "kind": "doc"
   },
+  {
+    "id": "me-lang-typescript",
+    "title": "Typescript",
+    "desc": "The reference implementation of .me — install via npm.",
+    "url": "https://neurons-me.github.io/.me/Typescript/",
+    "repo": ".me",
+    "icon": "🟦",
+    "kind": "doc"
+  },
+  {
+    "id": "me-lang-python",
+    "title": "Python",
+    "desc": "The Python implementation of .me. Status: in development.",
+    "url": "https://neurons-me.github.io/.me/Python/",
+    "repo": ".me",
+    "icon": "🐍",
+    "kind": "doc"
+  },
+  {
+    "id": "me-lang-rust",
+    "title": "Rust",
+    "desc": "The Rust implementation of .me. Status: in development.",
+    "url": "https://neurons-me.github.io/.me/Rust/",
+    "repo": ".me",
+    "icon": "🦀",
+    "kind": "doc"
+  },
 
   {
     "id": "me-ts-quickstart",
@@ -514,6 +541,169 @@
     "desc": "Source code for .me",
     "url": "https://github.com/neurons-me/.me",
     "repo": ".me",
+    "icon": "",
+    "kind": "source"
+  },
+
+  {
+    "id": "cleaker-lang-typescript",
+    "title": "Typescript",
+    "desc": "The reference implementation of cleaker — install via npm.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/",
+    "repo": "cleaker",
+    "icon": "🟦",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-lang-python",
+    "title": "Python",
+    "desc": "The Python implementation of cleaker. Status: in development.",
+    "url": "https://neurons-me.github.io/Cleaker/Python/",
+    "repo": "cleaker",
+    "icon": "🐍",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-lang-rust",
+    "title": "Rust",
+    "desc": "The Rust implementation of cleaker. Status: in development.",
+    "url": "https://neurons-me.github.io/Cleaker/Rust/",
+    "repo": "cleaker",
+    "icon": "🦀",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-doc-cleaker",
+    "title": "Cleaker Protocol",
+    "desc": "cleaker.me/, cleaker.me/?, username.cleaker.me/ — the resolution grammar.",
+    "url": "https://neurons-me.github.io/Cleaker/docs/en/Cleaker.html",
+    "repo": "cleaker",
+    "icon": "🔑",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-doc-model",
+    "title": "The Model",
+    "desc": "Identity exists in relation to something else — there is no .me floating in the void.",
+    "url": "https://neurons-me.github.io/Cleaker/docs/en/The-Model.html",
+    "repo": "cleaker",
+    "icon": "🧠",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-doc-algebra",
+    "title": "The Algebra of Me",
+    "desc": "Defining the universe of namespaces as a composite structure N = (domain, port).",
+    "url": "https://neurons-me.github.io/Cleaker/docs/en/The-Algebra-of-Me.html",
+    "repo": "cleaker",
+    "icon": "∑",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-doc-flat-universe",
+    "title": "The Flat Universe",
+    "desc": "Reality has one primitive: distinction. Hierarchy is emergent, not fundamental.",
+    "url": "https://neurons-me.github.io/Cleaker/docs/en/The-Flat-Universe.html",
+    "repo": "cleaker",
+    "icon": "🌐",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-doc-notes",
+    "title": "Notes",
+    "desc": "Secrets are holes in the map, not flags in a DB.",
+    "url": "https://neurons-me.github.io/Cleaker/docs/en/Notes.html",
+    "repo": "cleaker",
+    "icon": "📝",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-es-mision",
+    "title": "Misión",
+    "desc": "cleaker en español.",
+    "url": "https://neurons-me.github.io/Cleaker/docs/es/Mision.html",
+    "repo": "cleaker",
+    "icon": "🇪🇸",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-es-universo-plano",
+    "title": "El Universo Es Plano",
+    "desc": "La jerarquía es emergente, no fundamental.",
+    "url": "https://neurons-me.github.io/Cleaker/docs/es/El%20Universo%20Es%20Plano.html",
+    "repo": "cleaker",
+    "icon": "🇪🇸",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-ts-overview",
+    "title": "Overview: Typescript",
+    "desc": "cleaker binds a sovereign .me identity to a namespace surface.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/",
+    "repo": "cleaker",
+    "icon": "📖",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-ts-model",
+    "title": "The Model: Typescript",
+    "desc": "Identity exists in relation to something else — there is no .me floating in the void.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/The-Model.html",
+    "repo": "cleaker",
+    "icon": "🧠",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-ts-protocol",
+    "title": "Cleaker Protocol: Typescript",
+    "desc": "cleaker.me/, cleaker.me/?, username.cleaker.me/ — the resolution grammar.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/Cleaker.html",
+    "repo": "cleaker",
+    "icon": "🔑",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-ts-algebra",
+    "title": "The Algebra of Me: Typescript",
+    "desc": "Defining the universe of namespaces as a composite structure N = (domain, port).",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/Algebra-of-Me.html",
+    "repo": "cleaker",
+    "icon": "∑",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-ts-flat-universe",
+    "title": "The Flat Universe: Typescript",
+    "desc": "Reality has one primitive: distinction. Hierarchy is emergent, not fundamental.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/The-Flat-Universe.html",
+    "repo": "cleaker",
+    "icon": "🌐",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-ts-api",
+    "title": "API Reference: Typescript",
+    "desc": "Classes, interfaces and types — generated by TypeDoc.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/api/",
+    "repo": "cleaker",
+    "icon": "⚙️",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-npm",
+    "title": "npm: cleaker",
+    "desc": "Install: npm install cleaker",
+    "url": "https://www.npmjs.com/package/cleaker",
+    "repo": "cleaker",
+    "icon": "📦",
+    "kind": "source"
+  },
+  {
+    "id": "cleaker-github",
+    "title": "GitHub: cleaker",
+    "desc": "Source code for cleaker",
+    "url": "https://github.com/neurons-me/cleaker",
+    "repo": "cleaker",
     "icon": "",
     "kind": "source"
   }
