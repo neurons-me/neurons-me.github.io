@@ -93,11 +93,11 @@
   },
 
   {
-    "id": "me-nrp",
+    "id": "nrp",
     "title": "NRP: Namespace Resolution Protocol",
     "desc": "How a me:// path resolves to a monad, hop by hop, across the mesh.",
-    "url": "https://github.com/neurons-me/neurons.me/blob/main/docs/en/Namespace%20Resolution%20Protocol.md",
-    "repo": "neurons.me",
+    "url": "https://neurons-me.github.io/NRP.html",
+    "repo": null,
     "icon": "🛰️",
     "kind": "doc"
   },
