@@ -45,9 +45,8 @@ https://neurons-me.github.io/monad/Rust/ 𓎛 𓆙 𓅱 𓏏 𓁹 𓋹𓂀 𓋹 
 https://neurons-me.github.io/netget/ 𓃭 𓆀 𓂃 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/netget/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 𓃭 𓆀 𓇼
 https://neurons-me.github.io/netget/Typescript/ 𓎛 𓆙 𓅱 𓏏 𓆀 𓇼  𓀭 
-https://neurons-me.github.io/netget/Typescript/docs/ 𓃭 𓆀 𓂃 𓆀 𓇼  𓀭 
-https://neurons-me.github.io/netget/Typescript/docs/api/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/netget/Typescript/typedocs/ 𓆣 𓇯 𓁹 𓎛 𓆙 
+https://neurons-me.github.io/netget/Typescript/typedocs/api/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/netget/Python/ 𓃭 𓆀 𓂃  𓃭 𓆀 𓇼
 https://neurons-me.github.io/netget/Rust/ 𓎛 𓆙 𓅱 𓏏 𓂀 𓁹  𓀭𓂀 𓁹 
 
