@@ -37,7 +37,7 @@ https://neurons-me.github.io/monad/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 𓃭 𓆀 𓇼
 https://neurons-me.github.io/monad/docs/Notes.html 𓃭 𓆣 𓇯 𓁹 𓎛 𓆙   𓆀 𓂃 
 https://neurons-me.github.io/monad/Typescript/  𓃭 𓆀 𓆣 𓂀 𓋹 𓅓 𓏏 𓍢 𓁹 𓎛 𓆙  𓂃 
 https://neurons-me.github.io/monad/Typescript/typedocs/ 𓎛 𓆙 𓅱 𓏏  𓇼 𓁐 𓀭 𓄀
-https://neurons-me.github.io/monad/Typescript/typedocs/api/README.html 𓂀 𓋹 𓅓 𓏏 𓍢
+https://neurons-me.github.io/monad/Typescript/typedocs/api/ 𓂀 𓋹 𓅓 𓏏 𓍢
 https://neurons-me.github.io/monad/Python/ 𓋹𓂀 𓋹 𓅓 𓆀 𓇼  𓀭 
 https://neurons-me.github.io/monad/Rust/ 𓎛 𓆙 𓅱 𓏏 𓁹 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖
 
