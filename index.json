@@ -227,6 +227,277 @@
     "icon": "🎯",
     "kind": "doc"
   },
+  {
+    "id": "me-collaborators",
+    "title": "Collaborators",
+    "desc": "How to clone the repo and contribute to .me.",
+    "url": "https://neurons-me.github.io/.me/docs/Collaborators.html",
+    "repo": ".me",
+    "icon": "🤝",
+    "kind": "doc"
+  },
+
+  {
+    "id": "me-ts-quickstart",
+    "title": "Quick Start: Typescript",
+    "desc": "Build meaning with paths, add privacy structurally, compute derived state — without leaving the same object.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/QuickStart.html",
+    "repo": ".me",
+    "icon": "🚀",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-installation",
+    "title": "Installation: Typescript",
+    "desc": "Get started with this.me in seconds.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Installation.html",
+    "repo": ".me",
+    "icon": "⬇️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-axioms",
+    "title": "Axioms: Typescript",
+    "desc": "The Typescript kernel implementation of .me's axioms — the unbreakable runtime invariants, with API.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Axioms.html",
+    "repo": ".me",
+    "icon": "𓋹",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-syntax",
+    "title": "Syntax: Typescript",
+    "desc": "The algebraic grammar of .me, as implemented in the Typescript kernel.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Syntax.html",
+    "repo": ".me",
+    "icon": "⌨️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-algebra",
+    "title": "Algebra of Contexts: Typescript",
+    "desc": "Set law applied to context — spaces, not schemas, implemented.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Algebra-of-Contexts.html",
+    "repo": ".me",
+    "icon": "∑",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-operators",
+    "title": "Operators & Logic: Typescript",
+    "desc": "The operator reference (@, _, ~, __, ?, -) as implemented in Typescript.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Operators.html",
+    "repo": ".me",
+    "icon": "𓂀",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-proxy-calls",
+    "title": "Proxy Calls: Typescript",
+    "desc": "How the callable proxy routes reads, writes, and operators under the hood.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Proxy-Calls.html",
+    "repo": ".me",
+    "icon": "🔁",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-runtime-surface",
+    "title": "Runtime Surface: Typescript",
+    "desc": "The three surfaces .me exposes — Callable Proxy, introspection, meta-control.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Runtime-Surface.html",
+    "repo": ".me",
+    "icon": "🛰️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-memory",
+    "title": "Memory: Typescript",
+    "desc": "The public, redacted event log exposed by the runtime.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Memory.html",
+    "repo": ".me",
+    "icon": "🧠",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-shared-meaning",
+    "title": "Shared Meaning: Typescript",
+    "desc": "Language as structure plus relation, not a fixed dictionary.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Shared-Meaning.html",
+    "repo": ".me",
+    "icon": "🔗",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-phases",
+    "title": "Kernel Phases (0–8): Typescript",
+    "desc": "The behavioral contract of the kernel, validated by tests/phases.test.js.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Phases.html",
+    "repo": ".me",
+    "icon": "🧩",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-builds",
+    "title": "Builds: Typescript",
+    "desc": "Module formats and runtime targets — ESM/CJS/UMD published from one entry.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Builds.html",
+    "repo": ".me",
+    "icon": "📦",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-core",
+    "title": "O(k) Core Architecture: Typescript",
+    "desc": "Infinite Semantic Proxy with Incremental Dependency Graph — the engine behind O(k).",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/kernel/Core.html",
+    "repo": ".me",
+    "icon": "🏗️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-kernel-benchmarks",
+    "title": "Kernel Benchmarks: Typescript",
+    "desc": "The systems claim this suite validates, with numbers.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/kernel/Benchmarks.html",
+    "repo": ".me",
+    "icon": "⚡",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-intelligence",
+    "title": "Kernel Intelligence: Typescript",
+    "desc": "How .me recomputes, evaluates, and exposes meaning predictably.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/kernel/Intelligence.html",
+    "repo": ".me",
+    "icon": "🧠",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-robots",
+    "title": "Robots That Understand Context: Typescript",
+    "desc": "The code behind the shared-world-object robot reasoning demo.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/examples/Robots_Contexts.html",
+    "repo": ".me",
+    "icon": "🤖",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-social-graph",
+    "title": "Social Graph: Typescript",
+    "desc": "The canonical example — identity, privacy, links, derivations, explainability, in code.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/examples/Social_Graph.html",
+    "repo": ".me",
+    "icon": "𓀠",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-affinity",
+    "title": "Affinity Model: Typescript",
+    "desc": "Affinity is emergent — store reactions, derive affinity, no tables.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/examples/Affinity-Model.html",
+    "repo": ".me",
+    "icon": "🧲",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-shops-admin",
+    "title": "Running your CoffeeShops: Typescript",
+    "desc": "Multi-shop admin panel implemented with indexed collections.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/examples/Shops_Admin.html",
+    "repo": ".me",
+    "icon": "☕",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-wallet-split",
+    "title": "Splitting your Bill: Typescript",
+    "desc": "Two friends, one trip wallet, automatically derived balances — in code.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/examples/WalletSplit.html",
+    "repo": ".me",
+    "icon": "𓋹",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-tests-overview",
+    "title": "Test Suite Overview: Typescript",
+    "desc": "What exists in tests/, what each test validates, how to run it.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/tests/Overview.html",
+    "repo": ".me",
+    "icon": "🔥",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-tests-axioms-phases",
+    "title": "Axioms & Phases Tests: Typescript",
+    "desc": "The semantic correctness test suite.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/tests/Axioms-and-Phases.html",
+    "repo": ".me",
+    "icon": "🔥",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-tests-build-compat",
+    "title": "Build Compatibility Tests: Typescript",
+    "desc": "Verifies published artifacts work across module systems.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/tests/Build-Compatibility.html",
+    "repo": ".me",
+    "icon": "🔥",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-tests-examples-contracts",
+    "title": "Demos & Contracts Tests: Typescript",
+    "desc": "Usage scripts and formal DSL contracts.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/tests/Examples-and-Contracts.html",
+    "repo": ".me",
+    "icon": "🔥",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-tests-performance",
+    "title": "Performance & Benchmarks Tests: Typescript",
+    "desc": "Throughput stability and scaling, tracked.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/tests/Performance.html",
+    "repo": ".me",
+    "icon": "⚡",
+    "kind": "doc"
+  },
+  {
+    "id": "me-es-logica-derivacion",
+    "title": "La Lógica de Derivación",
+    "desc": "Documentación de .me en español: derivación reactiva sin tablas.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/es/La%20Logica%20de%20Derivacion.html",
+    "repo": ".me",
+    "icon": "🇪🇸",
+    "kind": "doc"
+  },
+  {
+    "id": "me-es-fractalismo",
+    "title": "Fractalismo de Privacidad",
+    "desc": "Documentación de .me en español: privacidad estructural, no por permiso.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/es/Fractalismo.html",
+    "repo": ".me",
+    "icon": "🇪🇸",
+    "kind": "doc"
+  },
+  {
+    "id": "me-es-espacios-semanticos",
+    "title": "Espacios Semánticos",
+    "desc": "Documentación de .me en español: espacios, no esquemas.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/es/Espacios%20Semanticos.html",
+    "repo": ".me",
+    "icon": "🇪🇸",
+    "kind": "doc"
+  },
+  {
+    "id": "me-ts-api",
+    "title": "Full API Reference: Typescript",
+    "desc": "Generated API reference for the this.me Typescript kernel.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/api/README.html",
+    "repo": ".me",
+    "icon": "📖",
+    "kind": "doc"
+  },
 
   {
     "id": "me-npm",
