@@ -1,0 +1,249 @@
+[
+  {
+    "id": "me",
+    "title": ".me",
+    "desc": "Own your knowledge.",
+    "url": "https://neurons-me.github.io/.me/",
+    "repo": ".me",
+    "icon": {
+      "light": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761149332/this.me-removebg-preview_2_j1eoiy.png",
+      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760758662/this.me-removebg-preview_fvyeda.png"
+    },
+    "kind": "root"
+  },
+  {
+    "id": "cleaker",
+    "title": "cleaker",
+    "desc": "Who am I, here.",
+    "url": "https://neurons-me.github.io/Cleaker/",
+    "repo": "cleaker",
+    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765054949/cleaker.me_gusn1q.png",
+    "kind": "root"
+  },
+  {
+    "id": "monad",
+    "title": "monad",
+    "desc": "Federated runtime surfaces.",
+    "url": "https://neurons-me.github.io/monad/",
+    "repo": "monad",
+    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778090977/monad.ai.profile-removebg-preview_np26yp.png",
+    "kind": "root"
+  },
+  {
+    "id": "gui",
+    "title": ".GUI",
+    "desc": "Generative User Interface.",
+    "url": "https://neurons-me.github.io/GUI/",
+    "repo": "GUI",
+    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629119/this.gui.neurons.me_mkapde.png",
+    "kind": "root"
+  },
+  {
+    "id": "netget",
+    "title": "netget",
+    "desc": "A Gateway to the Web. Routes http/https requests.",
+    "url": "https://neurons-me.github.io/netget/",
+    "repo": "netget",
+    "icon": {
+      "light": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png",
+      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png"
+    },
+    "kind": "root"
+  },
+  {
+    "id": "all-this",
+    "title": "All.This",
+    "desc": "Across the neurons.me ecosystem.",
+    "url": "https://github.com/neurons-me",
+    "repo": "all.this",
+    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765903003/all.this_sr55ml.webp",
+    "kind": "root"
+  },
+
+  {
+    "id": "npm-org",
+    "title": "npm",
+    "desc": "All packages published under suiGn / neurons.me",
+    "url": "https://www.npmjs.com/org/neurons-me",
+    "repo": null,
+    "icon": "https://static.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png",
+    "kind": "source"
+  },
+  {
+    "id": "github-org",
+    "title": "GitHub",
+    "desc": "Open source repositories.",
+    "url": "https://github.com/neurons-me",
+    "repo": null,
+    "icon": {
+      "light": "https://cdn.simpleicons.org/github/0f1720",
+      "dark": "https://cdn.simpleicons.org/github/ffffff"
+    },
+    "kind": "source"
+  },
+  {
+    "id": "neurons-me-network",
+    "title": "neurons.me",
+    "desc": "The live network. Run a monad. Claim your namespace.",
+    "url": "https://neurons.me",
+    "repo": null,
+    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629040/media.neurons.me_copy_tgilfg.png",
+    "iconPlate": true,
+    "kind": "source"
+  },
+
+  {
+    "id": "me-nrp",
+    "title": "NRP: Namespace Resolution Protocol",
+    "desc": "How a me:// path resolves to a monad, hop by hop, across the mesh.",
+    "url": "https://github.com/neurons-me/neurons.me/blob/main/docs/en/Namespace%20Resolution%20Protocol.md",
+    "repo": "neurons.me",
+    "icon": "🛰️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-primitives",
+    "title": "Primitives",
+    "desc": "The irreducible vocabulary of .me — the symbols you actually type.",
+    "url": "https://neurons-me.github.io/.me/docs/Primitives.html",
+    "repo": ".me",
+    "icon": "𓂀",
+    "kind": "doc"
+  },
+  {
+    "id": "me-axioms",
+    "title": "Axioms",
+    "desc": "The invariants the kernel guarantees, with runtime proof.",
+    "url": "https://neurons-me.github.io/.me/docs/Axioms.html",
+    "repo": ".me",
+    "icon": "𓋹",
+    "kind": "doc"
+  },
+  {
+    "id": "me-architecture",
+    "title": "What is O(k)?",
+    "desc": "Infinite Proxy Chaining with inline Path Algebra — one write recomputes only the k nodes that depend on it.",
+    "url": "https://neurons-me.github.io/.me/docs/Architecture.html",
+    "repo": ".me",
+    "icon": "🏗️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-syntax",
+    "title": "Syntax",
+    "desc": "The me:// URI scheme and grammar specification for semantic paths.",
+    "url": "https://neurons-me.github.io/.me/docs/Syntax.html",
+    "repo": ".me",
+    "icon": "⌨️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-robots",
+    "title": "Robots That Understand Context",
+    "desc": "The same object means different things depending on who is looking and where.",
+    "url": "https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html",
+    "repo": ".me",
+    "icon": "🤖",
+    "kind": "doc"
+  },
+  {
+    "id": "me-smart-cities",
+    "title": "Smart Cities",
+    "desc": "A city that behaves like a living semantic system — one reactive graph.",
+    "url": "https://neurons-me.github.io/.me/docs/Smart-Cities.html",
+    "repo": ".me",
+    "icon": "🏙️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-social-graph",
+    "title": "Social Graph",
+    "desc": "Relationships, policies, and privacy in one live graph — no query language, no joins.",
+    "url": "https://neurons-me.github.io/.me/docs/Social-Graph.html",
+    "repo": ".me",
+    "icon": "𓀠",
+    "kind": "doc"
+  },
+  {
+    "id": "me-coffeeshops",
+    "title": "Running your CoffeeShops",
+    "desc": "Public menus, reactive pricing, and private ops — one graph, three shops, zero databases.",
+    "url": "https://neurons-me.github.io/.me/docs/Running-your-CoffeeShops.html",
+    "repo": ".me",
+    "icon": "☕",
+    "kind": "doc"
+  },
+  {
+    "id": "me-splitting-bill",
+    "title": "Splitting your Bill",
+    "desc": "Shared expenses settle themselves — every balance updates the moment a payment lands.",
+    "url": "https://neurons-me.github.io/.me/docs/Splitting-your-Bill.html",
+    "repo": ".me",
+    "icon": "𓋹",
+    "kind": "doc"
+  },
+  {
+    "id": "me-hemisphere-scale",
+    "title": "Hemisphere Scale",
+    "desc": "1 million nodes. One sensor flips. Six derivations cascade. Everything else stays cold.",
+    "url": "https://neurons-me.github.io/.me/docs/Hemisphere-Scale.html",
+    "repo": ".me",
+    "icon": "🌐",
+    "kind": "doc"
+  },
+  {
+    "id": "me-extreme-fan-out",
+    "title": "Extreme Fan-Out",
+    "desc": "One write instantly updates 100,000 dependents — O(k) is honest when k is enormous.",
+    "url": "https://neurons-me.github.io/.me/docs/Extreme-Fan-Out.html",
+    "repo": ".me",
+    "icon": "💥",
+    "kind": "doc"
+  },
+  {
+    "id": "me-tests",
+    "title": "Tests",
+    "desc": "Phases 0–8, reconstruction proof, secret contracts. 11/11 phases passed.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/",
+    "repo": ".me",
+    "icon": "🔥",
+    "kind": "doc"
+  },
+  {
+    "id": "me-benchmarks",
+    "title": "Benchmarks",
+    "desc": "O(k) scaling, throughput, fan-out, cold/warm, explain overhead, secret-scope cost.",
+    "url": "https://neurons-me.github.io/.me/docs/Benchmarks/",
+    "repo": ".me",
+    "icon": "⚡",
+    "kind": "doc"
+  },
+  {
+    "id": "me-demos",
+    "title": "Demos",
+    "desc": "Runnable examples — identity, reactive graph, secrets, snapshots, vector search.",
+    "url": "https://neurons-me.github.io/.me/docs/Demos/",
+    "repo": ".me",
+    "icon": "🎯",
+    "kind": "doc"
+  },
+
+  {
+    "id": "me-npm",
+    "title": "npm: this.me",
+    "desc": "Install: npm install this.me",
+    "url": "https://www.npmjs.com/package/this.me",
+    "repo": ".me",
+    "icon": "📦",
+    "kind": "source"
+  },
+  {
+    "id": "me-github",
+    "title": "GitHub: .me",
+    "desc": "Source code for .me",
+    "url": "https://github.com/neurons-me/.me",
+    "repo": ".me",
+    "icon": "",
+    "kind": "source"
+  }
+]
