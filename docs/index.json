@@ -111,6 +111,15 @@
     "kind": "doc"
   },
   {
+    "id": "me-seed",
+    "title": "SEED",
+    "desc": "The one root every .me identity grows from — what it is, what it derives, what it never protects.",
+    "url": "https://neurons-me.github.io/.me/docs/Seed.html",
+    "repo": null,
+    "icon": "𓆼",
+    "kind": "source"
+  },
+  {
     "id": "me-axioms",
     "title": "Axioms",
     "desc": "The invariants the kernel guarantees, with runtime proof.",
