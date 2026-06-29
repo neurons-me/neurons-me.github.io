@@ -1,5 +1,6 @@
 ---
-title: NRP — Namespace Resolution Protocol
+layout: readme
+title: NRP v0.1.2 — Namespace Resolution Protocol
 ---
 
 # Namespace Resolution Protocol v0.1.2

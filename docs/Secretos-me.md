@@ -1,3 +1,8 @@
+---
+layout: readme
+title: Secretos — .me
+---
+
 ## El modelo de visibilidad de .me
 
 **Regla base: todo es público por defecto.**

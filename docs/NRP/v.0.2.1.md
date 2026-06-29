@@ -1,3 +1,8 @@
+---
+layout: readme
+title: NRP v0.2.1 — Namespace Resolution Protocol
+---
+
 # Namespace Resolution Protocol v0.2.1
 **neurons.me / suiGn**
 **Status:** Implemented mesh draft through monad.ai Phase 6

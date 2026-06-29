@@ -1,0 +1,34 @@
+title: neurons.me
+description: Sovereign Semantic Runtime — .me, NRP, and the All.This ecosystem.
+url: https://neurons-me.github.io
+baseurl: ""
+
+remote_theme: neurons-me/neurons-me
+
+plugins:
+  - jekyll-remote-theme
+
+exclude:
+  - vendor
+  - node_modules
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  parse_block_html: true
+  hard_wrap: false
+
+me_theme:
+  brand: neurons.me
+  favicon: "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1769890772/this.me.png"
+  nav:
+    - label: .me
+      url: https://neurons-me.github.io/.me/
+    - label: GUI
+      url: https://neurons-me.github.io/GUI/
+    - label: monad
+      url: https://neurons-me.github.io/monad/
+    - label: netget
+      url: https://neurons-me.github.io/netget/
+    - label: Github
+      url: https://github.com/neurons-me

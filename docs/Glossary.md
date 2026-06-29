@@ -1,3 +1,8 @@
+---
+layout: readme
+title: Glossary — neurons.me
+---
+
 # Glossary of neurons.me
 **by suiGn**
 

@@ -1,3 +1,8 @@
+---
+layout: readme
+title: .me URI Scheme (v1)
+---
+
 # .me URI Scheme (v1)
 
 ###### Semantic Reconstruction Architecture
