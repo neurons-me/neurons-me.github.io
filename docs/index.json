@@ -98,8 +98,8 @@
     "desc": "How a me:// path resolves to a monad, hop by hop, across the mesh.",
     "url": "https://neurons-me.github.io/NRP/",
     "repo": null,
-    "icon": "🛰️",
-    "kind": "doc"
+    "icon": "𓅓",
+    "kind": "source"
   },
   {
     "id": "me-primitives",
@@ -115,9 +115,9 @@
     "title": "Axioms",
     "desc": "The invariants the kernel guarantees, with runtime proof.",
     "url": "https://neurons-me.github.io/.me/docs/Axioms.html",
-    "repo": ".me",
-    "icon": "𓋹",
-    "kind": "doc"
+    "repo": null,
+    "icon": "𓊽",
+    "kind": "source"
   },
   {
     "id": "me-architecture",
