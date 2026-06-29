@@ -17,6 +17,8 @@
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     @media (max-width: 720px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+    .grid-half { grid-template-columns: repeat(2, 1fr) !important; }
+    @media (max-width: 480px) { .grid-half { grid-template-columns: 1fr !important; } }
     .card { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px; border-radius: 12px; border: 1px solid rgba(15,23,32,0.12); background: #fff; text-decoration: none; color: inherit; transition: box-shadow 130ms ease, border-color 130ms ease, transform 130ms ease; }
     .card:hover { box-shadow: 0 4px 18px rgba(15,23,32,0.10); border-color: #0f6a78; transform: translateY(-1px); }
     .allthis-card {
@@ -366,7 +368,7 @@
     </div>
 
     <p class="section-label">NRP & Axioms</p>
-    <div class="grid grid-resources">
+    <div class="grid grid-resources grid-half">
 
       <a class="card" href="https://neurons-me.github.io/NRP/">
         <div class="card-icon" style="font-size:1.8rem;">𓅓</div>
