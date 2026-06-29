@@ -9,7 +9,6 @@ plugins:
   - jekyll-remote-theme
 
 exclude:
-  - vendor
   - node_modules
 
 markdown: kramdown
