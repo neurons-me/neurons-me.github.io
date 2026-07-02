@@ -8,26 +8,25 @@ title: Surface Access Points and Routing
 Every surface in the neurons.me mesh is reachable through multiple access points simultaneously. The same monad — the same namespace, the same kernel — can be reached from a local machine, a LAN device, or the public internet. The routing layer (NetGet + OpenResty) decides which surface handles each incoming request based on the hostname.
 
 <style>
-.sap-wrap { width:100%; border-radius:10px; overflow:hidden; border:1px solid #1a2a38; background:#0f1720; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; margin:24px 0; border-collapse:separate; }
-.sap-wrap table { width:100%; border-collapse:collapse; }
-.sap-wrap thead tr { background:#162030; }
-.sap-wrap thead th { padding:8px 16px; font-size:10px; font-weight:700; letter-spacing:0.1em; color:#4a5a68; text-transform:uppercase; text-align:left; border-bottom:1px solid #1a2a38; }
-.sap-wrap tbody tr { border-bottom:1px solid #1a2a38; transition:background 120ms; }
-.sap-wrap tbody tr:nth-child(even) { background:#162030; }
-.sap-wrap tbody tr:hover { background:#1e3048; }
-.sap-wrap tbody tr:last-child { border-bottom:none; }
-.sap-wrap td { padding:12px 16px; font-size:12px; color:#cdd8e0; }
-.sap-wrap td.addr { font-family:monospace; font-size:13px; font-weight:700; white-space:nowrap; }
-.sap-wrap td.surface { font-weight:600; white-space:nowrap; }
-.sap-wrap td.arrow { color:#2a3d52; font-size:14px; width:28px; }
-.sap-wrap tbody tr:hover td.arrow { color:#4fc3f7; }
-.sap-wrap a { text-decoration:none; color:inherit; display:contents; }
-.c-netget { color:#4fc3f7; }
-.c-monad  { color:#81c784; }
-.c-direct { color:#ffb74d; }
-.c-public { color:#ce93d8; }
-.sap-legend { display:flex; gap:20px; padding:10px 16px; border-top:1px solid #1a2a38; }
-.sap-legend span { font-size:10px; color:#4a5a68; display:inline-flex; align-items:center; gap:6px; }
+.sap-wrap { width:100% !important; max-width:100% !important; border-radius:10px; overflow:hidden; border:1px solid #1a2a38 !important; background:#0f1720 !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; margin:24px 0; }
+.sap-wrap table { width:100% !important; border-collapse:collapse !important; background:transparent !important; margin:0 !important; }
+.sap-wrap thead tr { background:#162030 !important; }
+.sap-wrap thead th { padding:8px 16px !important; font-size:10px !important; font-weight:700 !important; letter-spacing:0.1em; color:#4a5a68 !important; text-transform:uppercase; text-align:left !important; border:none !important; border-bottom:1px solid #1a2a38 !important; }
+.sap-wrap tbody tr { border-bottom:1px solid #1a2a38 !important; transition:background 120ms; background:transparent !important; }
+.sap-wrap tbody tr:nth-child(even) { background:#162030 !important; }
+.sap-wrap tbody tr:hover { background:#1e3048 !important; }
+.sap-wrap tbody tr:last-child { border-bottom:none !important; }
+.sap-wrap td { padding:12px 16px !important; font-size:12px !important; color:#cdd8e0 !important; border:none !important; }
+.sap-wrap td.addr { font-family:monospace !important; font-size:13px !important; font-weight:700 !important; white-space:nowrap; }
+.sap-wrap td.surface { font-weight:600 !important; white-space:nowrap; }
+.sap-wrap td.arrow { font-size:14px !important; width:28px; color:#2a3d52 !important; }
+.sap-wrap tbody tr:hover td.arrow { color:#4fc3f7 !important; }
+.sap-wrap td.c-netget { color:#4fc3f7 !important; }
+.sap-wrap td.c-monad  { color:#81c784 !important; }
+.sap-wrap td.c-direct { color:#ffb74d !important; }
+.sap-wrap td.c-public { color:#ce93d8 !important; }
+.sap-legend { display:flex; gap:20px; padding:10px 16px; border-top:1px solid #1a2a38; background:#0f1720; }
+.sap-legend span { font-size:10px; color:#4a5a68 !important; display:inline-flex; align-items:center; gap:6px; }
 .sap-legend span::before { content:''; display:inline-block; width:8px; height:8px; border-radius:2px; }
 .leg-netget::before { background:#4fc3f7; }
 .leg-monad::before  { background:#81c784; }
