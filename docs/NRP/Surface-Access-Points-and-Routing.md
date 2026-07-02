@@ -40,7 +40,7 @@ Every surface in the neurons.me mesh is reachable through multiple access points
   <th>Address</th><th>Handled by</th><th>Surface</th><th></th>
 </tr></thead>
 <tbody>
-<tr onclick="window.open('https://neurons-me.github.io/netget/Typescript/typedocs/local-netget','_blank')" style="cursor:pointer">
+<tr onclick="window.open('https://neurons-me.github.io/netget/docs/local-netget','_blank')" style="cursor:pointer">
   <td class="addr c-netget">local.netget</td>
   <td>NetGet Express</td>
   <td class="surface c-netget">NetGet Dashboard</td>
