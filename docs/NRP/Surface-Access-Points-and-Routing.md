@@ -7,7 +7,75 @@ title: Surface Access Points and Routing
 
 Every surface in the neurons.me mesh is reachable through multiple access points simultaneously. The same monad — the same namespace, the same kernel — can be reached from a local machine, a LAN device, or the public internet. The routing layer (NetGet + OpenResty) decides which surface handles each incoming request based on the hostname.
 
-This document describes the concrete access points and how each one resolves to a surface.
+<style>
+.sap-table { width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid #1a2a38; background: #0f1720; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 24px 0; }
+.sap-header { display: grid; grid-template-columns: 220px 1fr 180px 28px; background: #162030; padding: 8px 20px; border-bottom: 1px solid #1a2a38; }
+.sap-header span { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #4a5a68; text-transform: uppercase; }
+.sap-row { display: grid; grid-template-columns: 220px 1fr 180px 28px; padding: 0 20px; border-bottom: 1px solid #1a2a38; align-items: center; min-height: 48px; text-decoration: none; transition: background 120ms; }
+.sap-row:last-of-type { border-bottom: none; }
+.sap-row:nth-child(even) { background: #162030; }
+.sap-row:hover { background: #1e3048; }
+.sap-addr { font-family: monospace; font-size: 13px; font-weight: 700; }
+.sap-dest { font-size: 12px; color: #cdd8e0; }
+.sap-surface { font-size: 12px; font-weight: 600; }
+.sap-arrow { font-size: 14px; color: #2a3d52; transition: color 120ms; }
+.sap-row:hover .sap-arrow { color: #4fc3f7; }
+.sap-netget { color: #4fc3f7; }
+.sap-monad  { color: #81c784; }
+.sap-direct { color: #ffb74d; }
+.sap-public { color: #ce93d8; }
+.sap-legend { display: flex; gap: 20px; padding: 10px 20px; border-top: 1px solid #1a2a38; background: #0f1720; }
+.sap-legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #4a5a68; }
+.sap-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+</style>
+
+<div class="sap-table">
+  <div class="sap-header">
+    <span>Address</span><span>Handled by</span><span>Surface</span><span></span>
+  </div>
+  <a class="sap-row" href="https://neurons-me.github.io/netget/Typescript/typedocs/NetGet" target="_blank">
+    <span class="sap-addr sap-netget">local.netget</span>
+    <span class="sap-dest">NetGet Express</span>
+    <span class="sap-surface sap-netget">NetGet Dashboard</span>
+    <span class="sap-arrow">↗</span>
+  </a>
+  <a class="sap-row" href="https://neurons-me.github.io/monad/docs/Initiating-Monads" target="_blank">
+    <span class="sap-addr sap-monad">hostname.local</span>
+    <span class="sap-dest">surface_proxy.lua → Monad</span>
+    <span class="sap-surface sap-monad">Namespace Root</span>
+    <span class="sap-arrow">↗</span>
+  </a>
+  <a class="sap-row" href="https://neurons-me.github.io/NRP/" target="_blank">
+    <span class="sap-addr sap-monad">{handle}.hostname.local</span>
+    <span class="sap-dest">nrp_handle.lua → Monad</span>
+    <span class="sap-surface sap-monad">Handle Surface</span>
+    <span class="sap-arrow">↗</span>
+  </a>
+  <a class="sap-row" href="https://neurons-me.github.io/monad/docs/Initiating-Monads" target="_blank">
+    <span class="sap-addr sap-direct">localhost:PORT</span>
+    <span class="sap-dest">Monad Express (direct)</span>
+    <span class="sap-surface sap-direct">Dev / Debug</span>
+    <span class="sap-arrow">↗</span>
+  </a>
+  <a class="sap-row" href="https://neurons-me.github.io/netget/Typescript/typedocs/Placement" target="_blank">
+    <span class="sap-addr sap-public">IP:80 / IP:443</span>
+    <span class="sap-dest">NetGet OpenResty</span>
+    <span class="sap-surface sap-public">Public Gateway</span>
+    <span class="sap-arrow">↗</span>
+  </a>
+  <a class="sap-row" href="https://neurons-me.github.io/netget/Typescript/typedocs/custom-domains" target="_blank">
+    <span class="sap-addr sap-public">domain.com</span>
+    <span class="sap-dest">surface_proxy.lua → routing table</span>
+    <span class="sap-surface sap-public">Public Surface</span>
+    <span class="sap-arrow">↗</span>
+  </a>
+  <div class="sap-legend">
+    <div class="sap-legend-item"><div class="sap-dot" style="background:#4fc3f7"></div>NetGet</div>
+    <div class="sap-legend-item"><div class="sap-dot" style="background:#81c784"></div>Monad</div>
+    <div class="sap-legend-item"><div class="sap-dot" style="background:#ffb74d"></div>Direct</div>
+    <div class="sap-legend-item"><div class="sap-dot" style="background:#ce93d8"></div>Public</div>
+  </div>
+</div>
 
 ---
 
