@@ -51,6 +51,7 @@ ones but don't erase them; the mesh, like the kernel, keeps its history.
 
 ## See also
 
+- [Surface Access Points and Routing](./Surface-Access-Points-and-Routing.md) — how HTTP requests physically reach a surface
 - [NRP Implementation Status](https://neurons-me.github.io/monad/Typescript/typedocs/NRP/status.html)
 - [NRP Scoring Engine](https://neurons-me.github.io/monad/Typescript/typedocs/NRP/scoring.html)
 - [NRP Test Documentation](https://neurons-me.github.io/monad/Typescript/typedocs/NRP/testing.html)
