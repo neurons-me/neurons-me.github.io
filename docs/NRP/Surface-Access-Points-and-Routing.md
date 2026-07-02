@@ -9,7 +9,7 @@ Every surface in the neurons.me mesh is reachable through multiple access points
 
 <style>
 .sap-wrap { width:100% !important; max-width:100% !important; border-radius:10px; overflow:hidden; border:1px solid #1a2a38 !important; background:#0f1720 !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; margin:24px 0; }
-.sap-wrap table { width:100% !important; border-collapse:collapse !important; background:transparent !important; margin:0 !important; }
+.sap-wrap table { display:table !important; width:100% !important; max-width:100% !important; border-collapse:collapse !important; background:transparent !important; margin:0 !important; }
 .sap-wrap thead tr { background:#162030 !important; }
 .sap-wrap thead th { padding:8px 16px !important; font-size:10px !important; font-weight:700 !important; letter-spacing:0.1em; color:#4a5a68 !important; text-transform:uppercase; text-align:left !important; border:none !important; border-bottom:1px solid #1a2a38 !important; }
 .sap-wrap tbody tr { border-bottom:1px solid #1a2a38 !important; transition:background 120ms; background:transparent !important; }
