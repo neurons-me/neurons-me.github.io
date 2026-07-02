@@ -8,73 +8,83 @@ title: Surface Access Points and Routing
 Every surface in the neurons.me mesh is reachable through multiple access points simultaneously. The same monad — the same namespace, the same kernel — can be reached from a local machine, a LAN device, or the public internet. The routing layer (NetGet + OpenResty) decides which surface handles each incoming request based on the hostname.
 
 <style>
-.sap-table { width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid #1a2a38; background: #0f1720; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 24px 0; }
-.sap-header { display: grid; grid-template-columns: 220px 1fr 180px 28px; background: #162030; padding: 8px 20px; border-bottom: 1px solid #1a2a38; }
-.sap-header span { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #4a5a68; text-transform: uppercase; }
-.sap-row { display: grid; grid-template-columns: 220px 1fr 180px 28px; padding: 0 20px; border-bottom: 1px solid #1a2a38; align-items: center; min-height: 48px; text-decoration: none; transition: background 120ms; }
-.sap-row:last-of-type { border-bottom: none; }
-.sap-row:nth-child(even) { background: #162030; }
-.sap-row:hover { background: #1e3048; }
-.sap-addr { font-family: monospace; font-size: 13px; font-weight: 700; }
-.sap-dest { font-size: 12px; color: #cdd8e0; }
-.sap-surface { font-size: 12px; font-weight: 600; }
-.sap-arrow { font-size: 14px; color: #2a3d52; transition: color 120ms; }
-.sap-row:hover .sap-arrow { color: #4fc3f7; }
-.sap-netget { color: #4fc3f7; }
-.sap-monad  { color: #81c784; }
-.sap-direct { color: #ffb74d; }
-.sap-public { color: #ce93d8; }
-.sap-legend { display: flex; gap: 20px; padding: 10px 20px; border-top: 1px solid #1a2a38; background: #0f1720; }
-.sap-legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #4a5a68; }
-.sap-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.sap-wrap { width:100%; border-radius:10px; overflow:hidden; border:1px solid #1a2a38; background:#0f1720; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; margin:24px 0; border-collapse:separate; }
+.sap-wrap table { width:100%; border-collapse:collapse; }
+.sap-wrap thead tr { background:#162030; }
+.sap-wrap thead th { padding:8px 16px; font-size:10px; font-weight:700; letter-spacing:0.1em; color:#4a5a68; text-transform:uppercase; text-align:left; border-bottom:1px solid #1a2a38; }
+.sap-wrap tbody tr { border-bottom:1px solid #1a2a38; transition:background 120ms; }
+.sap-wrap tbody tr:nth-child(even) { background:#162030; }
+.sap-wrap tbody tr:hover { background:#1e3048; }
+.sap-wrap tbody tr:last-child { border-bottom:none; }
+.sap-wrap td { padding:12px 16px; font-size:12px; color:#cdd8e0; }
+.sap-wrap td.addr { font-family:monospace; font-size:13px; font-weight:700; white-space:nowrap; }
+.sap-wrap td.surface { font-weight:600; white-space:nowrap; }
+.sap-wrap td.arrow { color:#2a3d52; font-size:14px; width:28px; }
+.sap-wrap tbody tr:hover td.arrow { color:#4fc3f7; }
+.sap-wrap a { text-decoration:none; color:inherit; display:contents; }
+.c-netget { color:#4fc3f7; }
+.c-monad  { color:#81c784; }
+.c-direct { color:#ffb74d; }
+.c-public { color:#ce93d8; }
+.sap-legend { display:flex; gap:20px; padding:10px 16px; border-top:1px solid #1a2a38; }
+.sap-legend span { font-size:10px; color:#4a5a68; display:inline-flex; align-items:center; gap:6px; }
+.sap-legend span::before { content:''; display:inline-block; width:8px; height:8px; border-radius:2px; }
+.leg-netget::before { background:#4fc3f7; }
+.leg-monad::before  { background:#81c784; }
+.leg-direct::before { background:#ffb74d; }
+.leg-public::before { background:#ce93d8; }
 </style>
 
-<div class="sap-table">
-  <div class="sap-header">
-    <span>Address</span><span>Handled by</span><span>Surface</span><span></span>
-  </div>
-  <a class="sap-row" href="https://neurons-me.github.io/netget/Typescript/typedocs/NetGet" target="_blank">
-    <span class="sap-addr sap-netget">local.netget</span>
-    <span class="sap-dest">NetGet Express</span>
-    <span class="sap-surface sap-netget">NetGet Dashboard</span>
-    <span class="sap-arrow">↗</span>
-  </a>
-  <a class="sap-row" href="https://neurons-me.github.io/monad/docs/Initiating-Monads" target="_blank">
-    <span class="sap-addr sap-monad">hostname.local</span>
-    <span class="sap-dest">surface_proxy.lua → Monad</span>
-    <span class="sap-surface sap-monad">Namespace Root</span>
-    <span class="sap-arrow">↗</span>
-  </a>
-  <a class="sap-row" href="https://neurons-me.github.io/NRP/" target="_blank">
-    <span class="sap-addr sap-monad">{handle}.hostname.local</span>
-    <span class="sap-dest">nrp_handle.lua → Monad</span>
-    <span class="sap-surface sap-monad">Handle Surface</span>
-    <span class="sap-arrow">↗</span>
-  </a>
-  <a class="sap-row" href="https://neurons-me.github.io/monad/docs/Initiating-Monads" target="_blank">
-    <span class="sap-addr sap-direct">localhost:PORT</span>
-    <span class="sap-dest">Monad Express (direct)</span>
-    <span class="sap-surface sap-direct">Dev / Debug</span>
-    <span class="sap-arrow">↗</span>
-  </a>
-  <a class="sap-row" href="https://neurons-me.github.io/netget/Typescript/typedocs/Placement" target="_blank">
-    <span class="sap-addr sap-public">IP:80 / IP:443</span>
-    <span class="sap-dest">NetGet OpenResty</span>
-    <span class="sap-surface sap-public">Public Gateway</span>
-    <span class="sap-arrow">↗</span>
-  </a>
-  <a class="sap-row" href="https://neurons-me.github.io/netget/Typescript/typedocs/custom-domains" target="_blank">
-    <span class="sap-addr sap-public">domain.com</span>
-    <span class="sap-dest">surface_proxy.lua → routing table</span>
-    <span class="sap-surface sap-public">Public Surface</span>
-    <span class="sap-arrow">↗</span>
-  </a>
-  <div class="sap-legend">
-    <div class="sap-legend-item"><div class="sap-dot" style="background:#4fc3f7"></div>NetGet</div>
-    <div class="sap-legend-item"><div class="sap-dot" style="background:#81c784"></div>Monad</div>
-    <div class="sap-legend-item"><div class="sap-dot" style="background:#ffb74d"></div>Direct</div>
-    <div class="sap-legend-item"><div class="sap-dot" style="background:#ce93d8"></div>Public</div>
-  </div>
+<div class="sap-wrap">
+<table>
+<thead><tr>
+  <th>Address</th><th>Handled by</th><th>Surface</th><th></th>
+</tr></thead>
+<tbody>
+<tr onclick="window.open('https://neurons-me.github.io/netget/Typescript/typedocs/NetGet','_blank')" style="cursor:pointer">
+  <td class="addr c-netget">local.netget</td>
+  <td>NetGet Express</td>
+  <td class="surface c-netget">NetGet Dashboard</td>
+  <td class="arrow">↗</td>
+</tr>
+<tr onclick="window.open('https://neurons-me.github.io/monad/docs/Initiating-Monads','_blank')" style="cursor:pointer">
+  <td class="addr c-monad">hostname.local</td>
+  <td>surface_proxy.lua → Monad</td>
+  <td class="surface c-monad">Namespace Root</td>
+  <td class="arrow">↗</td>
+</tr>
+<tr onclick="window.open('https://neurons-me.github.io/NRP/','_blank')" style="cursor:pointer">
+  <td class="addr c-monad">{handle}.hostname.local</td>
+  <td>nrp_handle.lua → Monad</td>
+  <td class="surface c-monad">Handle Surface</td>
+  <td class="arrow">↗</td>
+</tr>
+<tr onclick="window.open('https://neurons-me.github.io/monad/docs/Initiating-Monads','_blank')" style="cursor:pointer">
+  <td class="addr c-direct">localhost:PORT</td>
+  <td>Monad Express (direct)</td>
+  <td class="surface c-direct">Dev / Debug</td>
+  <td class="arrow">↗</td>
+</tr>
+<tr onclick="window.open('https://neurons-me.github.io/netget/Typescript/typedocs/Placement','_blank')" style="cursor:pointer">
+  <td class="addr c-public">IP:80 / IP:443</td>
+  <td>NetGet OpenResty</td>
+  <td class="surface c-public">Public Gateway</td>
+  <td class="arrow">↗</td>
+</tr>
+<tr onclick="window.open('https://neurons-me.github.io/netget/Typescript/typedocs/custom-domains','_blank')" style="cursor:pointer">
+  <td class="addr c-public">domain.com</td>
+  <td>surface_proxy.lua → routing table</td>
+  <td class="surface c-public">Public Surface</td>
+  <td class="arrow">↗</td>
+</tr>
+</tbody>
+</table>
+<div class="sap-legend">
+  <span class="leg-netget">NetGet</span>
+  <span class="leg-monad">Monad</span>
+  <span class="leg-direct">Direct</span>
+  <span class="leg-public">Public</span>
+</div>
 </div>
 
 ---
