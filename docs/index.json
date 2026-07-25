@@ -210,6 +210,15 @@
     "kind": "doc"
   },
   {
+    "id": "me-pointer-composition",
+    "title": "Pointer Composition",
+    "desc": "Chains compose, self-pointers aren't identity, and one cycle shape still overflows the stack — documented and tested.",
+    "url": "https://neurons-me.github.io/.me/docs/Pointer-Composition.html",
+    "repo": ".me",
+    "icon": "🔗",
+    "kind": "doc"
+  },
+  {
     "id": "me-tests",
     "title": "Tests",
     "desc": "Phases 0–8, reconstruction proof, secret contracts. 11/11 phases passed.",
@@ -1024,5 +1033,104 @@
     "repo": "netget",
     "icon": "",
     "kind": "source"
+  },
+  {
+    "id": "netget-doc-installing",
+    "title": "Installing NetGet",
+    "desc": "Install the netget CLI, set up OpenResty, and get local.netget running on your machine.",
+    "url": "https://neurons-me.github.io/netget/docs/installing-netget",
+    "repo": "netget",
+    "icon": "⚡",
+    "kind": "doc"
+  },
+  {
+    "id": "netget-doc-local-netget",
+    "title": "local.netget",
+    "desc": "The operator surface — manage routing, inspect the monad mesh, view logs, and configure the gateway.",
+    "url": "https://neurons-me.github.io/netget/docs/local-netget",
+    "repo": "netget",
+    "icon": "🖥️",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-surface-access-points",
+    "title": "Surface Access Points and Routing",
+    "desc": "Every access point in the neurons.me mesh — local.netget, hostname.local, domain.com — and what routes each request.",
+    "url": "https://neurons-me.github.io/NRP/Surface-Access-Points-and-Routing",
+    "repo": "neurons-me.github.io",
+    "icon": "🗺️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-nrp-kernel-role",
+    "title": ".me Kernel — Role in NRP",
+    "desc": "Why the .me kernel is the semantic authority: axioms A0/A2 (stealth), A8 (hash-chain), and why NRP cannot trust the client AST.",
+    "url": "https://neurons-me.github.io/.me/typedocs/NRP-Kernel-Role",
+    "repo": ".me",
+    "icon": "🧠",
+    "kind": "doc"
+  },
+  {
+    "id": "cleaker-nrp-namespaces",
+    "title": "Cleaker — Namespace Grammar for NRP",
+    "desc": "How Cleaker parses me:// expressions and complex namespace tokens like cleaker.me[host:localhost|protocol:http]:open/profile.",
+    "url": "https://neurons-me.github.io/Cleaker/typedocs/NRP-Namespaces",
+    "repo": "cleaker",
+    "icon": "🔑",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-expression-parser",
+    "title": "NRP Expression Parser",
+    "desc": "Algebraic parser for me:// expressions — union (+), intersection (∩), overlay (@), complement (~). Strict, precedence-aware, Cleaker-integrated.",
+    "url": "https://neurons-me.github.io/NRP/NRPExpression-Parser",
+    "repo": "neurons-me.github.io",
+    "icon": "𓆣",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-beatle",
+    "title": "Beatle — NRP Channel Client",
+    "desc": "The URL bar of the namespace mesh. Opens bidirectional WebSocket channels to me:// namespaces while the browser keeps its normal HTTP connection.",
+    "url": "https://neurons-me.github.io/NRP/Beatle",
+    "repo": "GUI",
+    "icon": "𓆣",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-namespace-channel",
+    "title": "NamespaceChannel",
+    "desc": "Live state of a Beatle NRP session: expression, resolved endpoints, channelId, audience, capabilities, surface, and disclosure level.",
+    "url": "https://neurons-me.github.io/NRP/NamespaceChannel",
+    "repo": "neurons-me.github.io",
+    "icon": "📡",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-surface-overlay",
+    "title": "Surface and Overlay (@)",
+    "desc": "The @ operator projects a .me namespace over a surface — overlay a namespace session on top of any URL you are visiting.",
+    "url": "https://neurons-me.github.io/NRP/Surface-and-Overlay",
+    "repo": "neurons-me.github.io",
+    "icon": "🔗",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-disclosure-levels",
+    "title": "Disclosure Levels",
+    "desc": "public, closed, stealth, contested — what the .me kernel reveals when an NRP channel resolves, and what each level means for the client.",
+    "url": "https://neurons-me.github.io/NRP/Disclosure-Levels",
+    "repo": "neurons-me.github.io",
+    "icon": "🔐",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-llm-context",
+    "title": "NRP + Beatle — LLM Context",
+    "desc": "Full context doc for AI assistants: stack layers, current state, design decisions, canonical examples, rules of authority, and what to read next.",
+    "url": "https://neurons-me.github.io/NRP/llm",
+    "repo": "neurons-me.github.io",
+    "icon": "𓆣",
+    "kind": "doc"
   }
 ]
