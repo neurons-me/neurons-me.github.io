@@ -66,7 +66,7 @@ Consistency of meaning validated by executable behavior rather than static taxon
 A shift from static metadata (describing data) to Executable Logic. In this paradigm, the meaning of a node is validated by its computational behavior and its role within a functional derivation.
 
 ### **Pointer Composition**
-The property that chained structural pointers (`a -> b -> c`) resolve as a single suffix-preserving substitution without an explicit `a -> c` edge existing. Composition is verified for acyclic chains of any practical length, self-pointers, and 2-node cycles — all fail closed or resolve correctly. A known resolver gap exists for cycles whose length does not realign with the internal hop budget (e.g. 3-node cycles), which currently overflow the call stack instead of failing closed.
+The property that chained structural pointers (`a -> b -> c`) resolve as a single suffix-preserving substitution without an explicit `a -> c` edge existing. Composition is verified for acyclic chains of any practical length, self-pointers, and cycles of any length — all fail closed or resolve correctly. Cycle detection tracks, within a single bounded resolution pass, which pointer edges have already been followed; redirecting through the same edge twice fails the read closed instead of recursing.
 
 ### **Push vs Pull**
 An analytical split between write-path cost (push/mutation) and read-path cost (pull/first read after mutation). Used to isolate where latency is introduced in reactive systems.

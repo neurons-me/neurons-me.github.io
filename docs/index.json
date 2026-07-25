@@ -212,7 +212,7 @@
   {
     "id": "me-pointer-composition",
     "title": "Pointer Composition",
-    "desc": "Chains compose, self-pointers aren't identity, and one cycle shape still overflows the stack — documented and tested.",
+    "desc": "Chains compose, self-pointers aren't identity, and cycles of any length fail closed — documented and tested.",
     "url": "https://neurons-me.github.io/.me/docs/Pointer-Composition.html",
     "repo": ".me",
     "icon": "🔗",
