@@ -1,0 +1,39 @@
+# neurons.me
+
+> Sovereign Semantic Runtime — .me, NRP, and the All.This ecosystem. A federated, local-first, O(K) reactive knowledge graph engine, developed under github.com/neurons-me.
+
+For the full technical context (kernel axioms, `me://` URI forms, architecture layers, key invariants for LLMs working with this codebase), see [llm.md](https://neurons-me.github.io/llm.md).
+
+## Core
+
+- [.me](https://neurons-me.github.io/.me/): the kernel — O(K) reactive knowledge graph engine, operator algebra, 11 axioms.
+- [.me Typescript typedocs](https://neurons-me.github.io/.me/Typescript/typedocs/): generated API reference for the kernel implementation.
+- [Glossary](https://neurons-me.github.io/Glossary.html): terminology used across the ecosystem.
+- [me:// URI Schema](https://neurons-me.github.io/me.URI.schema.html): the published `me://` URI scheme, Draft v0.1, CC0 1.0.
+- [Secretos-me](https://neurons-me.github.io/Secretos-me.html): secret-scope mechanism — path-bound, structural, not a global toggle.
+
+## Namespace Resolution Protocol (NRP)
+
+- [NRP — index](https://neurons-me.github.io/NRP/): how a `me://` URI resolves from a symbolic address to a concrete value across a distributed mesh, without a central registry.
+- [NRP status](https://neurons-me.github.io/NRP/status.html): current implementation status.
+- [NRP v0.2.1](https://neurons-me.github.io/NRP/v.0.2.1.html): protocol version spec.
+- [NRP v0.1.2](https://neurons-me.github.io/NRP/v.0.1.2.html): earlier protocol version spec.
+- [Surface Access Points and Routing](https://neurons-me.github.io/NRP/Surface-Access-Points-and-Routing.html): how surfaces expose and route within NRP.
+
+## Ecosystem Modules
+
+- [GUI](https://neurons-me.github.io/GUI/): interface generation layer.
+- [Cleaker](https://neurons-me.github.io/Cleaker/): namespace binding — identity mounting, context lens, ledger replay (`cleaker(me, {secret}) → me.learn()`).
+- [monad](https://neurons-me.github.io/monad/): federated runtime — durable ledger, surfaces, snapshots (`monad.ai`).
+- [netget](https://neurons-me.github.io/netget/): registry and proxy mesh, trust materialization.
+- [all.this](https://neurons-me.github.io/all.this/): DSL / projections monorepo.
+- [neurons-me](https://neurons-me.github.io/neurons-me/): organization root.
+
+## Source
+
+- [github.com/neurons-me/.me](https://github.com/neurons-me/.me): kernel source.
+- [github.com/neurons-me/monad](https://github.com/neurons-me/monad): federated runtime source.
+- [github.com/neurons-me/netget](https://github.com/neurons-me/netget): registry/proxy source.
+- [github.com/neurons-me/cleaker](https://github.com/neurons-me/cleaker): namespace binding source.
+- [github.com/neurons-me/all.this](https://github.com/neurons-me/all.this): DSL/projections source.
+- [github.com/neurons-me/GUI](https://github.com/neurons-me/GUI): interface generation source.
