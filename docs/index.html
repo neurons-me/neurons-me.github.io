@@ -146,6 +146,25 @@
       .allthis-card:hover {
         border-color: rgba(255,255,255,0.35);
       }
+
+      /* gui-searchbar renders with hardcoded inline light-mode styles —
+         no theme prop in its mount API, so it's overridden here to match
+         the same dark card colors used above. */
+      [data-gui-searchbar] > div > div {
+        background: #111a1f !important;
+        border-color: rgba(232,237,237,0.10) !important;
+      }
+      [data-gui-searchbar] input {
+        color: #e8eded !important;
+      }
+      [data-gui-searchbar] input::placeholder {
+        color: #98a7b3 !important;
+        opacity: 1 !important;
+      }
+      [data-gui-searchbar] span:last-of-type {
+        background: rgba(232,237,237,0.10) !important;
+        color: #98a7b3 !important;
+      }
     }
   </style>
   <link rel="icon" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
