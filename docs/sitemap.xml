@@ -62,6 +62,18 @@
   </url>
 
   <url>
+    <loc>https://neurons-me.github.io/.me/docs/One-Line-That-Replaces-Five.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/.me/docs/Una-Linea-Que-Reemplaza.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
     <loc>https://neurons-me.github.io/.me/Typescript/typedocs/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
