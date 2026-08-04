@@ -9,10 +9,23 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background: #f4f7f8; color: #0f1720; min-height: 100vh; -webkit-font-smoothing: antialiased; }
     .page { max-width: 960px; margin: 0 auto; padding: 56px 32px 80px; }
-    .header { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
+    .header { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; flex-wrap: wrap; }
     .header img { width: 44px; height: 44px; object-fit: contain; }
     .header-text h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
     .header-text p { font-size: 0.9rem; color: #51606d; margin-top: 4px; }
+    /* gui-searchbar sets its own inline width/max-width and its <input> has
+       no min-width:0, so at narrow widths the input refused to shrink and
+       forced the whole page to overflow horizontally. min-width:0 fixes the
+       overflow at any width; the 480px rule below gives it a full row of
+       its own on mobile instead of squeezing into ~100px next to the logo. */
+    [data-gui-searchbar] input { min-width: 0; }
+    @media (max-width: 480px) {
+      [data-gui-searchbar] {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
     .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #51606d; margin-bottom: 14px; margin-top: 40px; }
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     @media (max-width: 720px) { .grid { grid-template-columns: repeat(2, 1fr); } }
@@ -161,8 +174,21 @@
         color: #98a7b3 !important;
         opacity: 1 !important;
       }
-      [data-gui-searchbar] span:last-of-type {
+      [data-gui-searchbar] > div > div > span:last-of-type {
         background: rgba(232,237,237,0.10) !important;
+        color: #98a7b3 !important;
+      }
+      /* results dropdown: each option's title span has no color of its
+         own — it inherits from the <a>, so fixing the <a>'s color fixes
+         the (bold) title. The description and the root/doc badge each set
+         an explicit grey meant for a white background, so those need
+         their own override to stay legible on the dark listbox. */
+      [data-gui-searchbar] a[role="option"] {
+        color: #e8eded !important;
+        border-bottom-color: rgba(232,237,237,0.08) !important;
+      }
+      [data-gui-searchbar] a[role="option"] > span:nth-child(2) > span:last-child,
+      [data-gui-searchbar] a[role="option"] > span:last-child {
         color: #98a7b3 !important;
       }
     }
