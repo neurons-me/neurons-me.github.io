@@ -381,18 +381,19 @@
 
     <section>
       <div class="wrap" style="text-align:center;">
-        <div style="position:relative; width:min(300px,66vw); aspect-ratio:220/170; margin:0 auto 48px;">
+        <div style="position:relative; width:min(320px,70vw); aspect-ratio:220/170; margin:0 auto 48px;">
           <svg viewBox="0 0 220 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%; height:100%;">
             <defs>
-              <linearGradient id="ring-es" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="lens-es" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#83d6ec"/>
                 <stop offset="100%" stop-color="#f19b9b"/>
               </linearGradient>
             </defs>
-            <circle cx="85" cy="85" r="70" fill="#83d6ec" fill-opacity="0.5"/>
-            <circle cx="135" cy="85" r="70" fill="#f19b9b" fill-opacity="0.5"/>
-            <circle cx="110" cy="85" r="24" fill="none" stroke="url(#ring-es)" stroke-width="2"/>
+            <path d="M110,19.6 A70,70 0 0,0 110,150.4 A70,70 0 0,0 110,19.6 Z" fill="url(#lens-es)" fill-opacity="0.4" style="mix-blend-mode:screen;"/>
+            <circle cx="85" cy="85" r="70" fill="none" stroke="#83d6ec" stroke-width="1.5" stroke-opacity="0.9"/>
+            <circle cx="135" cy="85" r="70" fill="none" stroke="#f19b9b" stroke-width="1.5" stroke-opacity="0.9"/>
           </svg>
+          <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:56px; height:56px; object-fit:contain;" />
         </div>
         <div class="quote">
           The exact space<br>where it <em>coexists.</em>
