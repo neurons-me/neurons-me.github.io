@@ -151,4 +151,34 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://neurons-me.github.io/Inverted-Dependency-Indexing-Beautiful-Viz.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/Robots-Versi%C3%B3n-Humana.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/Robots-%C3%97-Encrypted-Audiences-Infographic.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/Smart-Cities-Versi%C3%B3n-Humana.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/me.explain.why.did.you.say.that.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
