@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b0b0f" />
-  <title>The Algebra of Encrypted Audiences III</title>
-  <meta name="description" content="Two islands, one shared space: the connection between two identities emerges from a verifiable intersection between their contexts, not from a central authority that knows both." />
-  <link rel="canonical" href="https://neurons-me.github.io/algebra_of_encrypted_audiences.html" />
+  <title>暗号化されたオーディエンスの代数 III</title>
+  <meta name="description" content="二つのデジタルアイランド、一つの共有空間——二つのアイデンティティ間の接続は、両者を知る中央権威からではなく、コンテキスト間の検証可能な交差から生まれる。" />
+  <link rel="canonical" href="https://neurons-me.github.io/algebra_of_encrypted_audiences_ja.html" />
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="The Algebra of Encrypted Audiences III" />
-  <meta property="og:description" content="Two islands, one shared space: the connection between two identities emerges from a verifiable intersection between their contexts, not from a central authority that knows both." />
-  <meta property="og:url" content="https://neurons-me.github.io/algebra_of_encrypted_audiences.html" />
+  <meta property="og:title" content="暗号化されたオーディエンスの代数 III" />
+  <meta property="og:description" content="二つのデジタルアイランド、一つの共有空間——二つのアイデンティティ間の接続は、両者を知る中央権威からではなく、コンテキスト間の検証可能な交差から生まれる。" />
+  <meta property="og:url" content="https://neurons-me.github.io/algebra_of_encrypted_audiences_ja.html" />
   <meta property="og:image" content="https://neurons-me.github.io/assets/img/audience-algebra-og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Algebra of Encrypted Audiences III" />
-  <meta name="twitter:description" content="Two islands, one shared space: the connection between two identities emerges from a verifiable intersection between their contexts, not from a central authority that knows both." />
+  <meta name="twitter:title" content="暗号化されたオーディエンスの代数 III" />
+  <meta name="twitter:description" content="二つのデジタルアイランド、一つの共有空間——二つのアイデンティティ間の接続は、両者を知る中央権威からではなく、コンテキスト間の検証可能な交差から生まれる。" />
   <meta name="twitter:image" content="https://neurons-me.github.io/assets/img/audience-algebra-og.png" />
   <style>
     :root {
@@ -38,13 +38,13 @@
 
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Hiragino Sans", "Noto Sans JP", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
         radial-gradient(circle at 20% 0%, rgba(131,214,236,.10), transparent 32rem),
         radial-gradient(circle at 85% 20%, rgba(241,155,155,.10), transparent 30rem),
         var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.8;
     }
 
     a { color: inherit; }
@@ -77,23 +77,22 @@
       border-radius: 999px;
       color: var(--muted);
       font-size: .85rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      letter-spacing: .04em;
       background: rgba(255,255,255,.03);
       backdrop-filter: blur(12px);
     }
 
     h1 {
       margin: 20px 0 18px;
-      font-size: clamp(3rem, 8vw, 7rem);
-      line-height: .95;
-      letter-spacing: -.055em;
-      max-width: 11ch;
+      font-size: clamp(2.4rem, 7vw, 5.4rem);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      max-width: 13ch;
     }
 
     .lead {
       max-width: 60ch;
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
       color: #d4d4d8;
     }
 
@@ -128,10 +127,10 @@
 
     .formula {
       text-align: center;
-      font-size: clamp(1.15rem, 3vw, 1.65rem);
+      font-size: clamp(1.1rem, 2.8vw, 1.5rem);
       margin-bottom: 24px;
       font-weight: 700;
-      letter-spacing: -.02em;
+      letter-spacing: -.01em;
     }
 
     .venn {
@@ -194,13 +193,13 @@
 
     h2 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 4rem);
-      line-height: 1;
-      letter-spacing: -.045em;
+      font-size: clamp(1.8rem, 3.6vw, 3.4rem);
+      line-height: 1.2;
+      letter-spacing: -.01em;
     }
 
     .section-copy {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: #d6d6db;
     }
 
@@ -259,10 +258,10 @@
     .quote {
       max-width: 900px;
       margin: 0 auto;
-      font-size: clamp(2rem, 5vw, 5rem);
-      line-height: 1.05;
+      font-size: clamp(1.8rem, 4.4vw, 4rem);
+      line-height: 1.35;
       text-align: center;
-      letter-spacing: -.045em;
+      letter-spacing: -.01em;
     }
 
     .quote em {
@@ -295,25 +294,25 @@
 <body>
   <div style="display:flex;align-items:center;gap:8px;margin:20px 0 0 20px;">
     <a href="./" style="display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">&larr; neurons.me</a>
+    <a href="./algebra_of_encrypted_audiences.html" style="display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">EN</a>
     <a href="./algebra_audiencias_cifradas.html" style="display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">ES</a>
-    <a href="./algebra_of_encrypted_audiences_ja.html" style="display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">JA</a>
   </div>
   <header>
     <div class="wrap hero">
       <div>
-        <div class="eyebrow">The Algebra of Encrypted Audiences III</div>
-        <h1>Connect without centralizing.</h1>
+        <div class="eyebrow">暗号化されたオーディエンスの代数 III</div>
+        <h1>中央集権化せずに、つながる。</h1>
         <p class="lead">
-          To connect two digital islands, the system doesn't need to consult a central database.
-          It computes the exact space where both coexist.
+          二つのデジタルアイランドを接続するために、システムは中央データベースに問い合わせる必要はない。
+          両者が共存する正確な空間を計算するだけだ。
         </p>
         <div class="statement">
-          A connection isn't a search. It's an intersection.
+          接続とは検索ではない。交差である。
         </div>
       </div>
 
-      <div class="diagram-card" aria-label="Intersection diagram between two digital islands">
-        <div class="formula">Algebraic connection: I<sub>AB</sub> = I<sub>A</sub> ∩ I<sub>B</sub></div>
+      <div class="diagram-card" aria-label="二つのデジタルアイランド間の交差図">
+        <div class="formula">代数的接続: I<sub>AB</sub> = I<sub>A</sub> ∩ I<sub>B</sub></div>
         <div class="venn">
           <div class="circle a">I<sub>A</sub></div>
           <div class="circle b">I<sub>B</sub></div>
@@ -326,52 +325,52 @@
   <main>
     <section>
       <div class="wrap section-grid">
-        <h2>Two islands. One shared space.</h2>
+        <h2>二つの島。<br>一つの共有空間。</h2>
         <div class="section-copy">
           <p>
-            Each identity keeps its own context, relationships, and rules. The connection appears only
-            when a computable match exists between the two spaces.
+            各アイデンティティは、独自のコンテキスト・関係性・ルールを保持する。接続が現れるのは、
+            両者の空間の間に計算可能な一致が存在するときだけだ。
           </p>
           <p>
-            The result isn't a full copy of A or B. It's a third space: the minimal, verifiable set
-            that can exist between the two.
+            その結果はAやBの完全なコピーではない。第三の空間——両者の間に存在しうる、
+            最小限で検証可能な集合である。
           </p>
         </div>
       </div>
 
       <div class="wrap cards">
         <div class="card">
-          <strong>Contextual sovereignty</strong>
-          <span>Each island keeps control of its own semantic universe.</span>
+          <strong>コンテキストの主権</strong>
+          <span>各アイランドは、自らの意味的宇宙の制御を保持する。</span>
         </div>
         <div class="card">
-          <strong>Verifiable intersection</strong>
-          <span>The relationship is derived from a match, not from a central authority.</span>
+          <strong>検証可能な交差</strong>
+          <span>その関係は一致から導かれるものであり、中央権威からではない。</span>
         </div>
         <div class="card">
-          <strong>Structural privacy</strong>
-          <span>Only the space necessary to establish the connection is revealed.</span>
+          <strong>構造的プライバシー</strong>
+          <span>接続の確立に必要な空間だけが開示される。</span>
         </div>
       </div>
     </section>
 
     <section>
       <div class="wrap section-grid">
-        <h2>The model shift</h2>
+        <h2>モデルの転換</h2>
         <div class="section-copy">
           <p>
-            In a conventional network, two people meet because a server knows both of them. In this model,
-            the connection emerges when their sets produce a valid intersection.
+            従来型のネットワークでは、サーバーが両者を知っているために二人が出会う。このモデルでは、
+            両者の集合が有効な交差を生み出したときに接続が生まれる。
           </p>
         </div>
       </div>
 
-      <div class="wrap flow" aria-label="Conceptual flow of a connection">
+      <div class="wrap flow" aria-label="接続の概念的な流れ">
         <div class="node">
           <svg width="56" height="44" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle cx="28" cy="22" r="19" fill="#83d6ec" fill-opacity="0.82"/>
           </svg>
-          <div>Island I<sub>A</sub><br><small>own context</small></div>
+          <div>アイランド I<sub>A</sub><br><small>固有のコンテキスト</small></div>
         </div>
         <div class="arrow">→</div>
         <div class="node">
@@ -379,14 +378,14 @@
             <circle cx="26" cy="22" r="19" fill="#83d6ec" fill-opacity="0.75"/>
             <circle cx="44" cy="22" r="19" fill="#f19b9b" fill-opacity="0.75"/>
           </svg>
-          <div>Intersection<br><small>I<sub>A</sub> ∩ I<sub>B</sub></small></div>
+          <div>交差<br><small>I<sub>A</sub> ∩ I<sub>B</sub></small></div>
         </div>
         <div class="arrow">→</div>
         <div class="node">
           <svg width="56" height="44" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M35 5 A19 19 0 0 0 35 39 A19 19 0 0 0 35 5 Z" fill="#cf7fba" fill-opacity="0.85"/>
           </svg>
-          <div>Shared space<br><small>I<sub>AB</sub></small></div>
+          <div>共有空間<br><small>I<sub>AB</sub></small></div>
         </div>
       </div>
     </section>
@@ -396,18 +395,18 @@
         <div style="position:relative; width:min(320px,70vw); aspect-ratio:220/170; margin:0 auto 48px;">
           <svg viewBox="0 0 220 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%; height:100%;">
             <defs>
-              <linearGradient id="blend-en" gradientUnits="userSpaceOnUse" x1="0" y1="85" x2="220" y2="85">
+              <linearGradient id="blend-ja" gradientUnits="userSpaceOnUse" x1="0" y1="85" x2="220" y2="85">
                 <stop offset="0%" stop-color="#83d6ec"/>
                 <stop offset="100%" stop-color="#f19b9b"/>
               </linearGradient>
             </defs>
-            <circle cx="85" cy="85" r="70" fill="none" stroke="url(#blend-en)" stroke-width="1.5" stroke-opacity="0.9"/>
-            <circle cx="135" cy="85" r="70" fill="none" stroke="url(#blend-en)" stroke-width="1.5" stroke-opacity="0.9"/>
+            <circle cx="85" cy="85" r="70" fill="none" stroke="url(#blend-ja)" stroke-width="1.5" stroke-opacity="0.9"/>
+            <circle cx="135" cy="85" r="70" fill="none" stroke="url(#blend-ja)" stroke-width="1.5" stroke-opacity="0.9"/>
           </svg>
           <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:56px; height:56px; object-fit:contain;" />
         </div>
         <div class="quote">
-          The exact space<br>where it <em>coexists.</em>
+          正確な空間<br>そこに<em>共存する。</em>
         </div>
       </div>
     </section>
@@ -415,7 +414,7 @@
 
   <footer>
     <div class="wrap">
-      <div style="font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); opacity:.7; margin-bottom:12px;">Further reading</div>
+      <div style="font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); opacity:.7; margin-bottom:12px;">さらに読む</div>
       <div style="display:flex; flex-wrap:wrap; gap:6px 18px; margin-bottom:22px; font-size:.92rem;">
         <a href="https://dev.to/suign/t-a-replication-should-not-change-audience-2b25">T·A: Replication Should Not Change Audience</a>
         <a href="https://dev.to/suign/cryptographic-set-chemistry-30ho">Cryptographic Set-Chemistry</a>
@@ -424,7 +423,8 @@
         <a href="https://neurons-me.github.io/Equations-Visual-Infographics-Edition.html">The Equations — Visual Infographics Edition</a>
       </div>
       <div style="padding-top:18px; border-top:1px solid var(--line);">
-        <a href="https://suign.github.io/">suiGn</a> · <a href="https://medium.com/@suign/the-algebra-of-encrypted-audiences-a9d2a8195bbb">The Algebra of Encrypted Audiences III</a> · neurons.me
+        <a href="https://suign.github.io/">suiGn</a> · <a href="https://medium.com/@suign/the-algebra-of-encrypted-audiences-a9d2a8195bbb">暗号化されたオーディエンスの代数 III</a> · neurons.me
+      </div>
     </div>
   </footer>
 </body>

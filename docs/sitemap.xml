@@ -133,4 +133,10 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://neurons-me.github.io/algebra_of_encrypted_audiences_ja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
