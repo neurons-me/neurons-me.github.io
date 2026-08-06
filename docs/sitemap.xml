@@ -181,4 +181,22 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://neurons-me.github.io/robots/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/smart-cities/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/encrypted-audiences/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
