@@ -229,8 +229,11 @@
       min-height: 130px;
       border: 1px solid var(--line);
       border-radius: 24px;
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       text-align: center;
       padding: 18px;
       background: rgba(255,255,255,.035);
@@ -349,11 +352,27 @@
       </div>
 
       <div class="wrap flow" aria-label="Flujo conceptual de conexión">
-        <div class="node">Isla I<sub>A</sub><br><small>contexto propio</small></div>
+        <div class="node">
+          <svg width="56" height="44" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="28" cy="22" r="19" fill="#83d6ec" fill-opacity="0.82"/>
+          </svg>
+          <div>Isla I<sub>A</sub><br><small>contexto propio</small></div>
+        </div>
         <div class="arrow">→</div>
-        <div class="node">Intersección<br><small>I<sub>A</sub> ∩ I<sub>B</sub></small></div>
+        <div class="node">
+          <svg width="70" height="44" viewBox="0 0 70 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="26" cy="22" r="19" fill="#83d6ec" fill-opacity="0.75"/>
+            <circle cx="44" cy="22" r="19" fill="#f19b9b" fill-opacity="0.75"/>
+          </svg>
+          <div>Intersección<br><small>I<sub>A</sub> ∩ I<sub>B</sub></small></div>
+        </div>
         <div class="arrow">→</div>
-        <div class="node">Espacio compartido<br><small>I<sub>AB</sub></small></div>
+        <div class="node">
+          <svg width="56" height="44" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M35 5 A19 19 0 0 0 35 39 A19 19 0 0 0 35 5 Z" fill="#cf7fba" fill-opacity="0.85"/>
+          </svg>
+          <div>Espacio compartido<br><small>I<sub>AB</sub></small></div>
+        </div>
       </div>
     </section>
 
@@ -367,8 +386,13 @@
   </main>
 
   <footer>
-    <div class="wrap">
-      suiGn · <a href="https://suign.github.io/EncryptedAudiences.html">Álgebra de Audiencias Cifradas</a> · neurons.me
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div>
+        <a href="https://suign.github.io/">suiGn</a> · <a href="https://suign.github.io/EncryptedAudiences.html">Álgebra de Audiencias Cifradas</a> · neurons.me
+      </div>
+      <a href="https://neurons.me" target="_blank" rel="noopener">
+        <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" style="width:28px;height:28px;object-fit:contain;display:block;" />
+      </a>
     </div>
   </footer>
 </body>
