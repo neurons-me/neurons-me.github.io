@@ -199,4 +199,10 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://neurons-me.github.io/SEED-Monad-Minimal.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
