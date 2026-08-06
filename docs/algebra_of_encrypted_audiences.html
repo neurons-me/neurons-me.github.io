@@ -381,32 +381,24 @@
 
     <section>
       <div class="wrap" style="text-align:center;">
-        <div style="position:relative; width:min(340px,74vw); aspect-ratio:220/170; margin:0 auto 48px;">
-          <svg viewBox="0 0 220 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%;">
+        <div style="position:relative; width:min(300px,66vw); aspect-ratio:220/170; margin:0 auto 48px;">
+          <svg viewBox="0 0 220 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%; height:100%;">
             <defs>
-              <radialGradient id="gradA-en" cx="35%" cy="35%" r="75%">
-                <stop offset="0%" stop-color="#c7f0fb" stop-opacity="0.95"/>
-                <stop offset="100%" stop-color="#83d6ec" stop-opacity="0.28"/>
-              </radialGradient>
-              <radialGradient id="gradB-en" cx="65%" cy="35%" r="75%">
-                <stop offset="0%" stop-color="#fbdcd3" stop-opacity="0.95"/>
-                <stop offset="100%" stop-color="#f19b9b" stop-opacity="0.28"/>
-              </radialGradient>
-              <filter id="glow-en" x="-60%" y="-60%" width="220%" height="220%">
-                <feGaussianBlur stdDeviation="9"/>
-              </filter>
+              <linearGradient id="ring-en" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#83d6ec"/>
+                <stop offset="100%" stop-color="#f19b9b"/>
+              </linearGradient>
             </defs>
-            <circle cx="85" cy="85" r="72" fill="url(#gradA-en)" filter="url(#glow-en)" opacity="0.8"/>
-            <circle cx="135" cy="85" r="72" fill="url(#gradB-en)" filter="url(#glow-en)" opacity="0.8"/>
-            <circle cx="85" cy="85" r="70" fill="url(#gradA-en)" style="mix-blend-mode:screen;"/>
-            <circle cx="135" cy="85" r="70" fill="url(#gradB-en)" style="mix-blend-mode:screen;"/>
+            <circle cx="85" cy="85" r="70" fill="#83d6ec" fill-opacity="0.5"/>
+            <circle cx="135" cy="85" r="70" fill="#f19b9b" fill-opacity="0.5"/>
+            <circle cx="110" cy="85" r="24" fill="none" stroke="url(#ring-en)" stroke-width="2"/>
           </svg>
-          <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:32%; aspect-ratio:1; border-radius:50%; background:rgba(10,10,15,0.55); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.25); box-shadow:0 8px 32px rgba(0,0,0,0.45), 0 0 44px rgba(207,127,186,0.28); display:grid; place-items:center;">
-            <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" style="width:60%; aspect-ratio:1; object-fit:contain; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4));" />
-          </div>
         </div>
         <div class="quote">
           The exact space<br>where it <em>coexists.</em>
+        </div>
+        <div class="quote" style="margin-top:10px; font-size:clamp(1.1rem, 2.2vw, 1.8rem); color:var(--muted); font-weight:600;">
+          El espacio exacto<br>donde <em style="font-style:normal; color:var(--text);">coexiste.</em>
         </div>
       </div>
     </section>
@@ -414,7 +406,15 @@
 
   <footer>
     <div class="wrap">
-      <a href="https://suign.github.io/">suiGn</a> · <a href="https://suign.github.io/EncryptedAudiences.html">The Algebra of Encrypted Audiences</a> · neurons.me
+      <div style="font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); opacity:.7; margin-bottom:12px;">Further reading</div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px 18px; margin-bottom:22px; font-size:.92rem;">
+        <a href="https://dev.to/suign/t-a-replication-should-not-change-audience-2b25">T·A: Replication Should Not Change Audience</a>
+        <a href="https://dev.to/suign/cryptographic-set-chemistry-30ho">Cryptographic Set-Chemistry</a>
+        <a href="https://dev.to/suign/algebra-of-contexts-5f6">Algebra of Contexts</a>
+        <a href="https://dev.to/suign/crypto-derivation-allows-shared-space-not-shared-files-2545">Crypto-derivation allows shared space, not shared files</a>
+      </div>
+      <div style="padding-top:18px; border-top:1px solid var(--line);">
+        <a href="https://suign.github.io/">suiGn</a> · <a href="https://medium.com/@suign/the-algebra-of-encrypted-audiences-a9d2a8195bbb">The Algebra of Encrypted Audiences III</a> · neurons.me
     </div>
   </footer>
 </body>
