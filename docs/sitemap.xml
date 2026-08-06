@@ -115,4 +115,16 @@
     <priority>0.5</priority>
   </url>
 
+  <url>
+    <loc>https://neurons-me.github.io/algebra_audiencias_cifradas.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://neurons-me.github.io/Equations-Visual-Infographics-Edition.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>

@@ -6,7 +6,6 @@
 
 # neurons.me
 **Go Algorithmic.**
-
 ## 𓂀 .me 𓁹 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖
 https://neurons-me.github.io/.me/ 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/.me/docs/ 𓃭 𓆀 𓋹𓂀 𓋹 𓅓 𓂃 
@@ -17,7 +16,6 @@ https://neurons-me.github.io/.me/Typescript/typedocs/ 𓋹𓂀 𓋹 𓅓
 https://neurons-me.github.io/.me/Typescript/typedocs/api/ 𓎛 𓆙 𓅱 𓏏 𓅓 𓆙 
 https://neurons-me.github.io/.me/Python/ 𓋹𓂀 𓋹 𓅓 𓆙 𓅱  𓎛 
 https://neurons-me.github.io/.me/Rust/ 𓎛 𓆙 𓅱 𓏏 𓍢 𓎛 𓆣 𓍢 𓎛 
-
 ## 𓍢 cleaker 𓍢 𓎛 𓆣 𓍢 𓎛 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆣 𓇯 𓁹 𓎛 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/Cleaker/ 𓆣 𓇯 𓁹  𓎛 𓆙 
 https://neurons-me.github.io/Cleaker/docs/ 𓃭 𓆀 𓂃  𓆣 𓇯 𓁹 𓎛 𓆙 
@@ -30,7 +28,6 @@ https://neurons-me.github.io/Cleaker/Typescript/typedocs/ 𓃭 𓆀 𓂃
 https://neurons-me.github.io/Cleaker/Typescript/typedocs/api/ 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/Cleaker/Python/ 𓎛 𓆙 𓅱 𓏏 𓆀 𓇼  𓀭 
 https://neurons-me.github.io/Cleaker/Rust/ 𓋹𓂀 𓇯 𓁹 𓎛  𓅱 𓏏  𓋹 𓅓 
-
 ## 𓆙 monad 𓆙  𓇯 𓅱 𓅱  𓋹𓂀 𓋹 𓅓 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀
 https://neurons-me.github.io/monad/ 𓃭 𓆀 𓆣 𓇯 𓁹 𓂀 𓋹 𓅓 𓏏 𓍢 
 https://neurons-me.github.io/monad/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 𓃭 𓆀 𓇼
@@ -40,7 +37,6 @@ https://neurons-me.github.io/monad/Typescript/typedocs/ 𓎛 𓆙 𓅱 𓏏  �
 https://neurons-me.github.io/monad/Typescript/typedocs/api/ 𓂀 𓋹 𓅓 𓏏 𓍢
 https://neurons-me.github.io/monad/Python/ 𓋹𓂀 𓋹 𓅓 𓆀 𓇼  𓀭 
 https://neurons-me.github.io/monad/Rust/ 𓎛 𓆙 𓅱 𓏏 𓁹 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖
-
 ## 𓈖 netget 𓇼 𓁐 𓀭 𓇼 𓁐 𓀭 𓄀𓄀 𓋹𓂀 𓋹 𓅓 𓏏 𓍢 𓈖 𓃭 𓆀 𓂃 𓇼
 https://neurons-me.github.io/netget/ 𓃭 𓆀 𓂃 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/netget/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 𓃭 𓆀 𓇼
@@ -49,7 +45,6 @@ https://neurons-me.github.io/netget/Typescript/typedocs/ 𓆣 𓇯 𓁹 𓎛 �
 https://neurons-me.github.io/netget/Typescript/typedocs/api/ 𓆣 𓇯 𓁹 𓎛 𓆙 
 https://neurons-me.github.io/netget/Python/ 𓃭 𓆀 𓂃  𓃭 𓆀 𓇼
 https://neurons-me.github.io/netget/Rust/ 𓎛 𓆙 𓅱 𓏏 𓂀 𓁹  𓀭𓂀 𓁹 
-
 ## 𓏏 .GUI𓏏  𓇌 𓆉𓈖𓂃 𓇼  𓃭 𓆀 𓇼  𓀭 𓈖 𓃭  𓂃 𓇼 
 https://neurons-me.github.io/GUI/ 𓎛 𓆙 𓅱 𓏏 
 https://neurons-me.github.io/GUI/docs/ 𓋹𓂀 𓋹 𓅓 𓃭 𓆀 𓇼
@@ -59,13 +54,10 @@ https://neurons-me.github.io/GUI/Typescript/typedocs/api/ 𓎛 𓆙 𓅱 𓏏  �
 https://neurons-me.github.io/GUI/Typescript/typedocs/ 𓃭 𓆣 𓇯 𓁹 𓎛 𓆙 𓆀 𓂃 
 https://neurons-me.github.io/GUI/Python/ 𓇯 𓁹 𓎛  𓅱 𓏏 
 https://neurons-me.github.io/GUI/Rust/ 𓎛 𓆙 𓅱 𓏏  𓃭 𓆀 𓇼
-
 ## 𓃭 all.this 𓆉𓈖 𓃭 𓅕 𓂀 𓁹 𓇼 𓁐 𓀭 𓃭 𓆀𓇼 𓅱 𓆣 𓄀 𓄃
 https://neurons-me.github.io/all.this/  𓆣 𓇯 𓁹 𓎛 𓆙  𓋀 𓋃 𓌀 𓌃 𓍀 𓍃  𓋀 𓃭 𓆀 𓇼 𓃭 𓆀 𓇼
 https://neurons-me.github.io/all.this/docs/ 𓃭 𓆀 𓂃 𓆣 𓇯 𓁹 𓎛 𓆙 𓋀 𓋃 𓌀 𓌃 𓍀 𓍃 𓋀 𓋃 𓌀 𓌃 𓍀 𓍃
-
 ## 𓇼 𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆙 𓅱 𓏏 𓍢 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀 𓄃 𓅔 𓅕 𓆌 𓆍 𓇋 𓇌 𓈀 𓈃 𓉀 𓉃 𓊀 𓊃 𓋀 𓋃 𓌀 𓌃 𓍀 𓍃 𓎀 𓎃 𓏀 𓏃
-
 https://neurons-me.github.io/PixelGrid.me/ <!-- needs attention --> 𓇯 𓁹 𓎛  𓅱 𓏏 
 https://neurons-me.github.io/neurons-me/ <!-- bug: light mode broken, welcome to me link does nothing --> 𓇯 𓁹 𓎛  𓅱 𓏏 
 

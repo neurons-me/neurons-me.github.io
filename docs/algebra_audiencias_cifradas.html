@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0f" />
+  <title>Álgebra de Audiencias Cifradas III</title>
+  <meta name="description" content="Dos islas, un espacio compartido: la conexión entre dos identidades emerge de una intersección verificable entre sus contextos, no de una autoridad central que conoce a ambas." />
+  <link rel="canonical" href="https://neurons-me.github.io/algebra_audiencias_cifradas.html" />
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1769890772/this.me.png" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --panel: #121218;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --blue: #83d6ec;
+      --red: #f19b9b;
+      --violet: #cf7fba;
+      --line: rgba(255,255,255,.1);
+      --shadow: 0 28px 80px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(131,214,236,.10), transparent 32rem),
+        radial-gradient(circle at 85% 20%, rgba(241,155,155,.10), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      padding: 72px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .85rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 {
+      margin: 20px 0 18px;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: .95;
+      letter-spacing: -.055em;
+      max-width: 11ch;
+    }
+
+    .lead {
+      max-width: 60ch;
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: #d4d4d8;
+    }
+
+    .statement {
+      margin-top: 30px;
+      padding: 18px 22px;
+      border-left: 3px solid var(--violet);
+      background: rgba(255,255,255,.035);
+      color: #e8e8ec;
+      font-size: 1.05rem;
+    }
+
+    .diagram-card {
+      position: relative;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .diagram-card::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background: conic-gradient(from 90deg, transparent, rgba(131,214,236,.13), transparent, rgba(241,155,155,.14), transparent);
+      filter: blur(40px);
+      z-index: -1;
+    }
+
+    .formula {
+      text-align: center;
+      font-size: clamp(1.15rem, 3vw, 1.65rem);
+      margin-bottom: 24px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .venn {
+      position: relative;
+      aspect-ratio: 1.35 / 1;
+      width: 100%;
+      min-height: 310px;
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      width: 58%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: rgba(10,10,15,.78);
+      border: 1px solid rgba(255,255,255,.35);
+      backdrop-filter: blur(3px);
+    }
+
+    .circle.a {
+      left: 5%;
+      background: rgba(131,214,236,.82);
+    }
+
+    .circle.b {
+      right: 5%;
+      background: rgba(241,155,155,.82);
+    }
+
+    .intersection {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      font-weight: 900;
+      color: #6b164e;
+      text-shadow: 0 1px 0 rgba(255,255,255,.35);
+    }
+
+    main { padding: 20px 0 100px; }
+
+    section {
+      padding: 84px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    .section-copy {
+      font-size: 1.15rem;
+      color: #d6d6db;
+    }
+
+    .section-copy p { margin-top: 0; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .card strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .card span { color: var(--muted); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-top: 42px;
+    }
+
+    .node {
+      min-height: 130px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 18px;
+      background: rgba(255,255,255,.035);
+      font-weight: 700;
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 1.5rem;
+    }
+
+    .quote {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: clamp(2rem, 5vw, 5rem);
+      line-height: 1.05;
+      text-align: center;
+      letter-spacing: -.045em;
+    }
+
+    .quote em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--blue), var(--red));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    footer {
+      padding: 40px 0 60px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: .95rem;
+    }
+
+    @media (max-width: 820px) {
+      header { min-height: auto; }
+      .hero,
+      .section-grid { grid-template-columns: 1fr; }
+      .hero { gap: 34px; }
+      .cards { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); text-align: center; }
+      .venn { min-height: 260px; }
+      section { padding: 62px 0; }
+    }
+  </style>
+</head>
+<body>
+  <a href="./" style="display:inline-block;margin:20px 0 0 20px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">&larr; neurons.me</a>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow">Álgebra de Audiencias Cifradas III</div>
+        <h1>Conectar sin centralizar.</h1>
+        <p class="lead">
+          Para conectar dos islas digitales, el sistema no necesita consultar una base de datos central.
+          Calcula el espacio exacto donde ambas coexisten.
+        </p>
+        <div class="statement">
+          Una conexión no es una búsqueda. Es una intersección.
+        </div>
+      </div>
+
+      <div class="diagram-card" aria-label="Diagrama de intersección entre dos islas digitales">
+        <div class="formula">Conexión algebraica: I<sub>AB</sub> = I<sub>A</sub> ∩ I<sub>B</sub></div>
+        <div class="venn">
+          <div class="circle a">I<sub>A</sub></div>
+          <div class="circle b">I<sub>B</sub></div>
+          <div class="intersection">I<sub>AB</sub></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap section-grid">
+        <h2>Dos islas. Un espacio compartido.</h2>
+        <div class="section-copy">
+          <p>
+            Cada identidad conserva su propio contexto, sus relaciones y sus reglas. La conexión aparece únicamente
+            cuando existe una coincidencia calculable entre ambos espacios.
+          </p>
+          <p>
+            El resultado no es una copia completa de A ni de B. Es un tercer espacio: el conjunto mínimo y verificable
+            que puede existir entre los dos.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap cards">
+        <div class="card">
+          <strong>Soberanía contextual</strong>
+          <span>Cada isla conserva el control de su universo semántico.</span>
+        </div>
+        <div class="card">
+          <strong>Intersección verificable</strong>
+          <span>La relación se deriva de una coincidencia, no de una autoridad central.</span>
+        </div>
+        <div class="card">
+          <strong>Privacidad estructural</strong>
+          <span>Solo se revela el espacio necesario para establecer la conexión.</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap section-grid">
+        <h2>El cambio de modelo</h2>
+        <div class="section-copy">
+          <p>
+            En una red convencional, dos personas se encuentran porque un servidor conoce a ambas. En este modelo,
+            la conexión emerge cuando sus conjuntos producen una intersección válida.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap flow" aria-label="Flujo conceptual de conexión">
+        <div class="node">Isla I<sub>A</sub><br><small>contexto propio</small></div>
+        <div class="arrow">→</div>
+        <div class="node">Intersección<br><small>I<sub>A</sub> ∩ I<sub>B</sub></small></div>
+        <div class="arrow">→</div>
+        <div class="node">Espacio compartido<br><small>I<sub>AB</sub></small></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="quote">
+          The exact space<br>where it <em>coexists.</em>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      suiGn · Álgebra de Audiencias Cifradas · neurons.me
+      <div style="margin-top:10px;">
+        <a href="https://suign.github.io/EncryptedAudiences.html" style="color:var(--muted);">The Algebra of Encrypted Audiences</a>
+        &nbsp;·&nbsp;
+        <a href="https://neurons-me.github.io/" style="color:var(--muted);">home</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
