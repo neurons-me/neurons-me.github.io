@@ -535,6 +535,15 @@
     "kind": "doc"
   },
   {
+    "id": "me-es-forma-escrita-en-memoria",
+    "title": "La Forma Escrita En Memoria",
+    "desc": "Documentación de .me en español: por qué la forma de un plural, no solo sus datos, sobrevive al reinicio del kernel.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/es/La%20Forma%20Escrita%20En%20Memoria.html",
+    "repo": ".me",
+    "icon": "🇪🇸",
+    "kind": "doc"
+  },
+  {
     "id": "me-ts-api",
     "title": "Full API Reference: Typescript",
     "desc": "Generated API reference for the this.me Typescript kernel.",
