@@ -1065,9 +1065,18 @@
     "id": "me-nrp-kernel-role",
     "title": ".me Kernel — Role in NRP",
     "desc": "Why the .me kernel is the semantic authority: axioms A0/A2 (stealth), A8 (hash-chain), and why NRP cannot trust the client AST.",
-    "url": "https://neurons-me.github.io/.me/typedocs/NRP-Kernel-Role",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/NRP-Kernel-Role.html",
     "repo": ".me",
     "icon": "🧠",
+    "kind": "doc"
+  },
+  {
+    "id": "me-plurality-is-grammar",
+    "title": "Plurality Is Grammar",
+    "desc": "[] is not a data type — it's grammar, the plural form, the same category as . (hierarchy) and () (execution).",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Plurality-Is-Grammar.html",
+    "repo": ".me",
+    "icon": "𓁶",
     "kind": "doc"
   },
   {
@@ -1131,6 +1140,15 @@
     "url": "https://neurons-me.github.io/NRP/llm",
     "repo": "neurons-me.github.io",
     "icon": "𓆣",
+    "kind": "doc"
+  },
+  {
+    "id": "nrp-virtual-hosts",
+    "title": "Virtual Hosts As Semantic Containers",
+    "desc": "host virtual = surface address + monad identity + .me namespace + netget policy — proposed direction, not yet implemented.",
+    "url": "https://neurons-me.github.io/NRP/Virtual-Hosts-As-Semantic-Containers",
+    "repo": "neurons-me.github.io",
+    "icon": "🧩",
     "kind": "doc"
   }
 ]
