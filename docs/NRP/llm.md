@@ -29,11 +29,14 @@ Everything else follows from this.
 │  NRPExpression parser                       │  Beatle/NRPExpression.ts
 │  algebra: + ∩ @ ~ and Cleaker leaf parsing  │
 ├─────────────────────────────────────────────┤
-│  Wire: WebSocket  ws://local.netget/nrp     │  BeatleMessage discriminated union
-│  nrp.open → resolved | stream | error       │
+│  Wire: WebSocket  ws://<host>/nrp           │  BeatleMessage discriminated union
+│  nrp.open → resolved | read/subscribe →     │
+│  data/stream | error                        │
 ├─────────────────────────────────────────────┤
-│  NetGet / Monad  (SERVER — pending /nrp)    │  modules/netget, modules/monad
-│  receives nrp.open, resolves against kernel │
+│  NetGet / Monad  (SERVER — implemented)     │  modules/netget, modules/monad
+│  receives nrp.open, resolves against kernel;│
+│  reached per-app via netget's /apps/:name   │
+│  mesh proxy, not a fixed global host        │
 ├─────────────────────────────────────────────┤
 │  .me kernel                                 │  me/Typescript/src/me.ts
 │  semantic authority: secrets, audience,     │
@@ -75,26 +78,31 @@ The client sends `{ raw, canonical, ast, client }` as **intent and hint**. The s
 
 ## Current Implementation State
 
-### Done (Beatle v0.9)
+### Done (as of 2026-08-18)
 
 | Component | File | Status |
 |---|---|---|
 | NRP algebra parser | `NRPExpression.ts` | ✅ strict, precedence-aware, Cleaker-integrated |
 | `useBeatle` hook | `useBeatle.ts` | ✅ `open()`, 8-state machine, send() state-guarded |
 | Beatle UI | `Beatle.tsx` | ✅ bar + bubble variants, all 8 states visualized |
-| Wire types | `Beatle.types.ts` | ✅ discriminated union, ResolvedPayload, NRPDisclosure |
+| Wire types | `Beatle.types.ts` | ✅ discriminated union, ResolvedPayload, NRPDisclosure, `read`/`subscribe`/`unsubscribe` |
 | Stories | `Beatle.stories.tsx` | ✅ Bar, Bubble, InLayout |
 | Export | `widgets.ts` | ✅ exported from GUI widgets barrel |
+| `/nrp` WebSocket handler | `modules/monad/Typescript/src/http/nrpHandler.ts` | ✅ `nrp.open`/`resolved` plus `read`/`subscribe`/`unsubscribe` → `data`/`stream`, backed by a new in-process `pathNotify` registry |
+| `streaming` state | client + server | ✅ server pushes real `stream` frames on kernel writes now — verified end-to-end (external write, two independent WebSocket clients, live update, no polling) |
+| Reference runtime client | `this.gui/runtime`'s `createWsMeRuntime()` | ✅ not Beatle itself — a separate `RuntimeAdapter` built on the same wire protocol, for wiring `useMeValue`/spec `{read: ...}` tokens to live server state |
+| App addressing without a dedicated hostname | netget's `/apps/:name` (+ `/monads/:name` internal alias) | ✅ see [Apps Over Netget](https://neurons-me.github.io/netget/typedocs/AppsOverNetget.html) |
 
-### Pending
+### Still pending
 
 | Gap | Notes |
 |---|---|
-| `/nrp` WebSocket handler | Does not exist yet in NetGet or Monad. Beatle is a complete client with no server yet. |
 | Cleaker full leaf algebra | `parseNamespaceExpression` parses single namespaces. NRP compound expressions with context brackets tested but not end-to-end wired. |
-| `contested` disclosure handling | Type is defined. Server detection logic in `surface_proxy.lua` not yet implemented. |
-| `streaming` state | Wired in client. Server does not yet push stream frames. |
+| `contested` disclosure handling | Type is defined. Server detection logic in `surface_proxy.lua` not yet implemented. Unrelated to the new `/nrp` subscribe work, which only ever emits `public`/`closed` (see NRP v0.3.0 §11). |
 | `audience` from server | Field exists in types. Server must return it in `ResolvedPayload.audience`. |
+| Cross-monad/cross-machine live-update fan-out | The new `pathNotify` registry is single-process, in-memory only — a `subscribe` only hears writes that land on that same monad process. |
+| WebSocket write path | Writes still go over HTTP only (`monadClient.writeNamespace()`), applied optimistically client-side before the server confirms. |
+| Beatle itself doesn't yet use `read`/`subscribe` | Beatle's own `useBeatle.ts` still only implements the `nrp.open`/`resolved` handshake — the new message types were added to the shared wire contract (`Beatle.types.ts`) for `createWsMeRuntime()` to use, not wired into Beatle's own UI/hook yet. |
 
 ---
 
@@ -210,19 +218,30 @@ packages/GUI/Typescript/src/gui/All.This/NRP/Beatle/
   Beatle.stories.tsx    — Storybook stories
 
 neurons-me.github.io/docs/NRP/
-  Namespace-Protocol-Resolution.md  — protocol spec
+  index.md                          — map/overview only, not the spec (see below)
   NRPExpression-Parser.md           — this parser
   Beatle.md                         — Beatle component
   NamespaceChannel.md               — channel state
   Surface-and-Overlay.md            — @ operator
   Disclosure-Levels.md              — public / closed / stealth / contested
 
+all.this/modules/monad/Typescript/typedocs/
+  NRP-v0.3.0.md         — the actual normative protocol spec (canonical —
+                           lives with the implementation, not on this site)
+  Mesh/status.md        — implementation status
+
 all.this/me/Typescript/typedocs/
   NRP-Kernel-Role.md    — why .me is the semantic authority
   Algebra-of-Contexts.md
 
 all.this/modules/cleaker/Typescript/typedocs/
-  NRP-Namespaces.md     — Cleaker grammar for NRP leaves
+  NRP-Namespaces.md     — Cleaker grammar for NRP leaves (NOT the protocol
+                           itself — cleaker only parses namespace strings;
+                           discovery/scoring/synthesis/WS binding are monad)
+
+all.this/modules/netget/Typescript/docs/
+  AppsOverNetget.md     — how apps reach a monad through netget's mesh
+                           (/apps/:name) without owning a hostname
 ```
 
 ---
@@ -231,13 +250,34 @@ all.this/modules/cleaker/Typescript/typedocs/
 
 1. **The .me kernel internals** — how a namespace looks internally, how audiences and secrets are structured, how capabilities are declared. Start at `me/Typescript/src/me.ts` and `typedocs/Axioms.md`.
 
-2. **The `/nrp` WebSocket binding** — this does not exist yet. When building it: the server receives `nrp.open`, re-parses `canonical`, resolves against the kernel, and returns `{ type: 'resolved', channelId, payload: ResolvedPayload }`. Then it keeps the socket open for bidirectional `data` and `stream` frames.
+2. **The `/nrp` WebSocket binding** — implemented (2026-08-18). The server
+   receives `nrp.open`, re-parses `canonical`, resolves against the kernel,
+   and returns `{ type: 'resolved', channelId, payload: ResolvedPayload }`.
+   The socket then stays open for `read`/`subscribe`/`unsubscribe` (client →
+   server) and `data`/`stream` (server → client, the latter pushed live on
+   every matching kernel write via an in-process `pathNotify` registry). Full
+   contract: [NRP v0.3.0 §11](https://neurons-me.github.io/monad/Typescript/typedocs/NRP-v0.3.0.html#11-websocket-binding-nrp).
+   Reference client: `this.gui/runtime`'s `createWsMeRuntime()`.
 
 3. **Cleaker in depth** — `modules/cleaker/Typescript/src/namespace/expression.ts` is the canonical parser. `parseNamespaceExpression(input)` returns `ParsedNamespaceExpression` with context, operation, path, and transport hints.
 
-4. **Use cases** — Smart city Veracruz (mesh of sensors/services sharing a `.me` context), FullTrailer (creative collaboration namespace), LoFi Café (ambient shared namespace over a music surface). Each is a different expression over the same protocol.
+4. **Use cases** — Smart city Veracruz (mesh of sensors/services sharing a
+   `.me` context), LoFi Café (ambient shared namespace over a music
+   surface) remain speculative. **FullTrailer is no longer purely
+   speculative** — the live app-mesh path itself is verified (its own
+   monad, reachable through netget's `/apps/fulltrailer`, live cross-client
+   state over HTTP+WS: external write, two open browser tabs, no refresh).
+   FullTrailer the *app* is not production — its fleet data files are still
+   missing and `this.gui`'s new runtime isn't published yet. What's proven
+   is the pattern, not a shipped product. See
+   [Apps Over Netget](https://neurons-me.github.io/netget/typedocs/AppsOverNetget.html).
 
-5. **Short-term roadmap** — The next working piece is the `/nrp` WebSocket handler in NetGet or Monad. Once that exists, Beatle becomes a real client instead of a complete-but-serverless one.
+5. **Short-term roadmap** — The `/nrp` WebSocket handler exists now (see #2
+   above); Beatle itself hasn't been updated to use its new `read`/
+   `subscribe` messages yet (see "Still pending" above) — it still only
+   does the original `nrp.open`/`resolved` handshake. The next working
+   piece is either wiring Beatle to the live-update messages it already has
+   types for, or (per "Still pending") cross-monad fan-out for `pathNotify`.
 
 ---
 
