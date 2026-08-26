@@ -275,11 +275,110 @@
   {
     "id": "me-lang-rust",
     "title": "Rust",
-    "desc": "The Rust implementation of .me. Status: in development.",
+    "desc": "The Rust implementation of .me — published as the this-me crate.",
     "url": "https://neurons-me.github.io/.me/Rust/",
     "repo": ".me",
     "icon": "🦀",
     "kind": "doc"
+  },
+  {
+    "id": "me-rust-docs",
+    "title": "Rust .me Docs",
+    "desc": "Manual Rust implementation docs: quickstart, runtime host, CLI, benchmarks, parity, and integration notes.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/",
+    "repo": ".me",
+    "icon": "🦀",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-quickstart",
+    "title": "Quick Start: Rust",
+    "desc": "Install this-me with Cargo, create a kernel, write semantic memory, define derivations, and use secret scopes.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/QuickStart.html",
+    "repo": ".me",
+    "icon": "🚀",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-runtime-host",
+    "title": "Runtime Host: Rust",
+    "desc": "KernelRuntime wraps the Rust kernel with storage, receipts, events, snapshots, and host lifecycle.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/RuntimeHost.html",
+    "repo": ".me",
+    "icon": "⚙️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-cli",
+    "title": "CLI: Rust",
+    "desc": "Use the me binary to write, read, execute me:// URIs, persist snapshots, and prove identities locally.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/CLI.html",
+    "repo": ".me",
+    "icon": "⌨️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-benchmarks",
+    "title": "Benchmarks: Rust",
+    "desc": "Executable Rust benchmark binaries for O(k), sustained mutation, fan-out, lazy/eager recompute, and secret scopes.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/Benchmarks.html",
+    "repo": ".me",
+    "icon": "📊",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-benchmark-map",
+    "title": "Rust .me Benchmark Map",
+    "desc": "How the Rust benchmarks map back to the TypeScript benchmark surface and semantic contract.",
+    "url": "https://neurons-me.github.io/.me/Rust/BENCHMARKS.html",
+    "repo": ".me",
+    "icon": "📈",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-parity",
+    "title": "Parity With TypeScript: Rust",
+    "desc": "Rust .me is a port of the TypeScript kernel, allowed to improve mechanics but not change meaning.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/Parity.html",
+    "repo": ".me",
+    "icon": "🧬",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-integration",
+    "title": "Integration Notes: Rust",
+    "desc": "Where Rust .me fits today: library crate, CLI, JSON snapshots, runtime host, benchmarks, and future monad.ai integration.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/Integration.html",
+    "repo": ".me",
+    "icon": "🔌",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-rustdoc",
+    "title": "rustdoc and docs.rs: Rust",
+    "desc": "How Rust .me separates manual GitHub Pages docs from the generated docs.rs API reference.",
+    "url": "https://neurons-me.github.io/.me/Rust/docs/Rustdoc.html",
+    "repo": ".me",
+    "icon": "📚",
+    "kind": "doc"
+  },
+  {
+    "id": "me-rust-docs-rs",
+    "title": "docs.rs: this-me",
+    "desc": "Generated Rust API reference for the this-me crate.",
+    "url": "https://docs.rs/this-me",
+    "repo": ".me",
+    "icon": "📚",
+    "kind": "source"
+  },
+  {
+    "id": "me-rust-crates-io",
+    "title": "crates.io: this-me",
+    "desc": "Published Rust crate for .me.",
+    "url": "https://crates.io/crates/this-me",
+    "repo": ".me",
+    "icon": "🦀",
+    "kind": "source"
   },
 
   {
