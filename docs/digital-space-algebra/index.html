@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0f" />
+  <title>Digital Space Algebra — Root Index</title>
+  <meta name="description" content="A space is a region of meaning that can contain other spaces — its location, its readers, and what they're allowed to do to it, described together by three sets: topology, audience, capability. Everything downstream — encrypted audiences, islands, the reactive engine, robots, cities — is this one theory at a different depth. Start here." />
+  <link rel="canonical" href="https://neurons-me.github.io/digital-space-algebra/" />
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --blue: #83d6ec;
+      --red: #f19b9b;
+      --line: rgba(255,255,255,.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(131,214,236,.08), transparent 32rem),
+        radial-gradient(circle at 85% 20%, rgba(241,155,155,.08), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .wrap { width: min(820px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 88px 0 40px; }
+    h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 18px 0 14px; }
+    .lead { font-size: 1.1rem; color: #d4d4d8; max-width: 62ch; }
+    .lead + .lead { margin-top: 14px; color: var(--muted); font-size: 1rem; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px;
+      border: 1px solid var(--line); border-radius: 999px; color: var(--muted);
+      font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .atoms-visual { display: flex; gap: 44px; flex-wrap: wrap; margin-top: 30px; }
+    .atom-min { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+    .atom-min-label { font-size: .95rem; font-weight: 700; }
+    .atom-min-desc { font-size: .8rem; color: var(--muted); }
+
+    .hero-visual { text-align: center; margin: 36px 0 8px; }
+    .hero-rings { position: relative; width: min(320px,70vw); aspect-ratio: 220/170; margin: 0 auto 40px; }
+    .hero-rings img { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 56px; height: 56px; object-fit: contain; }
+    .quote { max-width: 640px; margin: 0 0 18px; font-size: clamp(1.3rem, 3.4vw, 1.8rem); line-height: 1.35; color: #d4d4d8; letter-spacing: -.01em; }
+    .quote em { font-style: normal; background: linear-gradient(90deg, var(--blue), var(--red)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .venn-plain { width: min(320px, 100%); margin: 0 auto 18px; }
+    .venn-plain .formula { text-align: center; font-size: clamp(.95rem, 2.4vw, 1.15rem); margin-bottom: 18px; font-weight: 700; letter-spacing: -.02em; }
+    .venn { position: relative; aspect-ratio: 1.35/1; width: 100%; min-height: 190px; }
+    .venn .circle {
+      position: absolute; top: 50%; width: 58%; aspect-ratio: 1; border-radius: 50%; transform: translateY(-50%);
+      display: grid; place-items: center; font-weight: 800; font-size: clamp(1rem, 3vw, 1.3rem);
+      color: rgba(10,10,15,.78); border: 1px solid rgba(255,255,255,.35);
+    }
+    .venn .circle.a { left: 5%; background: rgba(131,214,236,.82); }
+    .venn .circle.b { right: 5%; background: rgba(241,155,155,.82); }
+    .venn .intersection {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); z-index: 3;
+      font-weight: 900; font-size: .82rem; color: #6b164e; text-shadow: 0 1px 0 rgba(255,255,255,.35);
+    }
+
+    section { padding: 32px 0; border-top: 1px solid var(--line); }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 6px; flex-wrap: wrap; }
+    .section-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0; }
+    .section-status { font-size: .72rem; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .section-note { color: var(--muted); font-size: .92rem; margin: 0 0 18px; max-width: 60ch; }
+    .links { display: flex; flex-direction: column; gap: 10px; }
+    .item {
+      display: block; padding: 16px 20px; border: 1px solid var(--line); border-radius: 14px;
+      background: rgba(255,255,255,.03); text-decoration: none; transition: border-color .15s, background .15s;
+      position: relative;
+    }
+    .item:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.05); }
+    .item-title { font-weight: 600; font-size: 1.02rem; }
+    .item-desc { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+    .item-src { display: inline-block; margin-top: 8px; font-size: .68rem; font-weight: 700; letter-spacing: .04em; color: #0f6a78; background: rgba(15,106,120,0.12); padding: 2px 8px; border-radius: 999px; }
+    .item.hub { border-style: dashed; }
+    footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="../" style="display:inline-block;margin-top:20px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">&larr; neurons.me</a>
+    <header>
+      <div class="hero-visual">
+        <div class="hero-rings">
+          <svg viewBox="0 0 220 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%; height:100%;">
+            <defs>
+              <linearGradient id="blend-dsa" gradientUnits="userSpaceOnUse" x1="0" y1="85" x2="220" y2="85">
+                <stop offset="0%" stop-color="#83d6ec"/>
+                <stop offset="100%" stop-color="#f19b9b"/>
+              </linearGradient>
+            </defs>
+            <circle cx="85" cy="85" r="70" fill="none" stroke="url(#blend-dsa)" stroke-width="1.5" stroke-opacity="0.9"/>
+            <circle cx="135" cy="85" r="70" fill="none" stroke="url(#blend-dsa)" stroke-width="1.5" stroke-opacity="0.9"/>
+          </svg>
+          <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" />
+        </div>
+      </div>
+
+      <div class="eyebrow">Topic &middot; Root</div>
+      <h1>Digital Space Algebra</h1>
+      <div class="quote">The exact space where they <em>coexist</em>.</div>
+
+      <p class="lead">A space is a region of meaning that can contain other spaces. Its location, its readers, and what they're allowed to do to it are properties of that same space — described together by three sets, not three separate systems. Everything below is that one idea, applied at a different depth.</p>
+      <div class="atoms-visual">
+        <div class="atom-min">
+          <svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true">
+            <circle cx="10" cy="30" r="4.5" fill="none" stroke="#83d6ec" stroke-width="1.6"/>
+            <circle cx="38" cy="30" r="4.5" fill="none" stroke="#83d6ec" stroke-width="1.6"/>
+            <circle cx="24" cy="8" r="4.5" fill="none" stroke="#83d6ec" stroke-width="1.6"/>
+            <line x1="13.6" y1="27.6" x2="20.8" y2="11.4" stroke="#83d6ec" stroke-width="1.3" stroke-opacity=".7"/>
+            <line x1="34.4" y1="27.6" x2="27.2" y2="11.4" stroke="#83d6ec" stroke-width="1.3" stroke-opacity=".7"/>
+            <line x1="14.5" y1="30" x2="33.5" y2="30" stroke="#83d6ec" stroke-width="1.3" stroke-opacity=".7"/>
+          </svg>
+          <div class="atom-min-label"><b style="color:#83d6ec;">T</b> topology</div>
+          <div class="atom-min-desc">where it lives</div>
+        </div>
+        <div class="atom-min">
+          <svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true">
+            <circle cx="17" cy="20" r="13" fill="none" stroke="#f19b9b" stroke-width="1.6"/>
+            <circle cx="31" cy="20" r="13" fill="none" stroke="#f19b9b" stroke-width="1.6"/>
+          </svg>
+          <div class="atom-min-label"><b style="color:#f19b9b;">A</b> audience</div>
+          <div class="atom-min-desc">who can read it</div>
+        </div>
+        <div class="atom-min">
+          <svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true">
+            <circle cx="24" cy="14" r="8" fill="none" stroke="#c9a9f0" stroke-width="1.6"/>
+            <rect x="14" y="20" width="20" height="15" rx="3" fill="none" stroke="#c9a9f0" stroke-width="1.6"/>
+          </svg>
+          <div class="atom-min-label"><b style="color:#c9a9f0;">C</b> capability</div>
+          <div class="atom-min-desc">what's allowed</div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="section-head">
+        <p class="section-label">1 &middot; Structural Geometry</p>
+      </div>
+      <p class="section-note">The formal shape: a space as position, containment order, and an observer/mode/authority-indexed resolution. Where the sets above get their definitions.</p>
+      <div class="links">
+        <a class="item" href="https://suign.github.io/SpaceStructure.html">
+          <div class="item-title">The Mathematical Structure of a Space in .me</div>
+          <div class="item-desc">The source essay: positions, containment, and how a space resolves differently per observer.</div>
+          <span class="item-src">sui.gn — essay</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Typescript/typedocs/Algebra-of-Contexts.html">
+          <div class="item-title">Algebra of Contexts</div>
+          <div class="item-desc">The canonical implementation: (A, T, C, P) as it's actually built and tested in the .me kernel.</div>
+          <span class="item-src">.me — canonical</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <p class="section-label">2 &middot; Cryptographic Layer</p>
+      </div>
+      <p class="section-note">The instantiation: how "audience" stops being a permissions table and becomes a cryptographic fact — replication and readability pulled apart, key-wrapped sets, union and intersection over real identities.</p>
+      <div class="venn-plain" aria-label="Intersection diagram between two spaces">
+        <div class="formula">I<sub>AB</sub> = I<sub>A</sub> &cap; I<sub>B</sub></div>
+        <div class="venn">
+          <div class="circle a">I<sub>A</sub></div>
+          <div class="circle b">I<sub>B</sub></div>
+          <div class="intersection">I<sub>AB</sub></div>
+        </div>
+      </div>
+      <div class="links">
+        <a class="item hub" href="https://neurons-me.github.io/encrypted-audiences/">
+          <div class="item-title">Encrypted Audiences — topic index &rarr;</div>
+          <div class="item-desc">The full sub-hub for this layer: the essay in three languages, the robots infographic, the .me kernel docs on secret-scope.</div>
+        </a>
+        <a class="item" href="https://suign.github.io/SetChemistry.html">
+          <div class="item-title">Cryptographic Set-Chemistry on Audiences</div>
+          <div class="item-desc">Union and intersection of audience sets over kernel identities, with key wrapping.</div>
+          <span class="item-src">sui.gn — essay</span>
+        </a>
+        <a class="item" href="https://suign.github.io/Perp-Infographic.html">
+          <div class="item-title">T &perp; A — infographic</div>
+          <div class="item-desc">Topology and audience, drawn as orthogonal: replicating a space never changes who can read it.</div>
+          <span class="item-src">sui.gn — visual</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <p class="section-label">NRP &middot; Concrete Syntax</p>
+        <p class="section-status">how the algebra becomes an addressable URL</p>
+      </div>
+      <p class="section-note">Where audience stops being just math and becomes routable: <code>group:name</code> is an anchored shared space — the namespace is stable, membership moves inside it. <code>surface[a+b]</code> is a derived one — the namespace is computed from the member set itself, and stops resolving the moment someone leaves.</p>
+      <div class="links">
+        <a class="item" href="https://neurons-me.github.io/monad/Typescript/typedocs/architecture/nrp-chemistry.html">
+          <div class="item-title">NRP Chemistry — Settled Architecture</div>
+          <div class="item-desc"><code>group:name</code> vs <code>surface[a+b]</code>, spelled out: which is anchored, which is derived, and why both are useful.</div>
+          <span class="item-src">monad.ai — canonical</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/monad/Typescript/typedocs/NRP-v0.3.0.html">
+          <div class="item-title">Namespace Resolution Protocol v0.3.0</div>
+          <div class="item-desc">The normative grammar this syntax is part of — paths, surfaces, resolution.</div>
+          <span class="item-src">monad.ai — spec</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <p class="section-label">3 &middot; Synthesis</p>
+      </div>
+      <p class="section-note">Where structure and cryptography meet: privacy as something a space derives from its own definition, not something a platform grants it.</p>
+      <div class="links">
+        <a class="item" href="https://suign.github.io/EncryptedIsland.html">
+          <div class="item-title">Encrypted Semantic Island</div>
+          <div class="item-desc">Privacy as a derivation property of the space itself, not a custodial arrangement.</div>
+          <span class="item-src">sui.gn — essay</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <p class="section-label">4 &middot; Reactive Engine</p>
+      </div>
+      <p class="section-note">The performance side: once relationships are real pointers instead of copies, one mutation only has to touch what actually depends on it.</p>
+      <div class="links">
+        <a class="item" href="https://suign.github.io/InvertedIndex.html">
+          <div class="item-title">Inverted Dependency Indexing</div>
+          <div class="item-desc">The mechanism: refSubscribers, eager/lazy recompute, and why invalidation is O(k), not O(n).</div>
+          <span class="item-src">sui.gn — essay</span>
+        </a>
+        <a class="item" href="https://suign.github.io/Inverted-Dependency-Indexing-Infographic.html">
+          <div class="item-title">cost(mutation) = O(k) — infographic</div>
+          <div class="item-desc">The formula, drawn: one mutation, a bounded number of dependents touched.</div>
+          <span class="item-src">sui.gn — visual</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/Inverted-Dependency-Indexing-Beautiful-Viz.html">
+          <div class="item-title">Inverted Dependency Indexing — Visualized</div>
+          <div class="item-desc">Why changing 1 node in 1,000,000 touches only 6, not 1,000,000 — a hand-drawn precision visualization.</div>
+          <span class="item-src">neurons.me — visual</span>
+        </a>
+        <a class="item" href="https://suign.github.io/WhatIsOK.html">
+          <div class="item-title">What is O(k)?</div>
+          <div class="item-desc">The recorded benchmark numbers the performance claims are checked against, not just asserted.</div>
+          <span class="item-src">sui.gn — essay</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <p class="section-label">Applications</p>
+        <p class="section-status">built on the same kernel, not part of the numbered index above</p>
+      </div>
+      <p class="section-note">Demos that put the same topology/audience/capability mechanics to work on a concrete scenario.</p>
+      <div class="links">
+        <a class="item hub" href="https://neurons-me.github.io/robots/">
+          <div class="item-title">Robots — topic index &rarr;</div>
+          <div class="item-desc">One object, four meanings, zero copies — context algebra applied to embodied agents.</div>
+        </a>
+        <a class="item hub" href="https://neurons-me.github.io/smart-cities/">
+          <div class="item-title">Smart Cities — topic index &rarr;</div>
+          <div class="item-desc">A city as one reactive graph — districts, traffic, services and stealth security on one kernel.</div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <p class="section-label">Full glossary</p>
+      </div>
+      <div class="links">
+        <a class="item" href="https://neurons-me.github.io/Equations-Visual-Infographics-Edition.html">
+          <div class="item-title">The Equations — Visual Infographics Edition</div>
+          <div class="item-desc">Every original formula across this layer, one glossary — imported results clearly marked, not claimed.</div>
+        </a>
+      </div>
+    </section>
+
+    <footer>sui.gn / neurons.me</footer>
+  </div>
+</body>
+</html>
