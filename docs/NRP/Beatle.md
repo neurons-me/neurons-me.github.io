@@ -1,3 +1,8 @@
+---
+layout: readme
+title: Beatle — NRP Channel Client
+---
+
 # Beatle — NRP Channel Client
 
 > **Beatle is the URL bar of the namespace mesh.**

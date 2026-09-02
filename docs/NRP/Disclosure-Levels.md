@@ -1,3 +1,8 @@
+---
+layout: readme
+title: Disclosure Levels
+---
+
 # Disclosure Levels
 
 When an NRP channel resolves, the server returns a `disclosure` level alongside the endpoints. Disclosure tells the client what the `.me` kernel revealed — and therefore what the client can trust about the resolved channel.

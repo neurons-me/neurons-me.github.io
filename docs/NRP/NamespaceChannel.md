@@ -1,3 +1,8 @@
+---
+layout: readme
+title: NamespaceChannel
+---
+
 # NamespaceChannel
 
 `NamespaceChannel` is the live state of a Beatle channel — everything the client knows about the current NRP session after a channel is opened and resolved.

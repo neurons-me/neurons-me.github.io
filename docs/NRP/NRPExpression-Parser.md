@@ -1,3 +1,8 @@
+---
+layout: readme
+title: NRP Expression Parser
+---
+
 # NRP Expression Parser
 
 `NRPExpression.ts` — algebraic parser for `me://` namespace expressions.

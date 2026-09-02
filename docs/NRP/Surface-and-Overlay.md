@@ -1,3 +1,8 @@
+---
+layout: readme
+title: Surface and Overlay
+---
+
 # Surface and Overlay
 
 The `@` operator in an NRP expression overlays a namespace onto a surface.
