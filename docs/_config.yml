@@ -7,6 +7,13 @@ remote_theme: neurons-me/neurons-me
 
 plugins:
   - jekyll-remote-theme
+  - jekyll-sitemap
+
+defaults:
+  - scope:
+      path: "google*.html"
+    values:
+      sitemap: false
 
 exclude:
   - node_modules
