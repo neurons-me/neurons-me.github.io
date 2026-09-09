@@ -44,8 +44,11 @@ A reactive architecture where state changes propagate only through active upward
 ### **i.mlearning (mlearning.me)**
 A dataset-structuring module/domain in the neurons.me ecosystem focused on preparing data for machine learning workflows. It acts as a personal/targeted learning memory layer where raw signals are normalized into trainable structure.
 
+### **Identity-Bound Secrets**
+A proposed encryption model in which protected scopes require both a private identity root and the applicable branch secrets. Unlocking an identity does not automatically unlock every scope. Noise may cut inherited secrets, but must preserve the identity dependency. See [Identity-Bound Secrets — Design and Tests]({{ '/architecture/identity-bound-secrets/' | relative_url }}) for the contract, package responsibilities, and 11 acceptance criteria. These criteria are requirements, not a report of passing tests.
+
 ### **Identity Noise**
-The deliberate application of cryptographic entropy and Stealth-Roots to make private data branches mathematically indetectable to unauthorized observers. It represents the "Level 0" of informational privacy.
+The `~()` operator establishes a boundary that cuts inherited secret lineage. Its caller-supplied value is not automatically random. Under the proposed identity-bound design, this boundary must never remove the private identity dependency. It does not by itself guarantee that on-disk metadata or access patterns are hidden. See [Identity-Bound Secrets]({{ '/architecture/identity-bound-secrets/' | relative_url }}).
 
 ### **Inherent Logic**
 The pre-symbolic layer of structural necessity that defines what configurations are possible or impossible in a system before naming, syntax, or interpretation. It is not an imposed rule; it is the internal coherence condition of the form itself.

@@ -3,6 +3,8 @@ layout: readme
 title: Secretos — .me
 ---
 
+> **Diseño en evolución:** consulta [Identity-Bound Secrets: architecture and 11 acceptance criteria (English)]({{ "/architecture/identity-bound-secrets/" | relative_url }}). Esa propuesta distingue el comportamiento actual de las garantías pendientes de implementación.
+
 ## El modelo de visibilidad de .me
 
 **Regla base: todo es público por defecto.**

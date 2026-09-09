@@ -1258,5 +1258,14 @@
     "repo": "neurons-me.github.io",
     "icon": "🧩",
     "kind": "doc"
+  },
+  {
+    "id": "identity-bound-secrets",
+    "title": "Identity-Bound Secrets — Design and Tests",
+    "desc": "Architecture proposal: private encryption root, password changes, secret scopes, noise, snapshot persistence, v3-to-v4 migration, recovery, and 11 acceptance criteria across .me, Monad, and identity integration.",
+    "url": "https://neurons-me.github.io/architecture/identity-bound-secrets/",
+    "repo": "neurons-me.github.io",
+    "icon": "🔐",
+    "kind": "doc"
   }
 ]

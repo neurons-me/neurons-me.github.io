@@ -1,0 +1,408 @@
+<title>Why .me</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --surface:#111111;
+    --surface-2:#141414;
+    --surface-3:#171717;
+    --ink:#EDECE6;
+    --ink-dim:rgba(237,236,230,0.6);
+    --ink-dimmer:rgba(237,236,230,0.35);
+    --line:rgba(255,255,255,0.14);
+    --line-soft:rgba(255,255,255,0.08);
+    --good:#5fd98a;
+    --good-dim:rgba(95,217,138,0.14);
+    --cost:#e0a15c;
+    --cost-dim:rgba(224,161,92,0.14);
+    --paper:#EDECE6;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Geist Mono", ui-monospace, Menlo, monospace;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  ::selection{background:var(--paper);color:#0a0a0a;}
+  ::-webkit-scrollbar{height:6px;width:6px;}
+  ::-webkit-scrollbar-thumb{background:#2a2a2a;}
+
+  .serif{font-family:"Instrument Serif", Georgia, serif;}
+  h1,h2,h3{text-wrap:balance;}
+  code,pre{font-family:"Geist Mono", ui-monospace, monospace;}
+  table{font-variant-numeric:tabular-nums;}
+
+  a{color:inherit;}
+  a.link{text-decoration:underline;text-decoration-style:dotted;text-decoration-color:rgba(237,236,230,0.35);text-underline-offset:4px;}
+  a.link:hover{color:#fff;text-decoration-color:rgba(255,255,255,0.7);}
+
+  header.top{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,10,10,0.82);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1160px;margin:0 auto;padding:0 24px;
+    height:56px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:500;}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:pulse 2.2s cubic-bezier(.4,0,.6,1) infinite;}
+  @keyframes pulse{50%{opacity:.45;}}
+  .meta-tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:.5;}
+  .meta-tag.mobile-only{display:none;}
+
+  main{max-width:1160px;margin:0 auto;padding:0 24px;}
+
+  /* ---- hero ---- */
+  .hero{padding:64px 0 56px;border-bottom:1px solid var(--line);}
+  .hero-tags{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+  .pill{border:1px solid rgba(255,255,255,0.2);padding:4px 12px;font-size:11px;text-transform:uppercase;letter-spacing:0.16em;}
+  .pill.dim{opacity:.4;}
+  h1.headline{font-size:56px;line-height:0.95;letter-spacing:-0.03em;max-width:820px;font-weight:400;margin:0;}
+  h1.headline em{font-style:italic;font-weight:300;opacity:.92;}
+
+  .fact-box{
+    margin-top:36px;border:1px solid var(--line);background:var(--surface-2);
+    padding:28px 32px;position:relative;overflow:hidden;
+  }
+  .fact-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:1px;
+    background:linear-gradient(to right, rgba(255,255,255,0.22), rgba(255,255,255,0.03), transparent);}
+  .fact-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:.4;margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+  .fact-eyebrow .stub{width:22px;height:1px;background:rgba(255,255,255,0.2);display:inline-block;}
+  .fact-grid{display:flex;flex-wrap:wrap;gap:32px;align-items:baseline;}
+  .fact{display:flex;flex-direction:column;gap:6px;}
+  .fact .num{font-size:34px;font-weight:600;letter-spacing:-0.01em;}
+  .fact .num small{font-size:15px;font-weight:400;opacity:.5;margin-left:4px;}
+  .fact .cap{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;opacity:.45;max-width:200px;line-height:1.5;}
+  .fact-arrow{opacity:.3;font-size:22px;align-self:center;}
+  p.hero-sub{font-family:"Instrument Serif",serif;font-size:22px;line-height:1.4;max-width:640px;opacity:.72;margin-top:28px;}
+  p.hero-sub em{font-style:italic;}
+
+  /* ---- sections ---- */
+  section.chapter{padding:64px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:32px;}
+  @media (min-width:860px){
+    section.chapter{grid-template-columns:200px 1fr;gap:56px;padding:96px 0;}
+    .side{position:sticky;top:88px;height:fit-content;}
+  }
+  .side .seclabel{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;opacity:.5;}
+  .side h2{font-family:"Instrument Serif",serif;font-size:36px;line-height:0.95;margin:10px 0 0;letter-spacing:-0.02em;font-weight:400;}
+  .side .dek{font-size:13px;line-height:1.6;opacity:.5;margin-top:14px;max-width:210px;}
+
+  .body-col{display:flex;flex-direction:column;gap:44px;}
+  p.lead{font-size:15px;line-height:1.75;max-width:600px;opacity:.82;}
+  p.lead b{color:var(--ink);font-weight:600;}
+  p.small{font-size:13px;line-height:1.7;opacity:.55;max-width:560px;}
+
+  .glossary{border:1px solid var(--line);background:var(--surface-2);display:grid;grid-template-columns:1fr;gap:1px;background-color:var(--line-soft);}
+  @media (min-width:640px){.glossary{grid-template-columns:1fr 1fr;}}
+  .glossary .item{background:var(--surface-2);padding:20px 22px;}
+  .glossary .term{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;opacity:.45;margin-bottom:8px;}
+  .glossary code.big{font-size:22px;font-weight:700;}
+  .glossary .expl{margin-top:10px;font-size:13px;line-height:1.6;opacity:.65;}
+
+  .chart-block{border:1px solid var(--line);background:var(--surface);padding:22px 22px 18px;}
+  .chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+  .chart-title{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;opacity:.55;}
+  .chart-legend{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:.35;}
+  .chart-svg{width:100%;height:auto;display:block;margin-top:6px;}
+  .chart-caption{font-size:12.5px;line-height:1.6;opacity:.6;margin-top:14px;max-width:520px;}
+  .chart-caption b{color:var(--ink);opacity:1;}
+
+  .two-col{display:grid;grid-template-columns:1fr;gap:20px;}
+  @media (min-width:760px){.two-col{grid-template-columns:1fr 1fr;}}
+
+  table.data{width:100%;border-collapse:collapse;font-size:12px;}
+  table.data th, table.data td{border:1px solid var(--line-soft);padding:7px 10px;text-align:right;}
+  table.data th:first-child, table.data td:first-child{text-align:left;}
+  table.data th{opacity:.5;font-weight:500;text-transform:uppercase;font-size:10px;letter-spacing:0.08em;background:var(--surface-2);}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);}
+  .table-wrap table{border:none;}
+  .table-wrap table th, .table-wrap table td{border:none;border-bottom:1px solid var(--line-soft);}
+
+  .cost-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line-soft);border:1px solid var(--line);}
+  @media (min-width:760px){.cost-grid{grid-template-columns:1fr 1fr;}}
+  .cost-card{background:var(--surface);padding:24px 26px;}
+  .cost-card .k{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;opacity:.4;margin-bottom:14px;}
+  .cost-tag{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;padding:3px 8px;border-radius:2px;margin-bottom:14px;}
+  .cost-tag.good{background:var(--good-dim);color:var(--good);}
+  .cost-tag.cost{background:var(--cost-dim);color:var(--cost);}
+  .cost-num{font-size:26px;font-weight:600;}
+  .cost-num .from{opacity:.4;font-weight:400;font-size:16px;}
+  .cost-num .arrow{opacity:.3;margin:0 8px;font-weight:400;font-size:16px;}
+  .cost-expl{margin-top:12px;font-size:13px;line-height:1.65;opacity:.65;}
+  .cost-cmd{margin-top:16px;font-size:11px;background:var(--bg);border:1px solid var(--line-soft);padding:10px 12px;opacity:.55;overflow-x:auto;white-space:pre;}
+
+  .honesty{border-left:2px solid var(--cost);padding:16px 20px;background:var(--cost-dim);font-size:13px;line-height:1.7;}
+  .honesty b{color:var(--ink);}
+
+  .verdict{font-family:"Instrument Serif",serif;font-size:26px;line-height:1.3;max-width:680px;letter-spacing:-0.01em;margin-top:8px;}
+
+  footer.foot{padding:56px 0 80px;}
+  .foot-top{display:flex;flex-direction:column;gap:40px;}
+  @media (min-width:760px){.foot-top{flex-direction:row;justify-content:space-between;gap:64px;}}
+  .foot-brand .serif{font-size:21px;letter-spacing:-0.01em;}
+  .foot-brand p{font-size:12.5px;opacity:.5;max-width:340px;line-height:1.6;margin-top:12px;}
+  .foot-links{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .foot-links a{border:1px solid rgba(255,255,255,0.15);padding:8px 14px;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;}
+  .foot-links a:hover{background:#fff;color:#0a0a0a;}
+  .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:12px;}
+  .foot-cols .h{font-size:10px;opacity:.3;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px;}
+  .foot-cols ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;opacity:.7;}
+  .foot-bottom{border-top:1px solid var(--line-soft);margin-top:36px;padding-top:20px;
+    display:flex;flex-direction:column;gap:8px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;opacity:.32;}
+  @media (min-width:760px){.foot-bottom{flex-direction:row;justify-content:space-between;}}
+
+  @media (prefers-reduced-motion:reduce){.dot{animation:none;}}
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand"><span class="dot"></span>.me framework — by sui.gn</div>
+    <div class="meta-tag">Benchmarks, explained plainly · 7 min read</div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-tags">
+      <span class="pill">Article 02</span>
+      <span class="pill dim">EN · dark edition</span>
+    </div>
+    <h1 class="headline serif">It doesn't get slower.<br><em>It gets pickier.</em></h1>
+
+    <div class="fact-box">
+      <div class="fact-eyebrow"><span class="stub"></span>real numbers, one laptop, Aug 2026</div>
+      <div class="fact-grid">
+        <div class="fact">
+          <div class="num">10,443<small>things stored</small></div>
+          <div class="cap">grown from 453 across this run</div>
+        </div>
+        <div class="fact-arrow">→</div>
+        <div class="fact">
+          <div class="num">1<small>thing recomputed</small></div>
+          <div class="cap">every single time, unchanged</div>
+        </div>
+        <div class="fact-arrow">=</div>
+        <div class="fact">
+          <div class="num">0.007<small>ms p50</small></div>
+          <div class="cap">same speed at 10 records or 10,000</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hero-sub">No round numbers, no cherry-picked demo. Every figure on this page came out of a <code>cargo run --release</code> or a <code>vitest</code> run, on the machine this was written on. This is the "for dummies" walkthrough of <em>why</em> those numbers look the way they do.</p>
+  </section>
+
+  <section class="chapter">
+    <div class="side">
+      <div class="seclabel">Section 01 / 04</div>
+      <h2>What a benchmark actually asks</h2>
+      <p class="dek">Not "is it fast." A specific, boring, answerable question.</p>
+    </div>
+    <div class="body-col">
+      <p class="lead">Imagine your grocery list has 10,000 items on it because you've been adding to the same list for years. You cross out <b>one carton of eggs</b> because you bought it. How long does that take?</p>
+      <p class="lead">Obviously: the same half-second it always takes, whether the list has 10 items or 10,000. Crossing out eggs doesn't require re-reading the whole list. It only touches <b>the one line that changed</b>.</p>
+      <p class="lead">That's the entire idea a database benchmark is trying to catch people breaking. Most systems, under the hood, quietly start re-reading more of the list as it grows — a little slower at 10,000 items than at 10. <code>.me</code>'s benchmarks exist to prove, with numbers, that it doesn't.</p>
+
+      <div class="glossary">
+        <div class="item">
+          <div class="term">the size of your database</div>
+          <code class="big">n</code>
+          <div class="expl">Everything you've ever stored. In the run above, <b>n</b> grew from 453 to 10,443.</div>
+        </div>
+        <div class="item">
+          <div class="term">the size of your change</div>
+          <code class="big">k</code>
+          <div class="expl">How many things actually depend on what you just touched. In that same run, <b>k</b> stayed <b>1</b>.</div>
+        </div>
+      </div>
+      <p class="small">Every chart below is really just answering one question over and over: when you write, does the bill scale with <code>k</code>, or does it quietly scale with <code>n</code> instead?</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="side">
+      <div class="seclabel">Section 02 / 04</div>
+      <h2>Two charts, one honest contrast</h2>
+      <p class="dek">Irrelevant clutter costs nothing. Real connections cost something — on purpose.</p>
+    </div>
+    <div class="body-col">
+      <p class="lead">Here are the two shapes that matter, from the same benchmark suite, plotted straight from the recorded runs — nothing smoothed out.</p>
+
+      <div class="two-col">
+        <div class="chart-block">
+          <div class="chart-head">
+            <span class="chart-title">Chart A — bench-ok</span>
+            <span class="chart-legend">k held at 1</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 500 190" role="img" aria-label="Latency stays under 0.05 milliseconds as stored memories grow from 453 to 10,443, because k stays at 1.">
+            <line x1="60" y1="20" x2="60" y2="160" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+            <line x1="60" y1="160" x2="470" y2="160" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+            <g stroke="rgba(255,255,255,0.06)">
+              <line x1="60" y1="20" x2="470" y2="20"/>
+              <line x1="60" y1="68" x2="470" y2="68"/>
+              <line x1="60" y1="116" x2="470" y2="116"/>
+            </g>
+            <g font-size="9" fill="rgba(237,236,230,0.35)" font-family="Geist Mono, monospace">
+              <text x="52" y="163" text-anchor="end">0</text>
+              <text x="52" y="119" text-anchor="end">.02</text>
+              <text x="52" y="71" text-anchor="end">.04ms</text>
+            </g>
+            <polyline points="60,140 160,107 260,103 360,122 460,119" fill="none" stroke="var(--good)" stroke-width="2"/>
+            <g fill="var(--good)">
+              <circle cx="60" cy="140" r="3.5"/><circle cx="160" cy="107" r="3.5"/><circle cx="260" cy="103" r="3.5"/><circle cx="360" cy="122" r="3.5"/><circle cx="460" cy="119" r="3.5"/>
+            </g>
+            <g font-size="9.5" fill="rgba(237,236,230,0.55)" font-family="Geist Mono, monospace" text-anchor="middle">
+              <text x="60" y="178">453</text>
+              <text x="160" y="178">543</text>
+              <text x="260" y="178">1,443</text>
+              <text x="360" y="178">5,443</text>
+              <text x="460" y="178">10,443</text>
+            </g>
+            <text x="265" y="188" font-size="9" fill="rgba(237,236,230,0.3)" text-anchor="middle" font-family="Geist Mono, monospace" letter-spacing="0.05em">MEMORIES STORED →</text>
+          </svg>
+          <p class="chart-caption">1000+ irrelevant memories added, and the line <b>doesn't climb</b>. p95 latency for the one real update stays under 0.05ms the entire way — because nothing else was ever asked to recompute.</p>
+        </div>
+
+        <div class="chart-block">
+          <div class="chart-head">
+            <span class="chart-title">Chart B — bench-fanout</span>
+            <span class="chart-legend">k = fanout, on purpose</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 500 190" role="img" aria-label="Latency rises from 0.12 to 43 milliseconds as the number of real dependents grows from 10 to 5000, tracking k directly.">
+            <line x1="60" y1="20" x2="60" y2="160" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+            <line x1="60" y1="160" x2="470" y2="160" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+            <g stroke="rgba(255,255,255,0.06)">
+              <line x1="60" y1="20" x2="470" y2="20"/>
+              <line x1="60" y1="90" x2="470" y2="90"/>
+            </g>
+            <g font-size="9" fill="rgba(237,236,230,0.35)" font-family="Geist Mono, monospace">
+              <text x="52" y="163" text-anchor="end">0</text>
+              <text x="52" y="93" text-anchor="end">22</text>
+              <text x="52" y="23" text-anchor="end">43ms</text>
+            </g>
+            <polyline points="60,160 150,158 240,148 330,135 420,94 510,26" fill="none" stroke="var(--cost)" stroke-width="2"/>
+            <g fill="var(--cost)">
+              <circle cx="60" cy="160" r="3.5"/><circle cx="150" cy="158" r="3.5"/><circle cx="240" cy="148" r="3.5"/><circle cx="330" cy="135" r="3.5"/><circle cx="420" cy="94" r="3.5"/><circle cx="510" cy="26" r="3.5"/>
+            </g>
+            <g font-size="9.5" fill="rgba(237,236,230,0.55)" font-family="Geist Mono, monospace" text-anchor="middle">
+              <text x="60" y="178">10</text>
+              <text x="150" y="178">100</text>
+              <text x="240" y="178">500</text>
+              <text x="330" y="178">1,000</text>
+              <text x="420" y="178">2,500</text>
+              <text x="510" y="178">5,000</text>
+            </g>
+            <text x="265" y="188" font-size="9" fill="rgba(237,236,230,0.3)" text-anchor="middle" font-family="Geist Mono, monospace" letter-spacing="0.05em">REAL DEPENDENTS (k) →</text>
+          </svg>
+          <p class="chart-caption">Now give a write <b>5,000 real dependents</b> instead of 10. Latency climbs, from 0.12ms to 43ms. That's not a leak — that's <code>.me</code> correctly doing 5,000 real updates instead of pretending it didn't need to.</p>
+        </div>
+      </div>
+
+      <p class="verdict">Put the two charts side by side and there's one sentence underneath both: <b>you pay for what's actually connected to your change, never for what isn't.</b></p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="side">
+      <div class="seclabel">Section 03 / 04</div>
+      <h2>Two things that aren't free</h2>
+      <p class="dek">Asking "why," and keeping a secret, both cost something. Here's exactly how much.</p>
+    </div>
+    <div class="body-col">
+      <p class="lead"><code>.me</code> doesn't pretend everything is free. Two features have a real, measured cost — traceability and privacy. The only promise is that the cost stays small enough to leave on by default.</p>
+
+      <div class="cost-grid">
+        <div class="cost-card">
+          <span class="cost-tag good">still sub-millisecond</span>
+          <div class="k">explain(path) — asking where a value came from</div>
+          <div class="cost-num"><span class="from">0.0154ms</span><span class="arrow">→</span>0.0198ms</div>
+          <div class="cost-expl">A <b>28% overhead</b> on p95, measured over a real read/write loop. In plain terms: the receipt-printer adds noticeably to its own runtime, but the whole checkout is still done before you'd notice.</div>
+          <div class="cost-cmd">$ node benchmark.8.explain-overhead.test.ts
+baseline p95      0.0154ms
+with_explain p95  0.0198ms   (+28.11%)</div>
+        </div>
+        <div class="cost-card">
+          <span class="cost-tag cost">~21x slower, still &lt;0.4ms</span>
+          <div class="k">secret scope — reading something encrypted</div>
+          <div class="cost-num"><span class="from">0.0175ms</span><span class="arrow">→</span>0.3684ms</div>
+          <div class="cost-expl">Reading a <b>secret</b> path costs about 21 times more than reading a public one, p95 — that's the real price of decryption, not a rounding error hidden somewhere. It's also still under half a millisecond.</div>
+          <div class="cost-cmd">$ node benchmark.9.secret-scope-impact.test.ts
+public p95   0.0175ms
+secret p95   0.3684ms   (~21x)</div>
+        </div>
+      </div>
+      <p class="small">The Rust port (<code>this-me</code>) measures the same two costs independently and lands in the same shape — traceable and private both stay affordable, never free.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="side">
+      <div class="seclabel">Section 04 / 04</div>
+      <h2>Tested past toy scale — and where it isn't yet</h2>
+      <p class="dek">100,000 vectors is not a demo number. Neither is the ceiling below.</p>
+    </div>
+    <div class="body-col">
+      <p class="lead">Everything above was one write touching a handful of dependents. The AI-facing side of <code>.me</code> — vector search over embeddings — gets tested at a size that actually resembles a real corpus: <b>100,000 vectors</b>, on the realistic (chunk-coherent) profile.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>method</th><th>p95 latency</th><th>recall@10</th><th>chunks / query</th></tr></thead>
+          <tbody>
+            <tr><td>exact scan (baseline)</td><td>77,129.34ms</td><td>1.000</td><td>—</td></tr>
+            <tr><td>IVF sidecar index</td><td>3,318.42ms</td><td>1.000</td><td>18.4</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="chart-caption">Same recall — <b>perfect</b>, 1.000 — at <b>23.2x</b> the speed, by only checking the 18.4 chunks out of the corpus that could plausibly contain a match, instead of scanning all 100,000.</p>
+
+      <div class="honesty">
+        <b>Where the edge actually is today:</b> a single-process batch write path currently tops out around <b>137,300 items</b> before it runs into laptop heap memory — not a query slowdown, a hard ceiling on one machine, one process, no sharding. Typical batch cost stays a flat 14–20ms per 100-item chunk right up until that wall. That number is the next thing being worked on, not a footnote being hidden.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="top-inner" style="padding:0 24px;max-width:1160px;margin:0 auto;height:auto;display:block;">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="serif">sui.gn — .me framework</div>
+        <p>Every number on this page came from a benchmark binary or test file that still exists in the repo. Run it yourself; don't take the chart's word for it.</p>
+        <div class="foot-links">
+          <a href="https://sui.gn" target="_blank" rel="noopener">sui.gn →</a>
+          <a href="https://sui.gn/me" target="_blank" rel="noopener">.me docs →</a>
+        </div>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <div class="h">Benchmarks</div>
+          <ul>
+            <li><a class="link" href="https://neurons-me.github.io/.me/docs/Architecture.html" target="_blank" rel="noopener">O(k) architecture</a></li>
+            <li><a class="link" href="https://github.com/neurons-me/.me/tree/main/Rust" target="_blank" rel="noopener">Rust bench binaries</a></li>
+            <li><a class="link" href="https://github.com/neurons-me/.me" target="_blank" rel="noopener">.me on GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="h">Related</div>
+          <ul>
+            <li><a class="link" href="https://neurons-me.github.io/.me/docs/Axioms.html" target="_blank" rel="noopener">Axioms (A2 / A7)</a></li>
+            <li><a class="link" href="https://neurons-me.github.io/.me/docs" target="_blank" rel="noopener">explain() / prove()</a></li>
+            <li><a class="link" href="https://sui.gn/me" target="_blank" rel="noopener">Who needs .me →</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Written to explain the benchmarks in five minutes — no rounded-up numbers. English edition.</span>
+      <span>© 2026 — inspired by sui.gn</span>
+    </div>
+  </div>
+</footer>

@@ -1,6 +1,7 @@
 https://neurons-me.github.io/
 https://neurons-me.github.io/Glossary.html
 https://neurons-me.github.io/Secretos-me.html
+https://neurons-me.github.io/architecture/identity-bound-secrets/
 https://neurons-me.github.io/me.URI.schema.html
 https://neurons-me.github.io/NRP/
 https://neurons-me.github.io/NRP/status.html
