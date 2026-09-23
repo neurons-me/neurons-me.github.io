@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Namespace</title>
+  <meta name="description" content="A namespace names WHICH tree of meaning you're addressing — <handle>.<root>, composed and parsed by cleaker, resolved independent of which door (URL) you walked in through.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://neurons-me.github.io/Namespace.html">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1769890772/this.me.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="neurons.me">
+  <meta property="og:title" content="Namespace">
+  <meta property="og:description" content="A namespace names WHICH tree of meaning you're addressing — <handle>.<root>, resolved independent of which door (URL) you walked in through.">
+  <meta property="og:url" content="https://neurons-me.github.io/Namespace.html">
+  <meta property="og:image" content="https://suign.github.io/assets/imgs/sui.gn/inherent_logics_sui_gn.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Namespace">
+  <meta name="twitter:description" content="A namespace names WHICH tree of meaning you're addressing — resolved independent of which door (URL) you walked in through.">
+  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/sui.gn/inherent_logics_sui_gn.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Namespace",
+    "url": "https://neurons-me.github.io/Namespace.html",
+    "author": { "@type": "Person", "name": "sui.gn", "url": "https://suign.github.io/sui-Gn.html" },
+    "description": "A namespace names WHICH tree of meaning you're addressing — <handle>.<root>, composed and parsed by cleaker, resolved independent of which door (URL) you walked in through."
+  }
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; background: #0b0c0e; color: #e7e7ea;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      padding: 24px;
+    }
+    main { max-width: 640px; margin: 0 auto; }
+    nav { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 36px; font-size: 12.5px; }
+    nav a { color: #9a9aa2; }
+    nav a:first-child { color: #e7e7ea; }
+    h1 { font-size: clamp(22px, 5vw, 34px); margin: 0 0 6px; color: #fff; }
+    h2 { font-size: 15px; color: #fff; margin: 36px 0 12px; }
+    .tag { color: #9a9aa2; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 24px; }
+    pre {
+      background: #131417; border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
+      padding: 16px 18px; font-size: 14px; overflow-x: auto; margin: 0 0 20px; line-height: 1.6;
+    }
+    table { display: block; overflow-x: auto; border-collapse: collapse; margin: 0 0 20px; font-size: 13px; max-width: 100%; }
+    td { padding: 4px 14px 4px 0; color: #c5c6c7; vertical-align: top; }
+    td:first-child { color: #fff; font-weight: 600; white-space: nowrap; }
+    .related td:first-child { font-weight: 400; }
+    .related td:first-child a { color: #fff; }
+    p { color: #c5c6c7; line-height: 1.6; font-size: 14px; margin: 0 0 20px; }
+    a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); text-decoration: none; }
+    footer { margin: 44px 0 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <a href="https://neurons-me.github.io/">&larr; neurons.me</a>
+      <a href="./me.whatever.what.html">me.whatever(what)</a>
+      <a href="./me.explain.html">me.explain(path)</a>
+      <a href="https://neurons-me.github.io/.me/docs/Architecture.html">Architecture</a>
+    </nav>
+
+    <p class="tag">.me — addressing</p>
+    <h1>Namespace</h1>
+    <pre><code>jabellae.cleaker.me
+jabellae.local.cleaker
+me://jabellae.cleaker.me/profile.name</code></pre>
+    <p>A namespace names <strong>WHICH</strong> tree of meaning you're addressing. Path (<code>me.whatever(what)</code>) names <strong>WHERE</strong> in it. Two different questions, answered two different ways — see <a href="https://neurons-me.github.io/.me/docs/Architecture.html">O(k) Semantic Kernel Architecture</a> for the tree the namespace points at.</p>
+
+    <h2>Grammar</h2>
+    <table>
+      <tr><td>handle</td><td>the claimed identity within a root — <code>jabellae</code></td></tr>
+      <tr><td>root</td><td>the namespace's own anchor — <code>cleaker.me</code>, <code>local.cleaker</code>, any <code>&lt;root&gt;</code></td></tr>
+      <tr><td>handle.root</td><td>the composed namespace — <code>jabellae.cleaker.me</code></td></tr>
+      <tr><td>path</td><td>local state within that tree — bookmarkable, shareable, survives a refresh</td></tr>
+    </table>
+    <pre><code>import { composeNamespace, parseNamespaceExpression } from "cleaker";
+
+composeNamespace("jabellae", "cleaker.me");
+// -> "jabellae.cleaker.me"
+
+parseNamespaceExpression("jabellae.cleaker.me");
+// -> { handle: "jabellae", root: "cleaker.me", ... }</code></pre>
+
+    <h2>Two ways to be addressed</h2>
+    <table>
+      <tr><td>Mounted natively</td><td>the page IS a door of the namespace — <code>window.location.origin</code> and the namespace are the same thing.</td></tr>
+      <tr><td>Referenced from outside</td><td>any page can point INTO a namespace — a link, a QR, an NRP expression — without being its door. The namespace is resolved from identity, never guessed from wherever the page happens to be served.</td></tr>
+    </table>
+    <p>The second case is the normal one, not the exception — a namespace is not the URL bar. It is whatever the identity resolves to, wherever you're standing when you ask.</p>
+
+    <footer>
+      <table class="related">
+        <tr><td><a href="https://neurons-me.github.io/Cleaker/typedocs/NRP-Namespaces">Cleaker — Namespace Grammar for NRP</a></td><td>The real parser: composeNamespace, parseNamespaceExpression, full grammar.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/NRP/">NRP: Namespace Resolution Protocol</a></td><td>How a namespace is actually resolved across hosts.</td></tr>
+        <tr><td><a href="./me.whatever.what.html">me.whatever(what)</a></td><td>The calling syntax — path, once you're standing on a namespace.</td></tr>
+        <tr><td><a href="./me.explain.html">me.explain(path)</a></td><td>Why a value holds, inside that same tree.</td></tr>
+      </table>
+    </footer>
+  </main>
+</body>
+</html>

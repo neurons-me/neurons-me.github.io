@@ -165,6 +165,15 @@
     "kind": "doc"
   },
   {
+    "id": "namespace",
+    "title": "Namespace",
+    "desc": "A namespace names WHICH tree of meaning you're addressing — <handle>.<root>, resolved independent of which door (URL) you walked in through.",
+    "url": "https://neurons-me.github.io/Namespace.html",
+    "repo": ".me",
+    "icon": "🧭",
+    "kind": "doc"
+  },
+  {
     "id": "me-robots",
     "title": "Robots That Understand Context",
     "desc": "The same object means different things depending on who is looking and where.",
