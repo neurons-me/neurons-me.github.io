@@ -57,6 +57,14 @@
     p { color: #c5c6c7; line-height: 1.6; font-size: 14px; margin: 0 0 20px; }
     a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); text-decoration: none; }
     footer { margin: 44px 0 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); }
+
+    /* token colors — win over the generic rules above on purpose, last in source */
+    .kw   { color: #93c5fd; }              /* import, from, const, new */
+    .str  { color: #86efac; }              /* "strings" */
+    .num  { color: #fbbf24; }              /* numbers */
+    .com  { color: #6b7280; font-style: italic; }  /* // comments */
+    .op   { color: #f472b6 !important; font-weight: 600; }  /* @ _ ~ -> = ? - — the actual operators */
+    .fn   { color: #7dd3fc; }              /* method/property names off me */
   </style>
 </head>
 <body>
@@ -72,47 +80,47 @@
 
     <p class="tag">.me — syntax</p>
     <h1>me.whatever(what)</h1>
-    <pre><code>me.some.path("value");   // Subject . Verb-Object path . call</code></pre>
+    <pre><code>me.<span class="fn">some</span>.<span class="fn">path</span>(<span class="str">"value"</span>);   <span class="com">// Subject . Verb-Object path . call</span></code></pre>
     <table>
-      <tr><td>@</td><td>identity</td></tr>
-      <tr><td>_</td><td>secret scope</td></tr>
-      <tr><td>~</td><td>noise reset</td></tr>
-      <tr><td>-&gt;</td><td>derivation</td></tr>
-      <tr><td>=</td><td>assignment</td></tr>
-      <tr><td>?</td><td>query</td></tr>
-      <tr><td>-</td><td>negation</td></tr>
+      <tr><td class="op">@</td><td>identity</td></tr>
+      <tr><td class="op">_</td><td>secret scope</td></tr>
+      <tr><td class="op">~</td><td>noise reset</td></tr>
+      <tr><td class="op">-&gt;</td><td>derivation</td></tr>
+      <tr><td class="op">=</td><td>assignment</td></tr>
+      <tr><td class="op">?</td><td>query</td></tr>
+      <tr><td class="op">-</td><td>negation</td></tr>
     </table>
-    <p>Every call into <code>.me</code> is a path, Subject-Verb-Object, plus this operator table. Full grammar and selector syntax: <a href="https://suign.github.io/MeWhateverWhat.html">the official Syntax spec</a>.</p>
+    <p>Every call into <code class="fn">.me</code> is a path, Subject-Verb-Object, plus this operator table. Full grammar and selector syntax: <a href="https://suign.github.io/MeWhateverWhat.html">the official Syntax spec</a>.</p>
 
     <h2>Jump in</h2>
     <pre><code>npm install this.me</code></pre>
-    <pre><code>import ME from "this.me";
-const me = new ME();
+    <pre><code><span class="kw">import</span> ME <span class="kw">from</span> <span class="str">"this.me"</span>;
+<span class="kw">const</span> me = <span class="kw">new</span> ME();
 
-me["@"]("jabellae");             // @  — identity
-me.profile.name("José Abella");  // plain write, no operator needed
+me[<span class="op">"@"</span>](<span class="str">"jabellae"</span>);             <span class="com">// @  — identity</span>
+me.<span class="fn">profile</span>.<span class="fn">name</span>(<span class="str">"José Abella"</span>);  <span class="com">// plain write, no operator needed</span>
 
-me.wallet["_"]("wallet-key");    // _  — secret scope: root is stealth
-me.wallet.balance(12480);        //      descendants still resolve
+me.<span class="fn">wallet</span>[<span class="op">"_"</span>](<span class="str">"wallet-key"</span>);    <span class="com">// _  — secret scope: root is stealth</span>
+me.<span class="fn">wallet</span>.<span class="fn">balance</span>(<span class="num">12480</span>);        <span class="com">//      descendants still resolve</span>
 
-me.friends.ana["->"]("users.ana");                    // -> — structural link, not a copy
-me.friends["[i]"]["="]("isAdult", "age >= 18");        // =  — reactive rule, recomputes in O(k)
+me.<span class="fn">friends</span>.<span class="fn">ana</span>[<span class="op">"->"</span>](<span class="str">"users.ana"</span>);                    <span class="com">// -> — structural link, not a copy</span>
+me.<span class="fn">friends</span>[<span class="op">"[i]"</span>][<span class="op">"="</span>](<span class="str">"isAdult"</span>, <span class="str">"age >= 18"</span>);        <span class="com">// =  — reactive rule, recomputes in O(k)</span>
 
-me("profile.name");        // "José Abella"
-me("friends.ana.isAdult"); // true
-me("wallet");               // undefined — stealth root
-me("wallet.balance");       // 12480 — descendant resolves</code></pre>
-    <p>One kernel, five lines of real operators. <code>@</code> sets who you are; <code>_</code> hides a subtree structurally, not by convention; <code>-&gt;</code> points instead of copying; <code>=</code> registers logic that recomputes only what depends on it.</p>
+me(<span class="str">"profile.name"</span>);        <span class="com">// "José Abella"</span>
+me(<span class="str">"friends.ana.isAdult"</span>); <span class="com">// true</span>
+me(<span class="str">"wallet"</span>);               <span class="com">// undefined — stealth root</span>
+me(<span class="str">"wallet.balance"</span>);       <span class="com">// 12480 — descendant resolves</span></code></pre>
+    <p>One kernel, five lines of real operators. <code class="op">@</code> sets who you are; <code class="op">_</code> hides a subtree structurally, not by convention; <code class="op">-&gt;</code> points instead of copying; <code class="op">=</code> registers logic that recomputes only what depends on it.</p>
 
     <h2>How-to</h2>
     <table>
-      <tr><td>Read a path</td><td><code>me("some.path")</code></td></tr>
-      <tr><td>Write a path</td><td><code>me.some.path("value")</code></td></tr>
-      <tr><td>Claim an identity</td><td><code>me["@"]("handle")</code></td></tr>
-      <tr><td>Hide a subtree</td><td><code>me.scope["_"]("key")</code></td></tr>
-      <tr><td>Link instead of copy</td><td><code>me.a["->"]("b.c")</code></td></tr>
-      <tr><td>Register derived logic</td><td><code>me.list["[i]"]["="]("flag", "cond")</code></td></tr>
-      <tr><td>Ask why a value holds</td><td><code>me.explain("some.path")</code></td></tr>
+      <tr><td>Read a path</td><td><code>me(<span class="str">"some.path"</span>)</code></td></tr>
+      <tr><td>Write a path</td><td><code>me.<span class="fn">some</span>.<span class="fn">path</span>(<span class="str">"value"</span>)</code></td></tr>
+      <tr><td>Claim an identity</td><td><code>me[<span class="op">"@"</span>](<span class="str">"handle"</span>)</code></td></tr>
+      <tr><td>Hide a subtree</td><td><code>me.<span class="fn">scope</span>[<span class="op">"_"</span>](<span class="str">"key"</span>)</code></td></tr>
+      <tr><td>Link instead of copy</td><td><code>me.<span class="fn">a</span>[<span class="op">"->"</span>](<span class="str">"b.c"</span>)</code></td></tr>
+      <tr><td>Register derived logic</td><td><code>me.<span class="fn">list</span>[<span class="op">"[i]"</span>][<span class="op">"="</span>](<span class="str">"flag"</span>, <span class="str">"cond"</span>)</code></td></tr>
+      <tr><td>Ask why a value holds</td><td><code>me.<span class="fn">explain</span>(<span class="str">"some.path"</span>)</code></td></tr>
     </table>
 
     <footer>
