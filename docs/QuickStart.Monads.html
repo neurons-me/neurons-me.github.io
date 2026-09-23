@@ -91,11 +91,11 @@ npm run test</code></pre>
     <p>🐍 <strong>Python</strong> — not available yet.</p>
 
     <h2>Run it</h2>
-    <p>A monad needs a seed — the 64-hex key its namespace identity and every derived secret trace back to. Same seed, same namespace, every time. Provide your own:</p>
+    <p>A monad needs a seed — the 64-hex key its cryptographic identity and every derived secret trace back to. Provide your own:</p>
     <pre><code>SEED=<span class="str">"Tetragramaton"</span> npm run dev</code></pre>
     <p>Or, running the compiled build instead of the dev server:</p>
     <pre><code>SEED=<span class="str">"Tetragramaton"</span> node dist/server.js</code></pre>
-    <p>That process is now a monad: it resolves paths for whatever namespace its seed derives, and it starts heartbeating onto the mesh so other monads and apps can find it.</p>
+    <p>That process is now a monad: it resolves paths for the namespace set by <code>ME_NAMESPACE</code> — a separate setting, not derived from the seed; unset, it falls back to your machine's hostname — and it starts heartbeating onto the mesh so other monads and apps can find it.</p>
 
     <h2>Talk to it</h2>
     <p>Two ways in, same tree either way.</p>
