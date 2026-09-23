@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get .me started</title>
+  <meta name="description" content="Install .me and build your first kernel — TypeScript, Rust, or Python (not yet available), one clone away.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://neurons-me.github.io/Get.me.started.html">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1769890772/this.me.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="neurons.me">
+  <meta property="og:title" content="Get .me started">
+  <meta property="og:description" content="Install .me and build your first kernel — TypeScript, Rust, or Python (not yet available), one clone away.">
+  <meta property="og:url" content="https://neurons-me.github.io/Get.me.started.html">
+  <meta property="og:image" content="https://suign.github.io/assets/imgs/sui.gn/inherent_logics_sui_gn.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Get .me started">
+  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/sui.gn/inherent_logics_sui_gn.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Get .me started",
+    "url": "https://neurons-me.github.io/Get.me.started.html",
+    "author": { "@type": "Person", "name": "sui.gn", "url": "https://suign.github.io/sui-Gn.html" },
+    "description": "Install .me and build your first kernel — TypeScript, Rust, or Python (not yet available), one clone away."
+  }
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; background: #0b0c0e; color: #e7e7ea;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      padding: 24px;
+    }
+    main { max-width: 640px; margin: 0 auto; }
+    nav { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 36px; font-size: 12.5px; }
+    nav a { color: #9a9aa2; }
+    nav a:first-child { color: #e7e7ea; }
+    h1 { font-size: clamp(22px, 5vw, 34px); margin: 0 0 6px; color: #fff; }
+    h2 { font-size: 15px; color: #fff; margin: 36px 0 12px; }
+    .tag { color: #9a9aa2; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 24px; }
+    pre {
+      background: #131417; border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
+      padding: 16px 18px; font-size: 14px; overflow-x: auto; margin: 0 0 20px; line-height: 1.6;
+    }
+    table { display: block; overflow-x: auto; border-collapse: collapse; margin: 0 0 20px; font-size: 13px; max-width: 100%; }
+    td { padding: 4px 14px 4px 0; color: #c5c6c7; vertical-align: top; }
+    td:first-child { color: #fff; font-weight: 600; white-space: nowrap; }
+    .related td:first-child { font-weight: 400; }
+    .related td:first-child a { color: #fff; }
+    p { color: #c5c6c7; line-height: 1.6; font-size: 14px; margin: 0 0 20px; }
+    a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); text-decoration: none; }
+    footer { margin: 44px 0 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); }
+    .kw  { color: #93c5fd; }
+    .str { color: #86efac; }
+    .num { color: #fbbf24; }
+    .com { color: #6b7280; font-style: italic; }
+    .op  { color: #f472b6; font-weight: 600; }
+    .fn  { color: #7dd3fc; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <a href="https://neurons-me.github.io/">&larr; neurons.me</a>
+      <a href="./me.whatever.what.html">me.whatever(what)</a>
+      <a href="./me.explain.html">me.explain(path)</a>
+      <a href="./Namespace.html">Namespace</a>
+    </nav>
+
+    <p class="tag">.me — install</p>
+    <h1>Get .me started</h1>
+    <p>One clone, then pick a runtime. Everything below is real — the same steps the repo itself runs.</p>
+
+    <h2>Clone</h2>
+    <pre><code>git clone <span class="str">https://github.com/neurons-me/.me.git</span>
+<span class="fn">cd</span> .me</code></pre>
+
+    <h2>Choose a runtime</h2>
+    <p>🔷 <strong><a href="https://neurons-me.github.io/.me/Typescript/">TypeScript</a></strong> — the reference implementation, what every example on this site runs.</p>
+    <pre><code><span class="fn">cd</span> Typescript
+npm <span class="fn">install</span>
+npm run build</code></pre>
+
+    <p>🦀 <strong><a href="https://neurons-me.github.io/.me/Rust/">Rust</a></strong> — published on <a href="https://crates.io/crates/this-me">crates.io</a>, documented on <a href="https://docs.rs/this-me">docs.rs</a>.</p>
+    <pre><code>cargo add this-me</code></pre>
+
+    <p>🐍 <strong>Python</strong> — not available yet.</p>
+
+    <h2>First kernel</h2>
+    <p>Once installed (TypeScript shown; same shape everywhere):</p>
+    <pre><code><span class="kw">import</span> ME <span class="kw">from</span> <span class="str">"this.me"</span>;
+<span class="kw">const</span> me = <span class="kw">new</span> ME();
+
+me[<span class="op">"@"</span>](<span class="str">"jabellae"</span>);            <span class="com">// your digital identity</span>
+me.<span class="fn">profile</span>.<span class="fn">name</span>(<span class="str">"José Abella"</span>); <span class="com">// declare meaning</span>
+
+me(<span class="str">"profile.name"</span>); <span class="com">// "José Abella" — resolve meaning</span></code></pre>
+    <p>Full walkthrough, with secrets, structural links, and reactive rules: <a href="https://neurons-me.github.io/.me/Typescript/typedocs/QuickStart.html">Quick Start</a>.</p>
+
+    <footer>
+      <table class="related">
+        <tr><td><a href="https://neurons-me.github.io/.me/Typescript/typedocs/QuickStart.html">Quick Start</a></td><td>The full first-kernel walkthrough, in depth.</td></tr>
+        <tr><td><a href="./me.whatever.what.html">me.whatever(what)</a></td><td>The calling syntax — every path is Subject-Verb-Object.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/.me/docs/Architecture.html">O(k) Semantic Kernel Architecture</a></td><td>What's underneath a call, once it reaches the kernel.</td></tr>
+        <tr><td><a href="https://github.com/neurons-me/.me/tree/main/Typescript/tests/Demos">All demos</a></td><td>Real, runnable examples — robots, cities, wallets, scale.</td></tr>
+      </table>
+    </footer>
+  </main>
+</body>
+</html>
