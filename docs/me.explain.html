@@ -5,45 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>me.explain() — Why Did You Say That?</title>
   <meta name="description" content="me.explain(path): a verifiable lookup into the actual dependency graph that produced a value — not a description of the reasoning, the reasoning itself.">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://neurons-me.github.io/me.explain.html">
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1769890772/this.me.png">
 
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="neurons.me">
   <meta property="og:title" content="me.explain() — Why Did You Say That?">
   <meta property="og:description" content="A verifiable lookup into the actual dependency graph — not a description of the reasoning, the reasoning itself.">
   <meta property="og:url" content="https://neurons-me.github.io/me.explain.html">
-  <meta property="og:image" content="https://suign.github.io/assets/imgs/neurons_me_logo.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://suign.github.io/assets/imgs/sui.gn/inherentLogics-suign.png">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="me.explain() — Why Did You Say That?">
-  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/neurons_me_logo.png">
+  <meta name="twitter:description" content="A verifiable lookup into the actual dependency graph — not a description of the reasoning, the reasoning itself.">
+  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/sui.gn/inherentLogics-suign.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "me.explain() — Why Did You Say That?",
+    "url": "https://neurons-me.github.io/me.explain.html",
+    "author": { "@type": "Person", "name": "sui.gn", "url": "https://suign.github.io/sui-Gn.html" },
+    "description": "me.explain(path): a verifiable lookup into the actual dependency graph that produced a value — not a description of the reasoning, the reasoning itself."
+  }
+  </script>
 
   <style>
     :root { color-scheme: dark; }
     body {
-      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      background: #0b0c0e; color: #e7e7ea;
+      margin: 0; background: #0b0c0e; color: #e7e7ea;
       font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       padding: 24px;
     }
-    main { max-width: 640px; }
+    main { max-width: 640px; margin: 0 auto; }
+    nav { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 36px; font-size: 12.5px; }
+    nav a { color: #9a9aa2; }
+    nav a:first-child { color: #e7e7ea; }
     h1 { font-size: clamp(22px, 5vw, 34px); margin: 0 0 6px; color: #fff; }
+    h2 { font-size: 15px; color: #fff; margin: 36px 0 12px; }
     .tag { color: #9a9aa2; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 24px; }
     pre {
       background: #131417; border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
-      padding: 16px 18px; font-size: 15px; overflow-x: auto; margin: 0 0 20px;
+      padding: 16px 18px; font-size: 14px; overflow-x: auto; margin: 0 0 20px; line-height: 1.6;
     }
+    table { display: block; overflow-x: auto; border-collapse: collapse; margin: 0 0 20px; font-size: 13px; max-width: 100%; }
+    td { padding: 4px 14px 4px 0; color: #c5c6c7; vertical-align: top; }
+    td:first-child { color: #fff; font-weight: 600; white-space: nowrap; }
+    .related td:first-child { font-weight: 400; }
+    .related td:first-child a { color: #fff; }
     p { color: #c5c6c7; line-height: 1.6; font-size: 14px; margin: 0 0 20px; }
     a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); text-decoration: none; }
+    footer { margin: 44px 0 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); }
   </style>
 </head>
 <body>
   <main>
+    <nav>
+      <a href="https://neurons-me.github.io/">&larr; neurons.me</a>
+      <a href="./me.whatever.what.html">me.whatever(what)</a>
+      <a href="https://neurons-me.github.io/.me/docs/Architecture.html">Architecture</a>
+      <a href="https://neurons-me.github.io/.me/Typescript/typedocs/QuickStart.html">Quick Start</a>
+    </nav>
+
     <p class="tag">.me — lineage</p>
     <h1>me.explain(path)</h1>
     <pre><code>me.explain("some.path");
 // → { value, derivation, meta: { k, recomputed, sourcePath } }</code></pre>
-    <p>Returns the actual computation that produced the value at <code>path</code> — which write triggered it, which nodes recomputed, and how many (<code>k</code>). Not a self-report generated after the fact.</p>
-    <p>Full write-up: <a href="./me.explain.why.did.you.say.that.html">me.explain() — Why Did You Say That?</a></p>
+    <p>Returns the actual computation that produced the value at <code>path</code> — which write triggered it, which nodes recomputed, and how many (<code>k</code>). Not a self-report generated after the fact: <code>self.explain(path)</code> looks up the derivation record the kernel already keeps and returns it unmodified. No LLM narration in the loop.</p>
+
+    <h2>Example</h2>
+    <pre><code>me.explain("robots.surgeon.canProceed") →
+{
+  path: "robots.surgeon.canProceed",
+  value: true,
+  expr: "canLift && softGripReady && !needsHumanReview && contextAllowsMotion",
+  derivation: {
+    expression: "canLift && softGripReady && !needsHumanReview && contextAllowsMotion",
+    inputs: [
+      { label: "canLift", path: "robots.surgeon.canLift", value: true, origin: "public" },
+      { label: "softGripReady", path: "robots.surgeon.softGripReady", value: true, origin: "public" },
+      // ...
+    ]
+  },
+  meta: {
+    dependsOn: [...],
+    recomputed: [...],  // what else recalculated in the same wave
+    sourcePath: "...",  // which write triggered the recompute
+  }
+}</code></pre>
+    <p>If <code>path</code> isn't derived — a plain stored value, not computed from an expression — <code>explain()</code> doesn't invent a cause. It returns <code>expr: null, derivation: null</code>, honestly. Absence of explanation is reported as absence.</p>
+
+    <h2>How-to</h2>
+    <table>
+      <tr><td>Why does this hold?</td><td><code>me.explain("some.path")</code></td></tr>
+      <tr><td>What did it depend on?</td><td><code>me.explain(path).derivation.inputs</code></td></tr>
+      <tr><td>What triggered the recompute?</td><td><code>me.explain(path).meta.sourcePath</code></td></tr>
+      <tr><td>How many nodes recomputed?</td><td><code>me.explain(path).meta.recomputed.length</code></td></tr>
+      <tr><td>Is this a stored value, not derived?</td><td><code>me.explain(path).derivation === null</code></td></tr>
+    </table>
+    <p>Why <code>recomputed</code>/<code>sourcePath</code> exist without scanning the whole graph on every call: a reverse index from each source path to what depends on it — see <a href="https://suign.github.io/InvertedIndex.html">Inverted Dependency Indexing</a>.</p>
+
+    <footer>
+      <table class="related">
+        <tr><td><a href="https://neurons-me.github.io/me.explain.why.did.you.say.that.html">me.explain() — Why Did You Say That?</a></td><td>The full essay: story vs. ledger, and why AI self-reports aren't evidence.</td></tr>
+        <tr><td><a href="./me.whatever.what.html">me.whatever(what)</a></td><td>The calling syntax — every path is Subject-Verb-Object.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/.me/docs/Architecture.html">O(k) Semantic Kernel Architecture</a></td><td>What <code>explain()</code> reads from — the dependency graph itself.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/.me/Typescript/typedocs/QuickStart.html">Quick Start</a></td><td>Install, first kernel, full walkthrough.</td></tr>
+      </table>
+    </footer>
   </main>
 </body>
 </html>

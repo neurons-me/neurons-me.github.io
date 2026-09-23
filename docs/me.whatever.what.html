@@ -5,42 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>me.whatever(what)</title>
   <meta name="description" content="The syntax of .me, formally: Subject-Verb-Object path calls, the operator table (@, _, ~, ->, =, ?, -), and selector syntax.">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://neurons-me.github.io/me.whatever.what.html">
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1769890772/this.me.png">
 
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="neurons.me">
   <meta property="og:title" content="me.whatever(what)">
   <meta property="og:description" content="The syntax of .me, formally: Subject-Verb-Object path calls, the operator table, and selector syntax.">
   <meta property="og:url" content="https://neurons-me.github.io/me.whatever.what.html">
-  <meta property="og:image" content="https://suign.github.io/assets/imgs/neurons_me_logo.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://suign.github.io/assets/imgs/sui.gn/inherent_logics_sui_gn.png">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="me.whatever(what)">
-  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/neurons_me_logo.png">
+  <meta name="twitter:description" content="The syntax of .me, formally: SVO path calls, the operator table, and selector syntax.">
+  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/sui.gn/inherent_logics_sui_gn.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "me.whatever(what)",
+    "url": "https://neurons-me.github.io/me.whatever.what.html",
+    "author": { "@type": "Person", "name": "sui.gn", "url": "https://suign.github.io/sui-Gn.html" },
+    "description": "The syntax of .me, formally: Subject-Verb-Object path calls, the operator table (@, _, ~, ->, =, ?, -), and selector syntax."
+  }
+  </script>
 
   <style>
     :root { color-scheme: dark; }
     body {
-      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      background: #0b0c0e; color: #e7e7ea;
+      margin: 0; background: #0b0c0e; color: #e7e7ea;
       font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       padding: 24px;
     }
-    main { max-width: 640px; }
+    main { max-width: 640px; margin: 0 auto; }
+    nav { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 36px; font-size: 12.5px; }
+    nav a { color: #9a9aa2; }
+    nav a:first-child { color: #e7e7ea; }
     h1 { font-size: clamp(22px, 5vw, 34px); margin: 0 0 6px; color: #fff; }
+    h2 { font-size: 15px; color: #fff; margin: 36px 0 12px; }
     .tag { color: #9a9aa2; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 24px; }
     pre {
       background: #131417; border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
-      padding: 16px 18px; font-size: 15px; overflow-x: auto; margin: 0 0 20px;
+      padding: 16px 18px; font-size: 14px; overflow-x: auto; margin: 0 0 20px; line-height: 1.6;
     }
-    table { border-collapse: collapse; margin: 0 0 20px; font-size: 13px; }
-    td { padding: 4px 14px 4px 0; color: #c5c6c7; }
-    td:first-child { color: #fff; font-weight: 600; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; margin: 0 0 20px; font-size: 13px; max-width: 100%; }
+    td { padding: 4px 14px 4px 0; color: #c5c6c7; vertical-align: top; }
+    td:first-child { color: #fff; font-weight: 600; white-space: nowrap; }
+    .related td:first-child { font-weight: 400; }
+    .related td:first-child a { color: #fff; }
     p { color: #c5c6c7; line-height: 1.6; font-size: 14px; margin: 0 0 20px; }
     a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); text-decoration: none; }
+    footer { margin: 44px 0 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); }
   </style>
 </head>
 <body>
   <main>
+    <nav>
+      <a href="https://neurons-me.github.io/">&larr; neurons.me</a>
+      <a href="https://neurons-me.github.io/.me/docs/Primitives.html">Primitives</a>
+      <a href="https://neurons-me.github.io/.me/docs/Syntax.html">Syntax</a>
+      <a href="https://neurons-me.github.io/.me/docs/Architecture.html">Architecture</a>
+      <a href="./me.explain.html">me.explain(path)</a>
+    </nav>
+
     <p class="tag">.me — syntax</p>
     <h1>me.whatever(what)</h1>
     <pre><code>me.some.path("value");   // Subject . Verb-Object path . call</code></pre>
@@ -54,6 +82,47 @@
       <tr><td>-</td><td>negation</td></tr>
     </table>
     <p>Every call into <code>.me</code> is a path, Subject-Verb-Object, plus this operator table. Full grammar and selector syntax: <a href="https://suign.github.io/MeWhateverWhat.html">the official Syntax spec</a>.</p>
+
+    <h2>Jump in</h2>
+    <pre><code>npm install this.me</code></pre>
+    <pre><code>import ME from "this.me";
+const me = new ME();
+
+me["@"]("jabellae");             // @  — identity
+me.profile.name("José Abella");  // plain write, no operator needed
+
+me.wallet["_"]("wallet-key");    // _  — secret scope: root is stealth
+me.wallet.balance(12480);        //      descendants still resolve
+
+me.friends.ana["->"]("users.ana");                    // -> — structural link, not a copy
+me.friends["[i]"]["="]("isAdult", "age >= 18");        // =  — reactive rule, recomputes in O(k)
+
+me("profile.name");        // "José Abella"
+me("friends.ana.isAdult"); // true
+me("wallet");               // undefined — stealth root
+me("wallet.balance");       // 12480 — descendant resolves</code></pre>
+    <p>One kernel, five lines of real operators. <code>@</code> sets who you are; <code>_</code> hides a subtree structurally, not by convention; <code>-&gt;</code> points instead of copying; <code>=</code> registers logic that recomputes only what depends on it.</p>
+
+    <h2>How-to</h2>
+    <table>
+      <tr><td>Read a path</td><td><code>me("some.path")</code></td></tr>
+      <tr><td>Write a path</td><td><code>me.some.path("value")</code></td></tr>
+      <tr><td>Claim an identity</td><td><code>me["@"]("handle")</code></td></tr>
+      <tr><td>Hide a subtree</td><td><code>me.scope["_"]("key")</code></td></tr>
+      <tr><td>Link instead of copy</td><td><code>me.a["->"]("b.c")</code></td></tr>
+      <tr><td>Register derived logic</td><td><code>me.list["[i]"]["="]("flag", "cond")</code></td></tr>
+      <tr><td>Ask why a value holds</td><td><code>me.explain("some.path")</code></td></tr>
+    </table>
+
+    <footer>
+      <table class="related">
+        <tr><td><a href="https://neurons-me.github.io/.me/Typescript/typedocs/QuickStart.html">Quick Start</a></td><td>Install, first kernel, full walkthrough.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/.me/Typescript/typedocs/Operators.html">Operators</a></td><td>Every operator, one page, with signatures.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/.me/Typescript/typedocs/Runtime-Surface.html">Runtime Surface</a></td><td>What's callable, top to bottom.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/.me/Typescript/typedocs/examples/Social_Graph.html">Social Graph — worked example</a></td><td>A real graph, built path by path.</td></tr>
+        <tr><td><a href="./me.explain.html">me.explain(path)</a></td><td>Why a value holds — lineage, not narration.</td></tr>
+      </table>
+    </footer>
   </main>
 </body>
 </html>
