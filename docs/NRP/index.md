@@ -13,8 +13,7 @@ title: NRP — Namespace Resolution Protocol
 
 The **Namespace Resolution Protocol (NRP)** specifies how a `me://` URI is
 resolved from a symbolic address into a concrete value, across a distributed
-mesh of surfaces — without a central registry, without a central server, and
-without requiring persistent connectivity.
+mesh of surfaces.
 
 It closes the gap between two layers, always composed in this order:
 
@@ -24,23 +23,19 @@ It closes the gap between two layers, always composed in this order:
   and reaches the surface that holds the target namespace, path, and key
   material.
 
-```
+<pre>
 me://jabellae.cleaker.me[surface:iphone]/wallet.balance
          │                    │                 │
-    topological           topological        semantic
+    <span style="color:#f0883e">topological</span>           <span style="color:#f0883e">topological</span>        <span style="color:#48a090">semantic</span>
     (find the             (find which        (resolve the
      namespace)            surface)           path locally)
-```
+</pre>
 
 *Meaning lives in the namespace. Execution lives in the mesh.*
 
 **This page is a map, not the spec.** The canonical, normative protocol
 document — and every implementation doc that goes with it — lives where the
-protocol is actually implemented: `monad.ai`. That's deliberate, not an
-oversight: duplicating the full spec text here, by hand, is exactly what let
-this page drift out of date in the past (it once described v0.2.1 as
-"latest" after v0.3.0 had already shipped). One canonical location, this
-page just points to it.
+protocol is actually implemented: `monad.ai`.
 
 ---
 
