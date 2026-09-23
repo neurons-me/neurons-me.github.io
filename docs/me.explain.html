@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>me.explain() — Why Did You Say That?</title>
+  <meta name="description" content="me.explain(path): a verifiable lookup into the actual dependency graph that produced a value — not a description of the reasoning, the reasoning itself.">
+  <link rel="canonical" href="https://neurons-me.github.io/me.explain.html">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1769890772/this.me.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="me.explain() — Why Did You Say That?">
+  <meta property="og:description" content="A verifiable lookup into the actual dependency graph — not a description of the reasoning, the reasoning itself.">
+  <meta property="og:url" content="https://neurons-me.github.io/me.explain.html">
+  <meta property="og:image" content="https://suign.github.io/assets/imgs/neurons_me_logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="me.explain() — Why Did You Say That?">
+  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/neurons_me_logo.png">
+
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: #0b0c0e; color: #e7e7ea;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      padding: 24px;
+    }
+    main { max-width: 640px; }
+    h1 { font-size: clamp(22px, 5vw, 34px); margin: 0 0 6px; color: #fff; }
+    .tag { color: #9a9aa2; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 24px; }
+    pre {
+      background: #131417; border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
+      padding: 16px 18px; font-size: 15px; overflow-x: auto; margin: 0 0 20px;
+    }
+    p { color: #c5c6c7; line-height: 1.6; font-size: 14px; margin: 0 0 20px; }
+    a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="tag">.me — lineage</p>
+    <h1>me.explain(path)</h1>
+    <pre><code>me.explain("some.path");
+// → { value, derivation, meta: { k, recomputed, sourcePath } }</code></pre>
+    <p>Returns the actual computation that produced the value at <code>path</code> — which write triggered it, which nodes recomputed, and how many (<code>k</code>). Not a self-report generated after the fact.</p>
+    <p>Full write-up: <a href="./me.explain.why.did.you.say.that.html">me.explain() — Why Did You Say That?</a></p>
+  </main>
+</body>
+</html>

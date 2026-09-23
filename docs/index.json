@@ -147,6 +147,24 @@
     "kind": "doc"
   },
   {
+    "id": "me-whatever-what",
+    "title": "me.whatever(what)",
+    "desc": "The calling syntax: Subject-Verb-Object path calls, the operator table, selectors.",
+    "url": "https://neurons-me.github.io/me.whatever.what.html",
+    "repo": ".me",
+    "icon": "🔤",
+    "kind": "doc"
+  },
+  {
+    "id": "me-explain",
+    "title": "me.explain() — Why Did You Say That?",
+    "desc": "A verifiable lookup into the actual dependency graph that produced a value — not a description of the reasoning, the reasoning itself.",
+    "url": "https://neurons-me.github.io/me.explain.html",
+    "repo": ".me",
+    "icon": "🔍",
+    "kind": "doc"
+  },
+  {
     "id": "me-robots",
     "title": "Robots That Understand Context",
     "desc": "The same object means different things depending on who is looking and where.",
