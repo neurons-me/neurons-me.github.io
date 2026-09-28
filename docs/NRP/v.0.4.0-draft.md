@@ -111,8 +111,10 @@ this section is a proposal until approved; the segment encoding is not chosen.
   serialized path or `me://` URI is decoded by the grammar. They never share
   decoding rules.
 - **`[2]` is `.2`.** An index selector names the same node as the numeric
-  segment, as the kernel does today. After a `.`, a digit starts a segment,
-  never a decimal literal (fixes kernel bug #5).
+  segment, as the kernel does today. Inside a path, a digit after a
+  separator `.` starts a segment: `dep.2.out` is `["dep", "2", "out"]` (fixes
+  kernel bug #5). A `.` that is not a path separator, as in the literal `1.5`
+  in a formula, keeps its decimal meaning.
 - **Selectors are explicit productions.** Index, range, multi-select,
   iterator, filter and transform are told apart by syntax. Position decides
   execution vs data: a `[...]` on the namespace (before the path) constrains
@@ -192,7 +194,7 @@ a stranger.
   namespace (claim / proof).
 - **D4 — Re-seal trigger.** Who re-seals when a member's key rotates or a group
   name moves, and whether old ciphertext is kept, replaced, or both.
-- **D5 — One path grammar.** Model agreed (§3); open: the serialization of a
+- **D5 — One path grammar.** Model proposed (§3); open: the serialization of a
   segment containing `.`, its compatibility boundary and test matrix.
 - **D6 — Existence privacy.** The R5 test: responses and parent listings for an
   existing sealed path vs a missing one, byte-for-byte.
