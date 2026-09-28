@@ -95,12 +95,52 @@ Unchanged from v0.3.0 §4. For an Island:
 ## 3. One path grammar (requirement)
 
 `.me` paths (`me.photos.iphone`) and NRP paths (`me://ns/photos/iphone`) must be
-one grammar with a lossless round trip: every `.me` path has exactly one NRP
-form and back, including selectors (`[i]`, `[age > 18]`, `[2]`) and numeric
-segments. Today they are two grammars and they already conflict: inside a
-`.me` formula `dep.2.out` is split into `dep`, `2`, `out` (kernel bug #5). This
-section is written first because every other part of v0.4 addresses through
-it. **Details OPEN (D5).**
+one grammar with a lossless round trip. **Status: OPEN (D5)** — everything in
+this section is a proposal until approved; the segment encoding is not chosen.
+
+**Proposed**
+
+- **Logical segments are the identity.** A path is an ordered list of logical
+  segments. `me.a.b` and `me://ns/a/b` are two spellings of `["a", "b"]`. There
+  is one path-identity contract: every representation — URI, storage keys,
+  memory log, scopes, pointers, derivation refs, snapshots, replay, parent/child
+  checks, key derivation — may have its own serializer, versioned, but each
+  must preserve exactly the same segments. Nothing joins segments by hand.
+- **Inputs decode differently by source.** The JavaScript proxy receives
+  literal names (`me.domains["cleaker.me"]` is the segment `cleaker.me`); a
+  serialized path or `me://` URI is decoded by the grammar. They never share
+  decoding rules.
+- **`[2]` is `.2`.** An index selector names the same node as the numeric
+  segment, as the kernel does today. After a `.`, a digit starts a segment,
+  never a decimal literal (fixes kernel bug #5).
+- **Selectors are explicit productions.** Index, range, multi-select,
+  iterator, filter and transform are told apart by syntax. Position decides
+  execution vs data: a `[...]` on the namespace (before the path) constrains
+  execution (v0.3.0 Rule 2); a `[...]` on a segment selects data.
+- **Its own parser.** No generic parser (e.g. a URL parser) may silently
+  reinterpret `.me` grammar; inside `me://`, `? # @ +` and spaces are grammar,
+  not URL syntax. Generic URL parsing stays valid for HTTP transport addresses.
+- **Transport is not grammar.** `/@handle`, `/.mesh/...`, `:read`,
+  `/resolve?target=` and `/apps/:name` are binding conventions (v0.3.0 §8,
+  §11), removed before a path reaches the tree.
+
+**Open: the serialization of a segment that contains `.`**
+
+Today segments are joined with `.` everywhere, so a segment containing `.`
+collides with nesting (kernel bug #6: `["a.b","c"]` and `["a","b.c"]` are one
+key). Candidate: a minimal escape applied only by the central serializer —
+`%` → `%25` and `.` → `%2E`, nothing else — which leaves every existing path
+without `.` or `%` byte-identical, including its key-derivation context.
+Alternative: length-prefixed segments for key derivation, versioned. Before
+either is chosen:
+
+- full encode/decode rules: empty segments, invalid escapes, canonical form;
+- a compatibility boundary: stored `a.b.c` records have lost their segment
+  boundaries and keep their historical reading; they are not migrated
+  automatically. `__DOT__` (netget domains) is migrated only where its own
+  contract says it stands for `.`;
+- a test matrix: dots, percents, Unicode, selectors, scopes, pointers,
+  existing sealed blobs, and `parse → serialize → parse` for both spellings.
 
 ## 4. Worked example: sharing a photo
 
@@ -152,8 +192,8 @@ a stranger.
   namespace (claim / proof).
 - **D4 — Re-seal trigger.** Who re-seals when a member's key rotates or a group
   name moves, and whether old ciphertext is kept, replaced, or both.
-- **D5 — Grammar details.** Numeric segments, selectors inside NRP URLs, and
-  their encoding.
+- **D5 — One path grammar.** Model agreed (§3); open: the serialization of a
+  segment containing `.`, its compatibility boundary and test matrix.
 - **D6 — Existence privacy.** The R5 test: responses and parent listings for an
   existing sealed path vs a missing one, byte-for-byte.
 - **D7 — Cross-host.** When jorge's monad is on another machine, resolving his
