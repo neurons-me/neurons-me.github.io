@@ -33,24 +33,29 @@ me://jabellae.cleaker.me[surface:iphone]/wallet.balance
 
 *Meaning lives in the namespace. Execution lives in the mesh.*
 
-**This page is a map, not the spec.** The canonical, normative protocol
-document — and every implementation doc that goes with it — lives where the
-protocol is actually implemented: `monad.ai`.
+**The normative spec lives here.** NRP is the contract every module follows —
+`.me`, cleaker, `monad.ai`, netget, the GUI — so its source of truth sits on
+this site, not inside any one implementation. Implementation docs stay with
+their code and link back here.
 
 ---
 
 ## Latest normative spec
 
-**[NRP v0.3.0](https://neurons-me.github.io/monad/Typescript/typedocs/NRP-v0.3.0.html)** —
+**[NRP v0.3.0](./v.0.3.0.md)** —
 current. Covers the core resolution grammar, disclosure model, Total Monad
 Synthesis, and the HTTP + WebSocket transport bindings.
 
+**[NRP v0.4.0 — draft](./v.0.4.0-draft.md)** — in progress, not normative
+yet. Binds the address to the Island `I = (path, ciphertext, T, A, C)`:
+one path grammar shared with `.me`, audiences, capabilities; open decisions
+are marked.
+
 ## Historical specs
 
-- [v0.2.1](https://neurons-me.github.io/monad/Typescript/typedocs/NRP-v0.2.1.html) —
+- [v0.2.1](./v.0.2.1.md) —
   archived, implemented mesh draft through `monad.ai` Phase 6. Superseded by v0.3.0.
-- [v0.1.2](./v.0.1.2.md) — first stable working document. No later home exists
-  for this one; kept here as the durable archive.
+- [v0.1.2](./v.0.1.2.md) — first stable working document.
 
 ## Relationship to cleaker
 

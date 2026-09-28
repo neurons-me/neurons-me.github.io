@@ -28,7 +28,7 @@ four parts that already have names elsewhere in this stack:
 |---|---|---|
 | **Surface address** | The hostname/path a request arrives on — `local.netget/apps/:name`, `<name>.local`, a public domain | [Surface Access Points and Routing](./Surface-Access-Points-and-Routing.md) |
 | **Monad identity** | The process serving the surface — its own `SEED`, its own keypair, its own `self.json` | [monad.ai](https://neurons-me.github.io/monad/) |
-| **`.me` namespace** | The semantic space the monad resolves reads/writes against | [NRP v0.3.0](https://neurons-me.github.io/monad/Typescript/typedocs/NRP-v0.3.0.html) |
+| **`.me` namespace** | The semantic space the monad resolves reads/writes against | [NRP v0.3.0](./v.0.3.0.md) |
 | **netget policy** | What the gateway exposes, proxies, and allows through for this surface | [Monad Exposure Policy](https://neurons-me.github.io/netget/Typescript/typedocs/monad-exposure-policy.html) |
 
 A "virtual host," in this sense, isn't a new primitive — it's naming the
@@ -109,5 +109,5 @@ files and restarts.
 - [Apps Over Netget](https://neurons-me.github.io/netget/Typescript/typedocs/AppsOverNetget.html) — the concrete, already-working instance of surface address + monad identity + `.me` namespace + netget policy, without the observability layer
 - [Surface Access Points and Routing](./Surface-Access-Points-and-Routing.md)
 - [Monad Exposure Policy](https://neurons-me.github.io/netget/Typescript/typedocs/monad-exposure-policy.html)
-- [NRP v0.3.0](https://neurons-me.github.io/monad/Typescript/typedocs/NRP-v0.3.0.html)
+- [NRP v0.3.0](./v.0.3.0.md)
 - [NRP overview](./index.md)

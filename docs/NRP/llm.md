@@ -218,7 +218,10 @@ packages/GUI/Typescript/src/gui/All.This/NRP/Beatle/
   Beatle.stories.tsx    — Storybook stories
 
 neurons-me.github.io/docs/NRP/
-  index.md                          — map/overview only, not the spec (see below)
+  index.md                          — NRP home: overview + links to every spec version
+  v.0.3.0.md                        — the normative protocol spec (canonical)
+  v.0.4.0-draft.md                  — next version, draft, not normative
+  v.0.2.1.md, v.0.1.2.md            — archived versions
   NRPExpression-Parser.md           — this parser
   Beatle.md                         — Beatle component
   NamespaceChannel.md               — channel state
@@ -226,9 +229,8 @@ neurons-me.github.io/docs/NRP/
   Disclosure-Levels.md              — public / closed / stealth / contested
 
 all.this/modules/monad/Typescript/typedocs/
-  NRP-v0.3.0.md         — the actual normative protocol spec (canonical —
-                           lives with the implementation, not on this site)
-  Mesh/status.md        — implementation status
+  Mesh/status.md        — implementation status (reference implementation;
+                           the spec itself is in neurons-me.github.io/docs/NRP/)
 
 all.this/me/Typescript/typedocs/
   NRP-Kernel-Role.md    — why .me is the semantic authority
@@ -256,7 +258,7 @@ all.this/modules/netget/Typescript/docs/
    The socket then stays open for `read`/`subscribe`/`unsubscribe` (client →
    server) and `data`/`stream` (server → client, the latter pushed live on
    every matching kernel write via an in-process `pathNotify` registry). Full
-   contract: [NRP v0.3.0 §11](https://neurons-me.github.io/monad/Typescript/typedocs/NRP-v0.3.0.html#11-websocket-binding-nrp).
+   contract: [NRP v0.3.0](https://neurons-me.github.io/NRP/v.0.3.0.html), §11.
    Reference client: `this.gui/runtime`'s `createWsMeRuntime()`.
 
 3. **Cleaker in depth** — `modules/cleaker/Typescript/src/namespace/expression.ts` is the canonical parser. `parseNamespaceExpression(input)` returns `ParsedNamespaceExpression` with context, operation, path, and transport hints.
