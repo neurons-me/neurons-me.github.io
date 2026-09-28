@@ -5,7 +5,9 @@ title: NRP v0.3.0 — Namespace Resolution Protocol
 
 # Namespace Resolution Protocol v0.3.0
 **neurons.me / suiGn**  
-**Status:** Latest normative protocol spec for the current `monad.ai` mesh binding through Phase 10  
+**Status:** Current normative spec of the `me://` URI scheme: how a name — a
+namespace, which is a `.me` — and a path inside it resolve to a value.
+`monad.ai` is the reference implementation (mesh binding through Phase 10).  
 **License:** CC0 1.0 Universal - Public Domain
 
 ---
@@ -77,8 +79,9 @@ converge. If they do not converge under synthesis, the result is `contested`.
 
 ## 1. Definitions
 
-**Namespace** - A named semantic domain owned by whoever holds its root key
-material. There is no central registry that grants or revokes a namespace.
+**Namespace** - A name for a `.me`: the root of a `.me` tree
+(`jabellae.cleaker.me`), owned by whoever holds its root key material. There is
+no central registry that grants or revokes a namespace.
 
 **monad** - A physical or logical runtime that can hold or reach a `.me` kernel
 instance and participate in the mesh. A monad is not a namespace; it is an
