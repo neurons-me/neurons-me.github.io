@@ -4,10 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b0b0f" />
-  <title>Smart Cities — Topic Index</title>
-  <meta name="description" content="A city that behaves like a living system: the human essay and the .me kernel docs on reactive scale behind it — start here." />
+  <title>Smart Cities</title>
+  <meta name="description" content="Evolving city data as live dependencies in .me — syntax demo, Madrid GTFS semantic graph, and human fares knowledge. Not a paper dump." />
   <link rel="canonical" href="https://neurons-me.github.io/smart-cities/" />
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
+  <meta property="og:title" content="Smart Cities — neurons.me" />
+  <meta property="og:description" content="Evolving city data as live dependencies in .me — syntax, Madrid GTFS, and human fares." />
+  <meta property="og:image" content="https://suign.github.io/assets/imgs/MADRID-GTFS-DATA-me.jpg" />
+  <meta property="og:url" content="https://neurons-me.github.io/smart-cities/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Smart Cities — neurons.me" />
+  <meta name="twitter:description" content="Evolving city data as live dependencies in .me — syntax, Madrid GTFS, and human fares." />
+  <meta name="twitter:image" content="https://suign.github.io/assets/imgs/MADRID-GTFS-DATA-me.jpg" />
   <style>
     :root {
       --bg: #0b0b0f;
@@ -48,6 +57,14 @@
     .item:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.05); }
     .item-title { font-weight: 600; font-size: 1.02rem; }
     .item-desc { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+    .item-tag {
+      display: inline-block; margin-top: 10px; font-size: .72rem; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--blue); opacity: .9;
+    }
+    .item-media {
+      display: block; width: 100%; max-height: 160px; object-fit: cover;
+      border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--line);
+    }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
@@ -55,31 +72,49 @@
   <div class="wrap">
     <a href="../" style="display:inline-block;margin-top:20px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">&larr; neurons.me</a>
     <header>
-      <div class="eyebrow">Topic</div>
+      <div class="eyebrow">Smart Cities</div>
       <h1>A city that behaves like a living system.</h1>
-      <p class="lead">Not a collection of databases. One reactive graph. Every street, schedule and secret lives on the same nervous system — and reacts by itself, no polling, no orchestration layer.</p>
+      <p class="lead">Evolving city data as live dependencies in <code>.me</code> — not a paper dump. Streets, schedules, fares and secrets on one reactive graph: mutate a fact, dependents update, <code>explain()</code> shows why.</p>
     </header>
+
+    <section>
+      <p class="section-label">Demos</p>
+      <div class="links">
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Smart-Cities.html">
+          <div class="item-title">Syntax demo — Veracruz</div>
+          <div class="item-desc">The original .me kernel walkthrough: districts, traffic, services and stealth security as one reactive semantic tree.</div>
+          <span class="item-tag">Syntax</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Tests/gtfs-madrid-universe.html">
+          <img class="item-media" src="https://suign.github.io/assets/imgs/MADRID-GTFS-DATA-me.jpg" alt="Madrid GTFS as .me dependencies" />
+          <div class="item-title">GTFS Madrid — semantic graph</div>
+          <div class="item-desc">Real GTFS → reactive dependencies. Mutate and watch k; technical graph of stops, routes and trips as live .me paths.</div>
+          <span class="item-tag">Technical · Madrid</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Tests/madrid-knowledge.html">
+          <div class="item-title">Madrid knowledge — fares</div>
+          <div class="item-desc">Same city, human story: fares, abono, Sol→Atocha. Mutate → dependents + explain() without the GTFS machinery.</div>
+          <span class="item-tag">Human · Madrid</span>
+        </a>
+      </div>
+    </section>
 
     <section>
       <p class="section-label">Read</p>
       <div class="links">
         <a class="item" href="../Smart-Cities-Versi%C3%B3n-Humana.html">
           <div class="item-title">Smart Cities — Human Version</div>
-          <div class="item-desc">The narrative demo: Veracruz as a reactive graph — districts, traffic, services, stealth security.</div>
+          <div class="item-desc">The narrative essay: Veracruz as a reactive graph — districts, traffic, services, stealth security.</div>
         </a>
       </div>
     </section>
 
     <section>
-      <p class="section-label">Technical docs</p>
+      <p class="section-label">Related technical docs</p>
       <div class="links">
-        <a class="item" href="https://neurons-me.github.io/.me/docs/Smart-Cities.html">
-          <div class="item-title">Smart Cities</div>
-          <div class="item-desc">The .me kernel docs this demo is built on.</div>
-        </a>
         <a class="item" href="https://neurons-me.github.io/.me/docs/Hemisphere-Scale.html">
           <div class="item-title">Hemisphere Scale</div>
-          <div class="item-desc">How the kernel holds up at 1,000,000+ nodes — the reactive scale behind the city demo.</div>
+          <div class="item-desc">How the kernel holds up at 1,000,000+ nodes — the reactive scale behind the city demos.</div>
         </a>
         <a class="item" href="https://neurons-me.github.io/.me/docs/Extreme-Fan-Out.html">
           <div class="item-title">Extreme Fan-Out</div>

@@ -8,7 +8,7 @@ Learn more: https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context
 **Smart Cities**
 Living infrastructure coordinated through semantic systems.
 Image: ./media/smart_cities.gif
-Learn more: https://neurons-me.github.io/.me/docs/Smart-Cities.html
+Learn more: https://neurons-me.github.io/smart-cities/
 
 **Social Graph**
 Explainable relationship networks built on human connection.

@@ -10,7 +10,7 @@
 https://neurons-me.github.io/.me/ 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/.me/docs/ 𓃭 𓆀 𓋹𓂀 𓋹 𓅓 𓂃 
 https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html 𓃭 𓆀 𓂃 
-https://neurons-me.github.io/.me/docs/Smart-Cities.html 𓎛 𓆙 𓅱 𓏏 
+https://neurons-me.github.io/smart-cities/ 𓎛 𓆙 𓅱 𓏏 
 https://neurons-me.github.io/.me/Typescript/ 𓋹𓂀 𓋹 𓅓 𓆀 𓇼  𓀭 
 https://neurons-me.github.io/.me/Typescript/typedocs/ 𓋹𓂀 𓋹 𓅓 
 https://neurons-me.github.io/.me/Typescript/typedocs/api/ 𓎛 𓆙 𓅱 𓏏 𓅓 𓆙 

@@ -194,8 +194,8 @@
   {
     "id": "me-smart-cities",
     "title": "Smart Cities",
-    "desc": "A city that behaves like a living semantic system — one reactive graph.",
-    "url": "https://neurons-me.github.io/.me/docs/Smart-Cities.html",
+    "desc": "Evolving city data as live dependencies — syntax demo, Madrid GTFS, and human fares.",
+    "url": "https://neurons-me.github.io/smart-cities/",
     "repo": ".me",
     "icon": "🏙️",
     "kind": "doc"
