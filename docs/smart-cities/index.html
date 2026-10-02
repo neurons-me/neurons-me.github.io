@@ -40,26 +40,90 @@
     a { color: inherit; }
     .wrap { width: min(760px, calc(100% - 40px)); margin: 0 auto; padding-top: 12px; }
 
-    .topnav {
-      position: sticky; top: 0; z-index: 100;
+
+    /* Site topbar — match Syntax (neurons-me remote theme) height + controls */
+    .topbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.86);
+      border-bottom: 1px solid #d0d7de;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      color: #24292f;
+    }
+    .topbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; max-width: 980px; margin: 0 auto; padding: 12px 32px;
+    }
+    .topbar .brand {
+      color: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0;
+      white-space: nowrap; text-decoration: none;
+    }
+    .topbar .brand:hover { text-decoration: none; opacity: 0.85; }
+    .topbar-search { flex: 1 1 auto; min-width: 120px; max-width: 280px; }
+    .topbar [data-gui-searchbar] input { min-width: 0; }
+    .topbar [data-gui-searchbar] > div > div { border-color: rgba(9,105,218,0.24) !important; }
+    .topbar [data-gui-searchbar] > div > div:focus-within {
+      border-color: #0969da !important; box-shadow: 0 0 0 3px rgba(9,105,218,0.12);
+    }
+    .topbar .nav-links {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end;
+    }
+    .topbar .nav-links a {
+      color: #57606a; border-radius: 6px; padding: 6px 10px; font-size: 14px;
+      line-height: 1; text-decoration: none;
+    }
+    .topbar .nav-links a:hover { color: #24292f; background: #f6f8fa; text-decoration: none; }
+    @media (prefers-color-scheme: dark) {
+      .topbar {
+        background: rgba(11,17,20,0.86); border-bottom-color: #30363d; color: #c9d1d9;
+      }
+      .topbar .nav-links a { color: #8b949e; }
+      .topbar .nav-links a:hover { color: #c9d1d9; background: #161b22; }
+      .topbar [data-gui-searchbar] > div > div {
+        background: #111a1f !important; border-color: rgba(232,237,237,0.1) !important;
+      }
+      .topbar [data-gui-searchbar] > div > div:focus-within {
+        border-color: #4fd1c5 !important; box-shadow: 0 0 0 3px rgba(79,209,197,0.12);
+      }
+      .topbar [data-gui-searchbar] input { color: #e8eded !important; }
+      .topbar [data-gui-searchbar] input::placeholder { color: #98a7b3 !important; opacity: 1 !important; }
+      .topbar [data-gui-searchbar] > div > div > span:last-of-type {
+        background: rgba(232,237,237,0.1) !important; color: #98a7b3 !important;
+      }
+      .topbar [data-gui-searchbar] a[role="option"] {
+        color: #e8eded !important; border-bottom-color: rgba(232,237,237,0.08) !important;
+      }
+    }
+    @media (max-width: 767px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; gap: 8px; padding: 12px 16px; }
+      .topbar-search { order: 3; width: 100%; max-width: 100%; }
+      .topbar .nav-links { justify-content: flex-start; }
+      .topbar .nav-links a { padding: 6px 8px; }
+    }
+
+    /* Hub is always dark — keep site topbar on the same surface as Syntax dark mode */
+    .topbar {
+      background: rgba(11,17,20,0.92) !important;
+      border-bottom-color: rgba(255,255,255,0.1) !important;
+      color: #c9d1d9 !important;
+    }
+    .topbar .nav-links a { color: #8b949e !important; }
+    .topbar .nav-links a:hover { color: #e8eded !important; background: rgba(255,255,255,0.06) !important; }
+
+    .sc-topnav {
       display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
-      padding: 10px 0 12px;
-      margin: 0 0 8px;
-      background: rgba(11,11,15,0.92);
-      backdrop-filter: blur(10px);
+      padding: 10px 0 12px; margin: 0 0 8px;
       border-bottom: 1px solid var(--line);
       font-size: 0.82rem; font-weight: 600;
     }
-    .topnav .brand {
+    .sc-topnav .brand {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.72rem; font-weight: 600; color: var(--muted);
       border: 1px solid var(--line); border-radius: 999px;
       padding: 5px 11px; margin-right: 4px; text-decoration: none;
     }
-    .topnav a { text-decoration: none; color: var(--muted); padding: 5px 10px; border-radius: 6px; transition: background .15s, color .15s; }
-    .topnav a:hover { color: var(--text); background: rgba(255,255,255,.06); }
-    .topnav a.active { color: var(--text); background: rgba(131,214,236,.14); }
-    .topnav .spacer { flex: 1; min-width: 8px; }
+    .sc-topnav a { text-decoration: none; color: var(--muted); padding: 5px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+    .sc-topnav a:hover { color: var(--text); background: rgba(255,255,255,.06); }
+    .sc-topnav a.active { color: var(--text); background: rgba(131,214,236,.14); }
 
     header { padding: 28px 0 40px; }
     h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; }
@@ -86,15 +150,32 @@
   </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="https://neurons-me.github.io/.me/">.me</a>
+      <div
+        class="topbar-search"
+        data-gui-searchbar
+        data-src="https://neurons-me.github.io/index.json"
+        data-placeholder="Search in All.This"
+      ></div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="https://neurons-me.github.io/">Home</a>
+        <a href="https://neurons-me.github.io/.me/docs/">Docs</a>
+        <a href="https://github.com/neurons-me/.me">Github</a>
+        <a href="https://neurons-me.github.io/all.this/">All.This</a>
+      </nav>
+    </div>
+  </header>
   <div class="wrap">
-  <nav class="topnav" aria-label="Smart Cities">
-    <a class="brand" href="../">← neurons.me</a>
+  <nav class="sc-topnav" aria-label="Smart Cities">
+    <a class="brand" href="https://neurons-me.github.io/">← neurons.me</a>
     <a href="https://neurons-me.github.io/smart-cities/" class="active">Smart Cities</a>
     <a href="https://neurons-me.github.io/.me/docs/Smart-Cities.html">Syntax</a>
     <a href="https://neurons-me.github.io/.me/docs/Tests/gtfs-madrid-universe.html">GTFS</a>
     <a href="https://neurons-me.github.io/.me/docs/Tests/madrid-knowledge.html">Fares</a>
   </nav>
-    <header>
+<header>
       <h1>A city that behaves like a living system.</h1>
       <p class="lead">Evolving city data as live dependencies in <code>.me</code> — not a paper dump. Streets, schedules, fares and secrets on one reactive graph: mutate a fact, dependents update, <code>explain()</code> shows why.</p>
     </header>
@@ -147,5 +228,6 @@
 
     <footer>sui.gn / neurons.me</footer>
   </div>
+  <script src="https://neurons-me.github.io/vendor/gui-searchbar.iife.js" defer></script>
 </body>
 </html>
