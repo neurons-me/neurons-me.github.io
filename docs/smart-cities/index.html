@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-accent="neutral">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,6 +25,16 @@
       --blue: #83d6ec;
       --red: #f19b9b;
       --line: rgba(255,255,255,.1);
+      /* chrome / accent=neutral (me-theme dark) */
+      --sc-fg: #c9d1d9;
+      --sc-muted: #8b949e;
+      --sc-border: #30363d;
+      --sc-subtle: #161b22;
+      --sc-accent: #4fd1c5;
+      --sc-nav-bg: rgba(11, 17, 20, 0.92);
+      --sc-active: rgba(131, 214, 236, 0.14);
+      --sc-active-fg: #e8eded;
+      --sc-hover: rgba(255, 255, 255, 0.06);
     }
     * { box-sizing: border-box; }
     body {
@@ -52,12 +62,18 @@
     .topbar-inner {
       display: flex; align-items: center; justify-content: space-between;
       gap: 20px; max-width: 980px; margin: 0 auto; padding: 12px 32px;
+      min-height: 48px; box-sizing: border-box;
     }
     .topbar .brand {
+      display: inline-flex; align-items: center; gap: 8px;
       color: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0;
-      white-space: nowrap; text-decoration: none;
+      white-space: nowrap; text-decoration: none; line-height: 1;
     }
     .topbar .brand:hover { text-decoration: none; opacity: 0.85; }
+    .topbar .brand-logo {
+      width: 20px; height: 20px; object-fit: contain; display: block;
+      border-radius: 4px; flex: 0 0 auto;
+    }
     .topbar-search { flex: 1 1 auto; min-width: 120px; max-width: 280px; }
     .topbar [data-gui-searchbar] input { min-width: 0; }
     .topbar [data-gui-searchbar] > div > div { border-color: rgba(9,105,218,0.24) !important; }
@@ -94,36 +110,30 @@
       }
     }
     @media (max-width: 767px) {
-      .topbar-inner { align-items: flex-start; flex-direction: column; gap: 8px; padding: 12px 16px; }
+      .topbar-inner { align-items: flex-start; flex-direction: column; gap: 8px; padding: 12px 16px; min-height: 0; }
       .topbar-search { order: 3; width: 100%; max-width: 100%; }
       .topbar .nav-links { justify-content: flex-start; }
       .topbar .nav-links a { padding: 6px 8px; }
     }
 
-    /* Hub is always dark — keep site topbar on the same surface as Syntax dark mode */
+    /* Hub is always dark — chrome uses sc-* tokens (accent=neutral) */
     .topbar {
-      background: rgba(11,17,20,0.92) !important;
-      border-bottom-color: rgba(255,255,255,0.1) !important;
-      color: #c9d1d9 !important;
+      background: var(--sc-nav-bg) !important;
+      border-bottom-color: var(--sc-border) !important;
+      color: var(--sc-fg) !important;
     }
-    .topbar .nav-links a { color: #8b949e !important; }
-    .topbar .nav-links a:hover { color: #e8eded !important; background: rgba(255,255,255,0.06) !important; }
+    .topbar .nav-links a { color: var(--sc-muted) !important; }
+    .topbar .nav-links a:hover { color: var(--sc-fg) !important; background: var(--sc-hover) !important; }
 
     .sc-topnav {
       display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
-      padding: 10px 0 12px; margin: 0 0 8px;
-      border-bottom: 1px solid var(--line);
-      font-size: 0.82rem; font-weight: 600;
+      padding: 8px 0; margin: 0 0 8px; max-width: 980px;
+      border-bottom: 1px solid var(--sc-border);
+      font-size: 0.82rem; font-weight: 600; min-height: 40px; box-sizing: border-box;
     }
-    .sc-topnav .brand {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.72rem; font-weight: 600; color: var(--muted);
-      border: 1px solid var(--line); border-radius: 999px;
-      padding: 5px 11px; margin-right: 4px; text-decoration: none;
-    }
-    .sc-topnav a { text-decoration: none; color: var(--muted); padding: 5px 10px; border-radius: 6px; transition: background .15s, color .15s; }
-    .sc-topnav a:hover { color: var(--text); background: rgba(255,255,255,.06); }
-    .sc-topnav a.active { color: var(--text); background: rgba(131,214,236,.14); }
+    .sc-topnav a { text-decoration: none; color: var(--sc-muted); padding: 5px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+    .sc-topnav a:hover { color: var(--sc-fg); background: var(--sc-hover); }
+    .sc-topnav a.active { color: var(--sc-active-fg); background: var(--sc-active); }
 
     header { padding: 28px 0 40px; }
     h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; }
@@ -152,7 +162,7 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="https://neurons-me.github.io/.me/">.me</a>
+      <a class="brand" href="https://neurons-me.github.io/.me/"><img class="brand-logo" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="" width="20" height="20" /><span>.me</span></a>
       <div
         class="topbar-search"
         data-gui-searchbar
@@ -160,7 +170,6 @@
         data-placeholder="Search in All.This"
       ></div>
       <nav class="nav-links" aria-label="Main navigation">
-        <a href="https://neurons-me.github.io/">Home</a>
         <a href="https://neurons-me.github.io/.me/docs/">Docs</a>
         <a href="https://github.com/neurons-me/.me">Github</a>
         <a href="https://neurons-me.github.io/all.this/">All.This</a>
@@ -168,8 +177,7 @@
     </div>
   </header>
   <div class="wrap">
-  <nav class="sc-topnav" aria-label="Smart Cities">
-    <a class="brand" href="https://neurons-me.github.io/">← neurons.me</a>
+    <nav class="sc-topnav" aria-label="Smart Cities">
     <a href="https://neurons-me.github.io/smart-cities/" class="active">Smart Cities</a>
     <a href="https://neurons-me.github.io/.me/docs/Smart-Cities.html">Syntax</a>
     <a href="https://neurons-me.github.io/.me/docs/Tests/gtfs-madrid-universe.html">GTFS</a>
