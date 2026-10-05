@@ -17,17 +17,17 @@ https://neurons-me.github.io/.me/Typescript/typedocs/api/ 𓎛 𓆙 𓅱 𓏏 �
 https://neurons-me.github.io/.me/Python/ 𓋹𓂀 𓋹 𓅓 𓆙 𓅱  𓎛 
 https://neurons-me.github.io/.me/Rust/ 𓎛 𓆙 𓅱 𓏏 𓍢 𓎛 𓆣 𓍢 𓎛 
 ## 𓍢 cleaker 𓍢 𓎛 𓆣 𓍢 𓎛 𓋹𓂀 𓋹 𓅓 𓆣 𓇯 𓁹 𓎛 𓆣 𓇯 𓁹 𓎛 𓋹𓂀 𓋹 𓅓 
-https://neurons-me.github.io/Cleaker/ 𓆣 𓇯 𓁹  𓎛 𓆙 
-https://neurons-me.github.io/Cleaker/docs/ 𓃭 𓆀 𓂃  𓆣 𓇯 𓁹 𓎛 𓆙 
-https://neurons-me.github.io/Cleaker/docs/en/Cleaker.html 𓋹𓂀 𓋹 𓅓 𓆀 𓇼  𓀭 
-https://neurons-me.github.io/Cleaker/docs/en/The-Model.html 𓃭 𓆀 𓆣 𓇯 𓁹 𓎛 𓆙 𓂃 
-https://neurons-me.github.io/Cleaker/docs/en/The-Algebra-of-Me.html 𓎛 𓆙 𓅱 𓏏 
-https://neurons-me.github.io/Cleaker/docs/en/The-Flat-Universe.html 𓃭 𓆀 𓂃 
-https://neurons-me.github.io/Cleaker/Typescript/ 𓆣 𓇯 𓁹 𓎛 𓆙 𓆀 𓇼  𓀭 
+https://github.com/neurons-me/Cleaker 𓆣 𓇯 𓁹  𓎛 𓆙 
+https://github.com/neurons-me/Cleaker/tree/main/docs 𓃭 𓆀 𓂃  𓆣 𓇯 𓁹 𓎛 𓆙 
+https://neurons-me.github.io/Cleaker/Typescript/typedocs/Cleaker.html 𓋹𓂀 𓋹 𓅓 𓆀 𓇼  𓀭 
+https://neurons-me.github.io/Cleaker/Typescript/typedocs/The-Model.html 𓃭 𓆀 𓆣 𓇯 𓁹 𓎛 𓆙 𓂃 
+https://neurons-me.github.io/Cleaker/Typescript/typedocs/Algebra-of-Me.html 𓎛 𓆙 𓅱 𓏏 
+https://neurons-me.github.io/Cleaker/Typescript/typedocs/The-Flat-Universe.html 𓃭 𓆀 𓂃 
+https://github.com/neurons-me/Cleaker/tree/main/Typescript 𓆣 𓇯 𓁹 𓎛 𓆙 𓆀 𓇼  𓀭 
 https://neurons-me.github.io/Cleaker/Typescript/typedocs/ 𓃭 𓆀 𓂃 
 https://neurons-me.github.io/Cleaker/Typescript/typedocs/api/ 𓋹𓂀 𓋹 𓅓 
-https://neurons-me.github.io/Cleaker/Python/ 𓎛 𓆙 𓅱 𓏏 𓆀 𓇼  𓀭 
-https://neurons-me.github.io/Cleaker/Rust/ 𓋹𓂀 𓇯 𓁹 𓎛  𓅱 𓏏  𓋹 𓅓 
+https://github.com/neurons-me/Cleaker/tree/main/Python 𓎛 𓆙 𓅱 𓏏 𓆀 𓇼  𓀭 
+https://github.com/neurons-me/Cleaker/tree/main/Rust 𓋹𓂀 𓇯 𓁹 𓎛  𓅱 𓏏  𓋹 𓅓 
 ## 𓆙 monad 𓆙  𓇯 𓅱 𓅱  𓋹𓂀 𓋹 𓅓 𓈖 𓃭 𓆀 𓂃 𓇼 𓁐 𓀭 𓄀
 https://neurons-me.github.io/monad/ 𓃭 𓆀 𓆣 𓇯 𓁹 𓂀 𓋹 𓅓 𓏏 𓍢 
 https://neurons-me.github.io/monad/docs/ 𓆣 𓇯 𓁹 𓎛 𓆙 𓃭 𓆀 𓇼
