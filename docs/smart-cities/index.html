@@ -139,6 +139,7 @@
     h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; }
     .lead { font-size: 1.1rem; color: #d4d4d8; max-width: 56ch; }
     section { padding: 32px 0; border-top: 1px solid var(--line); }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; letter-spacing: -.02em; font-weight: 800; margin: 0 0 18px; }
     .section-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 18px; }
     .links { display: flex; flex-direction: column; gap: 10px; }
     .item {
@@ -185,12 +186,11 @@
   </nav>
 <header>
       <h1>A city that behaves like a living system.</h1>
-      <p class="lead">Evolving city data as live dependencies in <code>.me</code> — not a paper dump. Streets, schedules, fares and secrets on one reactive graph: mutate a fact, dependents update, <code>explain()</code> shows why.</p>
-      <p class="dataset-note">Dataset parent: <a href="https://neurons-me.github.io/mlearning.studio/datasets/">Datasets</a> · <a href="https://neurons-me.github.io/mlearning.studio/datasets/madrid-gtfs/">Madrid GTFS</a> · <a href="https://neurons-me.github.io/mlearning.studio/datasets/hospital/">Hospital</a></p>
+      <p class="dataset-note">mlearning.studio: <a href="https://neurons-me.github.io/mlearning.studio/datasets/">Datasets</a> · <a href="https://neurons-me.github.io/mlearning.studio/datasets/madrid-gtfs/">Madrid GTFS</a> · <a href="https://neurons-me.github.io/mlearning.studio/datasets/hospital/">Hospital</a></p>
     </header>
 
     <section>
-      <p class="section-label">Demos</p>
+      <h2 class="section-title">Demos</h2>
       <div class="links">
         <a class="item" href="https://neurons-me.github.io/.me/Demos/SmartCities/Veracruz.Port/">
           <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/VERACRUZ-PORT-ME.png" alt="Port of Veracruz live operations in .me" />
