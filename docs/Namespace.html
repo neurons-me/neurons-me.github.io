@@ -83,13 +83,11 @@ me://jabellae.cleaker.me/profile.name</code></pre>
       <tr><td>handle.root</td><td>the composed namespace — <code>jabellae.cleaker.me</code></td></tr>
       <tr><td>path</td><td>local state within that tree — bookmarkable, shareable, survives a refresh</td></tr>
     </table>
-    <pre><code>import { composeNamespace, parseNamespaceExpression } from "cleaker";
+    <pre><code>import me from "this.me";
+import cleaker from "cleaker";
 
-composeNamespace("jabellae", "cleaker.me");
-// -> "jabellae.cleaker.me"
-
-parseNamespaceExpression("jabellae.cleaker.me");
-// -> { handle: "jabellae", root: "cleaker.me", ... }</code></pre>
+const identity = me("jabellae", "my-secret"); // who: offline identity
+const node = cleaker(identity, "cleaker.me");  // where: jabellae.cleaker.me</code></pre>
 
     <h2>Two ways to be addressed</h2>
     <table>
@@ -100,7 +98,7 @@ parseNamespaceExpression("jabellae.cleaker.me");
 
     <footer>
       <table class="related">
-        <tr><td><a href="https://neurons-me.github.io/Cleaker/typedocs/NRP-Namespaces">Cleaker — Namespace Grammar for NRP</a></td><td>The real parser: composeNamespace, parseNamespaceExpression, full grammar.</td></tr>
+        <tr><td><a href="https://neurons-me.github.io/Cleaker/typedocs/NRP-Namespaces">Cleaker — Namespace Grammar for NRP</a></td><td>The full namespace grammar behind <code>cleaker(me)</code>.</td></tr>
         <tr><td><a href="https://neurons-me.github.io/NRP/">NRP: Namespace Resolution Protocol</a></td><td>How a namespace is actually resolved across hosts.</td></tr>
         <tr><td><a href="./me.whatever.what.html">me.whatever(what)</a></td><td>The calling syntax — path, once you're standing on a namespace.</td></tr>
         <tr><td><a href="./me.explain.html">me.explain(path)</a></td><td>Why a value holds, inside that same tree.</td></tr>
