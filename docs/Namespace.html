@@ -87,7 +87,9 @@ me://jabellae.cleaker.me/profile.name</code></pre>
 import cleaker from "cleaker";
 
 const identity = me("jabellae", "my-secret"); // who: offline identity
-const node = cleaker(identity, "cleaker.me");  // where: jabellae.cleaker.me</code></pre>
+const node = cleaker(identity, "cleaker.me");  // where: jabellae.cleaker.me
+
+cleaker(identity);  // no namespace given → defaults to cleaker.me</code></pre>
 
     <h2>Two ways to be addressed</h2>
     <table>
