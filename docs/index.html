@@ -150,42 +150,15 @@
 
     .card-title { font-size: 0.95rem; font-weight: 700; }
     .card-desc { font-size: 0.825rem; color: #51606d; line-height: 1.5; }
-    /* Stack cards on mobile: compact, uniform 3-up grid. Descriptions never
-       stretch a card: tapping a card's chevron (injected by the script at the
-       bottom of the page) shows that card's description in a single panel
-       under the grid; tapping another chevron replaces it. Chevron and panel
-       are display:none above 480px, so desktop/tablet layout is untouched.
-       The in-card desc is only hidden once the script has run (.js-collapsible),
-       so without JS nothing is lost. */
-    .card-toggle, .stack-desc-panel { display: none; }
+    /* Stack cards on mobile: compact, uniform 3-up grid with icon + title
+       only (description hidden). Desktop/tablet layout is untouched. */
     @media (max-width: 480px) {
       .grid.grid-stack { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 10px; }
-      .grid-stack .card { position: relative; align-items: center; justify-content: flex-start; text-align: center; gap: 6px; padding: 12px 6px 10px; min-width: 0; }
+      .grid-stack .card { align-items: center; justify-content: flex-start; text-align: center; gap: 6px; padding: 12px 6px 10px; min-width: 0; }
       .grid-stack .card-icon { width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0; }
       .grid-stack .card-icon img { width: 38px; height: 38px; }
       .grid-stack .card-title { font-size: 0.8rem; line-height: 1.2; overflow-wrap: anywhere; }
-      .grid-stack.js-collapsible .card-desc { display: none; }
-      .grid-stack .card-toggle {
-        display: flex; align-items: center; justify-content: center;
-        position: absolute; top: 2px; right: 2px; width: 26px; height: 26px;
-        border-radius: 50%; color: #51606d; opacity: 0.7; font-size: 0.8rem; line-height: 1;
-        cursor: pointer; -webkit-tap-highlight-color: transparent;
-      }
-      .grid-stack .card-toggle::before { content: "\25BE"; transition: transform 150ms ease; }
-      .grid-stack .card.is-open .card-toggle::before { transform: rotate(180deg); }
-      .grid-stack .card.is-open { border-color: #0f6a78; }
-      .stack-desc-panel.is-open {
-        display: flex; align-items: flex-start; gap: 10px;
-        margin-top: 10px; padding: 10px 12px; border-radius: 10px;
-        border: 1px solid #0f6a78; background: #fff;
-        font-size: 0.8rem; line-height: 1.4; color: #51606d;
-      }
-      .stack-desc-panel .stack-desc-text { flex: 1; min-width: 0; }
-      .stack-desc-panel strong { color: #0f1720; font-weight: 700; margin-right: 4px; }
-      .stack-desc-panel .stack-desc-close {
-        flex-shrink: 0; width: 22px; height: 22px; border: 0; background: transparent;
-        color: inherit; font-size: 1rem; line-height: 1; cursor: pointer; opacity: 0.7;
-      }
+      .grid-stack .card-desc { display: none; }
     }
     footer { margin-top: 64px; padding: 24px 0; text-align: center; border-top: 1px solid rgba(15,23,32,0.08); }
     footer a { display: inline-flex; align-items: center; text-decoration: none; opacity: 0.45; transition: opacity 120ms; }
@@ -197,10 +170,6 @@
       .card { background: #111a1f; border-color: rgba(232,237,237,0.10); }
       .card:hover { border-color: #4fd1c5; box-shadow: 0 4px 18px rgba(0,0,0,0.3); }
       .card-icon { background: rgba(79,209,197,0.10); }
-      .card-toggle { color: #98a7b3; }
-      .grid-stack .card.is-open { border-color: #4fd1c5; }
-      .stack-desc-panel.is-open { background: #111a1f; border-color: #4fd1c5; color: #98a7b3; }
-      .stack-desc-panel strong { color: #e8eded; }
       footer { border-top-color: rgba(232,237,237,0.08); }
       .allthis-card {
         background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03));
@@ -637,76 +606,6 @@ me("people[age>=18].name")</div>
     </footer>
 
   </div>
-  <script>
-    // Mobile Stack cards: inject a chevron per card. Tapping it shows that
-    // card's description in one shared panel under the grid (cards never
-    // change size); tapping another chevron swaps the text, tapping the same
-    // one (or the panel's x) closes it. The card link itself still navigates.
-    // Chevron + panel are hidden by CSS above 480px.
-    (function () {
-      var grid = document.querySelector('.grid-stack');
-      if (!grid) return;
-      var panel = document.createElement('div');
-      panel.className = 'stack-desc-panel';
-      panel.id = 'stack-desc-panel';
-      panel.setAttribute('aria-live', 'polite');
-      var text = document.createElement('div');
-      text.className = 'stack-desc-text';
-      var close = document.createElement('button');
-      close.type = 'button';
-      close.className = 'stack-desc-close';
-      close.setAttribute('aria-label', 'Close description');
-      close.textContent = '\u00D7';
-      panel.appendChild(text);
-      panel.appendChild(close);
-      grid.parentNode.insertBefore(panel, grid.nextSibling);
-      var current = null;
-      function setOpen(card, open) {
-        var t = card.querySelector('.card-toggle');
-        card.classList.toggle('is-open', open);
-        t.setAttribute('aria-expanded', String(open));
-        t.setAttribute('aria-label', open ? 'Hide description' : 'Show description');
-      }
-      function hide() {
-        if (current) setOpen(current, false);
-        current = null;
-        panel.classList.remove('is-open');
-      }
-      function show(card) {
-        if (current) setOpen(current, false);
-        current = card;
-        setOpen(card, true);
-        text.innerHTML = '';
-        var b = document.createElement('strong');
-        b.textContent = card.querySelector('.card-title').textContent;
-        text.appendChild(b);
-        text.appendChild(document.createTextNode(card.querySelector('.card-desc').textContent));
-        panel.classList.add('is-open');
-      }
-      close.addEventListener('click', hide);
-      grid.querySelectorAll('.card').forEach(function (card) {
-        if (!card.querySelector('.card-desc') || !card.querySelector('.card-title')) return;
-        var t = document.createElement('span');
-        t.className = 'card-toggle';
-        t.setAttribute('role', 'button');
-        t.setAttribute('tabindex', '0');
-        t.setAttribute('aria-controls', 'stack-desc-panel');
-        t.setAttribute('aria-expanded', 'false');
-        t.setAttribute('aria-label', 'Show description');
-        function toggle(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (current === card) hide(); else show(card);
-        }
-        t.addEventListener('click', toggle);
-        t.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') toggle(e);
-        });
-        card.appendChild(t);
-      });
-      grid.classList.add('js-collapsible');
-    })();
-  </script>
   <script src="./vendor/gui-searchbar.iife.js" defer></script>
 </body>
 </html>
