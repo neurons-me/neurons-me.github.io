@@ -150,6 +150,31 @@
 
     .card-title { font-size: 0.95rem; font-weight: 700; }
     .card-desc { font-size: 0.825rem; color: #51606d; line-height: 1.5; }
+    /* Stack cards on mobile: compact 3-up grid, description hidden until the
+       card's chevron is tapped. The chevron is injected by the script at the
+       bottom of the page (only for .grid-stack) and is display:none above
+       480px, so desktop/tablet layout is untouched. The desc is only hidden
+       once that script has run (.js-collapsible), so without JS nothing hides. */
+    .card-toggle { display: none; }
+    @media (max-width: 480px) {
+      .grid.grid-stack { grid-template-columns: repeat(3, 1fr); gap: 10px; align-items: start; }
+      .grid-stack .card { position: relative; align-items: center; text-align: center; gap: 6px; padding: 12px 6px 10px; min-width: 0; }
+      .grid-stack .card-icon { width: 48px; height: 48px; border-radius: 10px; }
+      .grid-stack .card-icon img { width: 38px; height: 38px; }
+      .grid-stack .card-title { font-size: 0.8rem; line-height: 1.2; overflow-wrap: anywhere; }
+      .grid-stack .card-desc { font-size: 0.72rem; line-height: 1.35; }
+      .grid-stack.js-collapsible .card-desc { display: none; }
+      .grid-stack.js-collapsible .card.is-open .card-desc { display: block; }
+      .grid-stack .card-toggle {
+        display: flex; align-items: center; justify-content: center;
+        position: absolute; top: 2px; right: 2px; width: 26px; height: 26px;
+        border-radius: 50%; color: #51606d; opacity: 0.7; font-size: 0.8rem; line-height: 1;
+        cursor: pointer; -webkit-tap-highlight-color: transparent;
+      }
+      .grid-stack .card-toggle::before { content: "\25BE"; transition: transform 150ms ease; }
+      .grid-stack .card.is-open .card-toggle::before { transform: rotate(180deg); }
+      .grid-stack .card.is-open { border-color: #0f6a78; }
+    }
     footer { margin-top: 64px; padding: 24px 0; text-align: center; border-top: 1px solid rgba(15,23,32,0.08); }
     footer a { display: inline-flex; align-items: center; text-decoration: none; opacity: 0.45; transition: opacity 120ms; }
     footer a:hover { opacity: 0.9; }
@@ -160,6 +185,8 @@
       .card { background: #111a1f; border-color: rgba(232,237,237,0.10); }
       .card:hover { border-color: #4fd1c5; box-shadow: 0 4px 18px rgba(0,0,0,0.3); }
       .card-icon { background: rgba(79,209,197,0.10); }
+      .card-toggle { color: #98a7b3; }
+      .grid-stack .card.is-open { border-color: #4fd1c5; }
       footer { border-top-color: rgba(232,237,237,0.08); }
       .allthis-card {
         background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03));
@@ -596,6 +623,36 @@ me("people[age>=18].name")</div>
     </footer>
 
   </div>
+  <script>
+    // Mobile Stack cards: inject a chevron that toggles the description
+    // without following the card link. Hidden by CSS above 480px.
+    (function () {
+      var grid = document.querySelector('.grid-stack');
+      if (!grid) return;
+      grid.querySelectorAll('.card').forEach(function (card) {
+        if (!card.querySelector('.card-desc')) return;
+        var t = document.createElement('span');
+        t.className = 'card-toggle';
+        t.setAttribute('role', 'button');
+        t.setAttribute('tabindex', '0');
+        t.setAttribute('aria-expanded', 'false');
+        t.setAttribute('aria-label', 'Show description');
+        function toggle(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var open = card.classList.toggle('is-open');
+          t.setAttribute('aria-expanded', String(open));
+          t.setAttribute('aria-label', open ? 'Hide description' : 'Show description');
+        }
+        t.addEventListener('click', toggle);
+        t.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') toggle(e);
+        });
+        card.appendChild(t);
+      });
+      grid.classList.add('js-collapsible');
+    })();
+  </script>
   <script src="./vendor/gui-searchbar.iife.js" defer></script>
 </body>
 </html>
