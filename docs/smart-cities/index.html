@@ -90,6 +90,17 @@
       display: block; width: 100%; height: auto; max-height: 160px; object-fit: cover;
       border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--line);
     }
+    .demo-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { .demo-grid { grid-template-columns: repeat(2, 1fr); } }
+    .demo-grid .item { display: flex; flex-direction: column; padding: 12px 12px 16px; }
+    .demo-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
+    .demo-grid .item-tag { margin-top: auto; padding-top: 10px; }
+    .mls-card { margin-top: 18px; }
+    .mls-title { text-decoration: none; }
+    .mls-title:hover { text-decoration: underline; }
+    .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
+    .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
@@ -104,12 +115,20 @@
   <div class="wrap">
 <header>
       <h1>A city that explains itself.</h1>
-      <p class="dataset-note">mlearning.studio: <a href="https://neurons-me.github.io/mlearning.studio/datasets/">Datasets</a> · <a href="https://neurons-me.github.io/mlearning.studio/datasets/madrid-gtfs/">Madrid GTFS</a> · <a href="https://neurons-me.github.io/mlearning.studio/datasets/hospital/">Hospital</a></p>
+      <div class="item mls-card">
+        <a class="item-title mls-title" href="https://neurons-me.github.io/mlearning.studio/">mlearning.studio</a>
+        <div class="item-desc">The real datasets behind these demos.</div>
+        <div class="mls-links">
+          <a href="https://neurons-me.github.io/mlearning.studio/datasets/">Datasets</a>
+          <a href="https://neurons-me.github.io/mlearning.studio/datasets/madrid-gtfs/">Madrid GTFS</a>
+          <a href="https://neurons-me.github.io/mlearning.studio/datasets/hospital/">RAHA hospital</a>
+        </div>
+      </div>
     </header>
 
     <section>
       <h2 class="section-title">Demos</h2>
-      <div class="links">
+      <div class="links demo-grid">
         <a class="item" href="https://neurons-me.github.io/.me/Demos/SmartCities/Veracruz.Port/">
           <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/VERACRUZ-PORT-ME.png" width="1440" height="920" alt="Port of Veracruz live operations in .me" />
           <div class="item-title">Port of Veracruz — live operations</div>
