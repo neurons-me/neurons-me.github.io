@@ -91,7 +91,7 @@
       border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--line);
     }
     .demo-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 640px) { .demo-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 640px) { .demo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     .demo-grid .item { display: flex; flex-direction: column; padding: 12px 12px 16px; }
     .demo-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
     .demo-grid .item-tag { margin-top: auto; padding-top: 10px; }
@@ -101,6 +101,8 @@
     .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
     .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
+    .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre; overflow-x: auto; }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
@@ -121,7 +123,7 @@
         <div class="mls-links">
           <a href="https://neurons-me.github.io/mlearning.studio/datasets/">Datasets</a>
           <a href="https://neurons-me.github.io/mlearning.studio/datasets/madrid-gtfs/">Madrid GTFS</a>
-          <a href="https://neurons-me.github.io/mlearning.studio/datasets/hospital/">RAHA hospital</a>
+          <a href="https://neurons-me.github.io/mlearning.studio/BigDaMa/">BigDaMa</a>
         </div>
       </div>
     </header>
@@ -132,7 +134,9 @@
         <a class="item" href="https://neurons-me.github.io/.me/Demos/SmartCities/Veracruz.Port/">
           <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/VERACRUZ-PORT-ME.png" width="1440" height="920" alt="Port of Veracruz live operations in .me" />
           <div class="item-title">Port of Veracruz — live operations</div>
-          <div class="item-desc">Three ships unloading, one train loading, truck queues over a real OSM basemap. One truck cycle → wave on k paths → explain() why importRemaining changed.</div>
+          <div class="item-desc">3 ships, 1 train and 500 trucks on a real OSM map.</div>
+          <code class="item-code">ships["[i]"]["="]("hasWork", "remaining &gt; 0")
+trucks.unit["[i]"]["="]("working", "state &gt; 1")</code>
           <span class="item-tag">Operations · Veracruz</span>
         </a>
         <a class="item" href="https://neurons-me.github.io/.me/docs/Tests/gtfs-madrid-universe.html">
