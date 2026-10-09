@@ -1,0 +1,64 @@
+/* neurons.me docs shell (.GUI 4.1.0). Loaded by the neurons-me remote theme next to me-theme.css.
+   Everything here is scoped to html.docs-gui-on, which docs-gui.js sets only after GUI mounted, so
+   without JS or when the CDN fails the page keeps the static me-theme topbar and styles. */
+
+/* The static topbar is the fallback; the .GUI TopBar replaces it. */
+.docs-gui-on #static-topbar { display: none; }
+
+/* me-theme.css draws content from --bg/--fg/--muted/--border/--subtle/--accent/--code-bg;
+   docs-gui.js sets those from the active GUI theme palette, so content follows theme + light/dark. */
+html.docs-gui-on:not(.docs-gui-bar) body { background: var(--bg); color: var(--fg); }
+.docs-gui-on .docs-gui-content .markdown-body {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--doc-font, inherit);
+  overflow-wrap: break-word;
+}
+.docs-gui-on .markdown-body :is(h1, h2, h3, h4, h5, h6)[id] { scroll-margin-top: 80px; }
+.docs-gui-on .markdown-body a { color: var(--accent); }
+.docs-gui-on .markdown-body a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.docs-gui-on .markdown-body pre { border: 1px solid var(--border); }
+.docs-gui-on .markdown-body tr { background-color: transparent; }
+.docs-gui-on .markdown-body tr:nth-child(2n) { background-color: var(--subtle); }
+.docs-gui-on .markdown-body blockquote { border-left-color: var(--accent); }
+.docs-gui-on .markdown-body hr { background-color: var(--border); }
+.docs-gui-on .markdown-body img { border-radius: 4px; }
+
+/* Brand/path inside the GUI TopBar. */
+.docs-gui-on [data-docs-mepath] a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+@media (max-width: 599.95px) {
+  /* The Layout's main/content boxes clip overflow, which would pin the mobile sub-bar to them instead of the
+     viewport; let it stick under the fixed TopBar while the window scrolls. */
+  .docs-gui-on #docs-gui-root :has(> [data-docs-mobilebar]),
+  .docs-gui-on #docs-gui-root main:has([data-docs-mobilebar]) { overflow: visible !important; }
+  .docs-gui-on .markdown-body table { font-size: 14px; }
+}
+
+/* ── Bar mode: generated sites keep their content/sidebar; the .GUI TopBar replaces only their top nav. ── */
+/* The GUI Layout is only a host for the TopBar (and its router context): keep it out of the page flow and
+   unpainted; the fixed AppBar and the fixed mobile sub-bar opt back in. */
+.docs-gui-bar #docs-gui-root { position: fixed; top: 0; left: 0; right: 0; height: 0; z-index: 1100; }
+.docs-gui-bar #docs-gui-root main { visibility: hidden; pointer-events: none; }
+.docs-gui-bar #docs-gui-root [data-docs-mobilebar] { visibility: visible; pointer-events: auto; }
+/* VitePress */
+html.docs-gui-vitepress { --vp-nav-height: var(--docs-chrome-h, 50px) !important; }
+/* hidden but kept in flow: on small screens VitePress lays the page out below an in-flow VPNav of --vp-nav-height */
+.docs-gui-vitepress .VPNav { visibility: hidden !important; pointer-events: none !important; }
+.docs-gui-vitepress .VPLocalNav { top: var(--docs-chrome-h, 50px) !important; }
+.docs-gui-vitepress .VPSidebar { top: var(--docs-chrome-h, 50px) !important; }
+@media (min-width: 960px) {
+  .docs-gui-vitepress .VPSidebar { padding-top: 16px !important; height: calc(100vh - var(--docs-chrome-h, 50px)) !important; }
+}
+/* TypeDoc */
+.docs-gui-typedoc .tsd-page-toolbar { display: none !important; }
+/* Below 770px TypeDoc's navigation opens from its toolbar's menu button: keep that toolbar there, under the
+   .GUI chrome, minus its title (the me:// path already says where you are). */
+@media (max-width: 769px) {
+  .docs-gui-typedoc .tsd-page-toolbar { display: block !important; position: fixed !important; top: var(--docs-chrome-h, 50px) !important; left: 0; right: 0; }
+  .docs-gui-typedoc .tsd-page-toolbar .title { visibility: hidden; }
+  .docs-gui-typedoc body { padding-top: calc(var(--docs-chrome-h, 50px) + 2.5rem); }
+}
+.docs-gui-typedoc body { padding-top: var(--docs-chrome-h, 50px); }
+.docs-gui-typedoc .site-menu, .docs-gui-typedoc .page-menu { top: var(--docs-chrome-h, 50px) !important; }
