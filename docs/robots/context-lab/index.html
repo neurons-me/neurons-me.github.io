@@ -108,6 +108,7 @@
     /* context-lab */
     header { padding: 28px 0 28px; }
     .lead { margin: 0; }
+    .subtitle { margin: 0; font-size: .95rem; color: var(--muted); letter-spacing: .01em; }
     .kstrip { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.03); font-size: .85rem; color: var(--muted); }
     .kstrip .dot { width: 8px; height: 8px; border-radius: 50%; background: #e3b341; flex: none; }
     .kstrip.ok .dot { background: #3fb950; } .kstrip.bad .dot { background: var(--red); }
@@ -187,7 +188,7 @@
   <div class="wrap">
     <header>
       <h1>Robots that understand context.</h1>
-      <p class="lead">The real <a href="https://github.com/neurons-me/.me/blob/main/Typescript/tests/Demos/Robots_Contexts.ts">Robots_Contexts.ts</a>, running in your browser on the published this.me kernel: one canister, four contexts, four robots — six steps, every value read back from the kernel.</p>
+      <p class="subtitle">Syntax Demonstration</p>
       <div class="kstrip" id="kstrip"><span class="dot"></span><span id="ktxt">Loading this.me@4.1.0 and checking its sha256…</span><span class="sum" id="sum"></span></div>
       <nav class="steps" aria-label="Steps">
         <a href="#step-1">1 · Shared object</a><a href="#step-2">2 · Contexts</a><a href="#step-3">3 · Robots + pointers</a><a href="#step-4">4 · Policies</a><a href="#step-5">5 · Live updates</a><a href="#step-6">6 · explain()</a><a href="#source">Source</a>
