@@ -146,7 +146,15 @@ assert.equal(me("shops[1].ops.needsRestock"), true);       // owner: leaf readab
 assert.equal(me.as(null)("shops[1].ops.needsRestock"), undefined); // guest: blocked
 ```
 
-`me.as(null)` sets a caller scope (`src/me.ts: as()`/`withScope()`), and `hasStealthBarrier` in `core-read.ts` walks every ancestor of the path against that scope before returning anything — for a guest, the leaf is blocked too, not just the root.
+`me.as(null)` returns a **guest handle**; read through it (not through the owner `me`). `hasStealthBarrier` in `core-read.ts` walks every ancestor of the path against that handle's captured scope before returning anything — for a guest, the leaf is blocked too, not just the root.
+
+```ts
+const guest = me.as(null);
+guest("shops[1].ops.needsRestock"); // undefined — stealth
+me("shops[1].ops.needsRestock");    // owner still sees the value when authorized
+```
+
+(`ME#withScope` is deprecated and does not restrict reads on existing handles — do not use it as an authorization boundary.)
 
 **Native model:** visibility is a property of the *path*, checked as part of resolving it, not a separate authorization query run before or after the data query.
 

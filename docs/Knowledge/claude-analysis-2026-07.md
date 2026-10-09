@@ -16,7 +16,7 @@ Now let's look at core.ts (read/write/postulate machinery), derivation.ts (recom
 - **Two verbs, not many nouns**: *declare* (call a path with a value) and *resolve* (call a path without one) — `docs/Primitives.md`.
 - **Spaces, not schemas** — `typedocs/Algebra-of-Contexts.md` models paths as nested sets (`space ⊇ subspace`), and this set-theoretic framing is consistent with how `resolveBranchScope`, `hasStealthBarrier`, and index-prefix logic actually walk paths ancestor-by-ancestor in `secret-context.ts` / `core-read.ts`.
 - **An append-only, hash-chained memory log** (`KernelMemory`: `path, operator, expression, value, effectiveSecret, hash, prevHash, timestamp`) is the source of truth; the `index` is a derived, rebuildable projection (`core-index.ts: rebuildIndex`), ordered deterministically by `(timestamp asc, hash asc)` — axiom **A9**.
-- **Structural secrecy**, not ACL-checked secrecy — a secret scope's root resolves to `undefined` and is excluded from the public `index` (axioms **A0/A2**, `core-write.ts: postulate`/`registerStealthScope`, `core-read.ts: hasStealthBarrier`). Reading is gated by *caller scope* (`me.as(scope)` / `withScope`), not by a permission table.
+- **Structural secrecy**, not ACL-checked secrecy — a secret scope's root resolves to `undefined` and is excluded from the public `index` (axioms **A0/A2**, `core-write.ts: postulate`/`registerStealthScope`, `core-read.ts: hasStealthBarrier`). Reading is gated by *caller scope* via `me.as(scope)` (read through the returned handle), not by a permission table. (`withScope` is deprecated and must not be treated as an authorization boundary.)
 - **A reactive derivation graph, separate from the memory log** — `derivation.ts` maintains `refSubscribers`, `refVersions`, and a per-target `derivations` registry, supporting both eager and lazy recompute, with `explain()` returning `{ value, expr, dependsOn, k, recomputed, sourcePath }`.
 - **Pointers as first-class data** (`{ __ptr: "path" }`) that auto-dereference only on *traversal*, not on direct read — axiom **A4**.
 - **Identity as a pure function of a seed** — `identityHash = keccak256("this.me/identity:v1::" + seed)`; compound identity `keccak256("me.seed/compound:v1::" + who + "::" + secret)`. Verified deterministic, order-sensitive, and time/process-independent by `tests/reconstruction.test.ts`.
@@ -170,7 +170,9 @@ me.robots["[i]"]["="](
 
 `[i]` applies this single derivation across every current robot. Each robot's `context` pointer (`->`) resolves to a *different* `contexts.*` object, so the same formula, evaluated per-robot, reads different `context.sterileZone` or `context.movingVehicles` values depending on which context each robot points at. There is exactly one `canister7`. There are four different `canProceed` outcomes, because there are four different contexts in play — not because there are four different canisters.
 
-There is a second, orthogonal notion of context in the kernel: **caller scope**. `me.as(scope)` and `withScope(scope, fn)` (`me.ts`) set `_currentCallerScope` for the duration of a read, and `isStealthBlocked`/`hasStealthBarrier` (`me.ts`, `core-read.ts`) check every ancestor of a path against that scope before returning a value. This is exercised directly in axiom **A3b**:
+There is a second, orthogonal notion of context in the kernel: **caller scope**. Create a restricted handle with `me.as(scope)` and **read through that handle**; `isStealthBlocked`/`hasStealthBarrier` (`me.ts`, `core-read.ts`) check every ancestor of a path against the handle's captured scope before returning a value. This is exercised directly in axiom **A3b**.
+
+`ME#withScope` is **deprecated**: it only assigns `_currentCallerScope` for the duration of a callback and does **not** demote reads on an existing owner handle (proxies re-apply the scope they captured at creation). Do not use it as an authorization boundary — migrate to `as()`.
 
 ```ts
 me.root["_"]("alpha");
@@ -178,10 +180,11 @@ me.root.child["_"]("beta");
 me.root.child.leaf("x");
 
 assert.equal(me("root.child.leaf"), "x");                    // default owner
-assert.equal(me.as(null)("root.child.leaf"), undefined);     // guest
+const guest = me.as(null);
+assert.equal(guest("root.child.leaf"), undefined);           // guest handle
 ```
 
-Same path, same underlying memory — a different resolved value depending on who's asking. This is the mechanism, not a metaphor: `readPath` in `me.ts` checks `isStealthBlocked` against `_currentCallerScope` before it ever calls into `Core.readPath`.
+Same path, same underlying memory — a different resolved value depending on which handle is asking. This is the mechanism, not a metaphor: each handle's reads check `isStealthBlocked` against that handle's captured caller scope before `Core.readPath`.
 
 ## Identity, visibility, references, and observation — how they interact
 
