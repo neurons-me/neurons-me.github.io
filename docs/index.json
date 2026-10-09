@@ -2407,6 +2407,26 @@
     ]
   },
   {
+    "id": "me-demo-robots-space",
+    "title": "Autonomous Robotics in Space — Live Demo (.GUI)",
+    "desc": "A short story in seven passages on this.me@4.1.0: three small robots on three small asteroids, Earth far away. Cut the link and each robot's own kernel keeps deciding; explain() shows why. Part of the .me Demos.",
+    "url": "https://neurons-me.github.io/.me/Demos/Robots/Space/",
+    "repo": ".me",
+    "icon": "🛰️",
+    "kind": "doc",
+    "keywords": [
+      "space",
+      "robots",
+      "robotics",
+      "autonomous",
+      "asteroids",
+      "link",
+      "explain",
+      "gui",
+      "demo"
+    ]
+  },
+  {
     "id": "equations-infographics",
     "title": "The Equations — Visual Infographics Edition",
     "desc": "Every original formula in one visual glossary — context algebra, SpaceStructure, audience algebra, O(k) — imported results clearly marked.",

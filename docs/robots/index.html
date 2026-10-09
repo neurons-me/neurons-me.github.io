@@ -102,7 +102,8 @@
     .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
     .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
     .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre; overflow-x: auto; }
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .item-code.code-space { color: #e8b86d; background: rgba(232,184,109,.07); border-color: rgba(232,184,109,.22); }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
@@ -138,6 +139,13 @@
           <code class="item-code">me.robots["[i]"]["="]("canProceed", "canLift &amp;&amp; softGripReady &amp;&amp; !needsHumanReview &amp;&amp; contextAllowsMotion")
 me("robots[canProceed == true].name")</code>
           <span class="item-tag">Live · this.me@4.1.0</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Demos/Robots/Space/" style="grid-column: 1 / -1;">
+          <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-SPACE.jpg" width="1280" height="720" alt="Three small robots on three small asteroids, the Sun on the left, Earth far away" />
+          <div class="item-title">Autonomous Robotics in Space</div>
+          <div class="item-desc">A short story: cut the link to Earth, and each robot's own kernel keeps deciding.</div>
+          <code class="item-code code-space">me.robots["[i]"]["="]("mustReturn", "battery &lt; reserveNeeded")</code>
+          <span class="item-tag">Live · Story · this.me@4.1.0</span>
         </a>
       </div>
     </section>
