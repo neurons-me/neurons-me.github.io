@@ -207,6 +207,26 @@
         [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
   ]);
 
+  // GUI 4.1.0's SearchBar paints itself with inline styles from two fixed palettes (light: #fff / #0f1720 / teal,
+  // dark: #111a1f / #e8eded / #4fd1c5): only light vs dark follows the theme, never the theme's own colors, so it
+  // looked right only in neurons.me. Inline styles can only be beaten with !important, so the page re-skins it
+  // here from the active MUI theme (paper, divider, text, primary, action tokens). Selectors follow the
+  // SearchBar's DOM: root > [input row, listbox (quick access or results)].
+  const searchThemeSx = (t) => {
+    const P = t.palette, I = (v) => `${v} !important`, shadow = (t.shadows && t.shadows[8]) || "none";
+    return {
+      "& > div > div:first-of-type": { background: I(P.background.paper), borderColor: I(P.divider), color: I(P.text.primary), transition: "border-color 120ms ease" },
+      "& > div > div:first-of-type:focus-within": { borderColor: I(P.primary.main) },
+      "& input": { color: I(P.text.primary), caretColor: P.primary.main },
+      "& input::placeholder": { color: P.text.secondary, opacity: 1 },
+      "& > div > div:first-of-type > span:last-of-type:not(:first-of-type)": { background: I(P.action.hover), color: I(P.text.secondary) },
+      "& [role=listbox]": { background: I(P.background.paper), borderColor: I(P.divider), boxShadow: I(shadow), color: P.text.primary },
+      "& [role=listbox] > div": { color: I(P.text.secondary) },
+      "& [role=option]": { color: I(P.text.primary), borderColor: I(P.divider) },
+      "& [role=option]:hover, & [role=option][aria-selected=true]": { background: I(P.action.hover) },
+      "& [role=option] > span:nth-of-type(2) > span:nth-of-type(2), & [role=option] > span:nth-of-type(3)": { color: I(P.text.secondary) },
+    };
+  };
   // Landing header (replaces the app TopBar): big logo + title + tagline, search on the same row
   // (full width below it at <=480px, like the old page), small theme/settings controls.
   const header = N("Box", { component: "header", sx: { display: "flex", alignItems: "center", gap: 1.75, flexWrap: "wrap", mb: 5 } }, [
@@ -217,7 +237,7 @@
       N("Typography", { component: "h1", sx: { fontSize: "1.6rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1, color: "text.primary" } }, ["neurons.me"]),
       N("Typography", { component: "p", color: "text.secondary", sx: { fontSize: "0.9rem", mt: 0.5 } }, ["Go Algorithmic."]),
     ]),
-    N("Box", { sx: { ml: "auto", width: 280, maxWidth: "40vw", order: 2, [MOBILE]: { order: 4, ml: 0, width: "100%", maxWidth: "100%" } } }, [
+    N("Box", { className: "index-search", sx: (t) => ({ ml: "auto", width: 280, maxWidth: "40vw", order: 2, [MOBILE]: { order: 4, ml: 0, width: "100%", maxWidth: "100%" }, ...searchThemeSx(t) }) }, [
       N("SearchBar", { src: "https://neurons-me.github.io/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true }),
     ]),
     N("Box", { sx: { order: 3, [MOBILE]: { ml: "auto" } } }, [N("HeaderControls", {})]),
