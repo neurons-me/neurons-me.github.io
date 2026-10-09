@@ -29,12 +29,39 @@
       h("circle", { cx: 15, cy: 16, r: 13, fill: "#83d6ec", fillOpacity: 0.82 }),
       h("circle", { cx: 25, cy: 16, r: 13, fill: "#f19b9b", fillOpacity: 0.82 }));
   }
-  // HeaderControls: the same GUISettings controls the TopBar used (theme toggle + gear menu with
-  // Inspector ON/OFF), rendered as a small row in the landing header instead of an app bar.
+  // HeaderControls: GUISettings' theme toggle + a gear menu with Inspector ON/OFF and Grid Layout ON/OFF,
+  // rendered as a small row in the landing header instead of an app bar.
+  // GUISettings' own gear menu (4.1.0) has a fixed item list with no Grid entry and no way to add items,
+  // so the gear is rebuilt here from the same GUI pieces (Atoms.IconButton, Icon, Molecules.Menu/MenuItem/
+  // ListItemIcon/ListItemText) with the same Inspector item, plus Grid wired to the devtools selection
+  // context (GUI.useOptionalSelection().gridEnabled / setGridEnabled) — the same switch behind the
+  // Inspector panel's "Grid on/off" button and Cleaker's Dev Tools "Layout Grid" toggle.
+  const M = G.Molecules || {}, A = G.Atoms || {};
+  function SettingsMenu() {
+    const sel = G.useOptionalSelection ? G.useOptionalSelection() : null;
+    const [anchor, setAnchor] = React.useState(null);
+    React.useEffect(() => { if (sel && GRID_ON && !sel.gridEnabled) sel.setGridEnabled(true); }, []);
+    const insp = Boolean(G.getInspectorEnabled());
+    const grid = Boolean(sel && sel.gridEnabled);
+    const items = [
+      { key: "inspector", label: insp ? "Inspector · ON" : "Inspector · OFF", icon: insp ? "code" : "code_off", onClick: () => G.toggleInspector() },
+      sel && { key: "grid", label: grid ? "Grid Layout · ON" : "Grid Layout · OFF", icon: grid ? "grid_on" : "grid_off", onClick: () => sel.setGridEnabled(!grid) },
+    ].filter(Boolean);
+    const close = () => setAnchor(null);
+    return h(React.Fragment, null,
+      h(A.IconButton, { "aria-label": "GUI settings", title: "GUI settings", color: "inherit", size: "small", onClick: (e) => setAnchor(e.currentTarget) }, h(G.Icon, { name: "settings" })),
+      h(M.Menu, { anchorEl: anchor, open: Boolean(anchor), onClose: close, "data-gui-inspector-control": "true" },
+        items.map((it) => h(M.MenuItem, { key: it.key, "data-settings-item": it.key, onClick: () => { close(); it.onClick(); } },
+          h(M.ListItemIcon, null, h(G.Icon, { name: it.icon })),
+          h(M.ListItemText, null, it.label)))));
+  }
   function HeaderControls() {
-    const els = SETTINGS({ includeBrand: false }).topBarRight({ slot: "topBarRight", collectionId: "GUISettings" });
-    return h(G.Box, { sx: { display: "inline-flex", alignItems: "center", gap: 0.25, color: "text.secondary" } },
-      els.map((el, i) => h(G.Box, { key: i, title: el.props.tooltip, sx: { display: "inline-flex" } }, el.props.element)));
+    const els = SETTINGS({ includeBrand: false, includeSettingsMenu: false }).topBarRight({ slot: "topBarRight", collectionId: "GUISettings" });
+    // data-gui-inspector-control: GUI's inspector skips click-to-select inside these, so the switches
+    // still work while the Inspector is ON (same flag GUI puts on its own Theme/Dev Tools launchers).
+    return h(G.Box, { "data-gui-inspector-control": "true", sx: { display: "inline-flex", alignItems: "center", gap: 0.25, color: "text.secondary" } },
+      els.map((el, i) => h(G.Box, { key: i, title: el.props.tooltip, sx: { display: "inline-flex" } }, el.props.element)),
+      h(G.Box, { key: "settings", sx: { display: "inline-flex" } }, h(SettingsMenu)));
   }
   const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls };
 
@@ -202,6 +229,7 @@
   const PageTheme = ({ children }) => h(G.Theme, { initialThemeId: "neurons.me", initialMode: mode }, children);
 
   const INSPECTOR_ON = params.get("inspector") === "1";
+  const GRID_ON = params.get("grid") === "1"; // like ?inspector=1: page-level start state for screenshots/links
   if (G.getInspectorEnabled() !== INSPECTOR_ON) G.setInspectorEnabled(INSPECTOR_ON);
   const ROOT = document.getElementById("root");
   const mountPage = () => G.mount(spec, ROOT, {
