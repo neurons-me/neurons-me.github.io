@@ -91,7 +91,7 @@ The client sends `{ raw, canonical, ast, client }` as **intent and hint**. The s
 | `/nrp` WebSocket handler | `modules/monad/Typescript/src/http/nrpHandler.ts` | ✅ `nrp.open`/`resolved` plus `read`/`subscribe`/`unsubscribe` → `data`/`stream`, backed by a new in-process `pathNotify` registry |
 | `streaming` state | client + server | ✅ server pushes real `stream` frames on kernel writes now — verified end-to-end (external write, two independent WebSocket clients, live update, no polling) |
 | Reference runtime client | `this.gui/runtime`'s `createWsMeRuntime()` | ✅ not Beatle itself — a separate `RuntimeAdapter` built on the same wire protocol, for wiring `useMeValue`/spec `{read: ...}` tokens to live server state |
-| App addressing without a dedicated hostname | netget's `/apps/:name` (+ `/monads/:name` internal alias) | ✅ see [Apps Over Netget](https://neurons-me.github.io/netget/typedocs/AppsOverNetget.html) |
+| App addressing without a dedicated hostname | netget's `/apps/:name` (+ `/monads/:name` internal alias) | ✅ see [Apps Over Netget](https://neurons-me.github.io/netget/Typescript/typedocs/AppsOverNetget.html) |
 
 ### Still pending
 
@@ -272,7 +272,7 @@ all.this/modules/netget/Typescript/docs/
    FullTrailer the *app* is not production — its fleet data files are still
    missing and `this.gui`'s new runtime isn't published yet. What's proven
    is the pattern, not a shipped product. See
-   [Apps Over Netget](https://neurons-me.github.io/netget/typedocs/AppsOverNetget.html).
+   [Apps Over Netget](https://neurons-me.github.io/netget/Typescript/typedocs/AppsOverNetget.html).
 
 5. **Short-term roadmap** — The `/nrp` WebSocket handler exists now (see #2
    above); Beatle itself hasn't been updated to use its new `read`/

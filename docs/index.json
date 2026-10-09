@@ -39,6 +39,105 @@
     "kind": "root"
   },
   {
+    "id": "gui-docs",
+    "title": ".GUI Docs",
+    "desc": ".GUI documentation: reactive interfaces for distributed intelligence systems — mount, runtime contract, tests.",
+    "url": "https://neurons-me.github.io/GUI/docs/",
+    "repo": "GUI",
+    "icon": "📚",
+    "kind": "doc",
+    "keywords": [
+      "gui",
+      "docs",
+      "this.gui"
+    ]
+  },
+  {
+    "id": "gui-storybook",
+    "title": ".GUI Storybook",
+    "desc": "Interactive this.gui component catalog: atoms, molecules and All.This components with live props.",
+    "url": "https://neurons-me.github.io/GUI/storybook/",
+    "repo": "GUI",
+    "icon": "📕",
+    "kind": "doc",
+    "keywords": [
+      "storybook",
+      "components",
+      "catalog",
+      "this.gui"
+    ]
+  },
+  {
+    "id": "gui-ts-typedocs",
+    "title": "this.gui Typescript Docs",
+    "desc": "Composable React component library for the neurons.me stack: declarative, imperative and generative UI primitives, with API reference.",
+    "url": "https://neurons-me.github.io/GUI/Typescript/typedocs/",
+    "repo": "GUI",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "typedocs",
+      "api",
+      "components"
+    ]
+  },
+  {
+    "id": "gui-mount",
+    "title": "GUI Mount",
+    "desc": "The boundary where a GUI description becomes a live surface: given a DOM element, what kind of GUI thing are we projecting into it?",
+    "url": "https://neurons-me.github.io/GUI/docs/GUI-Mount.html",
+    "repo": "GUI",
+    "icon": "🧷",
+    "kind": "doc",
+    "keywords": [
+      "mount",
+      "runtime",
+      "gui"
+    ]
+  },
+  {
+    "id": "gui-runtime-contract",
+    "title": "Runtime Contract: this.gui",
+    "desc": "The runtime contract for this.gui: React-first apps, .me as the semantic state layer, explicit runtime/devtools boundaries.",
+    "url": "https://neurons-me.github.io/GUI/Typescript/Runtime-Contract.html",
+    "repo": "GUI",
+    "icon": "📜",
+    "kind": "doc",
+    "keywords": [
+      "runtime",
+      "contract",
+      "react"
+    ]
+  },
+  {
+    "id": "gui-ts-molecule-laws",
+    "title": "Molecule Laws: this.gui",
+    "desc": "The laws that molecules (composed components) in this.gui follow.",
+    "url": "https://neurons-me.github.io/GUI/Typescript/typedocs/Molecule-Laws.html",
+    "repo": "GUI",
+    "icon": "⚛️",
+    "kind": "doc",
+    "keywords": [
+      "molecules",
+      "components",
+      "laws"
+    ]
+  },
+  {
+    "id": "gui-ts-semantic-taxonomy",
+    "title": "Semantic Taxonomy: this.gui",
+    "desc": "How this.gui names and groups components: atoms, molecules, compounds and their roles.",
+    "url": "https://neurons-me.github.io/GUI/Typescript/typedocs/Semantic-Taxonomy.html",
+    "repo": "GUI",
+    "icon": "🗂️",
+    "kind": "doc",
+    "keywords": [
+      "taxonomy",
+      "atoms",
+      "molecules"
+    ]
+  },
+  {
     "id": "netget",
     "title": "netget",
     "desc": "A Gateway to the Web. Routes http/https requests.",
@@ -59,12 +158,25 @@
     "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765903003/all.this_sr55ml.webp",
     "kind": "root"
   },
-
+  {
+    "id": "all-this-docs",
+    "title": "all.this Docs",
+    "desc": "The neurons.me monorepo docs: the complete stack — kernel, gateway and UI — in one place.",
+    "url": "https://neurons-me.github.io/all.this/",
+    "repo": "all.this",
+    "icon": "📚",
+    "kind": "doc",
+    "keywords": [
+      "monorepo",
+      "all.this",
+      "docs"
+    ]
+  },
   {
     "id": "npm-org",
     "title": "npm",
     "desc": "All packages published under suiGn / neurons.me",
-    "url": "https://www.npmjs.com/org/neurons-me",
+    "url": "https://www.npmjs.com/org/neurons.me",
     "repo": null,
     "icon": "https://static.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png",
     "kind": "source"
@@ -91,7 +203,6 @@
     "iconPlate": true,
     "kind": "source"
   },
-
   {
     "id": "nrp",
     "title": "NRP: Namespace Resolution Protocol",
@@ -201,6 +312,37 @@
     "kind": "doc"
   },
   {
+    "id": "me-doc-smart-cities",
+    "title": "Smart Cities as Reactive Semantic Trees",
+    "desc": "The .me syntax walkthrough behind Smart Cities: city data — districts, transit, services — as live dependencies on one kernel.",
+    "url": "https://neurons-me.github.io/.me/docs/Smart-Cities.html",
+    "repo": ".me",
+    "icon": "🏙️",
+    "kind": "doc",
+    "keywords": [
+      "smart cities",
+      "syntax",
+      "city",
+      "reactive"
+    ]
+  },
+  {
+    "id": "me-doc-hospital",
+    "title": "Hospital — Reactive Data Correction",
+    "desc": "Hospital provider / measure tables as a reactive .me node: correct one record, update dependent quality checks, explain() the wave.",
+    "url": "https://neurons-me.github.io/.me/docs/Hospital.html",
+    "repo": ".me",
+    "icon": "🏥",
+    "kind": "doc",
+    "keywords": [
+      "hospital",
+      "data cleaning",
+      "raha",
+      "baran",
+      "dataset"
+    ]
+  },
+  {
     "id": "me-social-graph",
     "title": "Social Graph",
     "desc": "Relationships, policies, and privacy in one live graph — no query language, no joins.",
@@ -255,6 +397,32 @@
     "kind": "doc"
   },
   {
+    "id": "me-where-it-wins",
+    "title": ".me — Where It Wins",
+    "desc": ".me competitive positioning: one root, any host, audience in the type.",
+    "url": "https://neurons-me.github.io/.me/docs/Me-Where-It-Wins.html",
+    "repo": ".me",
+    "icon": "🏆",
+    "kind": "doc",
+    "keywords": [
+      "comparison",
+      "positioning"
+    ]
+  },
+  {
+    "id": "me-one-line",
+    "title": "One Line That Replaces Five",
+    "desc": "One line of .me that replaces five: a concise framing of what the kernel does.",
+    "url": "https://neurons-me.github.io/.me/docs/One-Line-That-Replaces-Five.html",
+    "repo": ".me",
+    "icon": "✳️",
+    "kind": "doc",
+    "keywords": [
+      "one line",
+      "example"
+    ]
+  },
+  {
     "id": "me-tests",
     "title": "Tests",
     "desc": "Phases 0–8, reconstruction proof, secret contracts. 11/11 phases passed.",
@@ -275,11 +443,243 @@
   {
     "id": "me-demos",
     "title": "Demos",
-    "desc": "Runnable examples — identity, reactive graph, secrets, snapshots, vector search.",
-    "url": "https://neurons-me.github.io/.me/docs/Demos/",
+    "desc": "Live examples of the .me kernel in the world — Affinity Model, Port of Veracruz, Smart Cities, robots, secrets, snapshots.",
+    "url": "https://neurons-me.github.io/.me/Demos/",
     "repo": ".me",
     "icon": "🎯",
     "kind": "doc"
+  },
+  {
+    "id": "me-demo-affinity-model",
+    "title": "Affinity Model — Demo",
+    "desc": "Affinity is emergent: store reactions, derive affinity as executable graph logic. The live this.me demo plus the Affinity UI explorations. Part of the .me Demos.",
+    "url": "https://neurons-me.github.io/.me/Demos/AffinityModel/",
+    "repo": ".me",
+    "icon": "🧲",
+    "kind": "doc",
+    "keywords": [
+      "affinity",
+      "demo",
+      "reactions",
+      "derived",
+      "explain"
+    ]
+  },
+  {
+    "id": "me-demo-affinity-live",
+    "title": "Affinity Model — Live Demo",
+    "desc": "Live on the real this.me kernel: reactions are facts, affinity is a derived formula, explain() shows why. Part of the .me Demos.",
+    "url": "https://neurons-me.github.io/.me/Demos/AffinityModel/Live/",
+    "repo": ".me",
+    "icon": "🧲",
+    "kind": "doc",
+    "keywords": [
+      "affinity",
+      "live",
+      "demo",
+      "explain"
+    ]
+  },
+  {
+    "id": "me-demo-veracruz-port",
+    "title": "Port of Veracruz — Live Demo (.GUI)",
+    "desc": "Port of Veracruz smart-city demo on a .GUI interface over the real this.me kernel: 500 trucks on real OpenStreetMap roads, every readout a live GUI component. Part of the .me Demos.",
+    "url": "https://neurons-me.github.io/.me/Demos/SmartCities/Veracruz.Port/",
+    "repo": ".me",
+    "icon": "🚢",
+    "kind": "doc",
+    "keywords": [
+      "veracruz",
+      "port",
+      "smart cities",
+      "openstreetmap",
+      "gui",
+      "demo"
+    ]
+  },
+  {
+    "id": "me-docs-home",
+    "title": ".me Docs",
+    "desc": "Documentation for .me: a semantic identity runtime for owning your knowledge graph — essays, examples, tests and benchmarks.",
+    "url": "https://neurons-me.github.io/.me/docs/",
+    "repo": ".me",
+    "icon": "📚",
+    "kind": "doc",
+    "keywords": [
+      "docs",
+      "documentation",
+      ".me"
+    ]
+  },
+  {
+    "id": "me-test-gtfs-madrid-universe",
+    "title": "GTFS Madrid — Live Knowledge Universe",
+    "desc": "Real GTFS Madrid transit data shaped as a reactive knowledge graph in this.me: relationships become dependencies; mutate one node and see the affected set k vs n.",
+    "url": "https://neurons-me.github.io/.me/Tests/gtfs-madrid-universe.html",
+    "repo": ".me",
+    "icon": "🚇",
+    "kind": "doc",
+    "keywords": [
+      "gtfs",
+      "madrid",
+      "transit",
+      "test",
+      "knowledge graph",
+      "benchmark"
+    ]
+  },
+  {
+    "id": "me-test-veracruz-port",
+    "title": "Port of Veracruz — Live Operations Test",
+    "desc": "Port of Veracruz as a .me semantic nervous system: 500 trucks on real OpenStreetMap roads, ships unloading, a train loading — every haul a real kernel write, with wave and explain().",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/veracruz-port.html",
+    "repo": ".me",
+    "icon": "🚢",
+    "kind": "doc",
+    "keywords": [
+      "veracruz",
+      "port",
+      "smart cities",
+      "test",
+      "explain"
+    ]
+  },
+  {
+    "id": "me-test-semantic-reactive",
+    "title": "Semantic Graph, Reactive (GTFS Madrid)",
+    "desc": "GTFS Madrid as a semantic graph in this.me: click a node to see me.explain(path), dependsOn and the recomputed wave.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/semantic-reactive.html",
+    "repo": ".me",
+    "icon": "🕸️",
+    "kind": "doc",
+    "keywords": [
+      "gtfs",
+      "madrid",
+      "reactive",
+      "explain",
+      "graph",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-madrid-knowledge",
+    "title": "Madrid Fares, Reactive",
+    "desc": "Human door on GTFS Madrid: change a fare or abono, watch dependents and k recompute. Syntax → graph → output.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/madrid-knowledge.html",
+    "repo": ".me",
+    "icon": "🎫",
+    "kind": "doc",
+    "keywords": [
+      "madrid",
+      "gtfs",
+      "fares",
+      "abono",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-fire",
+    "title": "Fire Test",
+    "desc": "Fire test evidence for the .me kernel: phases, reconstruction proof and secret contracts.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/fire.test.html",
+    "repo": ".me",
+    "icon": "🔥",
+    "kind": "doc",
+    "keywords": [
+      "fire test",
+      "phases",
+      "evidence",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-crypto-tampering",
+    "title": "Crypto Tampering Test",
+    "desc": "Tampered, truncated or relabelled blobs and envelopes fail closed. Runs the .me kernel live in your browser.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/crypto-tampering.html",
+    "repo": ".me",
+    "icon": "🛡️",
+    "kind": "doc",
+    "keywords": [
+      "crypto",
+      "tampering",
+      "security",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-information-leakage",
+    "title": "Information Leakage Test",
+    "desc": "Protected values, scope secrets and passwords never appear in snapshots, memory logs or error messages. Runs live in your browser.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/information-leakage.html",
+    "repo": ".me",
+    "icon": "🛡️",
+    "kind": "doc",
+    "keywords": [
+      "leakage",
+      "secrets",
+      "security",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-isolation",
+    "title": "Isolation Between Identities Test",
+    "desc": "Data encrypted under one .me identity root does not open under another. Runs live in your browser.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/isolation-between-identities.html",
+    "repo": ".me",
+    "icon": "🛡️",
+    "kind": "doc",
+    "keywords": [
+      "isolation",
+      "identity",
+      "encryption",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-replay-restart",
+    "title": "Replay and Restart Test",
+    "desc": "A kernel rebuilt from a snapshot comes back closed and recovers once its owner supplies the secrets. Runs live in your browser.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/replay-and-restart.html",
+    "repo": ".me",
+    "icon": "🛡️",
+    "kind": "doc",
+    "keywords": [
+      "replay",
+      "restart",
+      "snapshot",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-wrapped-secret",
+    "title": "Secret Wrapped for a Recipient Test",
+    "desc": "A secret wrapped for one P-256 public key opens only with the matching private key. Runs live in your browser.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/wrapped-secret.html",
+    "repo": ".me",
+    "icon": "🛡️",
+    "kind": "doc",
+    "keywords": [
+      "wrapped secret",
+      "p-256",
+      "encryption",
+      "test"
+    ]
+  },
+  {
+    "id": "me-test-derived-from-secret",
+    "title": "Derived from Secret Test",
+    "desc": "Public derivations of a secret: only someone who can open the secret can expose them. Runs live in your browser.",
+    "url": "https://neurons-me.github.io/.me/docs/Tests/derived-from-secret.html",
+    "repo": ".me",
+    "icon": "🛡️",
+    "kind": "doc",
+    "keywords": [
+      "derived",
+      "secret",
+      "test"
+    ]
   },
   {
     "id": "me-collaborators",
@@ -416,7 +816,6 @@
     "icon": "🦀",
     "kind": "source"
   },
-
   {
     "id": "me-ts-quickstart",
     "title": "Quick Start: Typescript",
@@ -682,12 +1081,53 @@
     "id": "me-ts-api",
     "title": "Full API Reference: Typescript",
     "desc": "Generated API reference for the this.me Typescript kernel.",
-    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/api/README.html",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/api/",
     "repo": ".me",
     "icon": "📖",
     "kind": "doc"
   },
-
+  {
+    "id": "me-ts-overview",
+    "title": ".me Typescript Docs",
+    "desc": "The this.me Typescript documentation home: quick start, syntax, axioms, kernel, examples and tests.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/",
+    "repo": ".me",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "typedocs",
+      "typescript",
+      "documentation"
+    ]
+  },
+  {
+    "id": "me-ts-identity-bound-secrets",
+    "title": "Identity-Bound Secret Derivation: Typescript",
+    "desc": "How protected scopes derive from the identity root plus branch secrets in the Typescript kernel.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Identity-Bound-Secrets.html",
+    "repo": ".me",
+    "icon": "🔐",
+    "kind": "doc",
+    "keywords": [
+      "secrets",
+      "identity",
+      "derivation"
+    ]
+  },
+  {
+    "id": "me-ts-secrets-guide",
+    "title": "Secrets Guide: Typescript",
+    "desc": "Guide to secret scopes in this.me: declaring, reading and protecting secret branches.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/guides/Secrets.html",
+    "repo": ".me",
+    "icon": "🔐",
+    "kind": "doc",
+    "keywords": [
+      "secrets",
+      "guide",
+      "scopes"
+    ]
+  },
   {
     "id": "me-npm",
     "title": "npm: this.me",
@@ -706,7 +1146,6 @@
     "icon": "",
     "kind": "source"
   },
-
   {
     "id": "cleaker-lang-typescript",
     "title": "Typescript",
@@ -869,15 +1308,328 @@
     "icon": "",
     "kind": "source"
   },
-
   {
     "id": "network-glossary",
     "title": "Glossary",
-    "desc": "Core terms across the neurons.me ecosystem — O(k), axiomatic integrity, and more.",
+    "desc": "Core terms across the neurons.me ecosystem — O(k), axiomatic integrity, stealth-root, monad, netget, NRP, encrypted audiences and more.",
     "url": "https://neurons-me.github.io/Glossary.html",
     "repo": null,
     "icon": "📖",
     "kind": "doc"
+  },
+  {
+    "id": "glossary-stealth-root",
+    "title": "Stealth-Root — Glossary",
+    "desc": "A path-native encryption scope where the root of a private branch resolves to undefined by design.",
+    "url": "https://neurons-me.github.io/Glossary.html#stealth-root",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "stealth",
+      "privacy",
+      "encryption"
+    ]
+  },
+  {
+    "id": "glossary-structural-silence",
+    "title": "Structural Silence — Glossary",
+    "desc": "A branch that exists and works but exposes no metadata, markers or prefixes in the public index.",
+    "url": "https://neurons-me.github.io/Glossary.html#structural-silence",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "privacy",
+      "stealth"
+    ]
+  },
+  {
+    "id": "glossary-stealth-tax",
+    "title": "Stealth Tax — Glossary",
+    "desc": "The relative latency overhead of secret-path resolution compared to public-path resolution.",
+    "url": "https://neurons-me.github.io/Glossary.html#stealth-tax",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "latency",
+      "secrets",
+      "benchmark"
+    ]
+  },
+  {
+    "id": "glossary-secret-epoch",
+    "title": "Secret Epoch — Glossary",
+    "desc": "A monotonic version marker for security topology; caches are invalidated atomically when it changes.",
+    "url": "https://neurons-me.github.io/Glossary.html#secret-epoch",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "secrets",
+      "cache",
+      "epoch"
+    ]
+  },
+  {
+    "id": "glossary-identity-noise",
+    "title": "Identity Noise (~) — Glossary",
+    "desc": "The ~() operator: a boundary that cuts inherited secret lineage without removing the identity dependency.",
+    "url": "https://neurons-me.github.io/Glossary.html#identity-noise",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "noise",
+      "operator",
+      "secrets"
+    ]
+  },
+  {
+    "id": "glossary-inverted-dependency-indexing",
+    "title": "Inverted Dependency Indexing — Glossary",
+    "desc": "State changes propagate only through active upward dependency chains — no polling, no global state manager.",
+    "url": "https://neurons-me.github.io/Glossary.html#inverted-dependency-indexing",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "reactivity",
+      "o(k)",
+      "dependencies"
+    ]
+  },
+  {
+    "id": "glossary-algorithmic-runtime-invariance-ok",
+    "title": "Algorithmic Runtime Invariance (O(k)) — Glossary",
+    "desc": "Query and resolution cost depends on path depth k, not on total data volume n.",
+    "url": "https://neurons-me.github.io/Glossary.html#algorithmic-runtime-invariance-ok",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "o(k)",
+      "performance",
+      "complexity"
+    ]
+  },
+  {
+    "id": "glossary-axiomatic-integrity",
+    "title": "Axiomatic Integrity — Glossary",
+    "desc": "Kernel-level enforcement of the .me axioms (A-struct-0, A0–A9) so every transition is deterministic and verifiable.",
+    "url": "https://neurons-me.github.io/Glossary.html#axiomatic-integrity",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "axioms",
+      "integrity"
+    ]
+  },
+  {
+    "id": "glossary-true-lazy-write",
+    "title": "True Lazy Write — Glossary",
+    "desc": "Writes do only an O(1) version update; recomputation is deferred to read-time validation.",
+    "url": "https://neurons-me.github.io/Glossary.html#true-lazy-write",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "write",
+      "lazy",
+      "performance"
+    ]
+  },
+  {
+    "id": "glossary-push-vs-pull",
+    "title": "Push vs Pull — Glossary",
+    "desc": "Split between write-path (push) and first-read-after-mutation (pull) cost, to see where latency enters.",
+    "url": "https://neurons-me.github.io/Glossary.html#push-vs-pull",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "latency",
+      "benchmark"
+    ]
+  },
+  {
+    "id": "glossary-differential-indexing",
+    "title": "Differential Indexing — Glossary",
+    "desc": "Incremental index maintenance: only changed paths are updated, no global rebuild on write.",
+    "url": "https://neurons-me.github.io/Glossary.html#differential-indexing",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "index",
+      "incremental"
+    ]
+  },
+  {
+    "id": "glossary-chunked-secret-storage",
+    "title": "Chunked Secret Storage — Glossary",
+    "desc": "Encrypted data split into deterministic chunks so crypto cost stays local to the touched segment.",
+    "url": "https://neurons-me.github.io/Glossary.html#chunked-secret-storage",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "secrets",
+      "storage",
+      "encryption"
+    ]
+  },
+  {
+    "id": "glossary-collective-alias-collapse",
+    "title": "Collective Alias Collapse — Glossary",
+    "desc": "Different labels converge on one operational meaning through structural alignment and pointers.",
+    "url": "https://neurons-me.github.io/Glossary.html#collective-alias-collapse",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "aliases",
+      "meaning",
+      "pointers"
+    ]
+  },
+  {
+    "id": "glossary-binary-geometry",
+    "title": "Binary Geometry — Glossary",
+    "desc": "Identity and meaning as emergent properties of a graph's structure and relations.",
+    "url": "https://neurons-me.github.io/Glossary.html#binary-geometry",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "geometry",
+      "identity"
+    ]
+  },
+  {
+    "id": "glossary-deterministic-portability",
+    "title": "Deterministic Portability — Glossary",
+    "desc": "Exported snapshots and replays rebuild equivalent state and outputs on any machine.",
+    "url": "https://neurons-me.github.io/Glossary.html#deterministic-portability",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "snapshots",
+      "replay",
+      "portability"
+    ]
+  },
+  {
+    "id": "glossary-criteria-invariance",
+    "title": "Criteria Invariance — Glossary",
+    "desc": "Interpretation criteria act as operators over data and never alter the observed data.",
+    "url": "https://neurons-me.github.io/Glossary.html#criteria-invariance",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "data",
+      "invariance"
+    ]
+  },
+  {
+    "id": "glossary-encrypted-island-distributed-encrypted-audience",
+    "title": "Encrypted Island — Glossary",
+    "desc": "I = (path, ciphertext, T, A, P): topology, audience and capability sets that define private, shared, public, replicated and distributed data.",
+    "url": "https://neurons-me.github.io/Glossary.html#encrypted-island-distributed-encrypted-audience",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "island",
+      "encrypted audiences",
+      "topology",
+      "audience"
+    ]
+  },
+  {
+    "id": "glossary-monad-monadai",
+    "title": "monad (monad.ai) — Glossary",
+    "desc": "A federated runtime holding one .me kernel, started from a SEED; the reference implementation of NRP.",
+    "url": "https://neurons-me.github.io/Glossary.html#monad-monadai",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "monad",
+      "runtime"
+    ]
+  },
+  {
+    "id": "glossary-nrp-namespace-resolution-protocol",
+    "title": "NRP (Namespace Resolution Protocol) — Glossary",
+    "desc": "How a me:// name and a path inside it resolve to a value across the mesh.",
+    "url": "https://neurons-me.github.io/Glossary.html#nrp-namespace-resolution-protocol",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "nrp",
+      "protocol",
+      "me://"
+    ]
+  },
+  {
+    "id": "glossary-disclosure-levels",
+    "title": "Disclosure Levels — Glossary",
+    "desc": "public, closed, stealth or contested: what the kernel reveals when an NRP channel resolves.",
+    "url": "https://neurons-me.github.io/Glossary.html#disclosure-levels",
+    "repo": "neurons-me.github.io",
+    "icon": "📖",
+    "kind": "doc",
+    "keywords": [
+      "glossary",
+      "term",
+      "disclosure",
+      "privacy",
+      "nrp"
+    ]
   },
   {
     "id": "network-secretos-me",
@@ -897,7 +1649,6 @@
     "icon": "🛰️",
     "kind": "doc"
   },
-
   {
     "id": "monad-lang-typescript",
     "title": "Typescript",
@@ -935,6 +1686,90 @@
     "kind": "doc"
   },
   {
+    "id": "monad-doc-initiating",
+    "title": "Initiating Monads",
+    "desc": "A monad is an HTTP runtime that holds a single .me kernel instance and starts from one thing: a SEED.",
+    "url": "https://neurons-me.github.io/monad/docs/Initiating-Monads.html",
+    "repo": "monad",
+    "icon": "🌱",
+    "kind": "doc",
+    "keywords": [
+      "monad",
+      "seed",
+      "start"
+    ]
+  },
+  {
+    "id": "monad-doc-subtractive-synthesis",
+    "title": "Subtractive Synthesis",
+    "desc": "How many monads share one namespace without a central coordinator: the output is what remains after filtering.",
+    "url": "https://neurons-me.github.io/monad/docs/Subtractive-Synthesis.html",
+    "repo": "monad",
+    "icon": "🎛️",
+    "kind": "doc",
+    "keywords": [
+      "subtractive synthesis",
+      "mesh",
+      "namespace"
+    ]
+  },
+  {
+    "id": "monad-quickstart",
+    "title": "Quick Start your Monads",
+    "desc": "Initialize a monad, talk to it over HTTP or in-process, and see subtractive synthesis in action.",
+    "url": "https://neurons-me.github.io/QuickStart.Monads.html",
+    "repo": "monad",
+    "icon": "🚀",
+    "kind": "doc",
+    "keywords": [
+      "quick start",
+      "monad",
+      "tutorial"
+    ]
+  },
+  {
+    "id": "knowledge-graph",
+    "title": "Knowledge Graph — Semantic Memory as a Queryable Ledger",
+    "desc": "Every fact a monad writes becomes a node in an append-only, hash-chained, path-addressable graph.",
+    "url": "https://neurons-me.github.io/KnowledgeGraph/",
+    "repo": "monad",
+    "icon": "🕸️",
+    "kind": "doc",
+    "keywords": [
+      "knowledge graph",
+      "semantic memory",
+      "ledger"
+    ]
+  },
+  {
+    "id": "monad-ts-nrp-chemistry",
+    "title": "NRP Chemistry — Settled Architecture: Typescript",
+    "desc": "The settled architecture of how monads, namespaces and NRP fit together.",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/architecture/nrp-chemistry.html",
+    "repo": "monad",
+    "icon": "⚗️",
+    "kind": "doc",
+    "keywords": [
+      "nrp",
+      "architecture",
+      "chemistry"
+    ]
+  },
+  {
+    "id": "monad-ts-netget-registration",
+    "title": "NetGet Registration: Typescript",
+    "desc": "How a monad registers itself with netget so hostnames route to it.",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/netget-registration.html",
+    "repo": "monad",
+    "icon": "🔌",
+    "kind": "doc",
+    "keywords": [
+      "netget",
+      "registration",
+      "routing"
+    ]
+  },
+  {
     "id": "monad-ts-overview",
     "title": "Overview: Typescript",
     "desc": "Serves namespace me:// protocol — the identity runtime for the neurons.me stack.",
@@ -965,7 +1800,7 @@
     "id": "monad-ts-nrp-status",
     "title": "NRP Implementation Status: Typescript",
     "desc": "What's built, what's pending, across the namespace resolution protocol.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/status.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/status.html",
     "repo": "monad",
     "icon": "📡",
     "kind": "doc"
@@ -974,7 +1809,7 @@
     "id": "monad-ts-nrp-scoring",
     "title": "NRP Scoring Engine: Typescript",
     "desc": "How candidate monads are ranked for a given namespace claim.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/scoring.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/scoring.html",
     "repo": "monad",
     "icon": "📊",
     "kind": "doc"
@@ -983,7 +1818,7 @@
     "id": "monad-ts-nrp-testing",
     "title": "NRP Test Documentation: Typescript",
     "desc": "tests/NRP — mesh resolver, scoring engine, observability, parser compatibility.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/testing.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/testing.html",
     "repo": "monad",
     "icon": "🧪",
     "kind": "doc"
@@ -992,7 +1827,7 @@
     "id": "monad-ts-nrp-learning-loop",
     "title": "NRP Learning Loop: Typescript",
     "desc": "Complete guide to the adaptive weight learning loop in src/kernel/.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/learning-loop.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/learning-loop.html",
     "repo": "monad",
     "icon": "🔁",
     "kind": "doc"
@@ -1001,7 +1836,7 @@
     "id": "monad-ts-nrp-learning-observability",
     "title": "NRP Learning Observability: Typescript",
     "desc": "Inspecting adaptive weights — src/kernel/adaptiveWeights.ts.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/learning-observability.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/learning-observability.html",
     "repo": "monad",
     "icon": "🔬",
     "kind": "doc"
@@ -1033,7 +1868,6 @@
     "icon": "",
     "kind": "source"
   },
-
   {
     "id": "netget-lang-typescript",
     "title": "Typescript",
@@ -1182,7 +2016,7 @@
     "id": "netget-doc-installing",
     "title": "Installing NetGet",
     "desc": "Install the netget CLI, set up OpenResty, and get local.netget running on your machine.",
-    "url": "https://neurons-me.github.io/netget/docs/installing-netget",
+    "url": "https://neurons-me.github.io/netget/docs/installing-netget.html",
     "repo": "netget",
     "icon": "⚡",
     "kind": "doc"
@@ -1191,16 +2025,161 @@
     "id": "netget-doc-local-netget",
     "title": "local.netget",
     "desc": "The operator surface — manage routing, inspect the monad mesh, view logs, and configure the gateway.",
-    "url": "https://neurons-me.github.io/netget/docs/local-netget",
+    "url": "https://neurons-me.github.io/netget/docs/local-netget.html",
     "repo": "netget",
     "icon": "🖥️",
     "kind": "doc"
   },
   {
+    "id": "netget-ts-apps-over-netget",
+    "title": "Apps Over Netget",
+    "desc": "App addressing without a dedicated hostname: netget /apps/:name (and the /monads/:name alias).",
+    "url": "https://neurons-me.github.io/netget/Typescript/typedocs/AppsOverNetget.html",
+    "repo": "netget",
+    "icon": "📱",
+    "kind": "doc",
+    "keywords": [
+      "apps",
+      "routing",
+      "gateway"
+    ]
+  },
+  {
+    "id": "netget-doc-signed-capabilities",
+    "title": "Signed Gateway Capabilities",
+    "desc": "netget answers a third question before a request acts — is this specific operation signed for? — kept separate from login and admin.",
+    "url": "https://neurons-me.github.io/netget/docs/signed-gateway-capabilities.html",
+    "repo": "netget",
+    "icon": "✍️",
+    "kind": "doc",
+    "keywords": [
+      "capabilities",
+      "signed",
+      "gateway",
+      "security"
+    ]
+  },
+  {
+    "id": "netget-ts-gateway-capability-model",
+    "title": "Gateway Capability Model: Typescript",
+    "desc": "The model behind netget signed capabilities: what a capability grants and how the gateway checks it.",
+    "url": "https://neurons-me.github.io/netget/Typescript/typedocs/GatewayCapabilityModel.html",
+    "repo": "netget",
+    "icon": "🛡️",
+    "kind": "doc",
+    "keywords": [
+      "capabilities",
+      "gateway",
+      "model"
+    ]
+  },
+  {
+    "id": "netget-ts-gateway-claims-ledger",
+    "title": "Gateway Claims Ledger: Typescript",
+    "desc": "The ledger netget keeps of gateway claims.",
+    "url": "https://neurons-me.github.io/netget/Typescript/typedocs/GatewayClaimsLedger.html",
+    "repo": "netget",
+    "icon": "📒",
+    "kind": "doc",
+    "keywords": [
+      "claims",
+      "ledger",
+      "gateway"
+    ]
+  },
+  {
+    "id": "mlearning-studio",
+    "title": "mlearning.studio",
+    "desc": "Machine learning studio for the neurons.me stack — curated datasets, GTFS feeds and BigDaMa data-cleaning pointers.",
+    "url": "https://neurons-me.github.io/mlearning.studio/",
+    "repo": "mlearning.studio",
+    "icon": "🧪",
+    "kind": "doc",
+    "keywords": [
+      "machine learning",
+      "datasets",
+      "studio"
+    ]
+  },
+  {
+    "id": "mlearning-bigdama",
+    "title": "BigDaMa — Raha, Baran and Benchmark Datasets",
+    "desc": "Raha (error detection) and Baran (error correction) from the BigDaMa group, plus the dirty/clean benchmark datasets — linked and pinned.",
+    "url": "https://neurons-me.github.io/mlearning.studio/BigDaMa/",
+    "repo": "mlearning.studio",
+    "icon": "🧹",
+    "kind": "doc",
+    "keywords": [
+      "bigdama",
+      "raha",
+      "baran",
+      "data cleaning",
+      "benchmark"
+    ]
+  },
+  {
+    "id": "mlearning-gtfs",
+    "title": "GTFS — Public Transit Feeds",
+    "desc": "GTFS feeds on mlearning.studio. Madrid: the GTFS-Madrid-Bench subway data shaped as a reactive .me graph, with live demos.",
+    "url": "https://neurons-me.github.io/mlearning.studio/GTFS/",
+    "repo": "mlearning.studio",
+    "icon": "🚇",
+    "kind": "doc",
+    "keywords": [
+      "gtfs",
+      "transit",
+      "madrid",
+      "dataset"
+    ]
+  },
+  {
+    "id": "mlearning-datasets",
+    "title": "Datasets",
+    "desc": "Curated datasets for mlearning.studio — sources, live demos and benchmark paths, not bulk dumps.",
+    "url": "https://neurons-me.github.io/mlearning.studio/datasets/",
+    "repo": "mlearning.studio",
+    "icon": "🗃️",
+    "kind": "doc",
+    "keywords": [
+      "datasets",
+      "data"
+    ]
+  },
+  {
+    "id": "mlearning-dataset-hospital",
+    "title": "Hospital Dataset",
+    "desc": "Hospital provider / measure tables as a reactive .me node: pinned Raha/Baran dirty and clean CSVs with sha256 provenance.",
+    "url": "https://neurons-me.github.io/mlearning.studio/datasets/hospital/",
+    "repo": "mlearning.studio",
+    "icon": "🏥",
+    "kind": "doc",
+    "keywords": [
+      "hospital",
+      "dataset",
+      "raha",
+      "baran"
+    ]
+  },
+  {
+    "id": "mlearning-dataset-madrid-gtfs",
+    "title": "Madrid GTFS Dataset",
+    "desc": "Madrid transit GTFS shaped as a reactive semantic graph on .me, for Smart Cities demos and dependency-propagation benchmarks.",
+    "url": "https://neurons-me.github.io/mlearning.studio/datasets/madrid-gtfs/",
+    "repo": "mlearning.studio",
+    "icon": "🚇",
+    "kind": "doc",
+    "keywords": [
+      "gtfs",
+      "madrid",
+      "dataset",
+      "smart cities"
+    ]
+  },
+  {
     "id": "nrp-surface-access-points",
     "title": "Surface Access Points and Routing",
     "desc": "Every access point in the neurons.me mesh — local.netget, hostname.local, domain.com — and what routes each request.",
-    "url": "https://neurons-me.github.io/NRP/Surface-Access-Points-and-Routing",
+    "url": "https://neurons-me.github.io/NRP/Surface-Access-Points-and-Routing.html",
     "repo": "neurons-me.github.io",
     "icon": "🗺️",
     "kind": "doc"
@@ -1227,16 +2206,45 @@
     "id": "cleaker-nrp-namespaces",
     "title": "Cleaker — Namespace Grammar for NRP",
     "desc": "How Cleaker parses me:// expressions and complex namespace tokens like cleaker.me[host:localhost|protocol:http]:open/profile.",
-    "url": "https://neurons-me.github.io/Cleaker/typedocs/NRP-Namespaces",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/NRP-Namespaces.html",
     "repo": "cleaker",
     "icon": "🔑",
     "kind": "doc"
   },
   {
+    "id": "cleaker-ts-namespace-is-context",
+    "title": "Namespace Is Context",
+    "desc": "Canon: a namespace is a context, not a label — sharpens the space/namespace distinction of The Model and the NRP namespace grammar.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/Namespace-Is-Context.html",
+    "repo": "cleaker",
+    "icon": "🧭",
+    "kind": "doc",
+    "keywords": [
+      "namespace",
+      "context",
+      "canon"
+    ]
+  },
+  {
+    "id": "cleaker-ts-surface-identity-claims",
+    "title": "Surface Identity Claims",
+    "desc": "Design (not implemented): the target shape for how surfaces claim identities, and the current gap against it.",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/Surface-Identity-Claims.html",
+    "repo": "cleaker",
+    "icon": "🪪",
+    "kind": "doc",
+    "keywords": [
+      "surface",
+      "identity",
+      "claims",
+      "design"
+    ]
+  },
+  {
     "id": "nrp-expression-parser",
     "title": "NRP Expression Parser",
     "desc": "Algebraic parser for me:// expressions — union (+), intersection (∩), overlay (@), complement (~). Strict, precedence-aware, Cleaker-integrated.",
-    "url": "https://neurons-me.github.io/NRP/NRPExpression-Parser",
+    "url": "https://neurons-me.github.io/NRP/NRPExpression-Parser.html",
     "repo": "neurons-me.github.io",
     "icon": "𓆣",
     "kind": "doc"
@@ -1245,7 +2253,7 @@
     "id": "nrp-beatle",
     "title": "Beatle — NRP Channel Client",
     "desc": "The URL bar of the namespace mesh. Opens bidirectional WebSocket channels to me:// namespaces while the browser keeps its normal HTTP connection.",
-    "url": "https://neurons-me.github.io/NRP/Beatle",
+    "url": "https://neurons-me.github.io/NRP/Beatle.html",
     "repo": "GUI",
     "icon": "𓆣",
     "kind": "doc"
@@ -1254,7 +2262,7 @@
     "id": "nrp-namespace-channel",
     "title": "NamespaceChannel",
     "desc": "Live state of a Beatle NRP session: expression, resolved endpoints, channelId, audience, capabilities, surface, and disclosure level.",
-    "url": "https://neurons-me.github.io/NRP/NamespaceChannel",
+    "url": "https://neurons-me.github.io/NRP/NamespaceChannel.html",
     "repo": "neurons-me.github.io",
     "icon": "📡",
     "kind": "doc"
@@ -1263,7 +2271,7 @@
     "id": "nrp-surface-overlay",
     "title": "Surface and Overlay (@)",
     "desc": "The @ operator projects a .me namespace over a surface — overlay a namespace session on top of any URL you are visiting.",
-    "url": "https://neurons-me.github.io/NRP/Surface-and-Overlay",
+    "url": "https://neurons-me.github.io/NRP/Surface-and-Overlay.html",
     "repo": "neurons-me.github.io",
     "icon": "🔗",
     "kind": "doc"
@@ -1272,7 +2280,7 @@
     "id": "nrp-disclosure-levels",
     "title": "Disclosure Levels",
     "desc": "public, closed, stealth, contested — what the .me kernel reveals when an NRP channel resolves, and what each level means for the client.",
-    "url": "https://neurons-me.github.io/NRP/Disclosure-Levels",
+    "url": "https://neurons-me.github.io/NRP/Disclosure-Levels.html",
     "repo": "neurons-me.github.io",
     "icon": "🔐",
     "kind": "doc"
@@ -1281,7 +2289,7 @@
     "id": "nrp-llm-context",
     "title": "NRP + Beatle — LLM Context",
     "desc": "Full context doc for AI assistants: stack layers, current state, design decisions, canonical examples, rules of authority, and what to read next.",
-    "url": "https://neurons-me.github.io/NRP/llm",
+    "url": "https://neurons-me.github.io/NRP/llm.html",
     "repo": "neurons-me.github.io",
     "icon": "𓆣",
     "kind": "doc"
@@ -1290,10 +2298,154 @@
     "id": "nrp-virtual-hosts",
     "title": "Virtual Hosts As Semantic Containers",
     "desc": "host virtual = surface address + monad identity + .me namespace + netget policy — proposed direction, not yet implemented.",
-    "url": "https://neurons-me.github.io/NRP/Virtual-Hosts-As-Semantic-Containers",
+    "url": "https://neurons-me.github.io/NRP/Virtual-Hosts-As-Semantic-Containers.html",
     "repo": "neurons-me.github.io",
     "icon": "🧩",
     "kind": "doc"
+  },
+  {
+    "id": "nrp-v030",
+    "title": "NRP v0.3.0 — Current Spec",
+    "desc": "Current normative spec of the me:// URI scheme: how a namespace and a path inside it resolve to a value. monad.ai is the reference implementation.",
+    "url": "https://neurons-me.github.io/NRP/v.0.3.0.html",
+    "repo": "neurons-me.github.io",
+    "icon": "𓅓",
+    "kind": "doc",
+    "keywords": [
+      "nrp",
+      "spec",
+      "me://",
+      "protocol"
+    ]
+  },
+  {
+    "id": "nrp-v040-draft",
+    "title": "NRP v0.4.0 — Draft",
+    "desc": "Draft for decision: binds the me:// address to the Island so one resolvable name carries its audience. Nothing implemented beyond v0.3.0.",
+    "url": "https://neurons-me.github.io/NRP/v.0.4.0-draft.html",
+    "repo": "neurons-me.github.io",
+    "icon": "𓅓",
+    "kind": "doc",
+    "keywords": [
+      "nrp",
+      "draft",
+      "island"
+    ]
+  },
+  {
+    "id": "digital-space-algebra",
+    "title": "Digital Space Algebra",
+    "desc": "A space is a region of meaning described by three sets — topology, audience, capability. Root index of the algebra.",
+    "url": "https://neurons-me.github.io/digital-space-algebra/",
+    "repo": "neurons-me.github.io",
+    "icon": "∑",
+    "kind": "doc",
+    "keywords": [
+      "algebra",
+      "space",
+      "topology",
+      "audience",
+      "capability"
+    ]
+  },
+  {
+    "id": "encrypted-audiences",
+    "title": "Encrypted Audiences",
+    "desc": "Two islands, one shared space: the algebra essay in three languages, the robots infographic and the .me kernel docs on secret scope and audience.",
+    "url": "https://neurons-me.github.io/encrypted-audiences/",
+    "repo": "neurons-me.github.io",
+    "icon": "🔐",
+    "kind": "doc",
+    "keywords": [
+      "encrypted audiences",
+      "algebra",
+      "island"
+    ]
+  },
+  {
+    "id": "algebra-encrypted-audiences",
+    "title": "The Algebra of Encrypted Audiences",
+    "desc": "The connection between two identities emerges from a verifiable intersection between their contexts, not from a central authority that knows both.",
+    "url": "https://neurons-me.github.io/algebra_of_encrypted_audiences.html",
+    "repo": "neurons-me.github.io",
+    "icon": "∩",
+    "kind": "doc",
+    "keywords": [
+      "encrypted audiences",
+      "algebra",
+      "essay"
+    ]
+  },
+  {
+    "id": "robots-topic",
+    "title": "Robots — Topic Index",
+    "desc": "Robots that understand context: the human essay, the infographic and the .me kernel docs behind it.",
+    "url": "https://neurons-me.github.io/robots/",
+    "repo": "neurons-me.github.io",
+    "icon": "🤖",
+    "kind": "doc",
+    "keywords": [
+      "robots",
+      "context",
+      "topic"
+    ]
+  },
+  {
+    "id": "equations-infographics",
+    "title": "The Equations — Visual Infographics Edition",
+    "desc": "Every original formula in one visual glossary — context algebra, SpaceStructure, audience algebra, O(k) — imported results clearly marked.",
+    "url": "https://neurons-me.github.io/Equations-Visual-Infographics-Edition.html",
+    "repo": "neurons-me.github.io",
+    "icon": "Σ",
+    "kind": "doc",
+    "keywords": [
+      "equations",
+      "formulas",
+      "glossary",
+      "infographic"
+    ]
+  },
+  {
+    "id": "inverted-dependency-viz",
+    "title": "Inverted Dependency Indexing — O(k) Visualized",
+    "desc": "Why changing 1 node in 1,000,000 touches only 6: the .me inverted dependency index and O(k) mutation cost.",
+    "url": "https://neurons-me.github.io/Inverted-Dependency-Indexing-Beautiful-Viz.html",
+    "repo": "neurons-me.github.io",
+    "icon": "📉",
+    "kind": "doc",
+    "keywords": [
+      "inverted dependency indexing",
+      "o(k)",
+      "visualization"
+    ]
+  },
+  {
+    "id": "seed-monad-minimal",
+    "title": "SEED → Monad — Minimal",
+    "desc": "What a seed is, what grows from it (identityHash, the monad bubble) and what it does not protect.",
+    "url": "https://neurons-me.github.io/SEED-Monad-Minimal.html",
+    "repo": "neurons-me.github.io",
+    "icon": "🌱",
+    "kind": "doc",
+    "keywords": [
+      "seed",
+      "monad",
+      "identity"
+    ]
+  },
+  {
+    "id": "smart-cities-veracruz-human",
+    "title": "Smart Cities — A City That Behaves Like a Living System",
+    "desc": "Veracruz as a reactive graph: districts, traffic, services and stealth security on one .me kernel; a single mutation propagates automatically.",
+    "url": "https://neurons-me.github.io/Smart-Cities-Versi%C3%B3n-Humana.html",
+    "repo": "neurons-me.github.io",
+    "icon": "🏙️",
+    "kind": "doc",
+    "keywords": [
+      "smart cities",
+      "veracruz",
+      "infographic"
+    ]
   },
   {
     "id": "identity-bound-secrets",

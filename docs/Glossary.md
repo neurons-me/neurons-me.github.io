@@ -12,7 +12,7 @@ title: Glossary — neurons.me
 The architectural property where query and resolution complexity is decoupled from global data volume (n). In the .me runtime, performance is a function of path depth (k), ensuring consistent latency regardless of the total size of the identity graph or network.
 
 ### **Axiomatic Integrity**
-The enforcement of the core logic gates (A0-A9) at the kernel level. These axioms ensure that every state transition, secret derivation, and pointer resolution is mathematically deterministic and verifiable.
+The enforcement of the core logic gates (A-struct-0 and A0–A9; see [The Axioms of .me](https://neurons-me.github.io/.me/docs/Axioms.html)) at the kernel level. These axioms ensure that every state transition, secret derivation, and pointer resolution is mathematically deterministic and verifiable.
 
 ### **Binary Geometry**
 The foundational concept that identity and meaning are emergent properties of a graph's structure and relations. It posits that "The distinction is the minimum ontological condition," where the "shape" of the logic defines the entity.
@@ -42,7 +42,7 @@ Incremental index maintenance where only changed paths are updated, replacing gl
 A reactive architecture where state changes propagate only through active upward dependency chains. Unlike traditional polling, this "Bubbling" effect enables autonomous local convergence without requiring a global state manager.
 
 ### **i.mlearning (mlearning.me)**
-A dataset-structuring module/domain in the neurons.me ecosystem focused on preparing data for machine learning workflows. It acts as a personal/targeted learning memory layer where raw signals are normalized into trainable structure.
+A dataset-structuring module/domain in the neurons.me ecosystem focused on preparing data for machine learning workflows. It acts as a personal/targeted learning memory layer where raw signals are normalized into trainable structure. Its public site is [mlearning.studio](https://neurons-me.github.io/mlearning.studio/): curated [datasets](https://neurons-me.github.io/mlearning.studio/datasets/) (GTFS Madrid, Hospital) and pinned pointers to the [BigDaMa](https://neurons-me.github.io/mlearning.studio/BigDaMa/) Raha/Baran tools, links only, no data dumps.
 
 ### **Identity-Bound Secrets**
 A proposed encryption model in which protected scopes require both a private identity root and the applicable branch secrets. Unlocking an identity does not automatically unlock every scope. Noise may cut inherited secrets, but must preserve the identity dependency. See [Identity-Bound Secrets — Design and Tests]({{ '/architecture/identity-bound-secrets/' | relative_url }}) for the contract, package responsibilities, and 11 acceptance criteria. These criteria are requirements, not a report of passing tests.
@@ -90,7 +90,7 @@ The relative latency overhead incurred by secret-path resolution compared to pub
 A path-native encryption scope where the root of a private branch resolves to undefined by design. This ensures that while leaves remain readable to authorized keys, the existence of the subtree remains hidden from the public index.
 
 ### **Structural Silence**
-El estado en el que una rama de datos existe y es funcional pero no proporciona metadatos, marcadores ni prefijos en el indice publico. Es la realizacion tecnica de la privacidad absoluta en grafos distribuidos.
+The state in which a data branch exists and works but exposes no metadata, markers or prefixes in the public index. It is the technical realization of absolute privacy in distributed graphs. See also [Stealth-Root](#stealth-root).
 
 ### **Structured Necessity**
 The principle that constraints are not external limitations but internal conditions for coherence. A form persists only by satisfying its own relational necessities.
@@ -100,6 +100,30 @@ The identity kernel/runtime of the ecosystem. It provides executable semantic tr
 
 ### **GUI (.GUI / this.GUI)**
 The interface-generation layer of the ecosystem: a collection of components and building blocks for AI-powered GUI generation. It is designed as composable primitives that transform structured data/configuration into usable interfaces.
+
+### **monad (monad.ai)**
+A federated runtime surface: an HTTP runtime that holds a single `.me` kernel instance and starts from one thing, a [SEED](#seed). Monads serve `me://` namespaces and are the reference implementation of [NRP](#nrp-namespace-resolution-protocol). Many monads can share one namespace through subtractive synthesis, without a central coordinator. See [Initiating Monads](https://neurons-me.github.io/monad/docs/Initiating-Monads.html) and [Quick Start your Monads](https://neurons-me.github.io/QuickStart.Monads.html).
+
+### **netget**
+The gateway to the web. It routes http/https requests by hostname to monads (via OpenResty), from local access points such as `local.netget` to custom domains. See [netget](https://neurons-me.github.io/netget/) and [Surface Access Points and Routing](https://neurons-me.github.io/NRP/Surface-Access-Points-and-Routing.html).
+
+### **NRP (Namespace Resolution Protocol)**
+How a `me://` name (a namespace, which is a `.me`) and a path inside it resolve to a value, hop by hop across the mesh, and what disclosure the caller receives. v0.3.0 is the current normative spec; `monad.ai` is the reference implementation. See [NRP](https://neurons-me.github.io/NRP/).
+
+### **SEED**
+The one root every `.me` identity grows from. It derives the identity (identityHash, the monad bubble); it is not a protection for everything below it. See [SEED](https://neurons-me.github.io/.me/docs/Seed.html).
+
+### **Surface and Overlay (@)**
+The `@` operator projects a `.me` namespace over a surface: a namespace session overlaid on top of any URL you are visiting. See [Surface and Overlay](https://neurons-me.github.io/NRP/Surface-and-Overlay.html).
+
+### **Disclosure Levels**
+What the kernel reveals when an NRP channel resolves: public, closed, stealth or contested. See [Disclosure Levels](https://neurons-me.github.io/NRP/Disclosure-Levels.html).
+
+### **Encrypted Audiences**
+The algebra in which the connection between two identities emerges from a verifiable intersection between their contexts, not from a central authority that knows both. Formalized below as the [Encrypted Island](#encrypted-island-distributed-encrypted-audience). See [Encrypted Audiences](https://neurons-me.github.io/encrypted-audiences/).
+
+### **all.this**
+The complete neurons.me stack in one monorepo: kernel, gateway and UI, where every package is also an independent git submodule. See [all.this](https://neurons-me.github.io/all.this/).
 
 ### **True Lazy Write**
 A write strategy where mutation performs only minimal version updates (`O(1)`) and defers recomputation to read-time validation.
@@ -127,7 +151,7 @@ This is the theoretical underpinning of multi-device, multi-audience encrypted d
 ## Conceptual Mappings (Philosophical Layer)
 
 > **Note**: The terms below are higher-level conceptual abstractions, not the kernel axioms.
-> For the 11 kernel axioms (A-struct-0 through A9), see: [neurons-me/.me/npm/docs/Axioms.md](https://github.com/neurons-me/.me/blob/main/Typescript/docs/Axioms.md)
+> For the 11 kernel axioms (A-struct-0 through A9), see: [The Axioms of .me](https://neurons-me.github.io/.me/docs/Axioms.html) ([Typescript docs](https://neurons-me.github.io/.me/Typescript/typedocs/Axioms.html))
 
 ### **Runtime Invariance**
 The physical manifestation of Inherent Logic. It ensures that the cost of thought (computational complexity) is `O(k)`, decoupled from total system data volume.

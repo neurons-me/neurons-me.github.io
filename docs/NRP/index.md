@@ -77,7 +77,7 @@ the normative document itself.
 
 Apps reaching a monad through [netget](https://neurons-me.github.io/netget/)'s
 mesh (rather than talking to `monad.ai` directly) should read
-[Apps Over Netget](https://neurons-me.github.io/netget/typedocs/AppsOverNetget.html)
+[Apps Over Netget](https://neurons-me.github.io/netget/Typescript/typedocs/AppsOverNetget.html)
 for the addressing contract (`/apps/:name`) and the live HTTP+WebSocket
 pattern built on top of this protocol.
 

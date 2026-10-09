@@ -1,0 +1,85 @@
+{
+  "_comment": "Per-site settings for scripts/gen-sitemap.mjs. 'exclude' globs are relative to the site source and only affect the sitemap (Jekyll still publishes the files). Each site's _config.yml 'exclude' and 'defaults ... sitemap: false' are honoured too. '**/404.html', '_*' and '.*' paths, README/LICENSE-style files, meta-refresh redirects and noindex pages are always skipped.",
+  "index": {
+    "repoSite": "root",
+    "out": "docs/sitemap_index.xml",
+    "txt": "docs/sitemap.txt"
+  },
+  "sites": {
+    "root": {
+      "repo": "neurons-me/neurons-me.github.io",
+      "src": "docs",
+      "base": "https://neurons-me.github.io/",
+      "out": "docs/sitemap.xml",
+      "exclude": []
+    },
+    ".me": {
+      "repo": "neurons-me/.me",
+      "base": "https://neurons-me.github.io/.me/",
+      "out": "sitemap.xml",
+      "exclude": [
+        "Typescript/typedocs/old",
+        "Typescript/tests"
+      ]
+    },
+    "GUI": {
+      "repo": "neurons-me/GUI",
+      "base": "https://neurons-me.github.io/GUI/",
+      "out": "sitemap.xml",
+      "exclude": [
+        "storybook/iframe.html",
+        "Typescript/demo",
+        "Typescript/npx/template"
+      ]
+    },
+    "Cleaker": {
+      "repo": "neurons-me/Cleaker",
+      "base": "https://neurons-me.github.io/Cleaker/",
+      "out": "sitemap.xml",
+      "exclude": []
+    },
+    "monad": {
+      "repo": "neurons-me/monad",
+      "base": "https://neurons-me.github.io/monad/",
+      "out": "sitemap.xml",
+      "exclude": [
+        "Rust/static"
+      ]
+    },
+    "netget": {
+      "repo": "neurons-me/netget",
+      "base": "https://neurons-me.github.io/netget/",
+      "out": "sitemap.xml",
+      "exclude": [
+        "Rust/netget-me/target",
+        "Typescript/gui",
+        "Typescript/docs/AppsOverNetget.md",
+        "Typescript/docs/custom-domains.md",
+        "Typescript/docs/DomainStoreSplitBrain.md",
+        "Typescript/docs/EncryptedAudienceCapabilityTests.md",
+        "Typescript/docs/GatewayCapabilityModel.md",
+        "Typescript/docs/GatewayClaimsLedger.md"
+      ]
+    },
+    "mlearning.studio": {
+      "repo": "neurons-me/mlearning.studio",
+      "base": "https://neurons-me.github.io/mlearning.studio/",
+      "out": "sitemap.xml",
+      "exclude": []
+    },
+    "all.this": {
+      "repo": "neurons-me/all.this",
+      "base": "https://neurons-me.github.io/all.this/",
+      "out": "sitemap.xml",
+      "exclude": [
+        "scripts"
+      ]
+    },
+    "neurons-me": {
+      "repo": "neurons-me/neurons-me",
+      "base": "https://neurons-me.github.io/neurons-me/",
+      "out": "sitemap.xml",
+      "exclude": []
+    }
+  }
+}
