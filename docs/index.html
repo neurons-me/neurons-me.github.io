@@ -15,6 +15,23 @@
   <meta name="twitter:title" content="neurons.me" />
   <meta name="twitter:description" content="Sovereign semantic compute. Identity, namespace, runtime — owned by you." />
   <meta name="twitter:image" content="https://suign.github.io/assets/imgs/neurons_me_logo.png" />
+  <link rel="icon" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
+  <!-- .GUI page: rendered by this.gui@4.1.0 (jsDelivr, SRI-pinned) via GUI.mount in ./assets/index-gui.js.
+       Theme state is page-scoped (does not touch the shared this.gui theme keys). -->
+  <script>
+    window.__thisGuiThemeScope = { scopeId: "neurons-index-gui", themeModeKey: "neurons-index-gui.themeMode", themeIdKey: "neurons-index-gui.themeId" };
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/this.gui@4.1.0/dist/material-symbols.css" integrity="sha384-dvUfVVY6nb2ef6F+dRTsSozZpefoOvMox4Ay4fQP86bSU+6yHovoYYKaRtwS+mca" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/this.gui@4.1.0/dist/this.gui.umd.js" integrity="sha384-umBxi9YB2FkfPkyuR4Ej4TvKyweGkUbZnvIQh/ZzaF0YGstAGl5I6xJ9fnLC+76O" crossorigin="anonymous"></script>
+  <style>html, body { margin: 0; } #root { min-height: 100vh; }</style>
+</head>
+<body>
+  <div id="root"></div>
+  <!-- Static fallback: the previous hand-written index. Shown when JavaScript is off; index-gui.js also
+       injects it if React / this.gui fail to load from the CDN. -->
+  <noscript id="static-index">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background: #f4f7f8; color: #0f1720; min-height: 100vh; -webkit-font-smoothing: antialiased; }
@@ -222,9 +239,6 @@
       }
     }
   </style>
-  <link rel="icon" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
-</head>
-<body>
   <div class="page">
 
     <div class="header">
@@ -233,12 +247,6 @@
         <h1>neurons.me</h1>
         <p>Go Algorithmic.</p>
       </div>
-      <div
-        data-gui-searchbar
-        data-src="https://neurons-me.github.io/index.json"
-        data-placeholder="Search in All.This"
-        style="margin-left:auto; width:280px; max-width:40vw;"
-      ></div>
     </div>
 
     <p class="section-label">Stack</p>
@@ -616,6 +624,7 @@ me("people[age>=18].name")</div>
     </footer>
 
   </div>
-  <script src="./vendor/gui-searchbar.iife.js" defer></script>
+  </noscript>
+  <script src="./assets/index-gui.js"></script>
 </body>
 </html>
