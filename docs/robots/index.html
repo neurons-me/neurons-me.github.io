@@ -103,6 +103,7 @@
     .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
     .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre; overflow-x: auto; }
+    .item-code.code-space { color: #e8b86d; background: rgba(232,184,109,.07); border-color: rgba(232,184,109,.22); }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
@@ -144,6 +145,13 @@
           <code class="item-code">me.robots.nurse.target["-&gt;"]("objects.canister7")
 me.robots.nurse.context["-&gt;"]("contexts.hospital")</code>
           <span class="item-tag">Technical · Live graph</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Demos/Robots/Space/">
+          <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-SPACE.jpg" width="1280" height="720" alt="Three small robots on three small asteroids, the Sun on the left, Earth far away" />
+          <div class="item-title">Autonomous Robots in Space</div>
+          <div class="item-desc">A short story: cut the link to Earth, and each robot's own kernel keeps deciding.</div>
+          <code class="item-code code-space">me.robots["[i]"]["="]("mustReturn", "battery &lt; reserveNeeded")</code>
+          <span class="item-tag">Live · Story · this.me@4.1.0</span>
         </a>
       </div>
     </section>
