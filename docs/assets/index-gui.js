@@ -29,7 +29,7 @@
       h("circle", { cx: 15, cy: 16, r: 13, fill: "#83d6ec", fillOpacity: 0.82 }),
       h("circle", { cx: 25, cy: 16, r: 13, fill: "#f19b9b", fillOpacity: 0.82 }));
   }
-  // HeaderControls: GUISettings' theme toggle + a gear menu with Inspector ON/OFF and Grid Layout ON/OFF,
+  // HeaderControls: GUISettings' light/dark toggle + a gear menu with the theme list, Inspector ON/OFF and Grid Layout ON/OFF,
   // rendered as a small row in the landing header instead of an app bar.
   // GUISettings' own gear menu (4.1.0) has a fixed item list with no Grid entry and no way to add items,
   // so the gear is rebuilt here from the same GUI pieces (Atoms.IconButton, Icon, Molecules.Menu/MenuItem/
@@ -37,8 +37,15 @@
   // context (GUI.useOptionalSelection().gridEnabled / setGridEnabled) — the same switch behind the
   // Inspector panel's "Grid on/off" button and Cleaker's Dev Tools "Layout Grid" toggle.
   const M = G.Molecules || {}, A = G.Atoms || {};
+  // Theme list at the top of the gear: GUI.GuiThemes (the 4.1.0 catalog, in its own order) with each theme's
+  // badgeUrl avatar (GUI.Atoms.Avatar), the same avatars GUI.ThemesCatalog shows. Picking one calls the page
+  // Theme's setThemeId (GUI.useThemeContext) and keeps the current light/dark mode, as ThemesCatalog does;
+  // Theme persists it to the page-scoped key in window.__thisGuiThemeScope (docs/index.html).
+  const THEMES = (G.GuiThemes || []).filter((t) => t && t.themeId);
+  const menuHeading = (text) => h(G.Box, { component: "li", role: "presentation", sx: { px: 2, pt: 0.75, pb: 0.5, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "text.secondary" } }, text);
   function SettingsMenu() {
     const sel = G.useOptionalSelection ? G.useOptionalSelection() : null;
+    const theme = G.useThemeContext();
     const [anchor, setAnchor] = React.useState(null);
     React.useEffect(() => { if (sel && GRID_ON && !sel.gridEnabled) sel.setGridEnabled(true); }, []);
     const insp = Boolean(G.getInspectorEnabled());
@@ -48,10 +55,27 @@
       sel && { key: "grid", label: grid ? "Grid Layout · ON" : "Grid Layout · OFF", icon: grid ? "grid_on" : "grid_off", onClick: () => sel.setGridEnabled(!grid) },
     ].filter(Boolean);
     const close = () => setAnchor(null);
+    const pickTheme = (id) => { close(); if (theme && typeof theme.setThemeId === "function" && id !== theme.themeId) theme.setThemeId(id); };
+    const themeItems = theme && THEMES.length ? [
+      menuHeading("Theme"),
+      ...THEMES.map((t) => {
+        const on = t.themeId === theme.themeId, name = t.themeName || t.themeId;
+        return h(M.MenuItem, { key: "theme:" + t.themeId, "data-theme-item": t.themeId, role: "menuitemradio", "aria-checked": on, selected: on,
+            onClick: () => pickTheme(t.themeId), sx: { py: 0.5, minHeight: 0 } },
+          h(M.ListItemIcon, null, t.badgeUrl
+            ? h(A.Avatar, { src: t.badgeUrl, alt: "", sx: { width: 26, height: 26 } })
+            : h(A.Avatar, { sx: { width: 26, height: 26, fontSize: 12 } }, name[0])),
+          h(M.ListItemText, { primaryTypographyProps: { sx: { fontSize: "0.9rem", fontWeight: on ? 700 : 400 } } }, name),
+          on ? h(G.Box, { component: "span", sx: { ml: 1.5, display: "inline-flex", color: "primary.main" } }, h(G.Icon, { name: "check", fontSize: "1.1rem" })) : null);
+      }),
+      h(A.Divider, { key: "divider", sx: { my: 0.5 } }),
+    ] : [];
     return h(React.Fragment, null,
       h(A.IconButton, { "aria-label": "GUI settings", title: "GUI settings", color: "inherit", size: "small", onClick: (e) => setAnchor(e.currentTarget) }, h(G.Icon, { name: "settings" })),
-      h(M.Menu, { anchorEl: anchor, open: Boolean(anchor), onClose: close, "data-gui-inspector-control": "true" },
-        items.map((it) => h(M.MenuItem, { key: it.key, "data-settings-item": it.key, onClick: () => { close(); it.onClick(); } },
+      h(M.Menu, { anchorEl: anchor, open: Boolean(anchor), onClose: close, "data-gui-inspector-control": "true",
+          slotProps: { paper: { sx: { minWidth: 220, maxWidth: "calc(100vw - 24px)", maxHeight: "calc(100vh - 96px)" } } } },
+        ...themeItems,
+        ...items.map((it) => h(M.MenuItem, { key: it.key, "data-settings-item": it.key, onClick: () => { close(); it.onClick(); } },
           h(M.ListItemIcon, null, h(G.Icon, { name: it.icon })),
           h(M.ListItemText, null, it.label)))));
   }
@@ -226,6 +250,15 @@
   let stored = null; try { stored = localStorage.getItem(KEY); } catch (e) {}
   const mode = params.get("mode") || stored || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   try { if (params.get("mode")) localStorage.setItem(KEY, mode); } catch (e) {}
+  // Theme id: ?theme=<id> (a GUI.GuiThemes id) picks one and persists it; otherwise a first visit gets neurons.me.
+  // Seeding the page-scoped key keeps Theme from falling back to the shared this.gui:themeId another .GUI page on
+  // this origin may have set (GUI storybook / Veracruz.Port).
+  const ID_KEY = (window.__thisGuiThemeScope && window.__thisGuiThemeScope.themeIdKey) || "neurons-index-gui.themeId";
+  const askedTheme = params.get("theme");
+  try {
+    if (askedTheme && THEMES.some((t) => t.themeId === askedTheme)) localStorage.setItem(ID_KEY, askedTheme);
+    else if (!localStorage.getItem(ID_KEY)) localStorage.setItem(ID_KEY, "neurons.me");
+  } catch (e) {}
   const PageTheme = ({ children }) => h(G.Theme, { initialThemeId: "neurons.me", initialMode: mode }, children);
 
   const INSPECTOR_ON = params.get("inspector") === "1";
