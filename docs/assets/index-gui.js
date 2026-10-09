@@ -1,5 +1,5 @@
 // neurons.me index (https://neurons-me.github.io/) on .GUI 4.1.0. Loaded by docs/index.html.
-// Everything renders through GUI.mount + GUI registry types (Layout/TopBar/Footer, Card, Box, Typography,
+// Everything renders through GUI.mount + GUI registry types (Layout/Footer, Card, Box, Typography,
 // Link, Chip, SearchBar). Two small page-local types fill gaps the registry doesn't cover:
 //   ThemedImg     — picks a light/dark image from GUI.useThemeContext().mode (no GUI image atom has that)
 //   AudienceMark  — the two-circle SVG icon used on two Essays cards
@@ -29,11 +29,14 @@
       h("circle", { cx: 15, cy: 16, r: 13, fill: "#83d6ec", fillOpacity: 0.82 }),
       h("circle", { cx: 25, cy: 16, r: 13, fill: "#f19b9b", fillOpacity: 0.82 }));
   }
-  // Search: the registry SearchBar entry (no new API) rendered as the TopBar's center action element.
-  function TopSearch() {
-    return G.Registry.SearchBar.resolve({ type: "SearchBar", props: { src: "https://neurons-me.github.io/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true } });
+  // HeaderControls: the same GUISettings controls the TopBar used (theme toggle + gear menu with
+  // Inspector ON/OFF), rendered as a small row in the landing header instead of an app bar.
+  function HeaderControls() {
+    const els = SETTINGS({ includeBrand: false }).topBarRight({ slot: "topBarRight", collectionId: "GUISettings" });
+    return h(G.Box, { sx: { display: "inline-flex", alignItems: "center", gap: 0.25, color: "text.secondary" } },
+      els.map((el, i) => h(G.Box, { key: i, title: el.props.tooltip, sx: { display: "inline-flex" } }, el.props.element)));
   }
-  const PAGE_TYPES = { ThemedImg, AudienceMark };
+  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls };
 
   // ── content (from docs/index.html @ 6bee309) ──
   const STACK = [
@@ -153,10 +156,25 @@
         [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
   ]);
 
-  const mainSections = (top) => N("Box", { component: "main", sx: { maxWidth: 960, mx: "auto", px: { xs: 2, sm: 4 }, pt: { xs: 2, sm: 3 }, pb: 6 } }, [
-    N("Typography", { variant: "body2", color: "text.secondary" }, ["Go Algorithmic."]),
+  // Landing header (replaces the app TopBar): big logo + title + tagline, search on the same row
+  // (full width below it at <=480px, like the old page), small theme/settings controls.
+  const header = N("Box", { component: "header", sx: { display: "flex", alignItems: "center", gap: 1.75, flexWrap: "wrap", mb: 5 } }, [
+    N("Link", { href: "https://neurons-me.github.io/", ariaLabel: "neurons.me home", underline: "none", sx: { display: "inline-flex", flexShrink: 0 } }, [
+      N("Box", { component: "img", src: LOGO, alt: "neurons.me", sx: { width: 44, height: 44, objectFit: "contain", display: "block" } }),
+    ]),
+    N("Box", { sx: { minWidth: 0 } }, [
+      N("Typography", { component: "h1", sx: { fontSize: "1.6rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1, color: "text.primary" } }, ["neurons.me"]),
+      N("Typography", { component: "p", color: "text.secondary", sx: { fontSize: "0.9rem", mt: 0.5 } }, ["Go Algorithmic."]),
+    ]),
+    N("Box", { sx: { ml: "auto", width: 280, maxWidth: "40vw", order: 2, [MOBILE]: { order: 4, ml: 0, width: "100%", maxWidth: "100%" } } }, [
+      N("SearchBar", { src: "https://neurons-me.github.io/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true }),
+    ]),
+    N("Box", { sx: { order: 3, [MOBILE]: { ml: "auto" } } }, [N("HeaderControls", {})]),
+  ]);
+  const mainSections = (top) => N("Box", { component: "main", sx: { maxWidth: 960, mx: "auto", px: { xs: 2, sm: 4 }, pt: { xs: 4, sm: 7 }, pb: 6 } }, [
+    header,
     ...(top || []),
-    N("Box", { component: "section", sx: { mt: 3 } }, [
+    N("Box", { component: "section" }, [
       label("Stack", { mb: 1.75 }),
       grid(3, STACK.map(stackCard), { gridAutoRows: "1fr", [MOBILE]: { gridTemplateColumns: "repeat(3, 1fr)", gap: 1.25 } }),
     ]),
@@ -170,26 +188,11 @@
   ]);
 
   const content = mainSections();
-  const withMobileSearch = mainSections([N("Box", { sx: { mt: 1.5 } }, [N("SearchBar", { src: "https://neurons-me.github.io/index.json", placeholder: "Search in All.This", themeMode: "auto" })])]);
   const SETTINGS = (o) => G.GUISettings({ includeAdminViewToggle: false, includeRuntimeControlsToggle: false, includeThemesLink: false, brandLogoSrc: GREY, brandHref: "https://neurons.me", ...o });
-  const NARROW = matchMedia("(max-width: 599.95px)"); // MUI "sm" breakpoint, where TopBar collapses its center
-  const buildSpec = (narrow) => N("Layout", {
-    TopBar: {
-      title: "neurons.me",
-      logo: LOGO,
-      homeTo: "https://neurons-me.github.io/",
-      collapsedIconCenter: "search",
-      // desktop/tablet: SearchBar in the TopBar center. Below 600px the TopBar collapses center items into an
-      // icon menu that renders the SearchBar as an empty popover, so on phones it moves into the content instead.
-      elementsCenter: narrow ? [] : [{ type: "action", props: { label: "Search", icon: "search", tooltip: "Search in All.This", element: h(TopSearch) } }],
-      // Below 600px TopBar 4.1.0 collapses its right side into a "…" menu that drops 'action' elements
-      // (TopBar.tsx: "'action' elements are not included in collapsed menu"), so the theme toggle / settings /
-      // inspector menu would be unreachable. On phones they go to the Footer, which keeps actions on mobile.
-      collectionsRight: narrow ? [] : [SETTINGS({})],
-    },
-    Footer: { brandLogo: GREY, brandHref: "https://neurons.me", brandLabel: "neurons.me", position: "static", ...(narrow ? { rightCollections: [SETTINGS({ includeBrand: false })] } : {}) },
-    LeftBar: false, RightBar: false,
-  }, [narrow ? withMobileSearch : content]);
+  const spec = N("Layout", {
+    TopBar: false, LeftBar: false, RightBar: false,
+    Footer: { brandLogo: GREY, brandHref: "https://neurons.me", brandLabel: "neurons.me", position: "static" },
+  }, [content]);
 
   // theme: neurons.me; first visit follows the OS setting (GUI.Theme alone doesn't), ?mode= overrides for screenshots
   const KEY = "neurons-index-gui.themeMode";
@@ -201,10 +204,9 @@
   const INSPECTOR_ON = params.get("inspector") === "1";
   if (G.getInspectorEnabled() !== INSPECTOR_ON) G.setInspectorEnabled(INSPECTOR_ON);
   const ROOT = document.getElementById("root");
-  const mountPage = () => G.mount(buildSpec(NARROW.matches), ROOT, {
+  const mountPage = () => G.mount(spec, ROOT, {
     gui: { ...G, Theme: PageTheme, registry: { ...G.Registry, ...PAGE_TYPES } },
     devtools: { enabled: true, inspector: INSPECTOR_ON, adminView: false, inspectorToggleVisible: false },
   });
   window.__handle = mountPage();
-  NARROW.addEventListener("change", () => { window.__handle && window.__handle.unmount && window.__handle.unmount(); window.__handle = mountPage(); });
 })();
