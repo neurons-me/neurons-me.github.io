@@ -175,16 +175,19 @@ There is a second, orthogonal notion of context in the kernel: **caller scope**.
 `ME#withScope` is **deprecated**: it only assigns `_currentCallerScope` for the duration of a callback and does **not** demote reads on an existing owner handle (proxies re-apply the scope they captured at creation). Do not use it as an authorization boundary — migrate to `as()`.
 
 ```ts
+me.profile.name("Abella");                                   // public
 me.root["_"]("alpha");
 me.root.child["_"]("beta");
 me.root.child.leaf("x");
 
 assert.equal(me("root.child.leaf"), "x");                    // default owner
 const guest = me.as(null);
-assert.equal(guest("root.child.leaf"), undefined);           // guest handle
+assert.equal(guest("profile.name"), "Abella");               // public — still readable
+assert.equal(guest("root.child.leaf"), undefined);           // protected ≡ absent for guest
+assert.equal(guest("root.child.missing"), undefined);        // does not exist — same undefined
 ```
 
-Same path, same underlying memory — a different resolved value depending on which handle is asking. This is the mechanism, not a metaphor: each handle's reads check `isStealthBlocked` against that handle's captured caller scope before `Core.readPath`.
+Same protected path, same underlying memory — a different resolved value depending on which handle is asking. A guest is **not** blocked from public paths; `undefined` on a guest handle means protected *or* missing, and those two cases are not distinguishable. Mechanism, not metaphor: each handle's reads check `isStealthBlocked` against that handle's captured caller scope before `Core.readPath`.
 
 ## Identity, visibility, references, and observation — how they interact
 
