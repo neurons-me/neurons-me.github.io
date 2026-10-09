@@ -2378,8 +2378,8 @@
   },
   {
     "id": "robots-topic",
-    "title": "Robots — Topic Index",
-    "desc": "Robots that understand context: the human essay, the infographic and the .me kernel docs behind it.",
+    "title": "Robots",
+    "desc": "Robots that understand context — demos: the human version and the live-graph infographic, plus the .me docs behind them.",
     "url": "https://neurons-me.github.io/robots/",
     "repo": "neurons-me.github.io",
     "icon": "🤖",
@@ -2387,7 +2387,7 @@
     "keywords": [
       "robots",
       "context",
-      "topic"
+      "demos"
     ]
   },
   {

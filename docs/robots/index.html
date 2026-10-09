@@ -1,13 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-accent="neutral">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b0b0f" />
-  <title>Robots — Topic Index</title>
-  <meta name="description" content="Robots that understand context: the human essay, the infographic, and the .me kernel docs behind it — start here." />
+  <title>Robots</title>
+  <meta name="description" content="Robots that understand context in .me — one object, four meanings, zero copies. The human version and the live-graph infographic, with the kernel docs behind them." />
   <link rel="canonical" href="https://neurons-me.github.io/robots/" />
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
+  <meta property="og:title" content="Robots — neurons.me" />
+  <meta property="og:description" content="Robots that understand context — one object, four meanings, zero copies." />
+  <meta property="og:image" content="https://neurons-me.github.io/robots/assets/ROBOTS-HUMAN-VERSION.jpg" />
+  <meta property="og:url" content="https://neurons-me.github.io/robots/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Robots — neurons.me" />
+  <meta name="twitter:description" content="Robots that understand context — one object, four meanings, zero copies." />
+  <meta name="twitter:image" content="https://neurons-me.github.io/robots/assets/ROBOTS-HUMAN-VERSION.jpg" />
   <style>
     :root {
       --bg: #0b0b0f;
@@ -16,6 +25,16 @@
       --blue: #83d6ec;
       --red: #f19b9b;
       --line: rgba(255,255,255,.1);
+      /* chrome / accent=neutral (me-theme dark) */
+      --sc-fg: #c9d1d9;
+      --sc-muted: #8b949e;
+      --sc-border: #30363d;
+      --sc-subtle: #161b22;
+      --sc-accent: #4fd1c5;
+      --sc-nav-bg: rgba(11, 17, 20, 0.92);
+      --sc-active: rgba(131, 214, 236, 0.14);
+      --sc-active-fg: #e8eded;
+      --sc-hover: rgba(255, 255, 255, 0.06);
     }
     * { box-sizing: border-box; }
     body {
@@ -29,16 +48,31 @@
       line-height: 1.6;
     }
     a { color: inherit; }
-    .wrap { width: min(760px, calc(100% - 40px)); margin: 0 auto; }
-    header { padding: 88px 0 40px; }
-    h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 18px 0 14px; }
+    .wrap { width: min(760px, calc(100% - 40px)); margin: 0 auto; padding-top: 12px; }
+
+
+    /* Topbar: one me:// path line + Docs + GitHub mark (same as me://Demos/AffinityModel, dark tokens) */
+    .topnav { position: sticky; top: 0; z-index: 100; height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 20px;
+      background: rgba(11,17,20,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid rgba(232,237,237,0.10); }
+    .topnav a { text-decoration: none; }
+    .topnav .logo { display: inline-flex; line-height: 0; }
+    .topnav .logo img { width: 28px; height: 28px; object-fit: contain; display: block; }
+    .mepath { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; line-height: 1.5; }
+    .mepath a { color: #4fd1c5; }
+    .mepath a:hover { text-decoration: underline; }
+    .mepath .sep { color: #98a7b3; opacity: .6; margin: 0 1px; }
+    .mepath .here { font-weight: 600; color: #e8eded; }
+    .topnav .spacer { flex: 1; }
+    .topnav .act { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #98a7b3; }
+    .topnav .act:hover { color: #4fd1c5; text-decoration: underline; }
+    .topnav .gh { display: inline-flex; line-height: 0; color: #98a7b3; }
+    .topnav .gh:hover { color: #e8eded; }
+
+    header { padding: 28px 0 40px; }
+    h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; }
     .lead { font-size: 1.1rem; color: #d4d4d8; max-width: 56ch; }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px;
-      border: 1px solid var(--line); border-radius: 999px; color: var(--muted);
-      font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
-    }
     section { padding: 32px 0; border-top: 1px solid var(--line); }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; letter-spacing: -.02em; font-weight: 800; margin: 0 0 18px; }
     .section-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 18px; }
     .links { display: flex; flex-direction: column; gap: 10px; }
     .item {
@@ -48,38 +82,84 @@
     .item:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.05); }
     .item-title { font-weight: 600; font-size: 1.02rem; }
     .item-desc { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+    .item-tag {
+      display: inline-block; margin-top: 10px; font-size: .72rem; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--blue); opacity: .9;
+    }
+    .item-media {
+      display: block; width: 100%; height: auto; max-height: 160px; object-fit: cover;
+      border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--line);
+    }
+    .demo-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { .demo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .demo-grid .item { display: flex; flex-direction: column; padding: 12px 12px 16px; }
+    .demo-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
+    .demo-grid .item-tag { margin-top: auto; padding-top: 10px; }
+    .mls-card { margin-top: 18px; }
+    .mls-title { text-decoration: none; }
+    .mls-title:hover { text-decoration: underline; }
+    .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
+    .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
+    .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre; overflow-x: auto; }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
 <body>
+  <nav class="topnav" aria-label="me path">
+    <a class="logo" href="https://neurons-me.github.io/" title="neurons.me"><img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" width="28" height="28" /></a>
+    <div class="mepath"><a href="https://neurons-me.github.io/.me/" title=".me">me://</a><a href="https://neurons-me.github.io/.me/Demos/" title=".me Demos">Demos</a><span class="sep">/</span><span class="here" aria-current="page">Robots</span></div>
+    <span class="spacer"></span>
+    <a class="act" href="https://neurons-me.github.io/.me/docs/">Docs</a>
+    <a class="gh" href="https://github.com/neurons-me/.me" target="_blank" rel="noopener" title="GitHub · neurons-me/.me" aria-label="GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+  </nav>
   <div class="wrap">
-    <a href="../" style="display:inline-block;margin-top:20px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;">&larr; neurons.me</a>
-    <header>
-      <div class="eyebrow">Topic</div>
+<header>
       <h1>Robots that understand context.</h1>
-      <p class="lead">One object, four meanings, zero copies. Facts live where they belong — objects own their properties, contexts own theirs, robots just point. Two ways in: the human essay, or the kernel docs.</p>
+      <div class="item mls-card">
+        <a class="item-title mls-title" href="https://github.com/neurons-me/.me/blob/main/Typescript/tests/Demos/Robots_Contexts.ts">Robots_Contexts.ts</a>
+        <div class="item-desc">One object, four meanings, zero copies — the runnable .me script behind these demos.</div>
+        <div class="mls-links">
+          <a href="https://github.com/neurons-me/.me/blob/main/Typescript/tests/Demos/Robots_Contexts.ts">Source</a>
+          <a href="https://neurons-me.github.io/.me/Typescript/typedocs/examples/Robots_Contexts.html">TypeScript example</a>
+          <a href="https://www.npmjs.com/package/this.me">this.me</a>
+        </div>
+      </div>
     </header>
 
     <section>
-      <p class="section-label">Read</p>
-      <div class="links">
-        <a class="item" href="../Robots-Versi%C3%B3n-Humana.html">
-          <div class="item-title">Robots — Human Version</div>
-          <div class="item-desc">The narrative essay: one canister, four worlds, zero copies.</div>
+      <h2 class="section-title">Demos</h2>
+      <div class="links demo-grid">
+        <a class="item" href="https://neurons-me.github.io/Robots-Versi%C3%B3n-Humana.html">
+          <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-HUMAN-VERSION.jpg" width="1280" height="720" alt="Robots that understand context — human version" />
+          <div class="item-title">Robots — human version</div>
+          <div class="item-desc">One canister, four worlds, zero copies. The whole idea, told without code.</div>
+          <span class="item-tag">Human · Context</span>
         </a>
-        <a class="item" href="../Robots-%C3%97-Encrypted-Audiences-Infographic.html">
-          <div class="item-title">Robots × Encrypted Audiences — Infographic</div>
-          <div class="item-desc">The technical infographic: .me paths, pointers not copies, mapped onto audience algebra.</div>
+        <a class="item" href="https://neurons-me.github.io/Robots-%C3%97-Encrypted-Audiences-Infographic.html">
+          <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-ENCRYPTED-AUDIENCES.jpg" width="1280" height="720" alt="One canister, four robots: the live context graph" />
+          <div class="item-title">Robots × Encrypted Audiences — live graph</div>
+          <div class="item-desc">Four robots point to one canister; each context decides what it means. Mapped onto the algebra of encrypted audiences.</div>
+          <code class="item-code">me.robots.nurse.target["-&gt;"]("objects.canister7")
+me.robots.nurse.context["-&gt;"]("contexts.hospital")</code>
+          <span class="item-tag">Technical · Live graph</span>
         </a>
       </div>
     </section>
 
     <section>
-      <p class="section-label">Technical docs</p>
+      <p class="section-label">Related technical docs</p>
       <div class="links">
         <a class="item" href="https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/robots-describing-context.png" width="500" height="500" alt="A robot pointing at a canister" />
           <div class="item-title">Robots That Understand Context</div>
-          <div class="item-desc">The .me kernel docs this essay is built on.</div>
+          <div class="item-desc">The .me walkthrough: objects own their properties, contexts own theirs, robots just point — then explain() why each one acted.</div>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Typescript/typedocs/examples/Robots_Contexts.html">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/robots-context.png" width="209" height="336" alt="A robot thinking in paths" />
+          <div class="item-title">Robots Understanding Context — TypeScript</div>
+          <div class="item-desc">The full script: one shared object, robot-specific contexts, broadcast derivations and explain() audits.</div>
         </a>
       </div>
     </section>

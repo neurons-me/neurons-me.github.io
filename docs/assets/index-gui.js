@@ -106,7 +106,7 @@
   ];
   const MEDIA = "https://neurons-me.github.io/neurons-me/media/";
   const DEMOS = [
-    ["Robots that Understand Context", "https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html", MEDIA + "robots_that_understand_context_gif.gif"],
+    ["Robots that Understand Context", "https://neurons-me.github.io/robots/", MEDIA + "robots_that_understand_context_gif.gif"],
     ["Smart Cities", "https://neurons-me.github.io/smart-cities/", MEDIA + "smart_cities.gif"],
     ["Social Networks", "https://neurons-me.github.io/.me/Typescript/typedocs/examples/Social_Graph.html", MEDIA + "SocialGraph.jpg"],
     ["Digital Space Algebra", "https://neurons-me.github.io/digital-space-algebra/", MEDIA + "Encrypted_Audience_Algebra.gif"],
@@ -132,7 +132,7 @@
     ["The Equations — Visual Infographics Edition", "Every original formula on sui.gn, one glossary — context algebra, SpaceStructure, audience algebra, O(k) — imported results clearly marked, not claimed.", "https://neurons-me.github.io/Equations-Visual-Infographics-Edition.html", { glyph: "Σ", size: "1.8rem" },
       [["ES", "https://neurons-me.github.io/Equations-Visual-Infographics-Edition_es.html"], ["JA", "https://neurons-me.github.io/Equations-Visual-Infographics-Edition_ja.html"]]],
     ["Inverted Dependency Indexing — Visualized", "Why changing 1 node in 1,000,000 touches only 6, not 1,000,000 — the .me kernel's reverse index and O(k) mutation cost, in a hand-drawn precision visualization.", "https://neurons-me.github.io/Inverted-Dependency-Indexing-Beautiful-Viz.html", { glyph: "◉", size: "1.6rem" }],
-    ["Robots — Human Version", "One object, four meanings, zero copies — how context algebra lets robots understand meaning by pointing to facts instead of duplicating them.", "https://neurons-me.github.io/robots/", { glyph: "🤖", size: "1.6rem" }],
+    ["Robots — Human Version", "One object, four meanings, zero copies — how context algebra lets robots understand meaning by pointing to facts instead of duplicating them.", "https://neurons-me.github.io/Robots-Versi%C3%B3n-Humana.html", { glyph: "🤖", size: "1.6rem" }],
     ["Robots × Encrypted Audiences — Infographic", "One canister, four robots, one context graph — how .me paths let robots share meaning through pointers, mapped onto the algebra of encrypted audiences.", "https://neurons-me.github.io/Robots-%C3%97-Encrypted-Audiences-Infographic.html", { mark: true, small: true }],
     ["Smart Cities — A City That Behaves Like a Living System", "Syntax, Madrid GTFS, and human fares — city data as live .me dependencies. Start at the Smart Cities hub.", "https://neurons-me.github.io/smart-cities/", { glyph: "🏙️", size: "1.6rem" }],
     ["me.explain() — Why Did You Say That?", "AI chain-of-thought is generated narration, not a record of computation. me.explain() is a verifiable lookup into the actual dependency graph — story vs. ledger.", "https://neurons-me.github.io/me.explain.why.did.you.say.that.html", { glyph: "🔍", size: "1.6rem" }],
