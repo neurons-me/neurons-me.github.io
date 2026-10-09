@@ -64,7 +64,7 @@
     "id": "npm-org",
     "title": "npm",
     "desc": "All packages published under suiGn / neurons.me",
-    "url": "https://www.npmjs.com/org/neurons-me",
+    "url": "https://www.npmjs.com/org/neurons.me",
     "repo": null,
     "icon": "https://static.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png",
     "kind": "source"
@@ -682,7 +682,7 @@
     "id": "me-ts-api",
     "title": "Full API Reference: Typescript",
     "desc": "Generated API reference for the this.me Typescript kernel.",
-    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/api/README.html",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/api/",
     "repo": ".me",
     "icon": "📖",
     "kind": "doc"
@@ -965,7 +965,7 @@
     "id": "monad-ts-nrp-status",
     "title": "NRP Implementation Status: Typescript",
     "desc": "What's built, what's pending, across the namespace resolution protocol.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/status.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/status.html",
     "repo": "monad",
     "icon": "📡",
     "kind": "doc"
@@ -974,7 +974,7 @@
     "id": "monad-ts-nrp-scoring",
     "title": "NRP Scoring Engine: Typescript",
     "desc": "How candidate monads are ranked for a given namespace claim.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/scoring.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/scoring.html",
     "repo": "monad",
     "icon": "📊",
     "kind": "doc"
@@ -983,7 +983,7 @@
     "id": "monad-ts-nrp-testing",
     "title": "NRP Test Documentation: Typescript",
     "desc": "tests/NRP — mesh resolver, scoring engine, observability, parser compatibility.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/testing.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/testing.html",
     "repo": "monad",
     "icon": "🧪",
     "kind": "doc"
@@ -992,7 +992,7 @@
     "id": "monad-ts-nrp-learning-loop",
     "title": "NRP Learning Loop: Typescript",
     "desc": "Complete guide to the adaptive weight learning loop in src/kernel/.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/learning-loop.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/learning-loop.html",
     "repo": "monad",
     "icon": "🔁",
     "kind": "doc"
@@ -1001,7 +1001,7 @@
     "id": "monad-ts-nrp-learning-observability",
     "title": "NRP Learning Observability: Typescript",
     "desc": "Inspecting adaptive weights — src/kernel/adaptiveWeights.ts.",
-    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/NRP/learning-observability.html",
+    "url": "https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/learning-observability.html",
     "repo": "monad",
     "icon": "🔬",
     "kind": "doc"
@@ -1227,7 +1227,7 @@
     "id": "cleaker-nrp-namespaces",
     "title": "Cleaker — Namespace Grammar for NRP",
     "desc": "How Cleaker parses me:// expressions and complex namespace tokens like cleaker.me[host:localhost|protocol:http]:open/profile.",
-    "url": "https://neurons-me.github.io/Cleaker/typedocs/NRP-Namespaces",
+    "url": "https://neurons-me.github.io/Cleaker/Typescript/typedocs/NRP-Namespaces.html",
     "repo": "cleaker",
     "icon": "🔑",
     "kind": "doc"

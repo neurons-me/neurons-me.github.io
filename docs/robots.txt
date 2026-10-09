@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://neurons-me.github.io/sitemap.xml
-Sitemap: https://neurons-me.github.io/sitemap.txt
+Sitemap: https://neurons-me.github.io/sitemap_index.xml
