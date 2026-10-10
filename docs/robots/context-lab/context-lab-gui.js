@@ -205,7 +205,7 @@ function Header(p) {
   const passed = results.filter((r) => r.pass).length, allOk = results.length && passed === results.length;
   const dot = kernel.state === "ok" ? "success.main" : kernel.state === "error" ? "error.main" : "warning.main";
   return h(Box, { component: "section", "data-gui-node-id": p["data-gui-node-id"], sx: { pt: 3.5, pb: 3.5 } },
-    h(Typography, { component: "h1", sx: { fontSize: "clamp(2.2rem, 6vw, 3.4rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 800, m: 0, mb: 1.75 } }, "Robots that understand context."),
+    h(Typography, { component: "h1", sx: { fontSize: "clamp(2.2rem, 6vw, 3.4rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 800, m: 0, mb: 1.75 } }, "ContextLab for Robots"),
     h(Typography, { component: "p", sx: { m: 0, fontSize: ".95rem", color: "text.secondary" } }, "Syntax Demonstration"),
     h(Card, { id: "kstrip", variant: "outlined", "data-state": kernel.state, sx: { display: "flex", alignItems: "center", gap: 1.25, flexWrap: "wrap", mt: 2, px: 1.75, py: 1.25, fontSize: ".85rem", color: "text.secondary", bgcolor: "background.paper" } },
       h(Box, { component: "span", sx: { width: 8, height: 8, borderRadius: "50%", bgcolor: dot, flex: "none" } }),
