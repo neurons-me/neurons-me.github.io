@@ -500,7 +500,7 @@
   {
     "id": "me-demo-robots-space",
     "title": "Autonomous Robotics in Space — Live Demo (.GUI)",
-    "desc": "A short story in seven passages on this.me@4.2.0: two small rocks, B 612 and B 325, and three spider robots, Oli, Tiko and Lua, each with its own .me kernel. Messages that arrive late or get lost, batteries (a [] aggregate), and a flower to care for. Part of the .me Demos.",
+    "desc": "A short story on this.me@4.2.0: two small rocks, B 612 and B 325, and three spider robots, Oli, Tiko and Lua, each with its own .me kernel. Messages that arrive late or get lost, batteries (a [] aggregate), and a flower to care for. Part of the .me Demos.",
     "url": "https://neurons-me.github.io/.me/Demos/Robots/Space/",
     "repo": ".me",
     "icon": "🛰️",
