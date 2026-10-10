@@ -1,5 +1,5 @@
 // Robots that understand context: .GUI page (this.gui@4.1.0, SRI-pinned in index.html, sha256-checked below)
-// over the real, unmodified this.me@4.1.0 kernel from npm (jsDelivr, unpkg fallback; sha256-checked before import).
+// over the real, unmodified this.me@4.2.0 kernel from npm (jsDelivr, unpkg fallback; sha256-checked before import).
 //
 //   KERNEL (this.me):  robots-context-lab.js runs the steps of Robots_Contexts.ts on one kernel; every value shown
 //                      comes from it (steps: what the script printed at that point; "Try it": live reads).
@@ -10,14 +10,14 @@
 
 import { runScript, ROBOTS } from "./robots-context-lab.js";
 
-const KERNEL = { version: "4.1.0", sha256: "47cc8f9a9b5ee2921a59023d400e694d6c9b9f80a0782db850b06156cbb46afa",
-  urls: ["https://cdn.jsdelivr.net/npm/this.me@4.1.0/dist/me.es.js", "https://unpkg.com/this.me@4.1.0/dist/me.es.js"] };
+const KERNEL = { version: "4.2.0", sha256: "8cc94d5273b05728713e7c06bcba6ab0d88c85d2a748dc885e7bca745605a61a",
+  urls: ["https://cdn.jsdelivr.net/npm/this.me@4.2.0/dist/me.es.js", "https://unpkg.com/this.me@4.2.0/dist/me.es.js"] };
 const GUI_PIN = { url: "https://cdn.jsdelivr.net/npm/this.gui@4.1.0/dist/this.gui.umd.js", sha256: "d50e32f6a4f7603804228c074fc59df1cfdea73a4f3d5ad93ba9475227b2a577" };
 const SRC_URL = "https://raw.githubusercontent.com/neurons-me/.me/main/Typescript/tests/Demos/Robots_Contexts.ts";
 const SRC_LINK = "https://github.com/neurons-me/.me/blob/main/Typescript/tests/Demos/Robots_Contexts.ts";
 
 const G = window.GUI, h = React.createElement;
-const { Box, Button, Typography, Link, Card, Chip, Checkbox, TextField, IconButton, Divider } = G.Atoms;
+const { Box, Button, Typography, Link, Card, Chip, TextField, IconButton, Divider } = G.Atoms;
 const { Table, TableBody, TableCell, TableHead, TableRow, Menu, MenuItem, ListItemIcon, ListItemText, Collapse } = G.Molecules;
 const MONO = '"IBM Plex Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace';
 const SYN = window.MeSyntax || null;
@@ -28,7 +28,7 @@ const params = new URLSearchParams(location.search);
 function createStore(state) { const ls = new Set(); let v = 0; return { state, subscribe: (cb) => (ls.add(cb), () => ls.delete(cb)), version: () => v, set(p) { if (p) Object.assign(state, p); v++; ls.forEach((cb) => cb()); } }; }
 const useStore = (s) => { React.useSyncExternalStore(s.subscribe, s.version); return s.state; };
 const ui = createStore({ focus: null, kernel: { state: "loading" }, gui: { state: "checking" }, steps: [], ex: {}, src: null, transcript: "", results: [],
-  reapply: true, lastOp: "— (state after the script: canister sterile, street clear)", prevRows: null, who: "nurse" });
+  lastOp: "— (state after the script: canister sterile, street clear)", prevRows: null, who: "nurse" });
 
 // ── selection: one id for code and objects (robot:<id>, context:<name>, object:canister7) ──
 const CONTEXTS = ["warehouse", "hospital", "street", "operatingRoom"];
@@ -334,18 +334,16 @@ function Step(p) {
     s.n === 5 ? h(Live) : null);
 }
 
-// ── step 5, interactive: the same kernel, the same applyRobotPolicies() ──
+// ── step 5, interactive: the same kernel the script ran on ──
 const kListeners = new Map();
 function kernelSubscribe(path, cb) { const key = String(path).replace(/^me\//, "").replace(/\//g, "."); let s = kListeners.get(key); if (!s) kListeners.set(key, (s = new Set())); s.add(cb); return () => { s.delete(cb); if (!s.size) kListeners.delete(key); }; }
 function announceAll() { for (const s of [...kListeners.values()]) [...s].forEach((cb) => cb()); }
-const APPLY = "applyRobotPolicies()  // 9 × me.robots[\"[i]\"][\"=\"](…)";
 function write(fn, op) {
   const prevRows = LAB.robotMapRows(); fn();
-  let lastOp = op; if (ui.state.reapply) { LAB.applyRobotPolicies(); lastOp += "\n" + APPLY; }
-  ui.set({ prevRows, lastOp }); announceAll();
+  ui.set({ prevRows, lastOp: op }); announceAll();
 }
 function Live() {
-  const { reapply, lastOp, prevRows, who } = useStore(ui); if (!LAB) return null;
+  const { lastOp, prevRows, who } = useStore(ui); if (!LAB) return null;
   const me = LAB.me, sterile = G.useMeValue("objects.canister7.sterile"), traffic = G.useMeValue("contexts.street.movingVehicles");
   const rows = LAB.robotMapRows(), trace = LAB.explainPrintable(`robots.${who}.canProceed`).printable;
   const btn = (id, label, code, onClick) => h(Button, { id, size: "small", variant: "outlined", onClick, sx: { textTransform: "none", borderRadius: 2, gap: 1, fontSize: 12.5, color: "text.primary", borderColor: "divider" } },
@@ -355,20 +353,14 @@ function Live() {
     h(Typography, { component: "p", sx: { m: 0, mb: 1.5, color: "text.secondary", fontSize: ".88rem" } }, "Each button writes one value into the same kernel the script just ran on; the table, the filter and explain() are read back from it."),
     h(Box, { sx: { display: "flex", flexWrap: "wrap", gap: 1, mb: 1.5, alignItems: "center" } },
       btn("b-ster", sterile ? "Make canister non-sterile" : "Sterilize canister", `objects.canister7.sterile(${!sterile})`, () => write(() => me.objects.canister7.sterile(!sterile), `me.objects.canister7.sterile(${!sterile})`)),
-      btn("b-traf", traffic ? "Clear the street" : "Send traffic", `contexts.street.movingVehicles(${!traffic})`, () => write(() => me.contexts.street.movingVehicles(!traffic), `me.contexts.street.movingVehicles(${!traffic})`)),
-      h(Box, { component: "label", sx: { fontSize: ".8rem", color: "text.secondary", display: "inline-flex", alignItems: "center", cursor: "pointer" } },
-        h(Checkbox, { id: "b-re", size: "small", checked: reapply, onChange: (e) => { const on = e.target.checked, prev = LAB.robotMapRows(); let op = lastOp; if (on) { LAB.applyRobotPolicies(); op = APPLY; } ui.set({ reapply: on, prevRows: prev, lastOp: op }); announceAll(); }, sx: { p: .5 } }),
-        "re-apply policies after each change (as the script does)")),
+      btn("b-traf", traffic ? "Clear the street" : "Send traffic", `contexts.street.movingVehicles(${!traffic})`, () => write(() => me.contexts.street.movingVehicles(!traffic), `me.contexts.street.movingVehicles(${!traffic})`))),
     h(Box, { sx: { display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: 1.5, "@media (min-width:900px)": { gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)" }, "& > *": { minWidth: 0 } } },
       h(Box, { sx: { "@media (min-width:900px)": { gridColumn: "1 / -1" } } }, h(MapTable, { id: "live-map", title: "Robot map — live", rows, prev: prevRows, live: true })),
       h(Box, { sx: { display: "flex", flexDirection: "column", gap: 1.5 } },
         h(OutCard, { label: "last write" }, h(Box, { id: "lastop", sx: { px: 1.5, py: .75, fontSize: 11.5 } }, h(MeCode, { code: lastOp }))),
         h(ShowBox, { item: { label: "robots[canProceed == true].name", value: me("robots[canProceed == true].name") } })),
       h(Box, null, H2(["explain", h(TextField, { key: "who", id: "b-who", select: true, size: "small", value: who, onChange: (e) => ui.set({ who: e.target.value }), SelectProps: { MenuProps: { "data-gui-inspector-control": "true" } }, sx: { "& .MuiSelect-select": { py: .25, fontSize: 12, fontFamily: MONO } } },
-        ...ROBOTS.map((r) => h(MenuItem, { key: r, value: r, sx: { fontFamily: MONO, fontSize: 12 } }, r)))]), h(ExplainBox, { path: `robots.${who}.canProceed`, p: trace }))),
-    h(Typography, { component: "p", className: "why", sx: { mt: 1.25, mb: 0, fontSize: ".8rem", color: "text.secondary", "& code": { fontSize: ".78rem" } } },
-      "Why the script calls ", h(MeCode, { code: "applyRobotPolicies()" }), " again after its updates: in this.me 4.1.0 a formula that reads ", h("em", null, "through a pointer"), " (", h(MeCode, { code: "target.sterile" }), ", ", h(MeCode, { code: "context.movingVehicles" }),
-      ") is not recomputed when the pointed-to value is written — ", h(Link, { href: "https://github.com/neurons-me/.me/blob/main/Typescript/CHANGELOG.md", underline: "hover" }, "known issue #4"), " in the 4.1.0 changelog. Re-broadcasting the same nine policies re-derives every robot. Untick the box to see the stale values a write alone leaves behind."));
+        ...ROBOTS.map((r) => h(MenuItem, { key: r, value: r, sx: { fontFamily: MONO, fontSize: 12 } }, r)))]), h(ExplainBox, { path: `robots.${who}.canProceed`, p: trace }))));
 }
 
 // ── source ──
