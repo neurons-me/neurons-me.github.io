@@ -7,7 +7,12 @@
     "repo": ".me",
     "icon": {
       "light": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761149332/this.me-removebg-preview_2_j1eoiy.png",
-      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760758662/this.me-removebg-preview_fvyeda.png"
+      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760758662/this.me-removebg-preview_fvyeda.png",
+      "monad": {
+        "variant": "identity",
+        "kind": "me",
+        "seed": "jabellae"
+      }
     },
     "kind": "root"
   },
