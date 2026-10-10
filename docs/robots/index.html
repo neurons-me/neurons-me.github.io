@@ -103,7 +103,6 @@
     .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
     .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre-wrap; overflow-wrap: anywhere; }
-    .item-code.code-space { color: #e8b86d; background: rgba(232,184,109,.07); border-color: rgba(232,184,109,.22); }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
@@ -132,19 +131,14 @@
     <section>
       <h2 class="section-title">Demos</h2>
       <div class="links demo-grid">
-        <a class="item" href="https://neurons-me.github.io/robots/context-lab/" style="grid-column: 1 / -1;">
+        <a class="item" href="https://neurons-me.github.io/robots/context-lab/">
           <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-CONTEXT-LAB.jpg" width="1280" height="720" alt="Robots that understand context — live robot map, explain() and controls" />
-          <div class="item-title">Robots that understand context — live</div>
-          <div class="item-desc">One canister, four contexts, four robots. The real script on this.me@4.2.0: change the world, read every robot again.</div>
-          <code class="item-code">me.robots["[i]"]["="]("canProceed", "canLift &amp;&amp; softGripReady &amp;&amp; !needsHumanReview &amp;&amp; contextAllowsMotion")
-me("robots[canProceed == true].name")</code>
+          <div class="item-title">Robots that understand context</div>
           <span class="item-tag">Live · this.me@4.2.0</span>
         </a>
-        <a class="item" href="https://neurons-me.github.io/.me/Demos/Robots/Space/" style="grid-column: 1 / -1;">
-          <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-SPACE.jpg" width="1280" height="720" alt="B 612 and B 325 in the dark, three spider robots on them, the Sun on the left, a message travelling between the rocks" />
+        <a class="item" href="https://neurons-me.github.io/.me/Demos/Robots/Space/">
+          <img class="item-media" src="https://neurons-me.github.io/.me/Demos/Robots/Space/assets/space-robots-og-4.2.png" width="1200" height="630" alt="B 612 and B 325 in the dark, three spider robots on them" />
           <div class="item-title">Autonomous Robotics in Space</div>
-          <div class="item-desc">A short story: two small rocks, B 612 and B 325, and three spider robots, Oli, Tiko and Lua, each with its own .me kernel. Late or lost messages, batteries, and a flower to care for.</div>
-          <code class="item-code code-space">me.robots["[i]"]["="]("battery", "robots[i].batteries[].charge / robots[i].batteries[].capacity * 100")</code>
           <span class="item-tag">Live · Story · this.me@4.2.0</span>
         </a>
       </div>
