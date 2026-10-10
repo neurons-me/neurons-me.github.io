@@ -1,4 +1,4 @@
-// .GUI (this.gui@4.1.0) for the hand-written landings (/robots/, /smart-cities/). Loaded by their index.html.
+// .GUI (this.gui@4.2.0) for the hand-written landings (/robots/, /smart-cities/). Loaded by their index.html.
 // The page's own static markup (#static-landing) is the single source of text, links and images: this script
 // reads it, renders the same content through GUI.mount (registry Card/Box/Typography/Link/Chip + a page-local
 // topbar like ContextLab's: me:// path, Docs, GitHub, theme picker, light/dark, gear with Inspector + Grid Layout),

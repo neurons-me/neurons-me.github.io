@@ -1,4 +1,4 @@
-// neurons.me index (https://neurons-me.github.io/) on .GUI 4.1.0. Loaded by docs/index.html.
+// neurons.me index (https://neurons-me.github.io/) on .GUI 4.2.0. Loaded by docs/index.html.
 // Everything renders through GUI.mount + GUI registry types (Layout/Footer, Card, Box, Typography,
 // Link, Chip, SearchBar). Two small page-local types fill gaps the registry doesn't cover:
 //   ThemedImg     — picks a light/dark image from GUI.useThemeContext().mode (no GUI image atom has that)
