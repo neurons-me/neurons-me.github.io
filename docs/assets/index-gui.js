@@ -87,11 +87,25 @@
       els.map((el, i) => h(G.Box, { key: i, title: el.props.tooltip, sx: { display: "inline-flex" } }, el.props.element)),
       h(G.Box, { key: "settings", sx: { display: "inline-flex" } }, h(SettingsMenu)));
   }
-  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls };
+  // The .me card's mark: the real .GUI identity monad (GUI.Widgets.Monad, the Storybook story
+  // All.This/monad.ai/monad.ai → Identity: variant "identity", kind "me", seed "jabellae"), contained in the card's
+  // icon box instead of floating. Its hover QR tooltip is hidden here (the card is a link), and the box isolates
+  // its z-index 1400 so menus stay on top. Without the widget (older bundle) the .me logo stays.
+  function MeMonad({ fallback }) {
+    const Monad = (G.Widgets && G.Widgets.Monad) || G.Monad;
+    const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
+    React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
+    if (!Monad) return h(ThemedImg, fallback);
+    const box = small ? 48 : 68;
+    return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex",
+        "& .monad-tooltip": { display: "none" } } },
+      h(Monad, { variant: "identity", kind: "me", seed: "jabellae", mode: "contained", size: small ? 20 : 30 }));
+  }
+  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad };
 
   // ── content (from docs/index.html @ 6bee309) ──
   const STACK = [
-    [".me", "Own your knowledge.", "https://neurons-me.github.io/.me/", { light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
+    [".me", "Own your knowledge.", "https://neurons-me.github.io/.me/", { monad: true, light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
     ["cleaker", "Who am I, here.", "https://neurons-me.github.io/Cleaker/", { light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
     ["monad", "Federated runtime surfaces.", "https://neurons-me.github.io/monad/", { light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
     [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
@@ -187,7 +201,8 @@
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5 } } }, [
       N("Box", { sx: { width: 68, height: 68, borderRadius: "14px", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           [MOBILE]: { width: 48, height: 48, borderRadius: "10px" } } }, [
-        N("ThemedImg", { ...img, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } }),
+        img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
+          : N("ThemedImg", { ...img, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } }),
       ]),
       N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, [MOBILE]: { fontSize: "0.8rem", overflowWrap: "anywhere" } } }, [title]),
       N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
