@@ -196,8 +196,8 @@
     N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "row", alignItems: "stretch", minHeight: 140, overflow: "hidden", p: 0 } }, [
       // 2:3 like the portrait GIFs: the card is as tall as its image (~210px at 1280), as on the static page.
       N("Box", { component: "img", src: img, alt: "", sx: { width: "clamp(140px, 45%, 240px)", height: "auto", aspectRatio: "2 / 3", minHeight: 140, objectFit: "cover", flexShrink: 0, display: "block" } }),
-      N("Box", { sx: { display: "flex", alignItems: "center", flex: 1, minWidth: 0, px: 2.5, py: 2 } }, [
-        N("Typography", { component: "span", sx: { fontWeight: 900, fontSize: "clamp(0.95rem, 1vw + 0.75rem, 1.2rem)", lineHeight: 1.15 } }, [title]),
+      N("Box", { sx: { display: "flex", alignItems: "center", flex: 1, minWidth: 0, p: "clamp(14px, 2vw, 20px) clamp(20px, 3vw, 40px) clamp(14px, 2vw, 20px) clamp(14px, 2vw, 24px)" } }, [
+        N("Typography", { component: "span", sx: { fontWeight: 900, fontSize: "clamp(0.95rem, 1vw + 0.75rem, 1.2rem)", lineHeight: 1.15, overflowWrap: "normal", wordBreak: "keep-all", hyphens: "none" } }, [title]),
       ]),
     ]);
   const sourceRow = N("Box", { component: "section", sx: { mt: 5, display: "flex", alignItems: "center", gap: 1.75, flexWrap: "wrap" } }, [

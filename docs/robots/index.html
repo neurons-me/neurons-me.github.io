@@ -95,6 +95,9 @@
     .demo-grid .item { display: flex; flex-direction: column; padding: 12px 12px 16px; }
     .demo-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
     .demo-grid .item-tag { margin-top: auto; padding-top: 10px; }
+    .docs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width: 640px) { .docs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .docs-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
     .mls-card { margin-top: 18px; }
     .mls-title { text-decoration: none; }
     .mls-title:hover { text-decoration: underline; }
@@ -145,7 +148,7 @@
 
     <section>
       <p class="section-label">Related technical docs</p>
-      <div class="links">
+      <div class="links docs-grid">
         <a class="item" href="https://neurons-me.github.io/Robots-Versi%C3%B3n-Humana.html">
           <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-HUMAN-VERSION.jpg" width="1280" height="720" alt="Robots that understand context — human version" />
           <div class="item-title">Robots — human version</div>
@@ -157,12 +160,12 @@
           <div class="item-desc">Four robots point to one canister; each context decides what it means. Mapped onto the algebra of encrypted audiences.</div>
         </a>
         <a class="item" href="https://neurons-me.github.io/.me/docs/Robots-That-Understand-Context.html">
-          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/robots-describing-context.png" width="500" height="500" alt="A robot pointing at a canister" />
+          <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-DOC-WALKTHROUGH.jpg" width="1200" height="630" alt="ContextLab for Robots: live robot map and explain() for the nurse robot" />
           <div class="item-title">Robots That Understand Context</div>
           <div class="item-desc">The .me walkthrough: objects own their properties, contexts own theirs, robots just point — then explain() why each one acted.</div>
         </a>
         <a class="item" href="https://neurons-me.github.io/.me/Typescript/typedocs/examples/Robots_Contexts.html">
-          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/robots-context.png" width="209" height="336" alt="A robot thinking in paths" />
+          <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-DOC-TYPESCRIPT.jpg" width="1200" height="630" alt="ContextLab for Robots: the context-aware policies broadcast to every robot" />
           <div class="item-title">Robots Understanding Context — TypeScript</div>
           <div class="item-desc">The example page: shared object, robot-specific contexts, broadcast derivations and explain() audits.</div>
         </a>
