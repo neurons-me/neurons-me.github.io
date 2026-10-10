@@ -2413,7 +2413,7 @@
   },
   {
     "id": "robots-context-lab",
-    "title": "Robots that Understand Context — Live Demo",
+    "title": "ContextLab for Robots — Live Demo",
     "desc": "The real Robots_Contexts.ts running in the browser on this.me@4.2.0: one canister, four contexts, four robots, broadcast policies, live updates, filters, explain() and all 18 asserts.",
     "url": "https://neurons-me.github.io/robots/context-lab/",
     "repo": "neurons-me.github.io",
