@@ -4,7 +4,7 @@
 // The Jekyll theme layout writes the same tags statically instead (see neurons-me/_includes/docs-gui-head.html).
 (function () {
   if (window.__docsGuiLoader) return; window.__docsGuiLoader = true;
-  var V = "2"; // bump with docs-gui.js/css releases (GitHub Pages caches for 10 min)
+  var V = "3"; // bump with docs-gui.js/css releases (GitHub Pages caches for 10 min)
   var HOST = "https://neurons-me.github.io";
   window.__thisGuiThemeScope = window.__thisGuiThemeScope || { scopeId: "neurons-index-gui", themeModeKey: "neurons-index-gui.themeMode", themeIdKey: "neurons-index-gui.themeId" };
   var head = document.head;

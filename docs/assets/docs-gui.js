@@ -1,8 +1,8 @@
 // neurons.me docs shell on .GUI 4.2.0.
 // Loaded by the neurons-me remote theme layout (readme/default) on every Jekyll doc page, after React,
 // ReactDOM and this.gui (jsDelivr, SRI-pinned). It upgrades the server-rendered page in place:
-//   - mounts a GUI Layout with the .GUI TopBar: logo + navigable me:// path, Docs, GitHub icon,
-//     SearchBar (themed from tokens), light/dark, and a gear with themes (avatars), Inspector, Grid;
+//   - mounts a GUI Layout with the .GUI TopBar: logo + navigable me:// path, SearchBar (themed from tokens),
+//     light/dark, and a gear with themes (avatars), Inspector, Grid (no Docs link, no GitHub icon);
 //   - moves the existing <main id="doc-content"> into the GUI layout untouched, and styles it from
 //     the active theme's tokens (docs-gui.css reads the CSS variables set here);
 //   - keeps the static topbar as the no-JS / CDN-failure fallback (it is only hidden once GUI mounted).
@@ -144,12 +144,6 @@
       els.map((el, i) => h(G.Box, { key: i, title: el.props.tooltip, sx: { display: "inline-flex" } }, el.props.element)),
       h(SettingsMenu));
   }
-  const GITHUB_SVG = "M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z";
-  function GitHubLink() {
-    return h(G.Box, { component: "a", href: CFG.github, "aria-label": "GitHub", title: "GitHub", target: "_blank", rel: "noopener",
-        sx: { display: "inline-flex", p: 0.75, borderRadius: 1, color: "text.secondary", "&:hover": { color: "text.primary", bgcolor: "action.hover" } } },
-      h("svg", { width: 20, height: 20, viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true" }, h("path", { d: GITHUB_SVG })));
-  }
 
   // ── mobile sub-bar (< 600px): GUI 4.1.0's collapsed TopBar drops `action` elements and hides the brand,
   // so path, search, light/dark and gear are rendered here, sticky under the TopBar.
@@ -162,7 +156,6 @@
         h(MePath, { compact: true })),
       h(G.Box, { sx: { display: "flex", alignItems: "center", gap: 0.5 } },
         h(G.Box, { sx: { flex: 1, minWidth: 0 } }, h(DocsSearch, { width: "100%" })),
-        h(GitHubLink),
         h(Controls)));
   }
 
@@ -241,14 +234,12 @@
     });
   }
 
-  const PAGE_TYPES = { Brand, MePath, DocsSearch, Controls, GitHubLink, MobileBar, DocContent, ThemeSync };
+  const PAGE_TYPES = { Brand, MePath, DocsSearch, Controls, MobileBar, DocContent, ThemeSync };
   const action = (type) => ({ type: "action", props: { element: h(PAGE_TYPES[type]) } });
   const TOPBAR = {
     title: h(Brand), logo: "", homeTo: null,
     logoSx: { display: "none" }, titleSx: { color: "inherit", fontSize: "1rem", fontWeight: 400, overflow: "visible" },
-    // Docs is a TopBar `link` so it also appears in the collapsed (< 600px) menu; GitHub is an icon-only
-    // action (TopBarLink always shows its label on desktop), repeated in the mobile sub-bar.
-    elementsRight: [{ type: "link", props: { label: "Docs", href: CFG.docs, icon: "menu_book" } }, action("GitHubLink"), action("DocsSearch"), action("Controls")],
+    elementsRight: [action("DocsSearch"), action("Controls")],
   };
   const spec = HOSTKIND === "jekyll" ? N("Layout", {
     TopBar: TOPBAR,
