@@ -96,12 +96,27 @@
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
-    const box = small ? 48 : 68;
-    return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex",
-        // The widget's "glow" keyframes pulse the orb's opacity between 0.3 and 0.5; an !important opacity outranks the
-        // animation, so the ring and dot show at full strength while the float motion and the soft glow shadow keep running.
-        "& .monad-tooltip": { display: "none" }, "& div": { opacity: "1 !important" } } },
-      h(Monad, { variant: "identity", kind: "me", seed: "jabellae", mode: "contained", size: small ? 20 : 30 }));
+    // Index-side tuning of the widget (selectors follow its DOM: orb > [aria-hidden] ring box > ring, dot):
+    //  · orb 48px (34px on phones) and a gentler float (-3px, ×1.04) so it never leaves its 68/48px slot;
+    //  · the widget's "glow" (opacity 0.3–0.5 pulse + white halo) replaced by a faint halo pulse, full opacity;
+    //  · the ring at 80% of the orb (closer to its edge, farther from the dot), the dot at 22% of the ring, soft shadows;
+    //  · ring box and ring inherit the orb's animated border-radius, so the ring morphs with the outer circle.
+    const box = small ? 48 : 68, orb = small ? 34 : 48;
+    const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
+    const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
+    return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
+        const dark = t.palette.mode === "dark", halo = dark ? "255,255,255" : "0,90,122";
+        return { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex",
+          "@keyframes meOrbFloat": Object.fromEntries(Object.keys(blob).map((k) => [k, { transform: `translateY(${lift[k][0]}px) scale(${lift[k][1]})`, borderRadius: blob[k] }])),
+          "@keyframes meOrbHalo": { "0%,100%": { boxShadow: `0 0 2px rgba(${halo},0.10)` }, "50%": { boxShadow: `0 0 4px rgba(${halo},0.16)` } },
+          "& .monad-tooltip": { display: "none" }, "& div": { opacity: "1 !important" },
+          "& div:has(> div[aria-hidden=true])": { animation: "meOrbFloat 6s ease-in-out infinite, meOrbHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } },
+          "& div[aria-hidden=true]": { width: "80% !important", height: "80% !important", borderRadius: "inherit" },
+          "& div[aria-hidden=true] > div:first-of-type": { borderRadius: "inherit !important", borderWidth: `${small ? 2 : 2.5}px !important`,
+            boxShadow: dark ? "0 0 3px rgba(180,230,230,0.22) !important" : "0 0 3px rgba(0,90,122,0.18) !important" },
+          "& div[aria-hidden=true] > div:last-of-type": { width: "22% !important", height: "22% !important", boxShadow: dark ? "0 0 3px rgba(234,252,250,0.35) !important" : "0 0 3px rgba(0,90,122,0.3) !important" } };
+      } },
+      h(Monad, { variant: "identity", kind: "me", seed: "jabellae", mode: "contained", size: Math.round(orb * 34 / 60) }));
   }
   const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad };
 
