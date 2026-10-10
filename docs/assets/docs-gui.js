@@ -1,4 +1,4 @@
-// neurons.me docs shell on .GUI 4.1.0.
+// neurons.me docs shell on .GUI 4.2.0.
 // Loaded by the neurons-me remote theme layout (readme/default) on every Jekyll doc page, after React,
 // ReactDOM and this.gui (jsDelivr, SRI-pinned). It upgrades the server-rendered page in place:
 //   - mounts a GUI Layout with the .GUI TopBar: logo + navigable me:// path, Docs, GitHub icon,
