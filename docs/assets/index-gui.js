@@ -123,6 +123,32 @@
   // The widget draws a fixed 60px orb, so a 60px stage is scaled to the slot (0.8 → 48px, 0.567 → 34px on phones, the
   // .me orb's sizes). Same index-side tuning as the .me orb: full opacity, gentler float, a faint halo instead of the
   // widget's opacity/halo pulse; its own lava, blob and pixel-breath motions keep running.
+  // Inner texture of the monad bubble (the light behind its pixel grid: the widget's ::before blob, glass shading
+  // and "rorschachLava" layers). "widget" = as GUI draws it; "A" matte + grain; "B" diffuse fog; "C" frosted fine dots.
+  // ?monadTexture=A|B|C|widget overrides it for a look.
+  const MONAD_TEXTURE = "A";
+  const monadTexture = (dark) => {
+    const pick = new URLSearchParams(location.search).get("monadTexture"), opt = /^(A|B|C|widget)$/.test(pick || "") ? pick : MONAD_TEXTURE;
+    if (opt === "widget") return {};
+    const ORB = "& div:has(> div[aria-hidden=true])", INNER = `${ORB} > div[aria-hidden=true]:first-of-type`;
+    const tint = dark ? "255,255,255" : "0,60,80";
+    // the inner layers: smaller (inset 9px instead of 5px of the 60px orb) and faded out at the edge, so no disc boundary
+    const base = { [INNER]: { inset: "9px !important", WebkitMaskImage: "radial-gradient(circle, #000 38%, transparent 70%)", maskImage: "radial-gradient(circle, #000 38%, transparent 70%)" } };
+    const grain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 ${dark ? 1 : 0} 0 0 0 0 ${dark ? 1 : 0.24} 0 0 0 0 ${dark ? 1 : 0.31} 0 0 0 ${dark ? 0.16 : 0.2} 0'/%3E%3C/filter%3E%3Crect width='64' height='64' filter='url(%23n)'/%3E%3C/svg%3E")`;
+    if (opt === "A") return { ...base,   // flat matte, faint grain, no highlight, no inkblot, no blob
+      [`${ORB}::before`]: { display: "none" },
+      [`${INNER} > div:first-of-type`]: { background: `${grain}, rgba(${tint},${dark ? 0.035 : 0.04}) !important`, backgroundSize: "32px 32px, auto", boxShadow: "none !important" },
+      [`${INNER} > div:last-of-type`]: { display: "none" } };
+    if (opt === "B") return { ...base,   // soft fog: wide, very blurred, low alpha; keeps the blob drift and the lava motion
+      [INNER]: { ...base[INNER], WebkitMaskImage: "radial-gradient(circle, #000 20%, transparent 72%)", maskImage: "radial-gradient(circle, #000 20%, transparent 72%)" },
+      [`${ORB}::before`]: { background: `radial-gradient(circle, rgba(${dark ? "159,246,255" : "0,90,122"},${dark ? 0.12 : 0.1}) 0%, transparent 70%) !important`, mixBlendMode: "normal !important" },
+      [`${INNER} > div:first-of-type`]: { background: `radial-gradient(circle at 50% 46%, rgba(${tint},${dark ? 0.06 : 0.05}), transparent 70%) !important`, boxShadow: "none !important" },
+      [`${INNER} > div:last-of-type`]: { background: `radial-gradient(ellipse at 45% 40%, rgba(${tint},0.05), transparent 60%), radial-gradient(ellipse at 58% 62%, rgba(${tint},0.04), transparent 60%) !important`, mixBlendMode: "normal !important" } };
+    return { ...base,                     // C: frosted glass with a fine dot screen, low contrast; keeps the lava motion
+      [`${ORB}::before`]: { display: "none" },
+      [`${INNER} > div:first-of-type`]: { background: `radial-gradient(rgba(${tint},${dark ? 0.16 : 0.18}) 0.55px, transparent 0.9px) 0 0 / 2.5px 2.5px, rgba(${tint},${dark ? 0.03 : 0.035}) !important`, boxShadow: "none !important", backdropFilter: "blur(2px)" },
+      [`${INNER} > div:last-of-type`]: { background: `repeating-linear-gradient(0deg, rgba(${tint},0.035) 0 0.6px, transparent 0.6px 2px) !important`, mixBlendMode: "normal !important", opacity: "1 !important" } };
+  };
   function MonadBubble({ fallback }) {
     const Monad = (G.Widgets && G.Widgets.Monad) || G.Monad;
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
@@ -137,7 +163,8 @@
           "@keyframes monadOrbFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p][0] / k}px) scale(${lift[p][1]})`, borderRadius: blob[p] }])),
           "@keyframes monadOrbHalo": { "0%,100%": { boxShadow: `0 0 3px rgba(${halo},0.14)` }, "50%": { boxShadow: `0 0 5px rgba(${halo},0.22)` } },
           "& .monad-tooltip": { display: "none" },
-          "& div:has(> div[aria-hidden=true])": { opacity: "1 !important", animation: "monadOrbFloat 6s ease-in-out infinite, monadOrbHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } } };
+          "& div:has(> div[aria-hidden=true])": { opacity: "1 !important", animation: "monadOrbFloat 6s ease-in-out infinite, monadOrbHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } },
+          ...monadTexture(t.palette.mode === "dark") };
       } },
       h(G.Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } },
         h(Monad, { variant: "bubble", kind: "monad", mode: "contained" })));
