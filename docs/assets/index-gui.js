@@ -98,7 +98,9 @@
     if (!Monad) return h(ThemedImg, fallback);
     const box = small ? 48 : 68;
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex",
-        "& .monad-tooltip": { display: "none" } } },
+        // The widget's "glow" keyframes pulse the orb's opacity between 0.3 and 0.5; an !important opacity outranks the
+        // animation, so the ring and dot show at full strength while the float motion and the soft glow shadow keep running.
+        "& .monad-tooltip": { display: "none" }, "& div": { opacity: "1 !important" } } },
       h(Monad, { variant: "identity", kind: "me", seed: "jabellae", mode: "contained", size: small ? 20 : 30 }));
   }
   const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad };
