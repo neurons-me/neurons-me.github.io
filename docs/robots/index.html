@@ -17,6 +17,23 @@
   <meta name="twitter:title" content="Robots — neurons.me" />
   <meta name="twitter:description" content="Robots that understand context — one object, four meanings, zero copies." />
   <meta name="twitter:image" content="https://neurons-me.github.io/robots/assets/ROBOTS-CONTEXT-LAB.jpg" />
+  <!-- .GUI (this.gui@4.1.0) renders this page from the static markup below (assets/landing-gui.js); the static page stays as the no-JS / CDN-failure fallback.
+       Page-scoped theme keys, neurons.me, dark by default. -->
+  <script>
+    window.__thisGuiThemeScope = { scopeId: "robots-landing", themeModeKey: "robots-landing.themeMode", themeIdKey: "robots-landing.themeId", defaultMode: "dark" };
+    try {
+      if (!localStorage.getItem("robots-landing.themeMode")) localStorage.setItem("robots-landing.themeMode", "dark");
+      if (!localStorage.getItem("robots-landing.themeId")) localStorage.setItem("robots-landing.themeId", "neurons.me");
+    } catch (e) {}
+    document.documentElement.classList.add("gui-boot");
+  </script>
+  <!-- No icon font: every icon is inline SVG; hide any icon-font span so its name never shows as text. -->
+  <style>.material-symbols-rounded,.material-symbols-outlined,.material-icons{display:none!important} body{margin:0} .gui-boot #static-landing{display:none}</style>
+  <!-- Pinned dependencies (jsDelivr, exact versions, Subresource Integrity), same as ContextLab. -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/this.gui@4.1.0/dist/this.gui.umd.js" integrity="sha384-umBxi9YB2FkfPkyuR4Ej4TvKyweGkUbZnvIQh/ZzaF0YGstAGl5I6xJ9fnLC+76O" crossorigin="anonymous"></script>
+  <!-- Static page styles, off once .GUI has rendered (html.gui-on). -->
   <style>
     :root {
       --bg: #0b0b0f;
@@ -36,8 +53,8 @@
       --sc-active-fg: #e8eded;
       --sc-hover: rgba(255, 255, 255, 0.06);
     }
-    * { box-sizing: border-box; }
-    body {
+    html:not(.gui-on) * { box-sizing: border-box; }
+    html:not(.gui-on) body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
@@ -47,69 +64,70 @@
       color: var(--text);
       line-height: 1.6;
     }
-    a { color: inherit; }
-    .wrap { width: min(760px, calc(100% - 40px)); margin: 0 auto; padding-top: 12px; }
+    html:not(.gui-on) a { color: inherit; }
+    html:not(.gui-on) .wrap { width: min(760px, calc(100% - 40px)); margin: 0 auto; padding-top: 12px; }
 
 
     /* Topbar: one me:// path line + Docs + GitHub mark (same as me://Demos/AffinityModel, dark tokens) */
-    .topnav { position: sticky; top: 0; z-index: 100; height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 20px;
+    html:not(.gui-on) .topnav { position: sticky; top: 0; z-index: 100; height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 20px;
       background: rgba(11,17,20,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid rgba(232,237,237,0.10); }
-    .topnav a { text-decoration: none; }
-    .topnav .logo { display: inline-flex; line-height: 0; }
-    .topnav .logo img { width: 28px; height: 28px; object-fit: contain; display: block; }
-    .mepath { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; line-height: 1.5; }
-    .mepath a { color: #4fd1c5; }
-    .mepath a:hover { text-decoration: underline; }
-    .mepath .sep { color: #98a7b3; opacity: .6; margin: 0 1px; }
-    .mepath .here { font-weight: 600; color: #e8eded; }
-    .topnav .spacer { flex: 1; }
-    .topnav .act { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #98a7b3; }
-    .topnav .act:hover { color: #4fd1c5; text-decoration: underline; }
-    .topnav .gh { display: inline-flex; line-height: 0; color: #98a7b3; }
-    .topnav .gh:hover { color: #e8eded; }
+    html:not(.gui-on) .topnav a { text-decoration: none; }
+    html:not(.gui-on) .topnav .logo { display: inline-flex; line-height: 0; }
+    html:not(.gui-on) .topnav .logo img { width: 28px; height: 28px; object-fit: contain; display: block; }
+    html:not(.gui-on) .mepath { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; line-height: 1.5; }
+    html:not(.gui-on) .mepath a { color: #4fd1c5; }
+    html:not(.gui-on) .mepath a:hover { text-decoration: underline; }
+    html:not(.gui-on) .mepath .sep { color: #98a7b3; opacity: .6; margin: 0 1px; }
+    html:not(.gui-on) .mepath .here { font-weight: 600; color: #e8eded; }
+    html:not(.gui-on) .topnav .spacer { flex: 1; }
+    html:not(.gui-on) .topnav .act { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #98a7b3; }
+    html:not(.gui-on) .topnav .act:hover { color: #4fd1c5; text-decoration: underline; }
+    html:not(.gui-on) .topnav .gh { display: inline-flex; line-height: 0; color: #98a7b3; }
+    html:not(.gui-on) .topnav .gh:hover { color: #e8eded; }
 
-    header { padding: 28px 0 40px; }
-    h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; }
-    .lead { font-size: 1.1rem; color: #d4d4d8; max-width: 56ch; }
-    section { padding: 32px 0; border-top: 1px solid var(--line); }
-    .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; letter-spacing: -.02em; font-weight: 800; margin: 0 0 18px; }
-    .section-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 18px; }
-    .links { display: flex; flex-direction: column; gap: 10px; }
-    .item {
+    html:not(.gui-on) header { padding: 28px 0 40px; }
+    html:not(.gui-on) h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; }
+    html:not(.gui-on) .lead { font-size: 1.1rem; color: #d4d4d8; max-width: 56ch; }
+    html:not(.gui-on) section { padding: 32px 0; border-top: 1px solid var(--line); }
+    html:not(.gui-on) .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; letter-spacing: -.02em; font-weight: 800; margin: 0 0 18px; }
+    html:not(.gui-on) .section-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 18px; }
+    html:not(.gui-on) .links { display: flex; flex-direction: column; gap: 10px; }
+    html:not(.gui-on) .item {
       display: block; padding: 16px 20px; border: 1px solid var(--line); border-radius: 14px;
       background: rgba(255,255,255,.03); text-decoration: none; transition: border-color .15s, background .15s;
     }
-    .item:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.05); }
-    .item-title { font-weight: 600; font-size: 1.02rem; }
-    .item-desc { color: var(--muted); font-size: .9rem; margin-top: 4px; }
-    .item-tag {
+    html:not(.gui-on) .item:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.05); }
+    html:not(.gui-on) .item-title { font-weight: 600; font-size: 1.02rem; }
+    html:not(.gui-on) .item-desc { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+    html:not(.gui-on) .item-tag {
       display: inline-block; margin-top: 10px; font-size: .72rem; letter-spacing: .06em;
       text-transform: uppercase; color: var(--blue); opacity: .9;
     }
-    .item-media {
+    html:not(.gui-on) .item-media {
       display: block; width: 100%; height: auto; max-height: 160px; object-fit: cover;
       border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--line);
     }
-    .demo-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 640px) { .demo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    .demo-grid .item { display: flex; flex-direction: column; padding: 12px 12px 16px; }
-    .demo-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
-    .demo-grid .item-tag { margin-top: auto; padding-top: 10px; }
-    .docs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    @media (min-width: 640px) { .docs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    .docs-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
-    .mls-card { margin-top: 18px; }
-    .mls-title { text-decoration: none; }
-    .mls-title:hover { text-decoration: underline; }
-    .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
-    .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
-    .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
+    html:not(.gui-on) .demo-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { html:not(.gui-on) .demo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    html:not(.gui-on) .demo-grid .item { display: flex; flex-direction: column; padding: 12px 12px 16px; }
+    html:not(.gui-on) .demo-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
+    html:not(.gui-on) .demo-grid .item-tag { margin-top: auto; padding-top: 10px; }
+    html:not(.gui-on) .docs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width: 640px) { html:not(.gui-on) .docs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    html:not(.gui-on) .docs-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
+    html:not(.gui-on) .mls-card { margin-top: 18px; }
+    html:not(.gui-on) .mls-title { text-decoration: none; }
+    html:not(.gui-on) .mls-title:hover { text-decoration: underline; }
+    html:not(.gui-on) .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    html:not(.gui-on) .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
+    html:not(.gui-on) .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
+    html:not(.gui-on) .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre-wrap; overflow-wrap: anywhere; }
-    footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
+    html:not(.gui-on) footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
 </head>
 <body>
+<div id="static-landing">
   <nav class="topnav" aria-label="me path">
     <a class="logo" href="https://neurons-me.github.io/" title="neurons.me"><img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" width="28" height="28" /></a>
     <div class="mepath"><a href="https://neurons-me.github.io/.me/" title=".me">me://</a><a href="https://neurons-me.github.io/.me/Demos/" title=".me Demos">Demos</a><span class="sep">/</span><span class="here" aria-current="page">Robots</span></div>
@@ -174,5 +192,8 @@
 
     <footer>sui.gn / neurons.me</footer>
   </div>
+</div>
+<div id="root"></div>
+<script src="/assets/landing-gui.js?v=1" onerror="document.documentElement.classList.remove('gui-boot')"></script>
 </body>
 </html>
