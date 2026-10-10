@@ -7,7 +7,12 @@
     "repo": ".me",
     "icon": {
       "light": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761149332/this.me-removebg-preview_2_j1eoiy.png",
-      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760758662/this.me-removebg-preview_fvyeda.png"
+      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760758662/this.me-removebg-preview_fvyeda.png",
+      "monad": {
+        "variant": "identity",
+        "kind": "me",
+        "seed": "jabellae"
+      }
     },
     "kind": "root"
   },
@@ -26,7 +31,15 @@
     "desc": "Federated runtime surfaces.",
     "url": "https://neurons-me.github.io/monad/",
     "repo": "monad",
-    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778090977/monad.ai.profile-removebg-preview_np26yp.png",
+    "icon": {
+      "light": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778090977/monad.ai.profile-removebg-preview_np26yp.png",
+      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778090977/monad.ai.profile-removebg-preview_np26yp.png",
+      "monad": {
+        "variant": "bubble",
+        "kind": "monad",
+        "texture": "matte"
+      }
+    },
     "kind": "root"
   },
   {
