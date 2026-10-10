@@ -118,13 +118,37 @@
       } },
       h(Monad, { variant: "identity", kind: "me", seed: "jabellae", mode: "contained", size: Math.round(orb * 34 / 60) }));
   }
-  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad };
+  // The monad card's mark: the .GUI Monad bubble itself (GUI.Widgets.Monad, Storybook All.This/monad.ai/monad.ai →
+  // Bubble: variant "bubble"; kind resolves to "monad" there since the story has no global me, so it is passed here).
+  // The widget draws a fixed 60px orb, so a 60px stage is scaled to the slot (0.8 → 48px, 0.567 → 34px on phones, the
+  // .me orb's sizes). Same index-side tuning as the .me orb: full opacity, gentler float, a faint halo instead of the
+  // widget's opacity/halo pulse; its own lava, blob and pixel-breath motions keep running.
+  function MonadBubble({ fallback }) {
+    const Monad = (G.Widgets && G.Widgets.Monad) || G.Monad;
+    const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
+    React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
+    if (!Monad) return h(ThemedImg, fallback);
+    const box = small ? 48 : 68, k = (small ? 34 : 48) / 60;
+    const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
+    const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
+    return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
+        const halo = t.palette.mode === "dark" ? "159,246,255" : "0,90,122";
+        return { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex", alignItems: "center", justifyContent: "center",
+          "@keyframes monadOrbFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p][0] / k}px) scale(${lift[p][1]})`, borderRadius: blob[p] }])),
+          "@keyframes monadOrbHalo": { "0%,100%": { boxShadow: `0 0 3px rgba(${halo},0.14)` }, "50%": { boxShadow: `0 0 5px rgba(${halo},0.22)` } },
+          "& .monad-tooltip": { display: "none" },
+          "& div:has(> div[aria-hidden=true])": { opacity: "1 !important", animation: "monadOrbFloat 6s ease-in-out infinite, monadOrbHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } } };
+      } },
+      h(G.Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } },
+        h(Monad, { variant: "bubble", kind: "monad", mode: "contained" })));
+  }
+  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad, MonadBubble };
 
   // ── content (from docs/index.html @ 6bee309) ──
   const STACK = [
     [".me", "Own your knowledge.", "https://neurons-me.github.io/.me/", { monad: true, light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
     ["cleaker", "Who am I, here.", "https://neurons-me.github.io/Cleaker/", { light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
-    ["monad", "Federated runtime surfaces.", "https://neurons-me.github.io/monad/", { light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
+    ["monad", "Federated runtime surfaces.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
     [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
     ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { light: CL + "v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png", dark: CL + "v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" }],
     ["Explore All.This", "Across the neurons.me ecosystem.", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
@@ -218,7 +242,8 @@
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5 } } }, [
       N("Box", { sx: { width: 68, height: 68, borderRadius: "14px", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           [MOBILE]: { width: 48, height: 48, borderRadius: "10px" } } }, [
-        img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
+        img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
+          : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
           : N("ThemedImg", { ...img, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } }),
       ]),
       N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, [MOBILE]: { fontSize: "0.8rem", overflowWrap: "anywhere" } } }, [title]),
