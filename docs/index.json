@@ -2400,7 +2400,7 @@
   {
     "id": "robots-topic",
     "title": "Robots",
-    "desc": "Robots that understand context — the live demo on this.me@4.1.0, plus the human version, the infographic and the .me docs behind it.",
+    "desc": "Robots that understand context — the live demo on this.me@4.2.0, plus the human version, the infographic and the .me docs behind it.",
     "url": "https://neurons-me.github.io/robots/",
     "repo": "neurons-me.github.io",
     "icon": "🤖",
@@ -2414,7 +2414,7 @@
   {
     "id": "robots-context-lab",
     "title": "Robots that Understand Context — Live Demo",
-    "desc": "The real Robots_Contexts.ts running in the browser on this.me@4.1.0: one canister, four contexts, four robots, broadcast policies, live updates, filters, explain() and all 18 asserts.",
+    "desc": "The real Robots_Contexts.ts running in the browser on this.me@4.2.0: one canister, four contexts, four robots, broadcast policies, live updates, filters, explain() and all 18 asserts.",
     "url": "https://neurons-me.github.io/robots/context-lab/",
     "repo": "neurons-me.github.io",
     "icon": "🤖",
