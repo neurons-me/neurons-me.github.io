@@ -447,10 +447,37 @@
   {
     "id": "me-benchmarks",
     "title": "Benchmarks",
-    "desc": "O(k) scaling, throughput, fan-out, cold/warm, explain overhead, secret-scope cost.",
+    "desc": "Kernel benchmarks 1–11 and the fire test, and real-data GTFS benchmarks (Madrid, this.me 4.2.0).",
     "url": "https://neurons-me.github.io/.me/docs/Benchmarks/",
     "repo": ".me",
     "icon": "⚡",
+    "kind": "doc"
+  },
+  {
+    "id": "me-benchmarks-kernel",
+    "title": "Kernel Benchmarks 1–11",
+    "desc": "O(k) scaling, throughput, fan-out, cold/warm, explain overhead, secret-scope cost, push vs pull.",
+    "url": "https://neurons-me.github.io/.me/docs/Benchmarks/benchmarks.html",
+    "repo": ".me",
+    "icon": "⚡",
+    "kind": "doc"
+  },
+  {
+    "id": "me-benchmarks-gtfs",
+    "title": "GTFS Benchmarks",
+    "desc": "The .me kernel on GTFS public-transport feeds: what GTFS is and which datasets are measured.",
+    "url": "https://neurons-me.github.io/.me/docs/Benchmarks/GTFS/",
+    "repo": ".me",
+    "icon": "🚇",
+    "kind": "doc"
+  },
+  {
+    "id": "me-benchmarks-gtfs-madrid",
+    "title": "GTFS-Madrid Benchmark",
+    "desc": "GTFS-Madrid-Bench on this.me 4.2.0: affected set k as VIG grows the data, fan-out skew, DELETE cost, the [] aggregate; scripts, commands, results.",
+    "url": "https://neurons-me.github.io/.me/docs/Benchmarks/GTFS/Madrid/",
+    "repo": ".me",
+    "icon": "🚇",
     "kind": "doc"
   },
   {
