@@ -120,7 +120,7 @@
     html:not(.gui-on) .docs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
     @media (min-width: 640px) { html:not(.gui-on) .docs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     html:not(.gui-on) .docs-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
-    html:not(.gui-on) .item-media.logo { object-fit: contain; background: #e8edf2; padding: 16px; }
+    html:not(.gui-on) .item-media.logo { object-fit: contain; padding: 16px; }
     html:not(.gui-on) .related { padding: 24px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
     html:not(.gui-on) .related a { color: var(--blue); margin-right: 10px; }
   </style>
@@ -142,7 +142,7 @@
       <h2 class="section-title">Projects</h2>
       <div class="links docs-grid">
         <a class="item" href="https://neurons-me.github.io/.me/docs/">
-          <img class="item-media logo" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761149332/this.me-removebg-preview_2_j1eoiy.png" width="1600" height="900" alt=".me" />
+          <img class="item-media logo" data-orb="me" data-dark="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760758662/this.me-removebg-preview_fvyeda.png" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1761149332/this.me-removebg-preview_2_j1eoiy.png" width="1600" height="900" alt=".me" />
           <div class="item-title">.me</div>
           <div class="item-desc">The reactive semantic kernel: paths, secrets, explain(), benchmarks and the API.</div>
           <span class="item-tag">Kernel · this.me</span>
@@ -154,13 +154,13 @@
           <span class="item-tag">Identity · cleaker</span>
         </a>
         <a class="item" href="https://neurons-me.github.io/netget/docs/">
-          <img class="item-media logo" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png" width="1600" height="900" alt="NetGet" />
+          <img class="item-media logo" data-dark="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png" width="1600" height="900" alt="NetGet" />
           <div class="item-title">NetGet</div>
           <div class="item-desc">A gateway to the web: routes HTTP/HTTPS requests to local services and domains.</div>
           <span class="item-tag">Gateway · netget</span>
         </a>
         <a class="item" href="https://neurons-me.github.io/monad/docs/">
-          <img class="item-media logo" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778090977/monad.ai.profile-removebg-preview_np26yp.png" width="1600" height="900" alt="monad" />
+          <img class="item-media logo" data-orb="monad" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778090977/monad.ai.profile-removebg-preview_np26yp.png" width="1600" height="900" alt="monad" />
           <div class="item-title">monad</div>
           <div class="item-desc">Federated runtime surfaces: run a monad, serve a namespace.</div>
           <span class="item-tag">Runtime · monad</span>
@@ -198,6 +198,6 @@
   </div>
 </div>
 <div id="root"></div>
-<script src="/assets/landing-gui.js?v=5" onerror="document.documentElement.classList.remove('gui-boot')"></script>
+<script src="/assets/landing-gui.js?v=6" onerror="document.documentElement.classList.remove('gui-boot')"></script>
 </body>
 </html>

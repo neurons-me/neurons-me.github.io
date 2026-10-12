@@ -36,7 +36,7 @@
           const img = a.querySelector("img");
           return { href: a.getAttribute("href"), title: txt(a.querySelector(".item-title")), desc: txt(a.querySelector(".item-desc")),
             code: a.querySelector(".item-code") ? a.querySelector(".item-code").textContent : "", tag: txt(a.querySelector(".item-tag")),
-            img: img && { logo: img.classList.contains("logo"), src: img.getAttribute("src"), width: img.getAttribute("width"), height: img.getAttribute("height"), alt: img.getAttribute("alt") || "" } };
+            img: img && { logo: img.classList.contains("logo"), orb: img.dataset.orb || "", dark: img.dataset.dark || "", soft: img.classList.contains("soft"), src: img.getAttribute("src"), width: img.getAttribute("width"), height: img.getAttribute("height"), alt: img.getAttribute("alt") || "" } };
         }),
       };
     }),
@@ -142,16 +142,65 @@
         h(Box, { "data-gui-inspector-control": "true", sx: { display: "inline-flex", alignItems: "center", gap: .25 } }, h(ThemePicker), h(ModeToggle), h(SettingsMenu))));
   }
 
+
+  // ── LandingOrb: the .GUI orbs, as on the neurons.me index (index-gui.js MeMonad / MonadBubble):
+  //   kind "me"    → GUI.Widgets.Monad variant "identity", kind "me", seed "jabellae" (Storybook All.This/monad.ai → Identity);
+  //   kind "monad" → GUI.Widgets.Monad variant "bubble", kind "monad" (Storybook → Bubble), matte texture "A".
+  // Same index-side tuning (full opacity, gentle float, faint halo, QR tooltip hidden), scaled up for a 16:9 card slot.
+  // Without the widget it falls back to the static image.
+  function LandingOrb({ kind, alt }) {
+    const Monad = (G.Widgets && G.Widgets.Monad) || G.Monad;
+    const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
+    React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
+    const orb = small ? 84 : 104;
+    const slot = { display: "flex", alignItems: "center", justifyContent: "center", width: "100%", aspectRatio: "16 / 9", mb: 1.5, position: "relative", zIndex: 0, isolation: "isolate" };
+    if (!Monad) return h(Box, { role: "img", "aria-label": alt, sx: slot });
+    const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
+    const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
+    const ORB = "& div:has(> div[aria-hidden=true])";
+    if (kind === "me") return h(Box, { role: "img", "aria-label": alt, sx: (t) => {
+        const dark = t.palette.mode === "dark", halo = dark ? "255,255,255" : "0,90,122";
+        return { ...slot, "@keyframes lOrbFloat": Object.fromEntries(Object.keys(blob).map((k) => [k, { transform: `translateY(${lift[k][0]}px) scale(${lift[k][1]})`, borderRadius: blob[k] }])),
+          "@keyframes lOrbHalo": { "0%,100%": { boxShadow: `0 0 2px rgba(${halo},0.10)` }, "50%": { boxShadow: `0 0 5px rgba(${halo},0.18)` } },
+          "& .monad-tooltip": { display: "none" }, "& div": { opacity: "1 !important" },
+          [ORB]: { animation: "lOrbFloat 6s ease-in-out infinite, lOrbHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } },
+          "& div[aria-hidden=true]": { width: "80% !important", height: "80% !important", borderRadius: "inherit" },
+          "& div[aria-hidden=true] > div:first-of-type": { borderRadius: "inherit !important", borderWidth: "4px !important", boxShadow: dark ? "0 0 4px rgba(180,230,230,0.22) !important" : "0 0 4px rgba(0,90,122,0.18) !important" },
+          "& div[aria-hidden=true] > div:last-of-type": { width: "22% !important", height: "22% !important", boxShadow: dark ? "0 0 4px rgba(234,252,250,0.35) !important" : "0 0 4px rgba(0,90,122,0.3) !important" } };
+      } }, h(Monad, { variant: "identity", kind: "me", seed: "jabellae", mode: "contained", size: Math.round(orb * 34 / 60) }));
+    const k = orb / 60;
+    return h(Box, { role: "img", "aria-label": alt, sx: (t) => {
+        const dark = t.palette.mode === "dark", halo = dark ? "159,246,255" : "0,90,122", tint = dark ? "255,255,255" : "0,60,80";
+        const INNER = `${ORB} > div[aria-hidden=true]:first-of-type`;
+        const grain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 ${dark ? 1 : 0} 0 0 0 0 ${dark ? 1 : 0.24} 0 0 0 0 ${dark ? 1 : 0.31} 0 0 0 ${dark ? 0.16 : 0.2} 0'/%3E%3C/filter%3E%3Crect width='64' height='64' filter='url(%23n)'/%3E%3C/svg%3E")`;
+        return { ...slot, "@keyframes lBubFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p][0] / k}px) scale(${lift[p][1]})`, borderRadius: blob[p] }])),
+          "@keyframes lBubHalo": { "0%,100%": { boxShadow: `0 0 3px rgba(${halo},0.14)` }, "50%": { boxShadow: `0 0 5px rgba(${halo},0.22)` } },
+          "& .monad-tooltip": { display: "none" },
+          [ORB]: { opacity: "1 !important", animation: "lBubFloat 6s ease-in-out infinite, lBubHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } },
+          [INNER]: { inset: "9px !important", WebkitMaskImage: "radial-gradient(circle, #000 38%, transparent 70%)", maskImage: "radial-gradient(circle, #000 38%, transparent 70%)" },
+          [`${ORB}::before`]: { display: "none" },
+          [`${INNER} > div:first-of-type`]: { background: `${grain}, rgba(${tint},${dark ? 0.035 : 0.04}) !important`, backgroundSize: "32px 32px, auto", boxShadow: "none !important" },
+          [`${INNER} > div:last-of-type`]: { display: "none" } };
+      } }, h(Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } }, h(Monad, { variant: "bubble", kind: "monad", mode: "contained" })));
+  }
   // ── content spec (registry types), same layout as the static page ──
   const cardSx = { display: "block", textDecoration: "none", color: "inherit", borderRadius: "14px", bgcolor: "background.paper", transition: "border-color .15s, box-shadow .15s",
     "&:hover": { borderColor: "primary.main", textDecoration: "none" } };
   const T = (text, sx, props) => N("Typography", { ...(props || {}), sx }, [text]);
   const title = (t) => T(t, { fontWeight: 600, fontSize: "1.02rem", lineHeight: 1.6, color: "text.primary" });
   const desc = (t) => T(t, { color: "text.secondary", fontSize: ".9rem", lineHeight: 1.6, mt: .5 });
-  // .item-media.logo: a project logo on a light plate (contained, not cropped), same box as a photo.
-  const media = (img) => N("Box", { component: "img", src: img.src, width: img.width, height: img.height, alt: img.alt,
-    sx: { display: "block", width: "100%", height: "auto", aspectRatio: "16 / 9", objectFit: img.logo ? "contain" : "cover", borderRadius: "10px", mb: 1.5, border: 1, borderColor: "divider",
-      ...(img.logo ? { bgcolor: "#e8edf2", p: { xs: 2, sm: 2.5 }, boxSizing: "border-box" } : {}) } });
+  // .item-media.logo: a project logo straight on the card (contained, no plate), in the same 16:9 box as a photo.
+  //   data-dark="url": the logo's dark-theme variant (both are rendered, the theme shows one).
+  //   .soft: a logo that would vanish on dark keeps a faint round wash behind it in dark mode only.
+  //   data-orb="me"|"monad": the real .GUI orb (GUI.Widgets.Monad) instead of the image (LandingOrb below).
+  const logoImg = (src, show) => N("Box", { component: "img", src, alt: "", sx: (t) => ({ display: show(t.palette.mode === "dark") ? "block" : "none",
+    maxWidth: "62%", maxHeight: "72%", width: "auto", height: "auto", objectFit: "contain" }) });
+  const media = (img) => img.orb ? N("LandingOrb", { kind: img.orb, alt: img.alt })
+    : img.logo ? N("Box", { role: "img", "aria-label": img.alt, sx: (t) => ({ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", aspectRatio: "16 / 9", mb: 1.5,
+        ...(img.soft && t.palette.mode === "dark" ? { background: "radial-gradient(circle at 50% 50%, rgba(232,237,242,.16) 0, rgba(232,237,242,.06) 30%, transparent 46%)" } : {}) }) },
+        img.dark ? [logoImg(img.src, (d) => !d), logoImg(img.dark, (d) => d)] : [logoImg(img.src, () => true)])
+    : N("Box", { component: "img", src: img.src, width: img.width, height: img.height, alt: img.alt,
+    sx: { display: "block", width: "100%", height: "auto", aspectRatio: "16 / 9", objectFit: "cover", borderRadius: "10px", mb: 1.5, border: 1, borderColor: "divider" } });
   const listMedia = (img) => N("Box", { component: "img", src: img.src, width: img.width, height: img.height, alt: img.alt,
     sx: { display: "block", width: "100%", height: "auto", maxHeight: 160, objectFit: "cover", borderRadius: "10px", mb: 1.5, border: 1, borderColor: "divider" } });
   const code = (c) => N("Box", { component: "code", sx: (t) => ({ display: "block", mt: 1.25, px: 1.25, py: 1, borderRadius: "8px", fontFamily: MONO, fontSize: ".68rem", lineHeight: 1.6,
@@ -199,7 +248,7 @@
   const INSPECTOR_ON = params.get("inspector") === "1";
   if (G.getInspectorEnabled() !== INSPECTOR_ON) G.setInspectorEnabled(INSPECTOR_ON);
   G.mount(spec, ROOT, {
-    gui: { ...G, Theme: PageTheme, registry: { ...(G.Registry || G.registry), LandingTopBar } },
+    gui: { ...G, Theme: PageTheme, registry: { ...(G.Registry || G.registry), LandingTopBar, LandingOrb } },
     devtools: { enabled: true, inspector: INSPECTOR_ON, adminView: false, inspectorToggleVisible: false },
   });
   html.classList.add("gui-on");
