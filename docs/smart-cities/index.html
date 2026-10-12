@@ -150,6 +150,14 @@
 trucks.unit["[i]"]["="]("working", "state &gt; 1")</code>
           <span class="item-tag">Operations · Veracruz</span>
         </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Demos/SmartCities/AI-Decides/">
+          <img class="item-media" src="https://neurons-me.github.io/.me/Demos/SmartCities/AI-Decides/assets/ai-decides-og.png" width="1200" height="630" alt="A headway decision on GTFS-Madrid-Bench: routes, trips and frequency windows around the decided factor, next to the decision card" />
+          <div class="item-title">AI decides, .me computes</div>
+          <div class="item-desc">A versioned policy proposes a headway change and says why; the decision is stored as a fact, one write recomputes routes, trips and windows, and explain() leads back to it. GTFS-Madrid-Bench (generated data).</div>
+          <code class="item-code">policy.factor(0.9)
+win["="]("tight", "headway &lt; policy.minHeadway")</code>
+          <span class="item-tag">Decisions · Madrid</span>
+        </a>
         <a class="item" href="https://neurons-me.github.io/.me/Tests/gtfs-madrid-universe.html">
           <img class="item-media" src="https://suign.github.io/assets/imgs/MADRID-GTFS-DATA-me.jpg" width="1672" height="941" alt="Madrid GTFS as .me dependencies" />
           <div class="item-title">GTFS Madrid — semantic graph</div>
