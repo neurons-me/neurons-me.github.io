@@ -288,6 +288,7 @@
       SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, underline: "none",
         sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: 2, opacity: 0.85, "&:hover": { opacity: 1, bgcolor: "action.hover" } } },
         [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
+    N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", sx: { fontSize: "0.825rem", fontWeight: 600, color: "primary.main" } }, ["All project docs →"]),
   ]);
 
   // GUI 4.1.0's SearchBar paints itself with inline styles from two fixed palettes (light: #fff / #0f1720 / teal,

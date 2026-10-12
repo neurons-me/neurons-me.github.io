@@ -22,7 +22,7 @@
   const header = SRC.querySelector("header");
   const page = {
     path, docs: SRC.querySelector(".topnav .act")?.getAttribute("href"), github: SRC.querySelector(".topnav .gh")?.getAttribute("href"),
-    h1: txt(header.querySelector("h1")),
+    h1: txt(header.querySelector("h1")), lead: txt(header.querySelector(".lead")),
     mls: [...header.querySelectorAll(".mls-card")].map((c) => {
       const t = c.querySelector(".mls-title");
       return { title: txt(t), href: t.getAttribute("href"), desc: txt(c.querySelector(".item-desc")), links: [...c.querySelectorAll(".mls-links a")].map((a) => ({ text: txt(a), href: a.getAttribute("href") })) };
@@ -36,10 +36,12 @@
           const img = a.querySelector("img");
           return { href: a.getAttribute("href"), title: txt(a.querySelector(".item-title")), desc: txt(a.querySelector(".item-desc")),
             code: a.querySelector(".item-code") ? a.querySelector(".item-code").textContent : "", tag: txt(a.querySelector(".item-tag")),
-            img: img && { src: img.getAttribute("src"), width: img.getAttribute("width"), height: img.getAttribute("height"), alt: img.getAttribute("alt") || "" } };
+            img: img && { logo: img.classList.contains("logo"), src: img.getAttribute("src"), width: img.getAttribute("width"), height: img.getAttribute("height"), alt: img.getAttribute("alt") || "" } };
         }),
       };
     }),
+    related: [...SRC.querySelectorAll(".wrap > .related a")].map((a) => ({ text: txt(a), href: a.getAttribute("href") })),
+    relatedLabel: txt(SRC.querySelector(".wrap > .related .related-label")),
     footer: txt(SRC.querySelector("footer")),
   };
 
@@ -146,8 +148,10 @@
   const T = (text, sx, props) => N("Typography", { ...(props || {}), sx }, [text]);
   const title = (t) => T(t, { fontWeight: 600, fontSize: "1.02rem", lineHeight: 1.6, color: "text.primary" });
   const desc = (t) => T(t, { color: "text.secondary", fontSize: ".9rem", lineHeight: 1.6, mt: .5 });
+  // .item-media.logo: a project logo on a light plate (contained, not cropped), same box as a photo.
   const media = (img) => N("Box", { component: "img", src: img.src, width: img.width, height: img.height, alt: img.alt,
-    sx: { display: "block", width: "100%", height: "auto", aspectRatio: "16 / 9", objectFit: "cover", borderRadius: "10px", mb: 1.5, border: 1, borderColor: "divider" } });
+    sx: { display: "block", width: "100%", height: "auto", aspectRatio: "16 / 9", objectFit: img.logo ? "contain" : "cover", borderRadius: "10px", mb: 1.5, border: 1, borderColor: "divider",
+      ...(img.logo ? { bgcolor: "#e8edf2", p: { xs: 2, sm: 2.5 }, boxSizing: "border-box" } : {}) } });
   const listMedia = (img) => N("Box", { component: "img", src: img.src, width: img.width, height: img.height, alt: img.alt,
     sx: { display: "block", width: "100%", height: "auto", maxHeight: 160, objectFit: "cover", borderRadius: "10px", mb: 1.5, border: 1, borderColor: "divider" } });
   const code = (c) => N("Box", { component: "code", sx: (t) => ({ display: "block", mt: 1.25, px: 1.25, py: 1, borderRadius: "8px", fontFamily: MONO, fontSize: ".68rem", lineHeight: 1.6,
@@ -176,9 +180,14 @@
     N("Box", { component: "main", sx: { width: "min(760px, calc(100% - 40px))", mx: "auto", pt: 1.5 } }, [
       N("Box", { component: "header", sx: { pt: 3.5, pb: 5 } }, [
         T(page.h1, { fontSize: "clamp(2.2rem, 6vw, 3.4rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 800, m: 0, mb: 1.75 }, { component: "h1" }),
+        page.lead && T(page.lead, { fontSize: "1.1rem", color: "text.secondary", maxWidth: "56ch", m: 0 }, { component: "p" }),
         ...page.mls.map(mlsCard),
-      ]),
+      ].filter(Boolean)),
       ...page.sections.map(section),
+      page.related.length && N("Box", { component: "p", sx: { m: 0, py: 3, borderTop: 1, borderColor: "divider", fontSize: ".85rem", color: "text.secondary", lineHeight: 1.9 } }, [
+        page.relatedLabel && N("Box", { component: "span", sx: { mr: 1 } }, [page.relatedLabel]),
+        ...page.related.flatMap((l, i) => [i > 0 && N("Box", { component: "span", sx: { mx: .75, opacity: .5 } }, ["·"]), N("Link", { href: l.href, underline: "hover", sx: { color: "primary.main" } }, [l.text])].filter(Boolean)),
+      ]),
       page.footer && T(page.footer, { pt: 3.75, pb: 7.5, color: "text.secondary", fontSize: ".85rem", borderTop: 1, borderColor: "divider", mt: 2.5 }, { component: "footer" }),
     ].filter(Boolean)),
   ]);
