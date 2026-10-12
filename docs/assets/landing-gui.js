@@ -194,6 +194,36 @@
     render() { return this.state.err ? this.props.fallback : this.props.children; }
   }
   const webgl = (() => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } })();
+  // Corner view: the widget has no camera prop and frames the cube head-on (one face). Without touching the package,
+  // the page re-aims the canvas camera through react-three-fiber's own root API (root.configure, via the raycaster's camera), found on
+  // the <canvas>'s React fiber: from (4.2, 3.6, 4.2) toward the origin, so three faces (+X primary, +Y text, +Z info)
+  // show at once. The widget's gentle spin keeps running (it rotates the cube, not the camera). It is re-applied when
+  // the theme changes (the widget re-renders its Canvas then). If the root can't be found, the head-on view stays.
+  const CORNER = (() => { const d = 6.2, v = [4.2, 3.6, 4.2], n = Math.hypot(...v), p = v.map((x) => x * d / n);
+    return { position: p, rotation: [-Math.atan2(p[1], Math.hypot(p[0], p[2])), Math.atan2(p[0], p[2]), 0, "YXZ"] }; })();
+  const aimCube = (box) => {
+    const c = box && box.querySelector("canvas"); if (!c) return false;
+    const key = Object.keys(c).find((k) => k.startsWith("__reactFiber")); let f = key && c[key];
+    for (let d = 0; f && d < 10; d++, f = f.return) {
+      for (let hk = f.memoizedState, i = 0; hk && i < 60; hk = hk.next, i++) {
+        const r = hk.memoizedState && hk.memoizedState.current;
+        if (r && typeof r.configure === "function" && typeof r.render === "function") {
+          const rect = c.parentElement.getBoundingClientRect();
+          // configure() only builds a camera once, but it applies raycaster props with applyProps, and the raycaster
+          // holds the live camera: pierced keys (camera-position / camera-rotation) re-aim that same camera.
+          r.configure({ dpr: [1, 2], size: { width: rect.width, height: rect.height, top: 0, left: 0 },
+            raycaster: { "camera-position": CORNER.position, "camera-rotation": CORNER.rotation } });
+          return true; } } }
+    return false; };
+  // The three faces the corner view shows get three distinct colours from the active theme's own tokens
+  // (GUI.GuiThemes → mode[light|dark]): +X color.secondary (semantic.error in dark: its secondary is teal, too
+  // close to the info blue there), +Y semantic.warning, +Z semantic.info. In "themed" alone,
+  // +Y (text.primary) and +Z (info) are both pale in dark and +Y is near-black in light. Hidden faces stay themed.
+  const cubeColors = (themeId, mode) => {
+    const t = (G.GuiThemes || []).find((x) => x.themeId === themeId), m = t && t.mode && t.mode[mode], c = m && m.color, sem = (m && m.semantic) || (c && c.semantic) || {};
+    const v = (o) => (o && o.$value) || undefined; if (!c) return undefined;
+    const out = { px: v(mode === "dark" ? sem.error : c.secondary), py: v(sem.warning), pz: v(sem.info) };
+    Object.keys(out).forEach((k) => out[k] === undefined && delete out[k]); return out; };
   function LandingCube({ src, alt }) {
     const Cube = (G.Widgets && G.Widgets.RubiksCube) || G.RubiksCube;
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
@@ -206,10 +236,14 @@
       io.observe(ref.current); return () => io.disconnect(); }, [ok, near]);
     // The widget frames the cube at about half of its canvas, so the canvas is ~1.75× the orb size: the cube itself reads 104px (84px).
     const size = small ? 148 : 182;
+    const { mode, themeId } = G.useThemeContext ? G.useThemeContext() : {};
+    React.useEffect(() => { if (!(near && ok)) return; let n = 0, raf;
+      const tick = () => { if (!aimCube(ref.current) && n++ < 120) raf = requestAnimationFrame(tick); };
+      raf = requestAnimationFrame(tick); return () => cancelAnimationFrame(raf); }, [near, ok, mode, themeId, small]);
     const logo = h("img", { src, alt: "", style: { display: "block", maxWidth: "62%", maxHeight: "72%", width: "auto", height: "auto", objectFit: "contain" } });
     return h(Box, { ref, role: "img", "aria-label": alt, "data-cube": near && ok ? "on" : "logo", sx: { display: "flex", alignItems: "center", justifyContent: "center", width: "100%", aspectRatio: "16 / 9", mb: 1.5 } },
       near && ok ? h(Box, { sx: { width: size, height: size, flexShrink: 0, "& canvas": { display: "block" } } },
-        h(CubeBoundary, { fallback: logo }, h(Cube, { height: size, spin: true, orbit: false, borderRadius: 0, palette: "themed" }))) : logo);
+        h(CubeBoundary, { fallback: logo }, h(Cube, { height: size, spin: true, orbit: false, borderRadius: 0, palette: "themed", colors: cubeColors(themeId, mode) }))) : logo);
   }
   // ── content spec (registry types), same layout as the static page ──
   const cardSx = { display: "block", textDecoration: "none", color: "inherit", borderRadius: "14px", bgcolor: "background.paper", transition: "border-color .15s, box-shadow .15s",
