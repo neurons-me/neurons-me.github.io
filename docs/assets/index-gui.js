@@ -200,9 +200,7 @@
   const code = (t) => ({ code: t });
   const ARCH = [["Identity-Bound Secrets", "Proposed design for private roots, secret scopes, noise, and persistence — with package responsibilities and 11 acceptance criteria.", "https://neurons-me.github.io/architecture/identity-bound-secrets/", { glyph: "🔐", size: "1.6rem" }]];
   const BENCH = [
-    ["Phase 2 · Disk & Write Pressure", "Incremental disk persistence, explain-lookup latency, and sustained write/rewrite pressure on the kernel.", "https://github.com/neurons-me/.me/tree/main/Typescript/tests/Phases", { img: SI("speedtest", "0f1720") }],
-    ["Phase 3 · Vector Search", "Exact vs. IVF semantic search at scale — corpus, tuning, and cascade-dependency benchmarks.", "https://github.com/neurons-me/.me/tree/main/Typescript/tests/Phases", { img: SI("chartdotjs", "0f1720") }],
-    ["Secret Scope & Scaling", "Push vs. pull and public vs. secret-scope cost — p50/p95/p99 latency baselines across node counts.", "https://github.com/neurons-me/.me/tree/main/Typescript/tests/Benchmarks", { img: SI("googleanalytics", "0f1720") }],
+    ["Benchmarks", "The .me benchmark hub: kernel benchmarks, GTFS / Madrid on real transit data, the performance phases (disk, write pressure, vector search) and secret-scope cost, each with its script and kernel version.", "https://neurons-me.github.io/.me/docs/Benchmarks/", { img: SI("speedtest", "0f1720") }],
   ];
   const NRP = [
     ["NRP · Namespace Resolution Protocol", ["Mesh-aware resolution for ", code("me://"), " paths — discover, score, forward, learn. A living network of monads, not a static DNS table."], "https://neurons-me.github.io/NRP/", { glyph: "𓅓", size: "1.8rem" }],
