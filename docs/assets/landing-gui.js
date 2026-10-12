@@ -36,7 +36,7 @@
           const img = a.querySelector("img");
           return { href: a.getAttribute("href"), title: txt(a.querySelector(".item-title")), desc: txt(a.querySelector(".item-desc")),
             code: a.querySelector(".item-code") ? a.querySelector(".item-code").textContent : "", tag: txt(a.querySelector(".item-tag")),
-            img: img && { logo: img.classList.contains("logo"), orb: img.dataset.orb || "", dark: img.dataset.dark || "", soft: img.classList.contains("soft"), src: img.getAttribute("src"), width: img.getAttribute("width"), height: img.getAttribute("height"), alt: img.getAttribute("alt") || "" } };
+            img: img && { logo: img.classList.contains("logo"), orb: img.dataset.orb || "", cube: img.dataset.cube === "1", dark: img.dataset.dark || "", soft: img.classList.contains("soft"), src: img.getAttribute("src"), width: img.getAttribute("width"), height: img.getAttribute("height"), alt: img.getAttribute("alt") || "" } };
         }),
       };
     }),
@@ -183,6 +183,34 @@
           [`${INNER} > div:last-of-type`]: { display: "none" } };
       } }, h(Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } }, h(Monad, { variant: "bubble", kind: "monad", mode: "contained" })));
   }
+
+  // ── LandingCube: the .GUI RubiksCube widget (GUI.Widgets.RubiksCube from the this.gui UMD the page already loads),
+  // orb-sized (104px, 84px on phones), themed palette, spin on, orbit off (a click still opens the card), transparent
+  // canvas. Lazy: the static logo shows until the card nears the viewport; then the cube mounts in its place. Without the
+  // widget, without WebGL, under prefers-reduced-motion, or if it throws, the logo stays.
+  class CubeBoundary extends React.Component {
+    constructor(p) { super(p); this.state = { err: false }; }
+    static getDerivedStateFromError() { return { err: true }; }
+    render() { return this.state.err ? this.props.fallback : this.props.children; }
+  }
+  const webgl = (() => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } })();
+  function LandingCube({ src, alt }) {
+    const Cube = (G.Widgets && G.Widgets.RubiksCube) || G.RubiksCube;
+    const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
+    React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
+    const ref = React.useRef(null), [near, setNear] = React.useState(false);
+    const ok = !!Cube && webgl && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    React.useEffect(() => { if (!ok || near || !ref.current) return;
+      if (!("IntersectionObserver" in window)) { setNear(true); return; }
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { setNear(true); io.disconnect(); } }, { rootMargin: "200px" });
+      io.observe(ref.current); return () => io.disconnect(); }, [ok, near]);
+    // The widget frames the cube at about half of its canvas, so the canvas is ~1.75× the orb size: the cube itself reads 104px (84px).
+    const size = small ? 148 : 182;
+    const logo = h("img", { src, alt: "", style: { display: "block", maxWidth: "62%", maxHeight: "72%", width: "auto", height: "auto", objectFit: "contain" } });
+    return h(Box, { ref, role: "img", "aria-label": alt, "data-cube": near && ok ? "on" : "logo", sx: { display: "flex", alignItems: "center", justifyContent: "center", width: "100%", aspectRatio: "16 / 9", mb: 1.5 } },
+      near && ok ? h(Box, { sx: { width: size, height: size, flexShrink: 0, "& canvas": { display: "block" } } },
+        h(CubeBoundary, { fallback: logo }, h(Cube, { height: size, spin: true, orbit: false, borderRadius: 0, palette: "themed" }))) : logo);
+  }
   // ── content spec (registry types), same layout as the static page ──
   const cardSx = { display: "block", textDecoration: "none", color: "inherit", borderRadius: "14px", bgcolor: "background.paper", transition: "border-color .15s, box-shadow .15s",
     "&:hover": { borderColor: "primary.main", textDecoration: "none" } };
@@ -195,7 +223,8 @@
   //   data-orb="me"|"monad": the real .GUI orb (GUI.Widgets.Monad) instead of the image (LandingOrb below).
   const logoImg = (src, show) => N("Box", { component: "img", src, alt: "", sx: (t) => ({ display: show(t.palette.mode === "dark") ? "block" : "none",
     maxWidth: "62%", maxHeight: "72%", width: "auto", height: "auto", objectFit: "contain" }) });
-  const media = (img) => img.orb ? N("LandingOrb", { kind: img.orb, alt: img.alt })
+  const media = (img) => img.cube ? N("LandingCube", { src: img.src, alt: img.alt })
+    : img.orb ? N("LandingOrb", { kind: img.orb, alt: img.alt })
     : img.logo ? N("Box", { role: "img", "aria-label": img.alt, sx: (t) => ({ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", aspectRatio: "16 / 9", mb: 1.5,
         ...(img.soft && t.palette.mode === "dark" ? { background: "radial-gradient(circle at 50% 50%, rgba(232,237,242,.16) 0, rgba(232,237,242,.06) 30%, transparent 46%)" } : {}) }) },
         img.dark ? [logoImg(img.src, (d) => !d), logoImg(img.dark, (d) => d)] : [logoImg(img.src, () => true)])
@@ -248,7 +277,7 @@
   const INSPECTOR_ON = params.get("inspector") === "1";
   if (G.getInspectorEnabled() !== INSPECTOR_ON) G.setInspectorEnabled(INSPECTOR_ON);
   G.mount(spec, ROOT, {
-    gui: { ...G, Theme: PageTheme, registry: { ...(G.Registry || G.registry), LandingTopBar, LandingOrb } },
+    gui: { ...G, Theme: PageTheme, registry: { ...(G.Registry || G.registry), LandingTopBar, LandingOrb, LandingCube } },
     devtools: { enabled: true, inspector: INSPECTOR_ON, adminView: false, inspectorToggleVisible: false },
   });
   html.classList.add("gui-on");
