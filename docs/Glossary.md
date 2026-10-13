@@ -56,6 +56,9 @@ The pre-symbolic layer of structural necessity that defines what configurations 
 ### **Inherent Logics**
 The family of intrinsic structural constraints that emerge from forms, relations, and systems. In this view, logic precedes formulation: symbols describe constraints but do not create them. Geometry is treated as a direct manifestation of these constraints (form contains its own rule). In `.me`, this principle appears as behavior-first semantics: labels may vary, but structural necessity remains.
 
+### **me.explain(path)**
+The kernel's answer to "why does this path have this value?": `{ path, value, expr, derivation, meta }` with the formula, every input and its current value, and the last wave that recomputed the path (`k`, `recomputed`, `changed`, `sourcePath`). It never writes. See [me.explain(path)](https://neurons-me.github.io/.me/docs/Explain.html).
+
 ### **Namespaces**
 A composite coordinate vector that locates execution context, not just a text label. A namespace can include domain, port, path, and related dimensions; it acts as a destination point in a probability/identity space where semantic resolution produces real consequences.
 
@@ -67,6 +70,9 @@ Consistency of meaning validated by executable behavior rather than static taxon
 
 ### **Operational Meaning**
 A shift from static metadata (describing data) to Executable Logic. In this paradigm, the meaning of a node is validated by its computational behavior and its role within a functional derivation.
+
+### **Paths**
+Every property access on `me` extends a path. `me.a.b(value)` declares `value` at `a.b` and returns the same path for chaining; `me("a.b")` reads it (`me("a[1].b")` names the same segments as `a.1.b`). A call with no argument, `me.a.b()`, is not a read: it declares `undefined` at `a.b`. See [Paths](https://neurons-me.github.io/.me/docs/Paths.html).
 
 ### **Pointer Composition**
 The property that chained structural pointers (`a -> b -> c`) resolve as a single suffix-preserving substitution without an explicit `a -> c` edge existing. Composition is verified for acyclic chains of any practical length, self-pointers, and cycles of any length — all fail closed or resolve correctly. Cycle detection tracks, within a single bounded resolution pass, which pointer edges have already been followed; redirecting through the same edge twice fails the read closed instead of recursing.
