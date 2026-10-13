@@ -62,6 +62,12 @@ The kernel's answer to "why does this path have this value?": `{ path, value, ex
 ### **me.whatever(what)**
 Every property access on `me` extends a path. `me.a.b(value)` declares `value` at `a.b` and returns the same path for chaining; `me("a.b")` reads it (`me("a[1].b")` names the same segments as `a.1.b`). A call with no argument, `me.a.b()`, is not a read: it declares `undefined` at `a.b`. See [me.whatever(what)](https://neurons-me.github.io/.me/docs/Paths.html).
 
+### **.me Syntax**
+Path algebra: `.` descends one level, `[]` selects members (index, `[i]` broadcast, filter, range, aggregates `x[]` / `x[].f`), `()` writes a value, reads on the root (`me("a.b")`) or applies an operator (`["="]`, `["_"]`, `["->"]`, …). Names are labels in any language. See [.me Syntax](https://neurons-me.github.io/.me/docs/Syntax.html); the `me://` address scheme is the separate [me:// URI grammar](https://neurons-me.github.io/.me/docs/me-uri.html).
+
+### **Operators (.me)**
+Bracketed keys called on a path: `@` identity, `_` secret scope, `~` noise reset, `__` / `->` pointer, `=` derivation, `?` query, `-` tombstone remove. See [.me Operators](https://neurons-me.github.io/.me/docs/Operators.html).
+
 ### **O(k)**
 The propagation work of one write in `.me` follows k, the number of derived values that write recomputes, not n, the number of values in the graph. Read k with `me.explain(path).meta.k` (with `recomputed`, `changed`, `sourcePath`). It is not a speed guarantee: when k is large, the write is large. See [What is O(k)?](https://neurons-me.github.io/.me/docs/O-k.html).
 

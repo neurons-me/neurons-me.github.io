@@ -281,11 +281,29 @@
   },
   {
     "id": "me-syntax",
-    "title": "Syntax",
-    "desc": "The me:// URI scheme and grammar specification for semantic paths.",
+    "title": ".me Syntax",
+    "desc": "Dot builds the path, [] selects members, () writes, reads or applies an operator. Names in any language.",
     "url": "https://neurons-me.github.io/.me/docs/Syntax.html",
     "repo": ".me",
     "icon": "⌨️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-operators",
+    "title": ".me Operators",
+    "desc": "@ identity, _ secret scope, ~ noise reset, __ / -> pointer, = derivation, ? query, - remove: one verified example each.",
+    "url": "https://neurons-me.github.io/.me/docs/Operators.html",
+    "repo": ".me",
+    "icon": "⚙️",
+    "kind": "doc"
+  },
+  {
+    "id": "me-uri",
+    "title": "me:// URI grammar",
+    "desc": "The me:// URI scheme and grammar specification: namespace, surface selector, path.",
+    "url": "https://neurons-me.github.io/.me/docs/me-uri.html",
+    "repo": ".me",
+    "icon": "🔗",
     "kind": "doc"
   },
   {

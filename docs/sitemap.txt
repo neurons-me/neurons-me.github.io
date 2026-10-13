@@ -79,6 +79,8 @@ https://neurons-me.github.io/.me/docs/Smart-Cities.html
 https://neurons-me.github.io/.me/docs/Social-Graph.html
 https://neurons-me.github.io/.me/docs/Splitting-your-Bill.html
 https://neurons-me.github.io/.me/docs/Syntax.html
+https://neurons-me.github.io/.me/docs/Operators.html
+https://neurons-me.github.io/.me/docs/me-uri.html
 https://neurons-me.github.io/.me/docs/Tests/
 https://neurons-me.github.io/.me/docs/Tests/crypto-tampering.html
 https://neurons-me.github.io/.me/docs/Tests/derived-from-secret.html
