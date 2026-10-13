@@ -9,7 +9,7 @@ title: Glossary — neurons.me
 ## Core Terms
 
 ### **Algorithmic Runtime Invariance (O(k))**
-The architectural property where query and resolution complexity is decoupled from global data volume (n). In the .me runtime, performance is a function of path depth (k), ensuring consistent latency regardless of the total size of the identity graph or network.
+The property that the propagation work of a write is decoupled from the total number of values in the graph (n). In the .me runtime, one write recomputes only the derived values that depend on it; k is how many that is (`me.explain(path).meta.k`). Work follows k, not n. It is not a speed guarantee: when k is large, the write is large. See [What is O(k)?](https://neurons-me.github.io/.me/docs/O-k.html).
 
 ### **Axiomatic Integrity**
 The enforcement of the core logic gates (A-struct-0 and A0–A9; see [The Axioms of .me](https://neurons-me.github.io/.me/docs/Axioms.html)) at the kernel level. These axioms ensure that every state transition, secret derivation, and pointer resolution is mathematically deterministic and verifiable.
@@ -61,6 +61,9 @@ The kernel's answer to "why does this path have this value?": `{ path, value, ex
 
 ### **me.whatever(what)**
 Every property access on `me` extends a path. `me.a.b(value)` declares `value` at `a.b` and returns the same path for chaining; `me("a.b")` reads it (`me("a[1].b")` names the same segments as `a.1.b`). A call with no argument, `me.a.b()`, is not a read: it declares `undefined` at `a.b`. See [me.whatever(what)](https://neurons-me.github.io/.me/docs/Paths.html).
+
+### **O(k)**
+The propagation work of one write in `.me` follows k, the number of derived values that write recomputes, not n, the number of values in the graph. Read k with `me.explain(path).meta.k` (with `recomputed`, `changed`, `sourcePath`). It is not a speed guarantee: when k is large, the write is large. See [What is O(k)?](https://neurons-me.github.io/.me/docs/O-k.html).
 
 ### **Namespaces**
 A composite coordinate vector that locates execution context, not just a text label. A namespace can include domain, port, path, and related dimensions; it acts as a destination point in a probability/identity space where semantic resolution produces real consequences.
@@ -160,7 +163,7 @@ This is the theoretical underpinning of multi-device, multi-audience encrypted d
 > For the 11 kernel axioms (A-struct-0 through A9), see: [The Axioms of .me](https://neurons-me.github.io/.me/docs/Axioms.html) ([Typescript docs](https://neurons-me.github.io/.me/Typescript/typedocs/Axioms.html))
 
 ### **Runtime Invariance**
-The physical manifestation of Inherent Logic. It ensures that the cost of thought (computational complexity) is `O(k)`, decoupled from total system data volume.
+The physical manifestation of Inherent Logic. The propagation cost of a write is `O(k)`: k derived values recomputed by that write, decoupled from total system data volume (n). See [O(k)](https://neurons-me.github.io/.me/docs/O-k.html).
 
 ### **Structural Silence**
 The physical manifestation of Stealth-Roots. It is the state where a branch is functionally active yet mathematically indetectable to observers without the correct path-coordinate and key.

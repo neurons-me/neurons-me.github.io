@@ -244,6 +244,15 @@
     "kind": "doc"
   },
   {
+    "id": "me-o-k",
+    "title": "What is O(k)?",
+    "desc": "n is every value, k is what one write recomputes. The work follows k, read from explain(path).meta.",
+    "url": "https://neurons-me.github.io/.me/docs/O-k.html",
+    "repo": ".me",
+    "icon": "𝑘",
+    "kind": "doc"
+  },
+  {
     "id": "me-seed",
     "title": "SEED",
     "desc": "The one root every .me identity grows from — what it is, what it derives, what it never protects.",
@@ -263,7 +272,7 @@
   },
   {
     "id": "me-architecture",
-    "title": "What is O(k)?",
+    "title": "O(k) Semantic Kernel Architecture",
     "desc": "Infinite Proxy Chaining with inline Path Algebra — one write recomputes only the k nodes that depend on it.",
     "url": "https://neurons-me.github.io/.me/docs/Architecture.html",
     "repo": ".me",
