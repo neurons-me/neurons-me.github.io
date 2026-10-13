@@ -236,7 +236,7 @@
   },
   {
     "id": "me-paths",
-    "title": "Paths",
+    "title": "me.whatever(what)",
     "desc": "me.a.b(value) declares, me(\"a.b\") reads: chaining, indexes, and why me.a.b() is not a read.",
     "url": "https://neurons-me.github.io/.me/docs/Paths.html",
     "repo": ".me",
