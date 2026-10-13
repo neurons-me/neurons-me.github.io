@@ -25,7 +25,8 @@
     h1: txt(header.querySelector("h1")), lead: txt(header.querySelector(".lead")),
     mls: [...header.querySelectorAll(".mls-card")].map((c) => {
       const t = c.querySelector(".mls-title");
-      return { title: txt(t), href: t.getAttribute("href"), desc: txt(c.querySelector(".item-desc")), links: [...c.querySelectorAll(".mls-links a")].map((a) => ({ text: txt(a), href: a.getAttribute("href") })) };
+      return { title: txt(t), href: t.getAttribute("href"), desc: txt(c.querySelector(".item-desc")),
+ links: [...c.querySelectorAll(".mls-links a")].map((a) => ({ text: txt(a), href: a.getAttribute("href") })) };
     }),
     sections: [...SRC.querySelectorAll(".wrap > section")].map((s) => {
       const grid = s.querySelector(".links");
@@ -274,7 +275,8 @@
     it.img && media(it.img), title(it.title), it.desc && desc(it.desc), it.code && code(it.code), it.tag && tag(it.tag)].filter(Boolean));
   const docCard = (kind) => (it) => N("Card", { component: "a", href: it.href, variant: "outlined", sx: { ...cardSx, p: "16px 20px" } }, [
     it.img && (kind === "docs" ? media(it.img) : listMedia(it.img)), title(it.title), it.desc && desc(it.desc)].filter(Boolean));
-  const mlsCard = (m) => N("Card", { variant: "outlined", sx: { borderRadius: "14px", bgcolor: "background.paper", p: "16px 20px", mt: "18px" } }, [
+  // Header cards (.mls-card). Several sit in a grid: one column on phones, three from 640px, equal height.
+  const mlsCard = (m, inGrid) => N("Card", { variant: "outlined", sx: { borderRadius: "14px", bgcolor: "background.paper", p: "16px 20px", mt: inGrid ? 0 : "18px", height: inGrid ? "100%" : "auto" } }, [
     N("Link", { href: m.href, underline: "hover", sx: { fontWeight: 600, fontSize: "1.02rem", color: "text.primary" } }, [m.title]),
     m.desc && desc(m.desc),
     N("Box", { sx: { display: "flex", flexWrap: "wrap", gap: 1, mt: 1.5 } }, m.links.map((l) => N("Chip", { label: l.text, component: "a", href: l.href, clickable: true, variant: "outlined", size: "small",
@@ -293,7 +295,9 @@
       N("Box", { component: "header", sx: { pt: 3.5, pb: 5 } }, [
         T(page.h1, { fontSize: "clamp(2.2rem, 6vw, 3.4rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 800, m: 0, mb: 1.75 }, { component: "h1" }),
         page.lead && T(page.lead, { fontSize: "1.1rem", color: "text.secondary", maxWidth: "56ch", m: 0 }, { component: "p" }),
-        ...page.mls.map(mlsCard),
+        ...(page.mls.length > 1
+          ? [N("Box", { sx: { display: "grid", gridTemplateColumns: "1fr", gap: "10px", mt: "18px", alignItems: "stretch", [WIDE]: { gridTemplateColumns: "repeat(3, minmax(0, 1fr))" } } }, page.mls.map((m) => mlsCard(m, true)))]
+          : page.mls.map((m) => mlsCard(m, false))),
       ].filter(Boolean)),
       ...page.sections.map(section),
       page.related.length && N("Box", { component: "p", sx: { m: 0, py: 3, borderTop: 1, borderColor: "divider", fontSize: ".85rem", color: "text.secondary", lineHeight: 1.9 } }, [

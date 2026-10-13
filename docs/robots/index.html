@@ -112,6 +112,9 @@
     @media (min-width: 640px) { html:not(.gui-on) .docs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     html:not(.gui-on) .docs-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
     html:not(.gui-on) .mls-card { margin-top: 18px; }
+    html:not(.gui-on) .mls-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 18px; align-items: stretch; }
+    @media (min-width: 640px) { html:not(.gui-on) .mls-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    html:not(.gui-on) .mls-grid .mls-card { margin-top: 0; }
     html:not(.gui-on) .mls-title { text-decoration: none; }
     html:not(.gui-on) .mls-title:hover { text-decoration: underline; }
     html:not(.gui-on) .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
@@ -132,6 +135,7 @@
   <div class="wrap">
 <header>
       <h1>Robots that understand context.</h1>
+      <div class="mls-grid">
       <div class="item mls-card">
         <a class="item-title mls-title" href="https://neurons-me.github.io/mlearning.studio/">mlearning.studio</a>
         <div class="mls-links">
@@ -139,6 +143,23 @@
           <a href="https://neurons-me.github.io/mlearning.studio/GTFS/">GTFS</a>
           <a href="https://neurons-me.github.io/mlearning.studio/BigDaMa/">BigDaMa</a>
         </div>
+      </div>
+      <div class="item mls-card">
+        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Paths.html">me.whatever(what)</a>
+        <div class="mls-links">
+          <a href="https://neurons-me.github.io/.me/docs/Paths.html#write-and-read">Write</a>
+          <a href="https://neurons-me.github.io/.me/Typescript/typedocs/Syntax.html">Syntax</a>
+          <a href="https://neurons-me.github.io/.me/docs/Paths.html#derived-values">Derived</a>
+        </div>
+      </div>
+      <div class="item mls-card">
+        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Explain.html">me.explain()</a>
+        <div class="mls-links">
+          <a href="https://neurons-me.github.io/.me/docs/Explain.html#example">Example</a>
+          <a href="https://neurons-me.github.io/.me/docs/Explain.html#fields">Fields</a>
+          <a href="https://neurons-me.github.io/.me/docs/Explain.html#early-cutoff-seen-through-explain">Cutoff</a>
+        </div>
+      </div>
       </div>
     </header>
 
@@ -184,10 +205,26 @@
       </div>
     </section>
 
+    <section>
+      <p class="section-label">Related</p>
+      <div class="links docs-grid">
+        <a class="item" href="https://neurons-me.github.io/.me/docs/">
+          <img class="item-media" src="/assets/card-docs.webp" width="960" height="540" alt="Line drawing of an isometric slab" />
+          <div class="item-title">Docs</div>
+          <div class="item-desc">The .me documentation: what .me is, primitives, paths, me.explain(path), O(k), demos and tests.</div>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Benchmarks/">
+          <img class="item-media" src="/assets/card-benchmarks-16x9.webp" width="960" height="540" alt="O(k) chart: latency vs n with k fixed" />
+          <div class="item-title">Benchmarks</div>
+          <div class="item-desc">O(k) scaling, throughput, fan-out, cold/warm, explain overhead, secret-scope cost.</div>
+        </a>
+      </div>
+    </section>
+
     <footer>sui.gn / neurons.me</footer>
   </div>
 </div>
 <div id="root"></div>
-<script src="/assets/landing-gui.js?v=8" onerror="document.documentElement.classList.remove('gui-boot')"></script>
+<script src="/assets/landing-gui.js?v=13" onerror="document.documentElement.classList.remove('gui-boot')"></script>
 </body>
 </html>
