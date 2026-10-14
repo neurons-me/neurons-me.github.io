@@ -60,7 +60,7 @@ The family of intrinsic structural constraints that emerge from forms, relations
 The kernel's answer to "why does this path have this value?": `{ path, value, expr, derivation, meta }` with the formula, every input and its current value, and the last wave that recomputed the path (`k`, `recomputed`, `changed`, `sourcePath`). It never writes. See [me.explain(path)](https://neurons-me.github.io/.me/docs/Explain.html).
 
 ### **me.whatever(what)**
-Every property access on `me` extends a path. `me.a.b(value)` declares `value` at `a.b` and returns the same path for chaining; `me("a.b")` reads it (`me("a[1].b")` names the same segments as `a.1.b`). A call with no argument, `me.a.b()`, is not a read: it declares `undefined` at `a.b`. See [me.whatever(what)](https://neurons-me.github.io/.me/docs/Paths.html).
+Every property access on `me` extends a path. `me.a.b(value)` declares `value` at `a.b` and returns the same path for chaining; `me("a.b")` reads it (`me("a[1].b")` names the same segments as `a.1.b`). A call with no argument, `me.a.b()`, is not a read: it declares `undefined` at `a.b`. See [me.whatever(what)](https://neurons-me.github.io/.me/docs/me-whatever-what.html).
 
 ### **.me Syntax**
 Path algebra: `.` descends one level, `[]` selects members (index, `[i]` broadcast, filter, range, aggregates `x[]` / `x[].f`), `()` writes a value, reads on the root (`me("a.b")`) or applies an operator (`["="]`, `["_"]`, `["->"]`, …). Names are labels in any language. See [.me Syntax](https://neurons-me.github.io/.me/docs/Syntax.html); the `me://` address scheme is the separate [me:// URI grammar](https://neurons-me.github.io/.me/docs/me-uri.html).
