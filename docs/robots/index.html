@@ -33,6 +33,9 @@
   <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/this.gui@4.2.0/dist/this.gui.umd.js" integrity="sha384-tAyskhiyJweQ9xXPVOSEJ0OQDE+lFsqRJvGRb8LVoqLbdNxYmJEhW21+fxcAYG0d" crossorigin="anonymous"></script>
+  <!-- .me syntax colours for the .me expressions in the cards (shared: /.me/assets/me-syntax/) -->
+  <link rel="stylesheet" href="/.me/assets/me-syntax/me-syntax.css">
+  <script src="/.me/assets/me-syntax/me-syntax.js"></script>
   <!-- Static page styles, off once .GUI has rendered (html.gui-on). -->
   <style>
     :root {
@@ -116,6 +119,7 @@
     @media (min-width: 640px) { html:not(.gui-on) .mls-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     html:not(.gui-on) .mls-grid .mls-card { margin-top: 0; }
     html:not(.gui-on) .mls-title { text-decoration: none; }
+    html:not(.gui-on) .mls-title code, html:not(.gui-on) .item-desc code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
     html:not(.gui-on) .mls-title:hover { text-decoration: underline; }
     html:not(.gui-on) .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     html:not(.gui-on) .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
@@ -145,7 +149,7 @@
         </div>
       </div>
       <div class="item mls-card">
-        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Paths.html">me.whatever(what)</a>
+        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Paths.html"><code class="language-me">me.whatever(what)</code></a>
         <div class="mls-links">
           <a href="https://neurons-me.github.io/.me/docs/Paths.html#write-and-read">Write</a>
           <a href="https://neurons-me.github.io/.me/docs/Syntax.html">Syntax</a>
@@ -153,7 +157,7 @@
         </div>
       </div>
       <div class="item mls-card">
-        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Explain.html">me.explain()</a>
+        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Explain.html"><code class="language-me">me.explain()</code></a>
         <div class="mls-links">
           <a href="https://neurons-me.github.io/.me/docs/Explain.html#example">Example</a>
           <a href="https://neurons-me.github.io/.me/docs/Explain.html#fields">Fields</a>
@@ -211,7 +215,7 @@
         <a class="item" href="https://neurons-me.github.io/.me/docs/">
           <img class="item-media" src="/assets/card-docs.webp" width="960" height="540" alt="Line drawing of an isometric slab" />
           <div class="item-title">Docs</div>
-          <div class="item-desc">The .me documentation: what .me is, primitives, paths, me.explain(path), O(k), demos and tests.</div>
+          <div class="item-desc">The .me documentation: what .me is, primitives, paths, <code class="language-me">me.explain(path)</code>, O(k), demos and tests.</div>
         </a>
         <a class="item" href="https://neurons-me.github.io/.me/docs/Benchmarks/">
           <img class="item-media" src="/assets/card-benchmarks-16x9.webp" width="960" height="540" alt="O(k) chart: latency vs n with k fixed" />
@@ -225,6 +229,7 @@
   </div>
 </div>
 <div id="root"></div>
-<script src="/assets/landing-gui.js?v=13" onerror="document.documentElement.classList.remove('gui-boot')"></script>
+<script src="/assets/landing-gui.js?v=14" onerror="document.documentElement.classList.remove('gui-boot')"></script>
+<script>if (!document.documentElement.classList.contains("gui-on") && window.MeSyntax) MeSyntax.highlightAll(document.getElementById("static-landing"));</script>
 </body>
 </html>

@@ -16,6 +16,12 @@
   const WIDE = "@media (min-width:640px)";
   const N = (type, props, children) => ({ type, props: props || {}, ...(children ? { children } : {}) });
   const txt = (el) => (el ? el.textContent.trim() : "");
+  // .me expressions (me. / me( / me[) in card text go through the shared .me highlighter (window.MeSyntax, /.me/assets/me-syntax/)
+  const SYN = window.MeSyntax, isMe = (s) => !!SYN && /^me[.(\[]/.test(s);
+  const meCode = (s, sx) => N("Box", { component: "code", className: "me-code", sx: { fontFamily: MONO, fontSize: ".86em", whiteSpace: "nowrap", ...(sx || {}) } }, SYN.render(h, s));
+  // a description with its inline <code>: .me expressions highlighted, other code plain monospace
+  const rich = (el) => !el ? "" : !el.querySelector("code") ? txt(el) : [...el.childNodes].map((n) => n.nodeType === 3 ? n.textContent
+    : n.tagName === "CODE" ? (isMe(n.textContent) ? meCode(n.textContent, { px: .5, borderRadius: "4px", bgcolor: "action.hover" }) : N("Box", { component: "code", sx: { fontFamily: MONO, fontSize: ".86em" } }, [n.textContent])) : n.textContent).filter((x) => x !== "");
 
   // ── read the static page ──
   const path = [...SRC.querySelectorAll(".mepath > a, .mepath > .here")].map((e) => ({ text: txt(e), href: e.getAttribute("href"), title: e.getAttribute("title") || txt(e) }));
@@ -35,7 +41,7 @@
         kind: grid.classList.contains("demo-grid") ? "demo" : grid.classList.contains("docs-grid") ? "docs" : "list",
         items: [...grid.querySelectorAll("a.item")].map((a) => {
           const img = a.querySelector("img");
-          return { href: a.getAttribute("href"), title: txt(a.querySelector(".item-title")), desc: txt(a.querySelector(".item-desc")),
+          return { href: a.getAttribute("href"), title: txt(a.querySelector(".item-title")), desc: rich(a.querySelector(".item-desc")),
             code: a.querySelector(".item-code") ? a.querySelector(".item-code").textContent : "", tag: txt(a.querySelector(".item-tag")),
             img: img && { logo: img.classList.contains("logo"), orb: img.dataset.orb || "", cube: img.dataset.cube === "1", dark: img.dataset.dark || "", soft: img.classList.contains("soft"), src: img.getAttribute("src"), width: img.getAttribute("width"), height: img.getAttribute("height"), alt: img.getAttribute("alt") || "" } };
         }),
@@ -249,7 +255,7 @@
   // ── content spec (registry types), same layout as the static page ──
   const cardSx = { display: "block", textDecoration: "none", color: "inherit", borderRadius: "14px", bgcolor: "background.paper", transition: "border-color .15s, box-shadow .15s",
     "&:hover": { borderColor: "primary.main", textDecoration: "none" } };
-  const T = (text, sx, props) => N("Typography", { ...(props || {}), sx }, [text]);
+  const T = (text, sx, props) => N("Typography", { ...(props || {}), sx }, [].concat(text));
   const title = (t) => T(t, { fontWeight: 600, fontSize: "1.02rem", lineHeight: 1.6, color: "text.primary" });
   const desc = (t) => T(t, { color: "text.secondary", fontSize: ".9rem", lineHeight: 1.6, mt: .5 });
   // .item-media.logo: a project logo straight on the card (contained, no plate), in the same 16:9 box as a photo.
@@ -268,7 +274,7 @@
   const listMedia = (img) => N("Box", { component: "img", src: img.src, width: img.width, height: img.height, alt: img.alt,
     sx: { display: "block", width: "100%", height: "auto", maxHeight: 160, objectFit: "cover", borderRadius: "10px", mb: 1.5, border: 1, borderColor: "divider" } });
   const code = (c) => N("Box", { component: "code", sx: (t) => ({ display: "block", mt: 1.25, px: 1.25, py: 1, borderRadius: "8px", fontFamily: MONO, fontSize: ".68rem", lineHeight: 1.6,
-    color: "primary.main", bgcolor: `color-mix(in srgb, ${t.palette.primary.main} 7%, transparent)`, border: 1, borderColor: `color-mix(in srgb, ${t.palette.primary.main} 20%, transparent)`, whiteSpace: "pre", overflowX: "auto" }) }, [c]);
+    color: "primary.main", bgcolor: `color-mix(in srgb, ${t.palette.primary.main} 7%, transparent)`, border: 1, borderColor: `color-mix(in srgb, ${t.palette.primary.main} 20%, transparent)`, whiteSpace: "pre", overflowX: "auto" }), ...(SYN ? { className: "me-code" } : {}) }, SYN ? SYN.render(h, c) : [c]);
   const tag = (t) => T(t, { display: "inline-block", mt: "auto", pt: 1.25, fontSize: ".72rem", letterSpacing: ".06em", textTransform: "uppercase", color: "primary.main", lineHeight: 1.6 }, { component: "span" });
 
   const demoCard = (it) => N("Card", { component: "a", href: it.href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", p: "12px 12px 16px" } }, [
@@ -277,7 +283,7 @@
     it.img && (kind === "docs" ? media(it.img) : listMedia(it.img)), title(it.title), it.desc && desc(it.desc)].filter(Boolean));
   // Header cards (.mls-card). Several sit in a grid: one column on phones, three from 640px, equal height.
   const mlsCard = (m, inGrid) => N("Card", { variant: "outlined", sx: { borderRadius: "14px", bgcolor: "background.paper", p: "16px 20px", mt: inGrid ? 0 : "18px", height: inGrid ? "100%" : "auto" } }, [
-    N("Link", { href: m.href, underline: "hover", sx: { fontWeight: 600, fontSize: "1.02rem", color: "text.primary" } }, [m.title]),
+    N("Link", { href: m.href, underline: "hover", sx: { fontWeight: 600, fontSize: "1.02rem", color: "text.primary" } }, [isMe(m.title) ? meCode(m.title, { fontSize: ".92em" }) : m.title]),
     m.desc && desc(m.desc),
     N("Box", { sx: { display: "flex", flexWrap: "wrap", gap: 1, mt: 1.5 } }, m.links.map((l) => N("Chip", { label: l.text, component: "a", href: l.href, clickable: true, variant: "outlined", size: "small",
       sx: { fontSize: ".82rem", color: "primary.main", borderColor: "divider", "&:hover": { borderColor: "primary.main" } } }))),
@@ -319,6 +325,7 @@
     devtools: { enabled: true, inspector: INSPECTOR_ON, adminView: false, inspectorToggleVisible: false },
   });
   html.classList.add("gui-on");
+  if (SYN && SYN.watchTheme) SYN.watchTheme(); // re-measures the code colours whenever .GUI writes a new theme / mode
   SRC.remove();
   }
 })();
