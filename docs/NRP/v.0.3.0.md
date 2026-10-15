@@ -166,6 +166,13 @@ legacy-surface  = "surface:" monad-name
 empty-selector  = ""
 ```
 
+> **Erratum E1 — the `:` of the bridge form is ambiguous (recorded 2026-10-15; this version is not changed).**
+> `bridge-uri = "me://" namespace ":" operation "/" path`, with `operation = ... / token`, also matches a string such as
+> `localhost:8080/x`, whose `8080` is a valid `token`. This version does not say whether that string is a namespace
+> reached through a transport port or a namespace with an operation named `8080`. The reference parsers have read an
+> all-digit suffix as a **port**, never as an operation; this document did not say so. The written rule, and what an
+> address can name, is in the [v0.4 draft §3a](./v.0.4.0-draft.md) and is not normative until that draft is.
+
 Control-plane data is a path, not selector semantics:
 
 ```txt
@@ -413,7 +420,7 @@ the modern namespace expression parser, with compatibility tests proving that
 bridge targets preserve existing behavior.
 
 Until that migration lands, the compatibility bridge grammar is part of the
-current HTTP binding, not the abstract NRP grammar.
+current HTTP binding, not the abstract NRP grammar. See also Erratum E1 in §3.
 
 ---
 

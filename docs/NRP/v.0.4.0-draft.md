@@ -8,6 +8,14 @@ title: NRP v0.4.0 — DRAFT
 Status: draft for decision. Nothing here is implemented beyond v0.3.0 unless a
 line says so. Decisions marked **OPEN** are not taken yet.
 
+## Status vocabulary
+
+Each rule below says where it stands, with three different words that are not interchangeable:
+
+- **Agreed** — decided by the authors of the protocol as the contract. It may or may not be built.
+- **Candidate** — implemented in a candidate build that has been tested and is **not** released.
+- **Published** — in a released package. Anything not marked Published is not what a released client does.
+
 ## 0. What v0.4 adds
 
 [v0.3.0](./v.0.3.0.md) defines how `me://namespace/path` resolves and what disclosure the
@@ -63,6 +71,28 @@ outside `A`, an existing sealed path and a missing path must produce the same
 `closed` response, and listing the parent must not reveal the node. This is a
 requirement with a test to be written, not a property the implementation is
 known to have today.
+
+**R6 — A signed proof is presented only to a destination authorized for that operation or link (MUST).** A signed proof
+(a claim, an open, a signed write) shows an identity to whoever receives it. A client **MUST** present it only to a transport
+address that was explicitly authorized for that operation or for that link: the transport declared for the link, or an
+explicitly listed alternative.
+
+- *Discovery proposes; it does not authorize.* The location of the page, an environment default, the machine's hostname, a
+  well-known public host, or the origin a name would resolve to may be offered as candidates. Having found a candidate does not
+  make it a destination for a signature.
+- *Declaring is not proving.* Declaring a destination authorizes presenting a proof there. It does not show that the destination
+  has authority over the namespace; that is evidence of another kind (a claim record and signatures against it; §3b).
+- *An explicit door is the only door.* If `name.space:9901` was written and does not answer, the attempt fails there. Using
+  another destination requires a policy that somebody states; it is never a default.
+- *A written port that contradicts the declared transport is a conflict.* Neither value is dropped silently; the caller is told
+  and nothing is sent.
+- *Nothing declared and nothing authorized:* the proof is not presented.
+
+Status — **Agreed.** **Candidate:** cleaker branch `fix/port-not-in-namespace` @ `d044746` (`authorizeDiscovered`, explicit
+`fallbackOrigins`, `TRANSPORT_NOT_DECLARED`, `TRANSPORT_PORT_CONFLICT`; contract tests K13–K17, L1–L6; run against a real
+disposable monad behind a real OpenResty door). **Published: no** — the cleaker line the candidate was cut from (`ee519ef`, 4.0.0) did not have it: there, a sign-in that
+failed at its primary destination presented signed open proofs to `https://cleaker.me` and `http://localhost` (measured). What
+netget's `^3.2.1` does was not measured.
 
 ## 1a. Capability (`C`)
 
@@ -144,6 +174,69 @@ either is chosen:
 - a test matrix: dots, percents, Unicode, selectors, scopes, pointers,
   existing sealed blobs, and `parse → serialize → parse` for both spellings.
 
+## 3a. What an address can name: a target, a transport address, a content surface
+
+Three different things travel in strings that look alike. They are not interchangeable and a port does not move one into another.
+
+| It names | Parts | Example | Owned by |
+|---|---|---|---|
+| **NRP target** | namespace, selector, operation, semantic path | `me://jabellae.cleaker.me/photos/iphone` | the `.me` tree |
+| **Transport address** | scheme, host, port | `http://fulltrailer.suis-macbook-air.local:9901` | the network: where a request goes |
+| **Content surface** | a URL with ITS OWN path | `https://example.com/articles/transport` | that site |
+
+Rules:
+
+1. **A port belongs to the transport address.** It never changes the namespace and it does not, by itself, decide what the text
+   after a `/` means. `name.space` and `name.space:8080` name the same namespace; they are two transports. This includes
+   `localhost`: `localhost:8191` and `localhost:8192` are one namespace, `localhost`, over two transports (the reference
+   parser's earlier test NS1 asserted the opposite and was changed as a documented compatibility change; namespaces that must
+   differ need different names).
+2. **What follows `/` depends on which of the three is being written.** Inside an NRP target it is a semantic path. Inside a
+   content URL it is that site's path. The string `name.space:9901/expression` does not say which; a producer SHOULD write an
+   explicit form:
+
+   ```txt
+   me://name.space/expression                 an NRP target (the transport is a separate fact)
+   http://name.space:9901                     a transport address
+   name.space/expression @ "http://name.space:9901/page"
+                                              a target, over a content surface that has its own path
+   ```
+3. **`@` states a surface context; it is not a transport redirect.** `namespace @ surface` does not make requests for the
+   namespace go to the surface's host (R6 decides where a proof may go).
+4. **Namespaces are compared without the port; transports with it.** Verification, a session or a credential obtained through
+   one transport is not inherited by another transport of the same namespace.
+5. **`:port:operation` has no written grammar.** `jabellae.cleaker.me:8161:read/profile` is read by the current parsers as an
+   operation named `8161:read`. That is a limitation of today's parsers, not a decision against writing a port and an operation
+   together; the grammar for it is **OPEN (D8)**.
+
+Status — rules 1, 3, 4 **Agreed**; rule 2's explicit forms **Agreed**, and what a parser does with the bare
+`host:port/path` is **implementation behavior**, not the rule. **Candidate:** cleaker `d044746` and the GUI topic
+`topic/port-namespace` (`fqdn` and `constant` carry no port; the port is in `transport`; `localhost:8191` and `localhost:8192`
+are the namespace `localhost`). **Published: no.**
+
+Where the parsers differ today (so nobody reads one as the other):
+
+| Behavior | Cleaker before the change (`ee519ef`, the 4.0.0 line; the one measured) | Candidate cleaker `d044746` | `monad.ai` |
+|---|---|---|---|
+| port in `fqdn` / `constant` | yes (`localhost:8191` has constant `localhost:8191`) | no (bare; `transport.port`) | strips the port when it canonicalizes |
+| all-digit suffix after `:` | a port | a port | reads the cleaker result |
+| `:port:operation` | operation `8161:read` | same limitation | same |
+| `[host:h\|port:8161]` | read as transport hints | same | the selector-admission branch (`fix/selector-admission` @ `49ad144c`, **not integrated**) refuses it: supported keys `device`, `tag`, `host`, `web`; `\|` is OR; a port inside `host:` is refused |
+| where a signed proof may go | primary, then page/env/host/defaults as fallbacks | declared transport + only the sources the caller lists in `authorizeDiscovered` | — |
+
+## 3b. Names, addresses and identity are three things
+
+- A **canonical name** is a spelling that implementations agree on (a loopback name is canonicalized to the machine's root).
+- A **network address** is where a request goes (scheme, host, port).
+- A **verifiable identity** is evidence that the actor behind a name is the one that was there before: a claim record and
+  signatures against it.
+
+Canonicalizing a name proves neither of the others. `suis-macbook-air.local` is not unique across networks; `localhost` and
+`127.0.0.1` mean "this machine" wherever they are read; the control of a DNS name such as `cleaker.me` can change. "The same
+namespace" means the same name; continuity of the actor or the tree needs the evidence above, and nothing in §3a replaces it.
+
+Status — **Agreed.**
+
 ## 4. Worked example: sharing a photo
 
 Actors: `jabellae.cleaker.me` (owner), `jorge.cleaker.me`, `ana.cleaker.me`, and
@@ -202,6 +295,8 @@ a stranger.
   identity and the photo needs cross-host mesh resolution, which is largely
   unbuilt and gated by the mesh trust gap (all.this CLAUDE.md, known gap #2).
   Single-host resolution is the v0.4 scope unless decided otherwise.
+- **D8 — Port and operation together.** A grammar for writing a transport port and an operation in one target. Today's parsers
+  read `host:8161:read` as the operation `8161:read` (§3a rule 5).
 
 ## 6. Preconditions before any of this is public API
 

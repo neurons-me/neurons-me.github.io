@@ -68,6 +68,22 @@ To overlay a union, use parentheses:
 
 ---
 
+## Ports, schemes and what `@` does not do
+
+- A bare surface is a host, optionally with a port: `jabellae @ localhost`, `jabellae @ localhost:55858`. A scheme, an IPv6
+  literal or a path needs the quoted form: `jabellae @ "http://localhost:55858/.me"`.
+- The port is part of the **surface** (the page or door the interface is open on). It is not part of the namespace
+  (`jabellae`): `jabellae @ localhost:55858` and `jabellae @ localhost:55859` are the same namespace over two surfaces.
+- `@` states a **context**. It does not redirect the transport: the requests of `jabellae` do not go to `localhost:55858`
+  because of it. Where a request or a signed proof goes is decided by the link's declared transport ([v0.4 draft R6](./v.0.4.0-draft.md)).
+- The namespace's path and the surface's path are independent: `jabellae/notes @ "https://example.com/articles/x"` has the
+  tree path `/notes` and the web path `/articles/x`; neither is read from the other.
+- A client may leave `@ surface` out of what it shows when the surface has been **checked** to be a transport that answers for
+  that namespace. That is a relation that was verified, not equality of two names, and it is not proof of authority over the
+  namespace (v0.4 draft §3b).
+
+---
+
 ## What Surface Means to the Resolver
 
 The surface is a hint to the NRP server about the context of the channel. The server may:

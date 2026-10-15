@@ -167,8 +167,14 @@ Why does this matter? `a ∩ (b + c)` without parentheses becomes `a ∩ b + c`,
 // Complement of a union
 "~(public + spam)"
 
-// Full Cleaker namespace token as leaf
-"cleaker.me[host:localhost|protocol:http|port:8161]:open/profile"
+// Full Cleaker namespace token as leaf: namespace, an execution selector, an operation, a path
+"cleaker.me[host:localhost]:open/profile"
+
+// A transport address is a different thing from all of the above (scheme, host, port):
+//   "http://localhost:8161"
+// It is not written inside the selector. `[host:a|port:8161]` does NOT mean "host a and port 8161":
+// `|` separates alternatives (OR) and `;` joins clauses (AND), and `port` / `protocol` are not execution-selector keys
+// the monad evaluates (supported: device, tag, host, web). A port is a property of a transport (v0.4 draft §3a).
 
 // me:// scheme (Cleaker strips it)
 "me://jabellae.cleaker.me/photos/iphone"
@@ -204,6 +210,15 @@ Why does this matter? `a ∩ (b + c)` without parentheses becomes `a ∩ b + c`,
 - `~` is **complement**, not negation. `~jabellae` means "the complement of the jabellae namespace" — not "not jabellae".
 - The `@` operator has **higher precedence** than `∩` and `+`. `a + b @ surface` = `a + (b @ surface)`.
 - Opening a channel does not require a local monad. Beatle can resolve to any namespace — local, remote, or a friend's monad.
+- A port never changes the namespace: `name.space` and `name.space:8080` are the same namespace over two transports.
+  `name.space:9901/expression` does not say whether `/expression` is a semantic path or a web path; do not guess, write an
+  explicit form (v0.4 draft §3a).
+- `@` is a surface **context**, not a transport redirect.
+- In a selector, `|` is OR and `;` is AND. Do not use it to combine a host with a port.
+- Do not suggest sending a signed proof to a destination just because it was discovered (page location, defaults, machine
+  hostname, `cleaker.me`, `localhost`): v0.4 draft R6.
+- Say which status a statement has: **Agreed**, **Candidate** (built, not released) or **Published**. The v0.4 draft is not
+  normative and its Candidate items are not what a released client does.
 
 ---
 
