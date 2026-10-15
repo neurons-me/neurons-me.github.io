@@ -84,6 +84,27 @@
       </div>
     </section>
 
+    <section id="status">
+      <p class="section-label">Status in this.me 4.2.1</p>
+      <div class="item" style="cursor:default;">
+        <div class="item-desc" style="margin-top:0;color:#d4d4d8;">
+          Kernel: this.me 4.2.1<br>
+          <strong>OR / AND (XOR shares) / minus</strong> — implemented and tested in the 4.2.1 source
+          (<a href="https://github.com/neurons-me/.me/blob/v4.2.1/Typescript/src/audience.ts">audience.ts</a>, <a href="https://github.com/neurons-me/.me/blob/v4.2.1/Typescript/tests/Security/audience-algebra.test.ts">audience-algebra.test.ts</a> 16/16); not exported by the npm 4.2.1 package.<br>
+          <strong>From npm 4.2.1</strong> — OR by wrapping one secret per recipient with <code>ME.wrapSecretV1</code> (<a href="https://github.com/neurons-me/.me/blob/v4.2.1/Typescript/src/crypto.ts#L1422-L1429">crypto.ts L1422–1429</a>).<br>
+          <strong>group:name</strong> — partial (Cleaker roles only). <strong>surface[a+b] / audienceSeed</strong> and <strong>key distribution</strong> — not implemented.
+        </div>
+      </div>
+<pre style="background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:.82rem;line-height:1.5;"><code>import ME from "this.me"; // 4.2.1
+const a = await ME.generateP256KeyPair(), b = await ME.generateP256KeyPair(), out = await ME.generateP256KeyPair();
+const S = "content-key-123";
+const Wa = await ME.wrapSecretV1({ secret: S, recipientPublicKey: a.publicKey, kid: "a", class: "identity-key" });
+const Wb = await ME.wrapSecretV1({ secret: S, recipientPublicKey: b.publicKey, kid: "b", class: "identity-key" });
+await ME.unwrapSecretV1(Wa, a.privateKey, "utf8");   // "content-key-123"
+await ME.unwrapSecretV1(Wb, b.privateKey, "utf8");   // "content-key-123"
+await ME.unwrapSecretV1(Wa, out.privateKey, "utf8"); // throws: OperationError</code></pre>
+    </section>
+
     <section>
       <p class="section-label">Technical docs</p>
       <div class="links">
