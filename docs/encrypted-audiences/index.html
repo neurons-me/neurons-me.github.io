@@ -53,8 +53,27 @@
       font-size: .68rem; font-weight: 700; letter-spacing: .04em; color: #0f6a78;
       background: rgba(15,106,120,0.12); padding: 2px 8px; border-radius: 999px; text-decoration: none;
     }
+    /* live steps (this.me 4.2.1 from npm, run in this browser) */
+    .live-kernel { font: 600 .78rem/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; color: var(--muted); margin: 0 0 14px; }
+    .live-kernel b { color: var(--text); } .live-kernel .tip { cursor: help; border-bottom: 1px dotted var(--muted); }
+    .step { border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.03); padding: 16px 18px; margin: 0 0 14px; }
+    .step h3 { margin: 0 0 6px; font-size: 1rem; } .step p { margin: 0 0 10px; color: #d4d4d8; font-size: .92rem; }
+    .step pre { margin: 0 0 10px; padding: 12px 14px; border-radius: 10px; background: rgba(0,0,0,.35); border: 1px solid var(--line); overflow-x: auto; font: .8rem/1.55 ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .step pre.out { color: #a7f3d0; white-space: pre-wrap; word-break: break-all; } .step pre.out.err { color: var(--red); }
+    .step .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0 0 10px; font: .8rem ui-monospace,SFMono-Regular,Menlo,monospace; color: var(--muted); }
+    .step input { font: inherit; color: var(--text); background: transparent; border: 0; border-bottom: 1px solid var(--muted); width: 9ch; padding: 2px; outline: none; }
+    .step input:focus { border-color: var(--blue); }
+    .step button { font: 600 .8rem ui-monospace,SFMono-Regular,Menlo,monospace; color: var(--text); background: rgba(131,214,236,.1); border: 1px solid rgba(131,214,236,.35); border-radius: 999px; padding: 5px 14px; cursor: pointer; }
+    /* this page is always dark: the dark .me syntax palette regardless of prefers-color-scheme */
+    html:root { --me-syn-ink:#e6edf3; --me-syn-ink2:#9198a1; --me-syn-base-primary:#58a6ff; --me-syn-base-secondary:#d2a8ff; --me-syn-base-info:#79c0ff; --me-syn-base-success:#3fb950; --me-syn-base-error:#ff7b72; --me-syn-base-warning:#d29922; }
+    .step pre.code { color:#e6edf3; }
+    .step button:hover { background: rgba(131,214,236,.2); }
     footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
   </style>
+  <link rel="stylesheet" href="https://neurons-me.github.io/.me/assets/me-syntax/me-syntax.css">
+  <script src="https://neurons-me.github.io/.me/assets/me-syntax/me-syntax.js"></script>
+  <script src="https://neurons-me.github.io/.me/assets/me-kernel/me-kernel.js"></script>
+  <script src="./live.js" defer></script>
 </head>
 <body>
   <div class="wrap">
@@ -64,6 +83,38 @@
       <h1>Two islands, one shared space.</h1>
       <p class="lead">A connection isn't a search. It's an intersection. The algebra behind how identities connect without a central authority that knows both.</p>
     </header>
+
+    <section id="live">
+      <p class="section-label">Two islands, live</p>
+      <p class="live-kernel">Kernel: <b>this.me 4.2.1</b> (<a href="https://www.npmjs.com/package/this.me/v/4.2.1">npm</a>) <span class="tip" id="kernel-tip" title="loading…">ⓘ</span></p>
+
+      <div class="step" data-step="1">
+        <h3>1 · Two islands</h3>
+        <p>Each identity is its own island: a who and a secret derive a seed, the seed an identity hash. Claiming a namespace is a signed proof anyone can check, without learning the secret.</p>
+        <div class="row">ana: <input id="ana-who" value="ana" aria-label="ana who"> <input id="ana-secret" type="password" value="luna" aria-label="ana secret"> · bob: <input id="bob-who" value="bob" aria-label="bob who"> <input id="bob-secret" type="password" value="sol" aria-label="bob secret"></div>
+        <pre class="me-code code"></pre><button>Run</button> <pre class="out" hidden></pre>
+      </div>
+
+      <div class="step" data-step="2">
+        <h3>2 · An island keeps its secret</h3>
+        <p>A secret scope narrows who can read a branch to its owner. Not a rule checked at a door: the branch is encrypted.</p>
+        <pre class="me-code code"></pre><button>Run</button> <pre class="out" hidden></pre>
+      </div>
+
+      <div class="step" data-step="3">
+        <h3>3 · A bridge for one reader (OR)</h3>
+        <p>To share, ana wraps a content key to bob's public key. bob opens it; eve, holding a different key, cannot. One wrap per member is an OR audience.</p>
+        <pre class="me-code code"></pre><button>Run</button> <pre class="out" hidden></pre>
+      </div>
+
+      <div class="step" data-step="4">
+        <h3>4 · Copying is not reading (T ⊥ A)</h3>
+        <p>ana's whole island can be copied to bob. The public part reads; the secret stays sealed, and the copy carries neither the value nor its key.</p>
+        <pre class="me-code code"></pre><button>Run</button> <pre class="out" hidden></pre>
+      </div>
+
+      <p class="live-kernel" style="font-weight:400;">AND (XOR shares), minus and groups: in the v4.2.1 source, not exported by npm. See <a href="https://neurons-me.github.io/.me/docs/Audiences.html">Audiences</a>.</p>
+    </section>
 
     <section>
       <p class="section-label">Read</p>
