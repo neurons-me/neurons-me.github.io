@@ -50,6 +50,7 @@ https://neurons-me.github.io/Secretos-me.html
 https://neurons-me.github.io/SEED-Monad-Minimal.html
 https://neurons-me.github.io/Smart-Cities-Versi%C3%B3n-Humana.html
 https://neurons-me.github.io/smart-cities/
+https://neurons-me.github.io/social-graphs/
 https://neurons-me.github.io/Wallet-Split-Rich-Everyday.html
 https://neurons-me.github.io/.me/
 https://neurons-me.github.io/.me/compatibility/

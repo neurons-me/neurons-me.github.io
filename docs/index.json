@@ -2474,6 +2474,21 @@
     ]
   },
   {
+    "id": "social-graphs-topic",
+    "title": "Social Graphs",
+    "desc": "Identity, trust and relationships as paths in one live graph: the Social Graph walkthrough, live encrypted audiences, the Affinity Model and the TypeScript example.",
+    "url": "https://neurons-me.github.io/social-graphs/",
+    "repo": "neurons-me.github.io",
+    "icon": "𓀠",
+    "kind": "doc",
+    "keywords": [
+      "social graph",
+      "identity",
+      "trust",
+      "demos"
+    ]
+  },
+  {
     "id": "robots-topic",
     "title": "Robots",
     "desc": "Robots that understand context — the live demo on this.me@4.2.0, plus the human version, the infographic and the .me docs behind it.",

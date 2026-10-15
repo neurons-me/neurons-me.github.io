@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en" data-accent="neutral">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0f" />
+  <title>Social Graphs</title>
+  <meta name="description" content="Social graphs in .me: identity, trust and relationships as paths in one graph. The Social Graph walkthrough, the TypeScript example, the Affinity Model and live encrypted audiences, with the kernel docs." />
+  <link rel="canonical" href="https://neurons-me.github.io/social-graphs/" />
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" />
+  <meta property="og:title" content="Social Graphs — neurons.me" />
+  <meta property="og:description" content="Identity, trust and relationships as paths in one live graph." />
+  <meta property="og:image" content="https://neurons-me.github.io/.me/docs/assets/og-social-graph.jpg" />
+  <meta property="og:url" content="https://neurons-me.github.io/social-graphs/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Social Graphs — neurons.me" />
+  <meta name="twitter:description" content="Identity, trust and relationships as paths in one live graph." />
+  <meta name="twitter:image" content="https://neurons-me.github.io/.me/docs/assets/og-social-graph.jpg" />
+  <!-- .GUI (this.gui@4.2.0) renders this page from the static markup below (assets/landing-gui.js); the static page stays as the no-JS / CDN-failure fallback.
+       Page-scoped theme keys, neurons.me, dark by default. -->
+  <script>
+    window.__thisGuiThemeScope = { scopeId: "social-graphs-landing", themeModeKey: "social-graphs-landing.themeMode", themeIdKey: "social-graphs-landing.themeId", defaultMode: "dark" };
+    try {
+      if (!localStorage.getItem("social-graphs-landing.themeMode")) localStorage.setItem("social-graphs-landing.themeMode", "dark");
+      if (!localStorage.getItem("social-graphs-landing.themeId")) localStorage.setItem("social-graphs-landing.themeId", "neurons.me");
+    } catch (e) {}
+    document.documentElement.classList.add("gui-boot");
+  </script>
+  <!-- No icon font: every icon is inline SVG; hide any icon-font span so its name never shows as text. -->
+  <style>.material-symbols-rounded,.material-symbols-outlined,.material-icons{display:none!important} body{margin:0} .gui-boot #static-landing{display:none}</style>
+  <!-- Pinned dependencies (jsDelivr, exact versions, Subresource Integrity), same as ContextLab. -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/this.gui@4.2.0/dist/this.gui.umd.js" integrity="sha384-tAyskhiyJweQ9xXPVOSEJ0OQDE+lFsqRJvGRb8LVoqLbdNxYmJEhW21+fxcAYG0d" crossorigin="anonymous"></script>
+  <!-- .me syntax colours for the .me expressions in the cards (shared: /.me/assets/me-syntax/) -->
+  <link rel="stylesheet" href="/.me/assets/me-syntax/me-syntax.css">
+  <script src="/.me/assets/me-syntax/me-syntax.js"></script>
+  <!-- Static page styles, off once .GUI has rendered (html.gui-on). -->
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --blue: #83d6ec;
+      --red: #f19b9b;
+      --line: rgba(255,255,255,.1);
+      /* chrome / accent=neutral (me-theme dark) */
+      --sc-fg: #c9d1d9;
+      --sc-muted: #8b949e;
+      --sc-border: #30363d;
+      --sc-subtle: #161b22;
+      --sc-accent: #4fd1c5;
+      --sc-nav-bg: rgba(11, 17, 20, 0.92);
+      --sc-active: rgba(131, 214, 236, 0.14);
+      --sc-active-fg: #e8eded;
+      --sc-hover: rgba(255, 255, 255, 0.06);
+    }
+    html:not(.gui-on) * { box-sizing: border-box; }
+    html:not(.gui-on) body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(131,214,236,.08), transparent 32rem),
+        radial-gradient(circle at 85% 20%, rgba(241,155,155,.08), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    html:not(.gui-on) a { color: inherit; }
+    html:not(.gui-on) .wrap { width: min(760px, calc(100% - 40px)); margin: 0 auto; padding-top: 12px; }
+
+
+    /* Topbar: one me:// path line + Docs + GitHub mark (same as me://Demos/AffinityModel, dark tokens) */
+    html:not(.gui-on) .topnav { position: sticky; top: 0; z-index: 100; height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 20px;
+      background: rgba(11,17,20,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid rgba(232,237,237,0.10); }
+    html:not(.gui-on) .topnav a { text-decoration: none; }
+    html:not(.gui-on) .topnav .logo { display: inline-flex; line-height: 0; }
+    html:not(.gui-on) .topnav .logo img { width: 28px; height: 28px; object-fit: contain; display: block; }
+    html:not(.gui-on) .mepath { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; line-height: 1.5; }
+    html:not(.gui-on) .mepath a { color: #4fd1c5; }
+    html:not(.gui-on) .mepath a:hover { text-decoration: underline; }
+    html:not(.gui-on) .mepath .sep { color: #98a7b3; opacity: .6; margin: 0 1px; }
+    html:not(.gui-on) .mepath .here { font-weight: 600; color: #e8eded; }
+    html:not(.gui-on) .topnav .spacer { flex: 1; }
+
+    html:not(.gui-on) header { padding: 28px 0 40px; }
+    html:not(.gui-on) h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; }
+    html:not(.gui-on) .lead { font-size: 1.1rem; color: #d4d4d8; max-width: 56ch; }
+    html:not(.gui-on) section { padding: 32px 0; border-top: 1px solid var(--line); }
+    html:not(.gui-on) .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; letter-spacing: -.02em; font-weight: 800; margin: 0 0 18px; }
+    html:not(.gui-on) .section-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 18px; }
+    html:not(.gui-on) .links { display: flex; flex-direction: column; gap: 10px; }
+    html:not(.gui-on) .item {
+      display: block; padding: 16px 20px; border: 1px solid var(--line); border-radius: 14px;
+      background: rgba(255,255,255,.03); text-decoration: none; transition: border-color .15s, background .15s;
+    }
+    html:not(.gui-on) .item:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.05); }
+    html:not(.gui-on) .item-title { font-weight: 600; font-size: 1.02rem; }
+    html:not(.gui-on) .item-desc { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+    html:not(.gui-on) .item-tag {
+      display: inline-block; margin-top: 10px; font-size: .72rem; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--blue); opacity: .9;
+    }
+    html:not(.gui-on) .item-media {
+      display: block; width: 100%; height: auto; max-height: 160px; object-fit: cover;
+      border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--line);
+    }
+    html:not(.gui-on) .demo-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { html:not(.gui-on) .demo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    html:not(.gui-on) .demo-grid .item { display: flex; flex-direction: column; padding: 12px 12px 16px; }
+    html:not(.gui-on) .demo-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
+    html:not(.gui-on) .demo-grid .item-tag { margin-top: auto; padding-top: 10px; }
+    html:not(.gui-on) .docs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width: 640px) { html:not(.gui-on) .docs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    html:not(.gui-on) .docs-grid .item-media { aspect-ratio: 16 / 9; height: auto; max-height: none; }
+    html:not(.gui-on) .mls-card { margin-top: 18px; }
+    html:not(.gui-on) .mls-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 18px; align-items: stretch; }
+    @media (min-width: 640px) { html:not(.gui-on) .mls-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    html:not(.gui-on) .mls-grid .mls-card { margin-top: 0; }
+    html:not(.gui-on) .mls-title { text-decoration: none; }
+    html:not(.gui-on) .mls-title code, html:not(.gui-on) .item-desc code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
+    html:not(.gui-on) .mls-title:hover { text-decoration: underline; }
+    html:not(.gui-on) .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    html:not(.gui-on) .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
+    html:not(.gui-on) .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
+    html:not(.gui-on) .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre-wrap; overflow-wrap: anywhere; }
+    html:not(.gui-on) footer { padding: 30px 0 60px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); margin-top: 20px; }
+    html:not(.gui-on) .topnav .act { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #8b949e; }
+    html:not(.gui-on) .topnav .gh { display: inline-flex; color: #c9d1d9; line-height: 0; }
+  </style>
+</head>
+<body>
+<div id="static-landing">
+  <nav class="topnav" aria-label="me path">
+    <a class="logo" href="https://neurons-me.github.io/" title="neurons.me"><img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="neurons.me" width="28" height="28" /></a>
+    <div class="mepath"><a href="https://neurons-me.github.io/.me/" title=".me">me://</a><a href="https://neurons-me.github.io/.me/Demos/" title=".me Demos">Demos</a><span class="sep">/</span><span class="here" aria-current="page">SocialGraphs</span></div>
+    <span class="spacer"></span>
+    <a class="act" href="https://neurons-me.github.io/.me/docs/">Docs</a>
+    <a class="gh" href="https://github.com/neurons-me/.me" title="GitHub · neurons-me/.me" aria-label="GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.290 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.130-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.930-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+  </nav>
+  <div class="wrap">
+<header>
+      <h1>Social graphs that explain themselves.</h1>
+      <p class="lead">Identity, trust and relationships are paths in one live graph.</p>
+      <div class="mls-grid">
+      <div class="item mls-card">
+        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Social-Graph.html">Social Graph</a>
+        <div class="mls-links">
+          <a href="https://neurons-me.github.io/.me/docs/Social-Graph.html#the-tiny-mental-model">Model</a>
+          <a href="https://neurons-me.github.io/.me/Typescript/typedocs/examples/Social_Graph.html">TypeScript</a>
+          <a href="https://github.com/neurons-me/.me/blob/main/Typescript/tests/Demos/Social_Graph.ts">Source</a>
+        </div>
+      </div>
+      <div class="item mls-card">
+        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/me-whatever-what.html"><code class="language-me">me.whatever(what)</code></a>
+        <div class="mls-links">
+          <a href="https://neurons-me.github.io/.me/docs/me-whatever-what.html#write-and-read">Write</a>
+          <a href="https://neurons-me.github.io/.me/docs/Syntax.html">Syntax</a>
+          <a href="https://neurons-me.github.io/.me/docs/me-whatever-what.html#derived-values">Derived</a>
+        </div>
+      </div>
+      <div class="item mls-card">
+        <a class="item-title mls-title" href="https://neurons-me.github.io/.me/docs/Explain.html"><code class="language-me">me.explain()</code></a>
+        <div class="mls-links">
+          <a href="https://neurons-me.github.io/.me/docs/Explain.html#example">Example</a>
+          <a href="https://neurons-me.github.io/.me/docs/Explain.html#fields">Fields</a>
+          <a href="https://neurons-me.github.io/.me/docs/Explain.html#early-cutoff-seen-through-explain">Cutoff</a>
+        </div>
+      </div>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">Demos</h2>
+      <div class="links demo-grid">
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Social-Graph.html">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/og-social-graph.jpg" width="1200" height="630" alt="Social graph: you, friends, family and acquaintances" />
+          <div class="item-title">Social Graph</div>
+          <div class="item-desc">Profiles, friends, invites and private contacts in one graph; every derived value stays live.</div>
+          <span class="item-tag">Walkthrough · this.me 4.2.1</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Audiences.html">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/card-audiences.webp" width="960" height="540" alt="Audiences: who can read a value" />
+          <div class="item-title">Encrypted Audiences</div>
+          <div class="item-desc">Pick who is in the audience; the kernel really wraps and unwraps the key.</div>
+          <span class="item-tag">Live · this.me 4.2.1</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Demos/AffinityModel/">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/affinity-model-og.jpg" width="1200" height="630" alt="Affinity Model: a face dissolving into clouds" />
+          <div class="item-title">Affinity Model</div>
+          <div class="item-desc">Store reactions, derive affinity as graph logic.</div>
+          <span class="item-tag">Live · this.me@4.1.0</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Typescript/typedocs/examples/Social_Graph.html">
+          <img class="item-media" src="https://neurons-me.github.io/neurons-me/media/SocialGraph.jpg" width="1280" height="720" alt="Social Networks" />
+          <div class="item-title">Social Graph — TypeScript</div>
+          <div class="item-desc">The example page: <code class="language-me">me("friends[isAdult == true].name")</code>, invites and trust.</div>
+          <span class="item-tag">Example · TypeScript</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Related technical docs</p>
+      <div class="links docs-grid">
+        <a class="item" href="https://neurons-me.github.io/.me/docs/me-whatever-what.html">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/card-paths.webp" width="960" height="540" alt="Paths" />
+          <div class="item-title">me.whatever(what)</div>
+          <div class="item-desc">How a path is written and read.</div>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Pointer-Composition.html">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/card-pointer.webp" width="960" height="540" alt="Pointer" />
+          <div class="item-title">Pointer Composition</div>
+          <div class="item-desc">A friend is a pointer to a person; reads go through it.</div>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/docs/Splitting-your-Bill.html">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/card-split-bill.webp" width="960" height="540" alt="Splitting the bill" />
+          <div class="item-title">Splitting your Bill</div>
+          <div class="item-desc">The same graph decides who owes what.</div>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/encrypted-audiences/">
+          <div class="item-title">Encrypted Audiences — topic index</div>
+          <div class="item-desc">The algebra of who can read what: papers, infographics and the live demo.</div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Related</p>
+      <div class="links docs-grid">
+        <a class="item" href="https://neurons-me.github.io/.me/docs/">
+          <img class="item-media" src="/assets/card-docs.webp" width="960" height="540" alt="Line drawing of an isometric slab" />
+          <div class="item-title">Docs</div>
+          <div class="item-desc">The .me documentation: what .me is, primitives, paths, <code class="language-me">me.explain(path)</code>, O(k), demos and tests.</div>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/smart-cities/">
+          <img class="item-media" src="https://neurons-me.github.io/.me/docs/assets/card-smart-cities.webp" width="960" height="540" alt="Smart Cities" />
+          <div class="item-title">Smart Cities</div>
+          <div class="item-desc">The city demos on the same kernel.</div>
+        </a>
+      </div>
+    </section>
+
+    <footer>sui.gn / neurons.me</footer>
+  </div>
+</div>
+<div id="root"></div>
+<script src="/assets/landing-gui.js?v=15" onerror="document.documentElement.classList.remove('gui-boot')"></script>
+<script>if (!document.documentElement.classList.contains("gui-on") && window.MeSyntax) MeSyntax.highlightAll(document.getElementById("static-landing"));</script>
+</body>
+</html>
