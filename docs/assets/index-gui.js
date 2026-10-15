@@ -300,7 +300,7 @@
   const pillIcon = (inner) => N("Box", { sx: { width: 40, height: 40, borderRadius: "50%", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" } }, [inner]);
   const sourceRow = N("Box", { component: "section", "aria-label": "Docs and source code", sx: { mt: 5, display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 2, [MOBILE]: { gridTemplateColumns: "1fr", gap: 1.25 } } }, [
     N("Card", { component: "a", href: "https://neurons-me.github.io/docs/", variant: "outlined", sx: pillSx }, [
-      pillIcon(N("Box", { component: "img", src: "/assets/docs-icon.webp", alt: "", sx: { width: 40, height: 40, objectFit: "cover", display: "block" } })),
+      pillIcon(N("ThemedImg", { light: "/assets/docs-icon-light.webp?v=2", dark: "/assets/docs-icon.webp?v=2", alt: "", sx: { width: 34, height: 34, objectFit: "contain", display: "block" } })),
       N("Box", { sx: { minWidth: 0, flex: 1 } }, [
         N("Typography", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.25 } }, ["Docs"]),
         N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.35 } }, ["All project docs: .me, cleaker, monad, .GUI, netget."]),
