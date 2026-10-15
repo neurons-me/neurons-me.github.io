@@ -169,12 +169,21 @@
       h(G.Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } },
         h(Monad, { variant: "bubble", kind: "monad", mode: "contained" })));
   }
-  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad, MonadBubble };
+  // The .me QR on the cleaker card: GUI.QRme (registry "QR.me", this.gui 4.2.0), the same component as the namespace
+  // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the
+  // page's theme and light/dark. No flip here: the whole card is the link.
+  function CleakerQRme({ value, title }) {
+    // drawn at 112px (its module grid needs the room) and scaled into the 60px / 44px icon box
+    return h(G.Box, { sx: { width: 60, height: 60, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0, [MOBILE]: { width: 44, height: 44 } } },
+      h(G.Box, { sx: { flexShrink: 0, transform: "scale(.5)", [MOBILE]: { transform: "scale(.37)" } } },
+        h(G.QRme, { value, diameter: 112, variant: "md", hoverFlip: false, clickFlip: false, defaultFace: "qr", showAvatarLabel: false })));
+  }
+  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme };
 
   // ── content (from docs/index.html @ 6bee309) ──
   const STACK = [
     [".me", "Own your knowledge.", "https://neurons-me.github.io/.me/", { monad: true, light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
-    ["cleaker", "Who am I, here.", "https://neurons-me.github.io/Cleaker/", { light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
+    ["cleaker", "Who am I, here.", "https://neurons-me.github.io/Cleaker/", { qr: "https://cleaker.me", light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
     ["monad", "Federated runtime surfaces.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
     [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
     ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { light: CL + "v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png", dark: CL + "v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" }],
@@ -269,7 +278,8 @@
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5 } } }, [
       N("Box", { sx: { width: 68, height: 68, borderRadius: "14px", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           [MOBILE]: { width: 48, height: 48, borderRadius: "10px" } } }, [
-        img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
+        img.qr && G.QRme ? N("CleakerQRme", { value: img.qr, title })
+          : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
           : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
           : N("ThemedImg", { ...img, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } }),
       ]),

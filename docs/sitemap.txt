@@ -42,7 +42,7 @@ https://neurons-me.github.io/NRP/v.0.4.0-draft.html
 https://neurons-me.github.io/NRP/Virtual-Hosts-As-Semantic-Containers.html
 https://neurons-me.github.io/QuickStart.Monads.html
 https://neurons-me.github.io/README-%E2%80%94-Zero-Marketing.html
-https://neurons-me.github.io/Robots-%C3%97-Encrypted-Audiences-Infographic.html
+https://neurons-me.github.io/social-graphs/robots-encrypted-audiences/
 https://neurons-me.github.io/Robots-Versi%C3%B3n-Humana.html
 https://neurons-me.github.io/robots/
 https://neurons-me.github.io/robots/context-lab/

@@ -2489,6 +2489,22 @@
     ]
   },
   {
+    "id": "robots-encrypted-audiences",
+    "title": "Robots × Encrypted Audiences",
+    "desc": "Infographic: one canister, four robots, one context graph; pointers instead of copies, mapped onto the algebra of encrypted audiences.",
+    "url": "https://neurons-me.github.io/social-graphs/robots-encrypted-audiences/",
+    "repo": "neurons-me.github.io",
+    "icon": "🤖",
+    "kind": "doc",
+    "keywords": [
+      "robots",
+      "encrypted audiences",
+      "context",
+      "infographic",
+      "social graph"
+    ]
+  },
+  {
     "id": "robots-topic",
     "title": "Robots",
     "desc": "Robots that understand context — the live demo on this.me@4.2.0, plus the human version, the infographic and the .me docs behind it.",
