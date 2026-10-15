@@ -192,7 +192,7 @@
   const DEMOS = [
     ["Robots that Understand Context", "https://neurons-me.github.io/robots/", MEDIA + "robots_that_understand_context_gif.gif"],
     ["Smart Cities", "https://neurons-me.github.io/smart-cities/", MEDIA + "smart_cities.gif"],
-    ["Social Networks", "https://neurons-me.github.io/.me/Typescript/typedocs/examples/Social_Graph.html", MEDIA + "SocialGraph.jpg"],
+    ["Social Graphs", "https://neurons-me.github.io/social-graphs/", MEDIA + "SocialGraph.jpg"],
     ["Digital Space Algebra", "https://neurons-me.github.io/digital-space-algebra/", MEDIA + "Encrypted_Audience_Algebra.gif"],
     ["Wallet Split", "https://neurons-me.github.io/.me/Typescript/typedocs/examples/WalletSplit.html", MEDIA + "split_bill_wallet.gif"],
     ["Affinity Model", "https://neurons-me.github.io/.me/Typescript/typedocs/examples/Affinity-Model.html", MEDIA + "affinity_model.gif"],

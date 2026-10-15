@@ -1,0 +1,68 @@
+{
+ "/NRP/Surface-Access-Points-and-Routing.html": {
+  "href": "https://neurons-me.github.io/NRP/Surface-Access-Points-and-Routing.html",
+  "title": "Surface Access Points",
+  "desc": "How HTTP requests physically reach a surface.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"Surface Access Points\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"200\" cy=\"110\" r=\"34\"/><circle cx=\"440\" cy=\"110\" r=\"34\"/><path d=\"M234 110 H406\"/><path d=\"M386 92 L406 110 L386 128\"/></g></svg>"
+ },
+ "/NRP/Beatle.html": {
+  "href": "https://neurons-me.github.io/NRP/Beatle.html",
+  "title": "Beatle",
+  "desc": "The NRP WebSocket client component.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"Beatle\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"250\" y=\"50\" width=\"140\" height=\"110\" rx=\"18\"/><path d=\"M290 160 V200 M350 160 V200\"/><circle cx=\"320\" cy=\"105\" r=\"18\"/></g></svg>"
+ },
+ "/NRP/Disclosure-Levels.html": {
+  "href": "https://neurons-me.github.io/NRP/Disclosure-Levels.html",
+  "title": "Disclosure Levels",
+  "desc": "What a namespace discloses, level by level.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"Disclosure Levels\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M200 170 H440 M230 130 H410 M260 90 H380 M290 50 H350\"/></g></svg>"
+ },
+ "/NRP/NRPExpression-Parser.html": {
+  "href": "https://neurons-me.github.io/NRP/NRPExpression-Parser.html",
+  "title": "NRP Expression Parser",
+  "desc": "From a me:// string to a resolvable expression.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"NRP Expression Parser\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M180 60 L140 110 L180 160 M460 60 L500 110 L460 160\"/><path d=\"M220 110 H420\"/><circle cx=\"270\" cy=\"110\" r=\"8\"/><circle cx=\"370\" cy=\"110\" r=\"8\"/></g></svg>"
+ },
+ "/NRP/NamespaceChannel.html": {
+  "href": "https://neurons-me.github.io/NRP/NamespaceChannel.html",
+  "title": "Namespace Channel",
+  "desc": "A live channel bound to a namespace.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"Namespace Channel\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M150 80 H490 M150 140 H490\"/><path d=\"M220 110 H420\"/><path d=\"M400 96 L420 110 L400 124\"/></g></svg>"
+ },
+ "/NRP/Surface-and-Overlay.html": {
+  "href": "https://neurons-me.github.io/NRP/Surface-and-Overlay.html",
+  "title": "Surface and Overlay",
+  "desc": "Surfaces, and the overlays above them.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"Surface and Overlay\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"200\" y=\"70\" width=\"200\" height=\"110\" rx=\"12\"/><rect x=\"240\" y=\"40\" width=\"200\" height=\"110\" rx=\"12\"/></g></svg>"
+ },
+ "/NRP/Virtual-Hosts-As-Semantic-Containers.html": {
+  "href": "https://neurons-me.github.io/NRP/Virtual-Hosts-As-Semantic-Containers.html",
+  "title": "Virtual Hosts",
+  "desc": "Proposed: surface address + monad identity + .me namespace + netget policy.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"Virtual Hosts\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M320 40 L440 100 L440 180 L320 220 L200 180 L200 100 Z\"/><path d=\"M200 100 L320 150 L440 100 M320 150 V220\"/></g></svg>"
+ },
+ "/monad/docs/": {
+  "href": "https://neurons-me.github.io/monad/docs/",
+  "title": "monad docs",
+  "desc": "The reference implementation: mesh resolver, scoring, /nrp binding, implementation status.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"monad docs\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"320\" cy=\"60\" r=\"20\"/><circle cx=\"210\" cy=\"170\" r=\"20\"/><circle cx=\"430\" cy=\"170\" r=\"20\"/><path d=\"M310 78 L222 152 M330 78 L418 152 M230 170 H410\"/></g></svg>"
+ },
+ "/Cleaker/docs/": {
+  "href": "https://neurons-me.github.io/Cleaker/docs/",
+  "title": "cleaker docs",
+  "desc": "The namespace grammar NRP parses with.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"cleaker docs\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M170 110 H470\"/><path d=\"M220 80 V140 M320 80 V140 M420 80 V140\"/></g></svg>"
+ },
+ "/netget/docs/": {
+  "href": "https://neurons-me.github.io/netget/docs/",
+  "title": "netget docs",
+  "desc": "The gateway: apps reached over the mesh.",
+  "svg": "<svg viewBox=\"0 0 640 280\" preserveAspectRatio=\"xMidYMid slice\" role=\"img\" aria-label=\"netget docs\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0 20)\" opacity=\".55\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M200 200 V90 A120 70 0 0 1 440 90 V200\"/><path d=\"M260 200 V120 M380 200 V120\"/></g></svg>"
+ },
+ "/.me/docs/me-uri.html": {
+  "href": "https://neurons-me.github.io/.me/docs/me-uri.html",
+  "title": "me:// URI grammar",
+  "desc": "The address NRP resolves, from the .me side.",
+  "img": "/.me/docs/assets/card-syntax.webp"
+ }
+}

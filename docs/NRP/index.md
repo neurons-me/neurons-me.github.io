@@ -1,11 +1,18 @@
 ---
-layout: readme
-title: NRP — Namespace Resolution Protocol
+layout: gui-doc
+title: "NRP — Namespace Resolution Protocol"
+description: "How a me:// URI is resolved from a symbolic address into a concrete value across a mesh of surfaces: the normative spec (v0.3.0), the v0.4.0 draft, history, and the implementation in monad."
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath: []
+crumb: NRP
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/tree/main/docs/NRP
+canonical: https://neurons-me.github.io/NRP/
 ---
 
 # NRP — Namespace Resolution Protocol
-**neurons.me / suiGn**
-**License:** CC0 1.0 Universal — Public Domain
+**neurons.me / suiGn** · **License:** CC0 1.0 Universal — Public Domain
 
 ---
 
@@ -42,20 +49,20 @@ their code and link back here.
 
 ## Latest normative spec
 
-**[NRP v0.3.0](./v.0.3.0.md)** —
+**[NRP v0.3.0](./v.0.3.0.html)** —
 current. Covers the core resolution grammar, disclosure model, Total Monad
 Synthesis, and the HTTP + WebSocket transport bindings.
 
-**[NRP v0.4.0 — draft](./v.0.4.0-draft.md)** — in progress, not normative
+**[NRP v0.4.0 — draft](./v.0.4.0-draft.html)** — in progress, not normative
 yet. Binds the address to the Island `I = (path, ciphertext, T, A, C)`:
 one path grammar shared with `.me`, audiences, capabilities; open decisions
 are marked.
 
 ## Historical specs
 
-- [v0.2.1](./v.0.2.1.md) —
+- [v0.2.1](./v.0.2.1.html) —
   archived, implemented mesh draft through `monad.ai` Phase 6. Superseded by v0.3.0.
-- [v0.1.2](./v.0.1.2.md) — first stable working document.
+- [v0.1.2](./v.0.1.2.html) — first stable working document.
 
 ## Relationship to cleaker
 
@@ -70,27 +77,30 @@ parsed, that's cleaker. If you're looking for where a namespace gets
 
 ## Implementation
 
-NRP's reference implementation is [`monad.ai`](https://neurons-me.github.io/monad/) —
-[implementation status](https://neurons-me.github.io/monad/Typescript/typedocs/Mesh/status.html)
-tracks what's actually built versus what the spec describes, separately from
-the normative document itself.
+NRP's reference implementation is [`monad.ai`](https://neurons-me.github.io/monad/docs/): the
+[monad docs](https://neurons-me.github.io/monad/docs/) cover the mesh resolver, scoring, the `/nrp`
+WebSocket binding, and the implementation status (what is actually built versus what the spec
+describes), separately from the normative document itself.
 
-Apps reaching a monad through [netget](https://neurons-me.github.io/netget/)'s
-mesh (rather than talking to `monad.ai` directly) should read
-[Apps Over Netget](https://neurons-me.github.io/netget/Typescript/typedocs/AppsOverNetget.html)
-for the addressing contract (`/apps/:name`) and the live HTTP+WebSocket
-pattern built on top of this protocol.
+Apps reaching a monad through [netget](https://neurons-me.github.io/netget/docs/)'s
+mesh (rather than talking to `monad.ai` directly) should read *Apps Over Netget* in the
+[netget docs](https://neurons-me.github.io/netget/docs/) for the addressing contract (`/apps/:name`)
+and the live HTTP+WebSocket pattern built on top of this protocol.
 
 ---
 
+Supplementary docs that live only here (not duplicated in monad's own docs), and where NRP is implemented:
+
 ## See also
 
-Supplementary docs that live only here (not duplicated in monad's own docs):
-
-- [Surface Access Points and Routing](./Surface-Access-Points-and-Routing.md) — how HTTP requests physically reach a surface
-- [Beatle](./Beatle.md) — the NRP WebSocket client component
-- [Disclosure Levels](./Disclosure-Levels.md)
-- [NRP Expression Parser](./NRPExpression-Parser.md)
-- [Namespace Channel](./NamespaceChannel.md)
-- [Surface and Overlay](./Surface-and-Overlay.md)
-- [Virtual Hosts As Semantic Containers](./Virtual-Hosts-As-Semantic-Containers.md) — proposed direction: `host virtual = surface address + monad identity + .me namespace + netget policy`
+- [Surface Access Points and Routing](./Surface-Access-Points-and-Routing.html)
+- [Beatle](./Beatle.html)
+- [Disclosure Levels](./Disclosure-Levels.html)
+- [NRP Expression Parser](./NRPExpression-Parser.html)
+- [Namespace Channel](./NamespaceChannel.html)
+- [Surface and Overlay](./Surface-and-Overlay.html)
+- [Virtual Hosts As Semantic Containers](./Virtual-Hosts-As-Semantic-Containers.html)
+- [monad docs](https://neurons-me.github.io/monad/docs/)
+- [cleaker docs](https://neurons-me.github.io/Cleaker/docs/)
+- [netget docs](https://neurons-me.github.io/netget/docs/)
+- [me:// URI grammar](https://neurons-me.github.io/.me/docs/me-uri.html)

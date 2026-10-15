@@ -80,6 +80,6 @@ The Beatle UI should show disclosure state when it is not `public` — a visual 
 ## See Also
 
 - [NamespaceChannel](./NamespaceChannel.md)
-- [.me Kernel Role in NRP](../../../all.this/me/Typescript/typedocs/NRP-Kernel-Role.md)
+- [.me docs: me:// URI grammar](https://neurons-me.github.io/.me/docs/me-uri.html)
 - [Namespace Protocol Resolution](./Namespace-Protocol-Resolution.md)
 - [Surface Access Points and Routing](./Surface-Access-Points-and-Routing.md)

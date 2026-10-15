@@ -146,5 +146,5 @@ The AST is sent as a hint for debugging and UX. The NRP server re-parses `canoni
 
 - [Beatle — NRP Channel Client](./Beatle.md)
 - [Surface and Overlay](./Surface-and-Overlay.md)
-- [Cleaker Namespace Grammar](../../all.this/modules/cleaker/Typescript/typedocs/NRP-Namespaces.md)
+- [Cleaker docs: namespace grammar](https://neurons-me.github.io/Cleaker/docs/)
 - [Namespace Protocol Resolution](./Namespace-Protocol-Resolution.md)
