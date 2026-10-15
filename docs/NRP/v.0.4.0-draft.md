@@ -14,7 +14,8 @@ Each rule below says where it stands, with three different words that are not in
 
 - **Agreed** — decided by the authors of the protocol as the contract. It may or may not be built.
 - **Candidate** — implemented in a candidate build that has been tested and is **not** released.
-- **Published** — in a released package. Anything not marked Published is not what a released client does.
+- **Published** — in a released package. Where no published version is indicated, this document does not establish
+  availability in a release; the absence of a label is not evidence that a release lacks the behavior.
 
 ## 0. What v0.4 adds
 
@@ -188,9 +189,11 @@ Rules:
 
 1. **A port belongs to the transport address.** It never changes the namespace and it does not, by itself, decide what the text
    after a `/` means. `name.space` and `name.space:8080` name the same namespace; they are two transports. This includes
-   `localhost`: `localhost:8191` and `localhost:8192` are one namespace, `localhost`, over two transports (the reference
-   parser's earlier test NS1 asserted the opposite and was changed as a documented compatibility change; namespaces that must
-   differ need different names).
+   `localhost`: `localhost:8191` and `localhost:8192` express the same namespace NAME, `localhost`, within the same resolution
+   context, through two transports. Removing the port keeps the semantic name; it does not show that the two servers serve the
+   same tree or hold the same authority: that is established by what answers (§3b), not by the spelling. (The reference parser's
+   earlier test NS1 asserted that the port was part of the name; it was changed as a documented compatibility change.
+   Namespaces that must differ need different names.)
 2. **What follows `/` depends on which of the three is being written.** Inside an NRP target it is a semantic path. Inside a
    content URL it is that site's path. The string `name.space:9901/expression` does not say which; a producer SHOULD write an
    explicit form:
@@ -212,7 +215,7 @@ Rules:
 Status — rules 1, 3, 4 **Agreed**; rule 2's explicit forms **Agreed**, and what a parser does with the bare
 `host:port/path` is **implementation behavior**, not the rule. **Candidate:** cleaker `d044746` and the GUI topic
 `topic/port-namespace` (`fqdn` and `constant` carry no port; the port is in `transport`; `localhost:8191` and `localhost:8192`
-are the namespace `localhost`). **Published: no.**
+parse to the same namespace name `localhost`). **Published: no.**
 
 Where the parsers differ today (so nobody reads one as the other):
 
@@ -229,11 +232,16 @@ Where the parsers differ today (so nobody reads one as the other):
 - A **canonical name** is a spelling that implementations agree on (a loopback name is canonicalized to the machine's root).
 - A **network address** is where a request goes (scheme, host, port).
 - A **verifiable identity** is evidence that the actor behind a name is the one that was there before: a claim record and
-  signatures against it.
+  signatures against it, checked against a trust reference the verifier already has.
 
 Canonicalizing a name proves neither of the others. `suis-macbook-air.local` is not unique across networks; `localhost` and
 `127.0.0.1` mean "this machine" wherever they are read; the control of a DNS name such as `cleaker.me` can change. "The same
-namespace" means the same name; continuity of the actor or the tree needs the evidence above, and nothing in §3a replaces it.
+namespace" means the same name. It does not mean the same server, the same actor or the same tree.
+
+Continuity needs a **trust reference**. A claim record and signatures that the NEW server itself supplies do not show continuity
+with the previous one: they must be verified against an identity that was recognized before (a key already known, or an
+authority the verifier already trusts). Continuity of the TREE needs additional evidence about its history; a matching name or
+a valid signature over today's state does not provide it. Nothing in §3a replaces this.
 
 Status — **Agreed.**
 
