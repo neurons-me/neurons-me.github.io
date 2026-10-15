@@ -180,7 +180,7 @@
     ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { light: CL + "v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png", dark: CL + "v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" }],
     ["mlearning.studio", "Datasets, GTFS and BigDaMa: machine learning on .me.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
     ["Explore All.This", "Across the neurons.me ecosystem.", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
-    ["Docs", "All project docs: .me, cleaker, monad, .GUI, netget.", "https://neurons-me.github.io/docs/", { light: "/assets/docs-icon.webp" }],
+    [".wallet", "Manage multiple blockchains with .me. npm: this.wallet.", "https://github.com/neurons-me/.wallet", { light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
   ];
   const SOURCES = [
     ["npm: @neurons.me", "https://www.npmjs.com/org/neurons.me", { light: "https://cdn.simpleicons.org/npm/CB3837" }],
@@ -284,13 +284,29 @@
         N("Typography", { component: "span", sx: { fontWeight: 900, fontSize: "clamp(0.95rem, 1vw + 0.75rem, 1.2rem)", lineHeight: 1.15, overflowWrap: "normal", wordBreak: "keep-all", hyphens: "none" } }, [title]),
       ]),
     ]);
-  const sourceRow = N("Box", { component: "section", sx: { mt: 5, display: "flex", alignItems: "center", gap: 1.75, flexWrap: "wrap" } }, [
-    label("Source Code"),
-    N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 0.5 } },
-      SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, underline: "none",
-        sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: 2, opacity: 0.85, "&:hover": { opacity: 1, bgcolor: "action.hover" } } },
-        [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
-    N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", sx: { fontSize: "0.825rem", fontWeight: 600, color: "primary.main" } }, ["All project docs →"]),
+  // Docs + Source Code: two wide pill cards side by side (stacked on mobile). The Source Code pill is not itself a link:
+  // its npm / GitHub / PyPI / crates.io icons are.
+  const pillSx = { ...cardSx, display: "flex", alignItems: "center", gap: 1.5, px: 2.25, py: 1.25, minHeight: 64, borderRadius: "999px" };
+  const pillIcon = (inner) => N("Box", { sx: { width: 40, height: 40, borderRadius: "50%", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" } }, [inner]);
+  const sourceRow = N("Box", { component: "section", "aria-label": "Docs and source code", sx: { mt: 5, display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 2, [MOBILE]: { gridTemplateColumns: "1fr", gap: 1.25 } } }, [
+    N("Card", { component: "a", href: "https://neurons-me.github.io/docs/", variant: "outlined", sx: pillSx }, [
+      pillIcon(N("Box", { component: "img", src: "/assets/docs-icon.webp", alt: "", sx: { width: 40, height: 40, objectFit: "cover", display: "block" } })),
+      N("Box", { sx: { minWidth: 0, flex: 1 } }, [
+        N("Typography", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.25 } }, ["Docs"]),
+        N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.35 } }, ["All project docs: .me, cleaker, monad, .GUI, netget."]),
+      ]),
+      N("Typography", { component: "span", color: "primary.main", sx: { fontWeight: 700, fontSize: "1.1rem", pr: 0.5 } }, ["→"]),
+    ]),
+    N("Card", { variant: "outlined", sx: { ...pillSx, cursor: "default", "&:hover": {} } }, [
+      N("Box", { sx: { minWidth: 0, flex: 1, pl: 0.5 } }, [
+        N("Typography", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.25 } }, ["Source Code"]),
+        N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.35 } }, ["npm · GitHub · PyPI · crates.io"]),
+      ]),
+      N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 0.75 } },
+        SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
+          sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 38, height: 38, borderRadius: "50%", bgcolor: "action.hover", opacity: 0.9, "&:hover": { opacity: 1, bgcolor: "action.selected" } } },
+          [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
+    ]),
   ]);
 
   // GUI 4.1.0's SearchBar paints itself with inline styles from two fixed palettes (light: #fff / #0f1720 / teal,
