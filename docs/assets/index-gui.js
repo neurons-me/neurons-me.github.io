@@ -178,7 +178,9 @@
     ["monad", "Federated runtime surfaces.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
     [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
     ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { light: CL + "v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png", dark: CL + "v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" }],
+    ["mlearning.studio", "Datasets, GTFS and BigDaMa: machine learning on .me.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
     ["Explore All.This", "Across the neurons.me ecosystem.", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
+    ["Docs", "All project docs: .me, cleaker, monad, .GUI, netget.", "https://neurons-me.github.io/docs/", { light: "/assets/docs-icon.webp" }],
   ];
   const SOURCES = [
     ["npm: @neurons.me", "https://www.npmjs.com/org/neurons.me", { light: "https://cdn.simpleicons.org/npm/CB3837" }],
@@ -330,13 +332,12 @@
     header,
     ...(top || []),
     N("Box", { component: "section" }, [
-      label("Stack", { mb: 1.75 }),
-      grid(3, STACK.map(stackCard), { gridAutoRows: "1fr", [MOBILE]: { gridTemplateColumns: "repeat(3, 1fr)", gap: 1.25 } }),
+      N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", color: "inherit", sx: { display: "inline-block", mb: 1.75, color: "text.secondary" } }, [label("Stack Docs")]),
+      grid(4, STACK.map(stackCard), { gridAutoRows: "1fr", [MOBILE]: { gridTemplateColumns: "repeat(3, 1fr)", gap: 1.25 } }),
     ]),
     sourceRow,
     section("Demos", grid(3, DEMOS.map(demoCard))),
-    section("Architecture", grid(2, ARCH.map(resourceCard))),
-    section("Benchmarks", grid(3, BENCH.map(resourceCard))),
+    section("Architecture & Benchmarks", grid(2, ARCH.concat(BENCH).map(resourceCard))),
     section("NRP & Axioms", grid(2, NRP.map(resourceCard))),
     section("Essays & Notation", grid(2, ESSAYS.map(resourceCard))),
     section("Network", N("Box", { sx: { display: "grid", gridTemplateColumns: "1fr" } }, NETWORK.map(resourceCard))),
