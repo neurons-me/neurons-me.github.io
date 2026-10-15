@@ -118,8 +118,9 @@
     html:not(.gui-on) .mls-title { text-decoration: none; }
     html:not(.gui-on) .mls-title code, html:not(.gui-on) .item-desc code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
     html:not(.gui-on) .mls-title:hover { text-decoration: underline; }
-    html:not(.gui-on) .mls-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    html:not(.gui-on) .mls-links a { font-size: .82rem; text-decoration: none; color: var(--blue); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
+    html:not(.gui-on) .mls-links { display: flex; flex-wrap: nowrap; gap: 6px; margin-top: 12px; min-width: 0; overflow: hidden; }
+    html:not(.gui-on) .mls-links a:nth-child(n+4) { display: none; }
+    html:not(.gui-on) .mls-links a { flex: 0 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .74rem; text-decoration: none; color: var(--blue); padding: 3px 8px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); }
     html:not(.gui-on) .mls-links a:hover { border-color: rgba(131,214,236,.5); background: rgba(131,214,236,.08); }
     html:not(.gui-on) .item-code { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(79,209,197,.07); border: 1px solid rgba(79,209,197,.18);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .68rem; line-height: 1.6; color: #4fd1c5; white-space: pre; overflow-x: auto; }
@@ -248,7 +249,7 @@ colony["="]("food", "chambers.pantry.stock + chambers.granary.stock")</code>
   </div>
 </div>
 <div id="root"></div>
-<script src="/assets/landing-gui.js?v=14" onerror="document.documentElement.classList.remove('gui-boot')"></script>
+<script src="/assets/landing-gui.js?v=15" onerror="document.documentElement.classList.remove('gui-boot')"></script>
 <script>if (!document.documentElement.classList.contains("gui-on") && window.MeSyntax) MeSyntax.highlightAll(document.getElementById("static-landing"));</script>
 </body>
 </html>

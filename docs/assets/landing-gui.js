@@ -285,8 +285,9 @@
   const mlsCard = (m, inGrid) => N("Card", { variant: "outlined", sx: { borderRadius: "14px", bgcolor: "background.paper", p: "16px 20px", mt: inGrid ? 0 : "18px", height: inGrid ? "100%" : "auto" } }, [
     N("Link", { href: m.href, underline: "hover", sx: { fontWeight: 600, fontSize: "1.02rem", color: "text.primary" } }, [isMe(m.title) ? meCode(m.title, { fontSize: ".92em" }) : m.title]),
     m.desc && desc(m.desc),
-    N("Box", { sx: { display: "flex", flexWrap: "wrap", gap: 1, mt: 1.5 } }, m.links.map((l) => N("Chip", { label: l.text, component: "a", href: l.href, clickable: true, variant: "outlined", size: "small",
-      sx: { fontSize: ".82rem", color: "primary.main", borderColor: "divider", "&:hover": { borderColor: "primary.main" } } }))),
+    // tags stay on one row (max 3): no wrap, compact chips that shrink and ellipsize instead of growing the card
+    N("Box", { sx: { display: "flex", flexWrap: "nowrap", gap: .75, mt: 1.5, minWidth: 0, overflow: "hidden" } }, m.links.slice(0, 3).map((l) => N("Chip", { label: l.text, title: l.text, component: "a", href: l.href, clickable: true, variant: "outlined", size: "small",
+      sx: { flex: "0 1 auto", minWidth: 0, maxWidth: "100%", height: 24, fontSize: ".74rem", color: "primary.main", borderColor: "divider", "& .MuiChip-label": { px: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, "&:hover": { borderColor: "primary.main" } } }))),
   ].filter(Boolean));
   const gridSx = (kind) => kind === "list" ? { display: "flex", flexDirection: "column", gap: "10px" }
     : { display: "grid", gridTemplateColumns: "1fr", gap: kind === "demo" ? "14px" : "10px", [WIDE]: { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" } };
