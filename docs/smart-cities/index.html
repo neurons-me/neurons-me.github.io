@@ -191,6 +191,22 @@ win["="]("tight", "headway &lt; policy.minHeadway")</code>
 colony["="]("food", "chambers.pantry.stock + chambers.granary.stock")</code>
           <span class="item-tag">Simulation · Colony</span>
         </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Demos/SmartCities/CityDelivery/">
+          <img class="item-media" src="https://neurons-me.github.io/.me/Demos/SmartCities/CityDelivery/assets/city-delivery-og.png" width="1200" height="630" alt="A city grid at night: sidewalk robots on the streets, drones over the blocks, traffic lights at the crossings, parcels arriving at homes" />
+          <div class="item-title">City Delivery</div>
+          <div class="item-desc">Sidewalk robots and drones deliver parcels. Flip a light or close a street and only the ETAs that depend on it recompute; a customer sees only their own order.</div>
+          <code class="item-code language-me">couriers["[i]"]["="]("eta", "dist / speed + next.wait")
+city["="]("delivering", "couriers[].delivering")</code>
+          <span class="item-tag">Live · this.me@4.2.1</span>
+        </a>
+        <a class="item" href="https://neurons-me.github.io/.me/Demos/SmartCities/SelfCleaningCity/">
+          <img class="item-media" src="https://neurons-me.github.io/.me/Demos/SmartCities/SelfCleaningCity/assets/self-cleaning-og.png" width="1200" height="630" alt="Six colonias of a city at night: bin sensors with fill bars, waste robots on the streets, a recycling depot in the middle" />
+          <div class="item-title">Self-Cleaning City</div>
+          <div class="item-desc">Bin sensors and waste robots in six colonias. A bin fills and only its colonia recomputes; each colonia sees only its own bins.</div>
+          <code class="item-code language-me">colonias["[i]"]["="]("avgFill", "colonias[i].bins[].fill / colonias[i].bins[]")
+colonias["[i]"]["="]("fullN", "colonias[i].bins[].full")</code>
+          <span class="item-tag">Live · this.me@4.2.1</span>
+        </a>
         <a class="item" href="https://neurons-me.github.io/.me/Tests/gtfs-madrid-universe.html">
           <img class="item-media" src="https://suign.github.io/assets/imgs/MADRID-GTFS-DATA-me.jpg" width="1672" height="941" alt="Madrid GTFS as .me dependencies" />
           <div class="item-title">GTFS Madrid — semantic graph</div>
