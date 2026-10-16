@@ -23,6 +23,9 @@ The explicit, testable specification of kernel behavior across phases and axioms
 ### **Chunked Secret Storage**
 A secret storage strategy that splits encrypted data into deterministic chunks instead of one monolithic blob. This reduces write/read crypto cost by localizing encryption and decryption to the relevant segment.
 
+### **Collection Aggregate (`x[]`, `x[].f`)**
+An empty `[]` after a collection path: `robots[]` is the count of its members, `robots[].battery` the sum of a field (a `true` counts as 1, a `false` as 0). It reads in `me()`, in `me.explain()` (an input with `kind: "aggregate"`) and in formulas, where it stays live on every member write. Collection paths are written from the root. See [Collection aggregates](https://neurons-me.github.io/.me/docs/Aggregates.html).
+
 ### **Collective Alias Collapse**
 The functional convergence of distinct linguistic labels into shared operational meaning through structural alignment and pointer links. Labels differ, but resolution behavior becomes equivalent.
 

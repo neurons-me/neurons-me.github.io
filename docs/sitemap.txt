@@ -60,6 +60,7 @@ https://neurons-me.github.io/.me/Demos/AffinityModel/Live/
 https://neurons-me.github.io/.me/Demos/Robots/Space/
 https://neurons-me.github.io/.me/Demos/SmartCities/Veracruz.Port/
 https://neurons-me.github.io/.me/docs/
+https://neurons-me.github.io/.me/docs/Aggregates.html
 https://neurons-me.github.io/.me/docs/Architecture.html
 https://neurons-me.github.io/.me/docs/Axioms.html
 https://neurons-me.github.io/.me/docs/Benchmarks/
@@ -113,6 +114,7 @@ https://neurons-me.github.io/.me/Rust/docs/Rustdoc.html
 https://neurons-me.github.io/.me/Tests/gtfs-madrid-universe.html
 https://neurons-me.github.io/.me/Typescript/
 https://neurons-me.github.io/.me/Typescript/typedocs/
+https://neurons-me.github.io/.me/Typescript/typedocs/Aggregates.html
 https://neurons-me.github.io/.me/Typescript/typedocs/Algebra-of-Contexts.html
 https://neurons-me.github.io/.me/Typescript/typedocs/api/
 https://neurons-me.github.io/.me/Typescript/typedocs/api/classes/ME.html

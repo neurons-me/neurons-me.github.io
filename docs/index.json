@@ -253,6 +253,16 @@
     "kind": "doc"
   },
   {
+    "id": "me-aggregates",
+    "title": "Collection aggregates: x[] and x[].f",
+    "desc": "robots[] counts, robots[].battery sums: live in formulas, shown in explain(); booleans count 1 / 0.",
+    "url": "https://neurons-me.github.io/.me/docs/Aggregates.html",
+    "repo": ".me",
+    "icon": "Σ",
+    "kind": "doc",
+    "keywords": ["aggregate", "sum", "count", "collection", "[]"]
+  },
+  {
     "id": "me-seed",
     "title": "SEED",
     "desc": "The one root every .me identity grows from — what it is, what it derives, what it never protects.",
@@ -957,6 +967,16 @@
     "repo": ".me",
     "icon": "∑",
     "kind": "doc"
+  },
+  {
+    "id": "me-ts-aggregates",
+    "title": "Collection Aggregates: Typescript",
+    "desc": "AggregateOp, AggregateResult and the explain aggregate block at v4.2.1: path-expr.ts, aggregate.ts, aggregate-index.ts.",
+    "url": "https://neurons-me.github.io/.me/Typescript/typedocs/Aggregates.html",
+    "repo": ".me",
+    "icon": "Σ",
+    "kind": "doc",
+    "keywords": ["aggregate", "sum", "count", "AggregateOp", "typescript"]
   },
   {
     "id": "me-ts-operators",
