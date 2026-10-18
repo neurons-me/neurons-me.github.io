@@ -41,6 +41,18 @@ We run advertising on Meta and use the Meta pixel to measure it.
   site and reloads the page without the pixel. You can also manage ad preferences in your Meta account.
 * Your choice is stored only in your browser (`localStorage`, key `neurons-consent-v1`). It is never sent to us or to anyone.
 
+## Cookies and storage we use {#cookies-we-use}
+
+| Name | Set by | What it is for | Lasts | Needs your consent |
+| --- | --- | --- | --- | --- |
+| `_fbp` | Meta pixel (a first-party cookie on this site) | Identifies the browser to measure ads and build audiences | up to 90 days | **Yes**: only set if you accept |
+| `_fbc` | Meta pixel | Links a visit to the Meta ad you clicked | up to 90 days | **Yes**: only set if you accept |
+| `neurons-consent-v1` | This site (browser storage) | Remembers your choice about the above | until you clear your browser data | No: it is what keeps your choice |
+| theme keys (`*.themeMode`, `*.themeId`, `tsd-theme`) | This site (browser storage) | Remembers light/dark appearance | until you clear your browser data | No: a display preference, not tracking |
+
+Nothing else is set by this site's code. The two Meta cookies exist only after you accept; Meta may also read cookies it has set on its own
+domains, which are governed by Meta's policy. The browser-storage items never leave your browser.
+
 ## Your rights
 Depending on where you live (for example under the GDPR) you can ask for access, rectification or erasure of your data, restrict or object to its processing,
 and withdraw consent at any time without affecting what happened before. For data held by Meta, use Meta's tools or its data-protection contact. You may also
@@ -80,6 +92,18 @@ Hacemos publicidad en Meta y usamos su píxel para medirla.
 * **Cambiar de opinión.** Usa **Privacidad · Cookies** (esquina inferior derecha de cada página) para aceptar o rechazar cuando quieras. Rechazar elimina las cookies de Meta de este
   sitio y recarga la página sin el píxel. También puedes gestionar tus preferencias de anuncios en tu cuenta de Meta.
 * Tu elección se guarda solo en tu navegador (`localStorage`, clave `neurons-consent-v1`). No se nos envía ni se envía a nadie.
+
+## Cookies y almacenamiento que usamos {#cookies-es}
+
+| Nombre | Lo crea | Para qué sirve | Dura | Requiere tu consentimiento |
+| --- | --- | --- | --- | --- |
+| `_fbp` | Píxel de Meta (cookie propia en este sitio) | Identifica el navegador para medir anuncios y crear audiencias | hasta 90 días | **Sí**: solo se crea si aceptas |
+| `_fbc` | Píxel de Meta | Vincula una visita con el anuncio de Meta en el que hiciste clic | hasta 90 días | **Sí**: solo se crea si aceptas |
+| `neurons-consent-v1` | Este sitio (almacenamiento del navegador) | Recuerda tu elección sobre lo anterior | hasta que borres los datos del navegador | No: es lo que conserva tu elección |
+| claves de tema (`*.themeMode`, `*.themeId`, `tsd-theme`) | Este sitio (almacenamiento del navegador) | Recuerda la apariencia clara/oscura | hasta que borres los datos del navegador | No: es una preferencia de visualización, no rastreo |
+
+El código de este sitio no crea nada más. Las dos cookies de Meta solo existen si aceptas; Meta también puede leer las cookies que haya creado en sus propios
+dominios, que se rigen por su política. Lo guardado en el almacenamiento del navegador nunca sale de tu navegador.
 
 ## Tus derechos
 Según donde vivas (por ejemplo, con el RGPD) puedes pedir acceso, rectificación o supresión de tus datos, limitar u oponerte a su tratamiento y retirar el consentimiento

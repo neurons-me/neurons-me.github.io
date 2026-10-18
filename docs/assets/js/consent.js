@@ -12,17 +12,17 @@
   'use strict';
   var PIXEL_ID = '2635461650224867';
   var KEY = 'neurons-consent-v1';
-  var PRIVACY = '/privacy.html';
+  var PRIVACY = '/privacy.html#cookies-we-use';
   var es = /^es\b/i.test((navigator.language || '') + '');
   var T = es ? {
     title: 'Cookies y privacidad',
     text: 'Usamos cookies de terceros (incluido Meta) para analítica y medición de anuncios. Solo se cargan si las aceptas.',
-    accept: 'Aceptar', reject: 'Rechazar', more: 'Política de privacidad',
+    accept: 'Aceptar', reject: 'Rechazar', more: 'Más información',
     link: 'Privacidad · Cookies', now: 'Ahora: ', on: 'aceptado', off: 'rechazado', none: 'sin decidir'
   } : {
     title: 'Cookies and privacy',
     text: 'We use third-party cookies (including Meta) for analytics and ad measurement. They only load if you accept.',
-    accept: 'Accept', reject: 'Reject', more: 'Privacy policy',
+    accept: 'Accept', reject: 'Reject', more: 'Learn more',
     link: 'Privacy · Cookies', now: 'Now: ', on: 'accepted', off: 'rejected', none: 'undecided'
   };
 
