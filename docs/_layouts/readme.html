@@ -1,0 +1,90 @@
+{%- comment -%}
+  Local override of the remote theme's _layouts/readme.html (neurons-me/neurons-me): identical to the theme's file plus
+  the Meta Pixel include before </head>, so every "layout: readme" page carries it. If the theme's layout changes, re-copy it
+  and keep the include line.
+{%- endcomment -%}
+<!doctype html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% assign page_title = page.title | default: site.title | escape %}
+  {% assign page_description = page.description | default: site.description | escape %}
+  {% assign social_image = page.image | default: site.me_theme.social_image | default: site.image %}
+  {% assign page_url = page.url | absolute_url %}
+  <title>{{ page_title }}</title>
+  <meta name="description" content="{{ page_description }}" />
+  {% comment %}
+    Every "layout: readme" page inherits real Open Graph/Twitter Card tags
+    from here — this is the ONE place that decides them, not per-page front
+    matter alone (page.image/page.description just override the site-wide
+    default when a page sets them; most won't need to). Before this, a page
+    with no image/description explicitly hand-authored as a standalone
+    .html file (bypassing this layout entirely) was the only way to get a
+    working social preview — confirmed live for
+    neurons-me.github.io/.me/docs/Splitting-your-Bill.html, which rendered
+    a bare <title> and nothing else. Site-wide fallback comes from
+    site.me_theme.social_image / site.description in _config.yml.
+  {% endcomment %}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ page_title }}" />
+  <meta property="og:description" content="{{ page_description }}" />
+  <meta property="og:url" content="{{ page_url }}" />
+  {% if social_image %}
+  <meta property="og:image" content="{{ social_image }}" />
+  <meta property="og:image:secure_url" content="{{ social_image }}" />
+  {% endif %}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ page_title }}" />
+  <meta name="twitter:description" content="{{ page_description }}" />
+  {% if social_image %}
+  <meta name="twitter:image" content="{{ social_image }}" />
+  {% endif %}
+  {% assign favicon_url = site.me_theme.favicon | default: "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" %}
+  <link rel="icon" type="image/png" href="{{ favicon_url }}">
+  <link rel="apple-touch-icon" href="{{ favicon_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/me-theme.css' | relative_url }}">
+  {% include meta-pixel.html %}
+</head>
+<body>
+  {% assign brand_label = site.me_theme.brand | default: site.title | default: '.me' %}
+  {% assign nav_items = site.me_theme.nav %}
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="https://neurons-me.github.io/">
+        <img class="brand-logo" src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1760629064/neurons.me_b50f6a.png" alt="" width="28" height="28" />
+        <span>{{ brand_label }}</span>
+      </a>
+      <div
+        class="topbar-search"
+        data-gui-searchbar
+        data-src="https://neurons-me.github.io/index.json"
+        data-placeholder="Search in All.This"
+      ></div>
+      <nav class="nav-links" aria-label="Main navigation">
+        {% if nav_items %}
+          {% for item in nav_items %}
+            {% if item.relative_url %}
+              <a href="{{ item.relative_url | relative_url }}">{{ item.label }}</a>
+            {% else %}
+              <a href="{{ item.url }}">{{ item.label }}</a>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <a href="https://neurons-me.github.io/all.this/">All.This</a>
+          <a href="https://www.npmjs.com/package/this.me">NPM</a>
+          <a href="{{ '/npm/typedocs/' | relative_url }}">TypeDocs</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="markdown-body">
+    {{ content }}
+  </main>
+
+  <script src="https://neurons-me.github.io/vendor/gui-searchbar.iife.js" defer></script>
+</body>
+</html>
+
