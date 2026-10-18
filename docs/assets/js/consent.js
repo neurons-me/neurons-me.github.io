@@ -16,12 +16,12 @@
   var es = /^es\b/i.test((navigator.language || '') + '');
   var T = es ? {
     title: 'Cookies y privacidad',
-    text: 'Usamos el píxel de Meta (Facebook) para medir nuestros anuncios. Solo se carga si lo aceptas; si lo rechazas no se envía nada a Meta.',
+    text: 'Usamos cookies de terceros (incluido Meta) para analítica y medición de anuncios. Solo se cargan si las aceptas.',
     accept: 'Aceptar', reject: 'Rechazar', more: 'Política de privacidad',
     link: 'Privacidad · Cookies', now: 'Ahora: ', on: 'aceptado', off: 'rechazado', none: 'sin decidir'
   } : {
     title: 'Cookies and privacy',
-    text: 'We use the Meta (Facebook) pixel to measure our ads. It only loads if you accept; if you reject it, nothing is sent to Meta.',
+    text: 'We use third-party cookies (including Meta) for analytics and ad measurement. They only load if you accept.',
     accept: 'Accept', reject: 'Reject', more: 'Privacy policy',
     link: 'Privacy · Cookies', now: 'Now: ', on: 'accepted', off: 'rejected', none: 'undecided'
   };
