@@ -12,8 +12,8 @@
   'use strict';
   var PIXEL_ID = '2635461650224867';
   var KEY = 'neurons-consent-v1';
-  var PRIVACY = '/privacy.html#cookies-we-use';
   var es = /^es\b/i.test((navigator.language || '') + '');
+  var PRIVACY = '/privacy.html#' + (es ? 'cookies-es' : 'cookies-we-use');
   var T = es ? {
     title: 'Cookies y privacidad',
     text: 'Usamos cookies de terceros (incluido Meta) para analítica y medición de anuncios. Solo se cargan si las aceptas.',
