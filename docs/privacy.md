@@ -13,7 +13,7 @@ canonical: https://neurons-me.github.io/privacy.html
 
 # Privacy policy
 
-*Last updated: 2026-10-18. Español más abajo.*
+*Last updated: 2026-10-18. Español más abajo. See also the [terms of use](/terms.html).*
 
 ## Who runs this site
 neurons.me / suiGn, published at `https://neurons-me.github.io`. Contact for anything in this page: open an issue at
@@ -65,7 +65,7 @@ If this page changes, the date above changes. The history is public in the repos
 
 # Política de privacidad
 
-*Última actualización: 2026-10-18.*
+*Última actualización: 2026-10-18. Consulta también los [términos de uso](/terms.html).*
 
 ## Quién gestiona este sitio
 neurons.me / suiGn, publicado en `https://neurons-me.github.io`. Contacto para cualquier tema de esta página: abre un issue en
