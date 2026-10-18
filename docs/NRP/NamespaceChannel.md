@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: NamespaceChannel
+layout: gui-doc
+title: "NamespaceChannel"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "NamespaceChannel"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/NamespaceChannel.md
+canonical: https://neurons-me.github.io/NRP/NamespaceChannel.html
 ---
 
 # NamespaceChannel

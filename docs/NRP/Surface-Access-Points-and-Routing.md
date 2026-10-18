@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: Surface Access Points and Routing
+layout: gui-doc
+title: "Surface Access Points and Routing"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "Surface Access Points"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/Surface-Access-Points-and-Routing.md
+canonical: https://neurons-me.github.io/NRP/Surface-Access-Points-and-Routing.html
 ---
 
 # Surface Access Points and Routing

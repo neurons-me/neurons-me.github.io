@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: NRP v0.2.1 (archived)
+layout: gui-doc
+title: "NRP v0.2.1 (archived)"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "v0.2.1 (archived)"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/v.0.2.1.md
+canonical: https://neurons-me.github.io/NRP/v.0.2.1.html
 ---
 
 > **Archived.** Superseded by [NRP v0.3.0](./v.0.3.0.md). Kept as the historical text of v0.2.1.

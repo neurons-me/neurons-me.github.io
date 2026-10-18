@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: NRP — Namespace Resolution Protocol
+layout: gui-doc
+title: "NRP — Namespace Resolution Protocol"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "Namespace Protocol Resolution"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/Namespace-Protocol-Resolution.md
+canonical: https://neurons-me.github.io/NRP/Namespace-Protocol-Resolution.html
 ---
 
 # Namespace Resolution Protocol

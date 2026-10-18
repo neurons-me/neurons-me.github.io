@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: Beatle — NRP Channel Client
+layout: gui-doc
+title: "Beatle — NRP Channel Client"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "Beatle"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/Beatle.md
+canonical: https://neurons-me.github.io/NRP/Beatle.html
 ---
 
 # Beatle — NRP Channel Client

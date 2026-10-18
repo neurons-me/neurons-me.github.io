@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: NRP v0.3.0 — Namespace Resolution Protocol
+layout: gui-doc
+title: "NRP v0.3.0 — Namespace Resolution Protocol"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "v0.3.0"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/v.0.3.0.md
+canonical: https://neurons-me.github.io/NRP/v.0.3.0.html
 ---
 
 # Namespace Resolution Protocol v0.3.0

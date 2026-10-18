@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: NRP Expression Parser
+layout: gui-doc
+title: "NRP Expression Parser"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "NRPExpression Parser"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/NRPExpression-Parser.md
+canonical: https://neurons-me.github.io/NRP/NRPExpression-Parser.html
 ---
 
 # NRP Expression Parser

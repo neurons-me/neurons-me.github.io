@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: Virtual Hosts As Semantic Containers
+layout: gui-doc
+title: "Virtual Hosts As Semantic Containers"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "Virtual Hosts"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/Virtual-Hosts-As-Semantic-Containers.md
+canonical: https://neurons-me.github.io/NRP/Virtual-Hosts-As-Semantic-Containers.html
 ---
 
 # Virtual Hosts As Semantic Containers

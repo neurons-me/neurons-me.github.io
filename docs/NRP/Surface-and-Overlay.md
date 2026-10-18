@@ -1,6 +1,15 @@
 ---
-layout: readme
-title: Surface and Overlay
+layout: gui-doc
+title: "Surface and Overlay"
+root_url: https://neurons-me.github.io/
+root_title: neurons.me
+mepath:
+  - text: NRP
+    url: https://neurons-me.github.io/NRP/
+crumb: "Surface and Overlay"
+docs_url: https://neurons-me.github.io/docs/
+github_url: https://github.com/neurons-me/neurons-me.github.io/blob/main/docs/NRP/Surface-and-Overlay.md
+canonical: https://neurons-me.github.io/NRP/Surface-and-Overlay.html
 ---
 
 # Surface and Overlay
