@@ -69,6 +69,7 @@ https://neurons-me.github.io/.me/docs/Collaborators.html
 https://neurons-me.github.io/.me/docs/Extreme-Fan-Out.html
 https://neurons-me.github.io/.me/docs/Hemisphere-Scale.html
 https://neurons-me.github.io/.me/docs/Hospital.html
+https://neurons-me.github.io/.me/docs/Is-Me-A-Category.html
 https://neurons-me.github.io/.me/docs/Me-Where-It-Wins.html
 https://neurons-me.github.io/.me/docs/me.html
 https://neurons-me.github.io/.me/docs/One-Line-That-Replaces-Five.html
@@ -79,6 +80,7 @@ https://neurons-me.github.io/.me/docs/Running-your-CoffeeShops.html
 https://neurons-me.github.io/.me/docs/Seed.html
 https://neurons-me.github.io/.me/docs/Smart-Cities.html
 https://neurons-me.github.io/.me/docs/Social-Graph.html
+https://neurons-me.github.io/.me/docs/Space-Structure.html
 https://neurons-me.github.io/.me/docs/Splitting-your-Bill.html
 https://neurons-me.github.io/.me/docs/Syntax.html
 https://neurons-me.github.io/.me/docs/Operators.html

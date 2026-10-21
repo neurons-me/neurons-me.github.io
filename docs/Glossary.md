@@ -89,6 +89,9 @@ A shift from static metadata (describing data) to Executable Logic. In this para
 ### **Pointer Composition**
 The property that chained structural pointers (`a -> b -> c`) resolve as a single suffix-preserving substitution without an explicit `a -> c` edge existing. Composition is verified for acyclic chains of any practical length, self-pointers, and cycles of any length — all fail closed or resolve correctly. Cycle detection tracks, within a single bounded resolution pass, which pointer edges have already been followed; redirecting through the same edge twice fails the read closed instead of recursing.
 
+### **Prefix Closure (`P = PrefixClosure(P_declared)`)**
+The positions of a `.me` space are every path that was written plus every prefix of one: writing only `profile.contact.email` still makes `profile` and `profile.contact` positions you can descend into, with no value of their own. Under descendant containment `q ≤ p`, `P` is a rooted, tree-shaped poset. See [What Is the Mathematical Structure of a Space in .me?](https://neurons-me.github.io/.me/docs/Space-Structure.html).
+
 ### **Push vs Pull**
 An analytical split between write-path cost (push/mutation) and read-path cost (pull/first read after mutation). Used to isolate where latency is introduced in reactive systems.
 
@@ -112,6 +115,9 @@ The state in which a data branch exists and works but exposes no metadata, marke
 
 ### **Structured Necessity**
 The principle that constraints are not external limitations but internal conditions for coherence. A form persists only by satisfying its own relational necessities.
+
+### **Trace (`Trace^{(n)}_t`)**
+The typed route one fuel-bounded read actually walks: a morphism `c : p → q` of the free category of routes `C_t = FreeCat(G_t)`, with the input `x ∈ ↓p`, or `id_x : x → x` when no pointer is involved. Operationally partial (the evaluation may not finish), unlike the semantic partiality of resolution `R_{t,γ}`. See [Is .me a Category?](https://neurons-me.github.io/.me/docs/Is-Me-A-Category.html).
 
 ### **.me**
 The identity kernel/runtime of the ecosystem. It provides executable semantic trees, path-native operators, deterministic derivations, and secret scopes so identity and logic can be modeled as a live graph.

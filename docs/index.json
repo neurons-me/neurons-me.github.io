@@ -456,6 +456,26 @@
     "kind": "doc"
   },
   {
+    "id": "me-space-structure",
+    "title": "What Is the Mathematical Structure of a Space in .me?",
+    "desc": "Theory: a prefix-closed tree of positions, R : P × Γ ⇀ M, addressability vs discoverability, S = (P, ≤, Γ, M, R) and K = (S, π, Σ, H, D).",
+    "url": "https://neurons-me.github.io/.me/docs/Space-Structure.html",
+    "repo": ".me",
+    "icon": "≤",
+    "kind": "doc",
+    "keywords": ["space", "poset", "prefix closure", "resolution", "manifestation", "theory"]
+  },
+  {
+    "id": "me-is-a-category",
+    "title": "Is .me a Category? From Pointer Semantics to Categorical Structure",
+    "desc": "Theory: H_t → G_t → C_t = FreeCat(G_t), typed traces, two partialities, ConeSubst(P̂), faithfulness per hom-set.",
+    "url": "https://neurons-me.github.io/.me/docs/Is-Me-A-Category.html",
+    "repo": ".me",
+    "icon": "→",
+    "kind": "doc",
+    "keywords": ["category", "free category", "morphism", "functor", "trace", "pointer", "theory"]
+  },
+  {
     "id": "me-where-it-wins",
     "title": ".me — Where It Wins",
     "desc": ".me competitive positioning: one root, any host, audience in the type.",
