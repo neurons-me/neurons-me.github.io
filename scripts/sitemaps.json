@@ -80,6 +80,12 @@
       "base": "https://neurons-me.github.io/neurons-me/",
       "out": "sitemap.xml",
       "exclude": []
+    },
+    ".wallet": {
+      "repo": "neurons-me/.wallet",
+      "base": "https://neurons-me.github.io/.wallet/",
+      "out": "sitemap.xml",
+      "exclude": []
     }
   }
 }
