@@ -166,7 +166,7 @@
     "id": "wallet",
     "title": "this.wallet",
     "desc": "Wallet handlers for .me. Ethereum and EVM networks work; Bitcoin and Stellar are not implemented yet.",
-    "url": "https://neurons-me.github.io/.wallet/docs/",
+    "url": "https://neurons-me.github.io/.wallet/",
     "repo": ".wallet",
     "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765902981/this.wallet_giyxtt.webp",
     "kind": "root"
