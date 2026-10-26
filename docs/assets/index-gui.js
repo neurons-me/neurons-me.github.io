@@ -188,7 +188,7 @@
     [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
     ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { light: CL + "v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png", dark: CL + "v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" }],
     ["mlearning.studio", "Datasets, GTFS and BigDaMa: machine learning on .me.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
-    [".wallet", "Manage multiple blockchains with .me. npm: this.wallet.", "https://github.com/neurons-me/.wallet", { light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
+    [".wallet", "Manage multiple blockchains with .me. npm: this.wallet.", "https://neurons-me.github.io/.wallet/docs/", { light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
     ["Explore All.This", "Across the neurons.me ecosystem.", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
   ];
   const SOURCES = [
