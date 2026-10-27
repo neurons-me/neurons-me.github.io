@@ -1,4 +1,4 @@
-// .GUI (this.gui@4.2.0) for the hand-written landings (/robots/, /smart-cities/). Loaded by their index.html.
+// .GUI (this.gui@4.2.0; /wallet/ loads 4.2.1, which has G.QRme) for the hand-written landings (/robots/, /smart-cities/, /wallet/). Loaded by their index.html.
 // The page's own static markup (#static-landing) is the single source of text, links and images: this script
 // reads it, renders the same content through GUI.mount (registry Card/Box/Typography/Link/Chip + a page-local
 // topbar like ContextLab's: me:// path, Docs, GitHub, theme picker, light/dark, gear with Inspector + Grid Layout),
@@ -50,6 +50,12 @@
     related: [...SRC.querySelectorAll(".wrap > .related a")].map((a) => ({ text: txt(a), href: a.getAttribute("href") })),
     relatedLabel: txt(SRC.querySelector(".wrap > .related .related-label")),
     footer: txt(SRC.querySelector("footer")),
+    // /wallet/ (#static-landing[data-layout=wallet]): the entry's own labels come from the static form, like every other text here
+    wallet: SRC.dataset.layout === "wallet" ? (() => {
+      const f = SRC.querySelector("[data-wallet-entry]");
+      return { label: txt(f.querySelector("label")), placeholder: f.querySelector("textarea").getAttribute("placeholder") || "", photo: txt(f.querySelector("[data-wallet-photo]")),
+        photoLabel: f.querySelector("[data-wallet-photo]").getAttribute("aria-label") || "", go: txt(f.querySelector("[data-wallet-go]")) };
+    })() : null,
   };
 
   // ── icons: inline SVG (no icon font) ──
@@ -135,17 +141,69 @@
       h(Menu, { id: "settings-menu", anchorEl: anchor, open: !!anchor, onClose: close, "data-gui-inspector-control": "true", anchorOrigin: { vertical: "bottom", horizontal: "right" }, transformOrigin: { vertical: "top", horizontal: "right" } },
         ...items.map((it) => h(MenuItem, { key: it.key, "data-settings-item": it.key, onClick: () => { close(); it.onClick(); } }, h(ListItemIcon, null, it.icon), h(ListItemText, null, it.label)))));
   }
+  // ── Cleaker's compact QRme in the topbar of /wallet/ (neurons-me/Cleaker landing-gui.js, commits ac6babf + 7b598e8). The same rules as there:
+  //    label "cleaker.me @ <window.location.host>" (surfaceToken) with the tightened "@", line padlock (closed on https, open + warning on http,
+  //    transportInfo), QR value per the library's NRP rule (the namespace's own address; the page's host stays in the label, not in the QR).
+  //    Difference: the library's "topbar" QRme (40px, the one its own top bar uses) draws no perimeter label, so the label and the padlock sit
+  //    beside the QR (label from sm up; on a phone the QR and the padlock) instead of on the QR's perimeter (variant "xl" in Cleaker). ──
+  const CLEAKER_NAMESPACE = "cleaker.me";
+  const CLEAKER_QR_VALUE = "https://" + CLEAKER_NAMESPACE;
+  // surfaceToken (positionExpression.ts): a bare host[:port]; quoted with its scheme only for http on a non-loopback host or an IPv6 literal.
+  function surfaceToken(loc) {
+    const host = String(loc.host || "").trim().toLowerCase();
+    if (!host) return "";
+    const scheme = String(loc.protocol || "http:").toLowerCase().replace(/:?$/, ":");
+    const loopback = /^(localhost|127(?:\.\d{1,3}){3}|\[::1\]|[^.:\s]+\.localhost)(?::\d+)?$/i.test(host);
+    return (scheme === "http:" && !loopback) || host.charAt(0) === "[" ? '"' + scheme + "//" + host + '"' : host;
+  }
+  // Transport security as the browser itself reports it, nothing more: https: in a secure context means the browser accepted a
+  // certificate; http: means there is none. Issuer and expiry are not readable from a page, so none is claimed.
+  function transportInfo() {
+    const proto = String(location.protocol || "").toLowerCase();
+    const secure = proto === "https:" && window.isSecureContext === true;
+    return { secure, title: secure ? "HTTPS \u00b7 certificate accepted by browser" : proto === "http:" ? "HTTP \u00b7 no certificate" : proto === "https:" ? "HTTPS \u00b7 not a secure context" : String(proto.replace(":", "")).toUpperCase() + " \u00b7 no certificate" };
+  }
+  // Line icon, currentColor, 24-box: a closed padlock, or the same padlock with its shackle lifted.
+  function LockGlyph(p) {
+    return h("svg", { viewBox: "0 0 24 24", width: p.size, height: p.size, fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", "data-lock": p.secure ? "closed" : "open" },
+      h("rect", { x: 5, y: 11, width: 14, height: 9.5, rx: 2 }),
+      h("path", { d: p.secure ? "M8 11V8a4 4 0 0 1 8 0v3" : "M8 11V8a4 4 0 0 1 7.6-1.7" }));
+  }
+  function WalletQR(p) {
+    const loc = typeof window !== "undefined" ? window.location : { host: "", protocol: "https:", origin: "" };
+    const surface = surfaceToken(loc);
+    const label = surface ? CLEAKER_NAMESPACE + " @ " + surface : CLEAKER_NAMESPACE;
+    const full = loc.host ? CLEAKER_NAMESPACE + ' @ "' + String(loc.protocol).toLowerCase() + "//" + String(loc.host).toLowerCase() + '"' : CLEAKER_NAMESPACE;
+    const tr = React.useMemo(transportInfo, []), id = p["data-gui-node-id"];
+    return h(Box, { sx: { display: "inline-flex", alignItems: "center", gap: .75, flexShrink: 0, minWidth: 0 } },
+      h(Box, { component: "a", href: (loc.origin || "") + "/", title: full, "aria-label": full, "data-position-expression": full,
+        sx: { display: "inline-flex", lineHeight: 0, color: "inherit", textDecoration: "none", "&:focus": { outline: "none" }, "&:focus-visible": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 3, borderRadius: 2 } } },
+        h(G.QRme, { variant: "topbar", value: CLEAKER_QR_VALUE, perimeterLabel: label, perimeterRootLabel: CLEAKER_NAMESPACE, clickFlip: false, hoverFlip: false, cursor: "pointer", "data-gui-node-id": id })),
+      h(Box, { component: "span", title: tr.title, "data-gui-node-id": id + ".transport", "data-transport": tr.secure ? "https" : "insecure",
+        sx: { display: "inline-flex", lineHeight: 0, color: tr.secure ? "text.secondary" : "warning.main" } }, h(LockGlyph, { size: 14, secure: tr.secure })),
+      // the label is monospace, so " @ " is three full cells; word-spacing pulls the two spaces in (presentation only, the text is unchanged)
+      h(Box, { component: "span", "data-gui-node-id": id + ".label", sx: { display: { xs: "none", sm: "inline" }, fontFamily: MONO, fontSize: 11.5, lineHeight: 1.2, color: "text.secondary", whiteSpace: "nowrap", wordSpacing: "-0.36em" } }, label));
+  }
   function LandingTopBar(p) {
-    const seg = (s, i) => [i > 0 && !page.path[i - 1].text.endsWith("://") ? h(Box, { component: "span", key: `sep${i}`, sx: { color: "text.disabled", mx: .15 } }, "/") : null,
-      s.href ? h(Link, { key: s.text, href: s.href, underline: "hover", title: s.title, sx: { color: "primary.main", fontFamily: MONO, fontSize: { xs: 12, sm: 13 } } }, s.text)
-        : h(Box, { component: "span", key: s.text, "aria-current": "page", sx: { color: "text.primary", fontFamily: MONO, fontSize: { xs: 12, sm: 13 }, fontWeight: 600 } }, s.text)];
+    // when the path doesn't fit (deep pages on phones), the middle segments collapse to "…" (a link to the parent), so the last one shows in full
+    const P = page.path, last = P.length - 1, [mode, setMode] = React.useState("measure"), col = mode === "col", pathRef = React.useRef(null);
+    React.useEffect(() => { const re = () => setMode("measure"); window.addEventListener("resize", re); if (document.fonts && document.fonts.ready) document.fonts.ready.then(re); return () => window.removeEventListener("resize", re); }, []);
+    React.useEffect(() => { const b = pathRef.current; if (mode === "measure" && b) setMode(b.scrollWidth > b.clientWidth + 1 ? "col" : "full"); }, [mode]);
+    const mids = P.slice(1, last).map((x) => x.text).join(" / ");
+    const seg = (s, i) => { const hide = col && i > 0 && i < last, ell = col && i === last && last > 1;
+      return [i > 0 && !P[i - 1].text.endsWith("://") && !hide && !ell ? h(Box, { component: "span", key: `sep${i}`, sx: { color: "text.disabled", mx: .15 } }, "/") : null,
+      ell ? h(Link, { key: "ell", href: P[last - 1].href, underline: "hover", title: mids, "aria-label": mids, sx: { color: "primary.main", fontFamily: MONO, fontSize: { xs: 12, sm: 13 } } }, "…") : null,
+      ell ? h(Box, { component: "span", key: "ellsep", sx: { color: "text.disabled", mx: .15 } }, "/") : null,
+      hide ? null : s.href ? h(Link, { key: s.text, href: s.href, underline: "hover", title: s.title, sx: { color: "primary.main", fontFamily: MONO, fontSize: { xs: 12, sm: 13 } } }, s.text)
+        : h(Box, { component: "span", key: s.text, "aria-current": "page", sx: { color: "text.primary", fontFamily: MONO, fontSize: { xs: 12, sm: 13 }, fontWeight: 600, flexShrink: 0 } }, s.text)]; };
     return h(Box, { component: "nav", "aria-label": "me path", "data-gui-node-id": p["data-gui-node-id"], sx: { position: "sticky", top: 0, zIndex: 100, display: "flex", alignItems: "center", gap: { xs: .5, sm: 1.25 }, px: { xs: .75, sm: 2.5 }, minHeight: 48, borderBottom: 1, borderColor: "divider", bgcolor: "background.paper" } },
       h(Link, { href: "https://neurons-me.github.io/", title: "neurons.me", underline: "none", sx: { display: "inline-flex", lineHeight: 0, flexShrink: 0 } }, h("img", { src: LOGO, alt: "neurons.me", width: 28, height: 28, style: { display: "block", objectFit: "contain" } })),
-      h(Box, { sx: { display: "inline-flex", alignItems: "center", minWidth: 0, overflowX: "auto", whiteSpace: "nowrap", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } } }, ...page.path.flatMap(seg)),
+      h(Box, { ref: pathRef, sx: { display: "inline-flex", alignItems: "center", minWidth: 0, overflowX: "auto", whiteSpace: "nowrap", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } } }, ...page.path.flatMap(seg)),
       h(Box, { sx: { ml: "auto", display: "inline-flex", alignItems: "center", gap: { xs: .25, sm: 1.25 }, flexShrink: 0 } },
+        page.wallet && h(WalletQR, { "data-gui-node-id": "GUI.window.layout.bars.top.qr" }),
         h(TopSearch),
-        page.docs && h(Link, { href: page.docs, underline: "hover", sx: { fontFamily: MONO, fontSize: 12, color: "text.secondary" } }, "Docs"),
-        page.github && h(Link, { href: page.github, underline: "none", target: "_blank", rel: "noopener", title: "GitHub · neurons-me/.me", "aria-label": "GitHub", sx: { display: "inline-flex", lineHeight: 0, color: "text.secondary", "&:hover": { color: "text.primary" } } }, h(Ico, { kind: "github", size: 18 })),
+        page.docs && h(Link, { href: page.docs, underline: "hover", sx: { fontFamily: MONO, fontSize: 12, color: "text.secondary", mx: { xs: 1, sm: 0 } } }, "Docs"),
+        page.github && h(Link, { href: page.github, underline: "none", target: "_blank", rel: "noopener", title: "GitHub · " + page.github.replace(/^https?:\/\/github\.com\//, ""), "aria-label": "GitHub", sx: { display: "inline-flex", lineHeight: 0, color: "text.secondary", "&:hover": { color: "text.primary" } } }, h(Ico, { kind: "github", size: 18 })),
         h(Box, { "data-gui-inspector-control": "true", sx: { display: "inline-flex", alignItems: "center", gap: .25 } }, h(ThemePicker), h(ModeToggle), h(SettingsMenu))));
   }
 
@@ -252,6 +310,29 @@
       near && ok ? h(Box, { sx: { width: size, height: size, flexShrink: 0, "& canvas": { display: "block" } } },
         h(CubeBoundary, { fallback: logo }, h(Cube, { height: size, spin: true, orbit: false, borderRadius: 0, palette: "themed", colors: cubeColors(themeId, mode) }))) : logo);
   }
+  // ── /wallet/ hero: one entry, UI only (nothing is sent anywhere yet): the text area for "who paid what", a receipt-photo button
+  //    (the browser's file picker; the chosen file only shows its name here) and a primary button that stays disabled while there is nothing to send. ──
+  const LINE = { fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round" };
+  const CameraGlyph = () => h("svg", { viewBox: "0 0 24 24", width: 18, height: 18, "aria-hidden": "true", focusable: "false", style: { display: "block", flex: "none" }, ...LINE },
+    h("path", { d: "M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1.3-2h5.4L16 7h2.5A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z" }), h("circle", { cx: 12, cy: 12.5, r: 3.2 }));
+  const ArrowGlyph = () => h("svg", { viewBox: "0 0 24 24", width: 18, height: 18, "aria-hidden": "true", focusable: "false", style: { display: "block", flex: "none" }, ...LINE },
+    h("path", { d: "M5 12h14M13 6l6 6-6 6" }));
+  function WalletEntry(p) {
+    const W = page.wallet, [text, setText] = React.useState(""), [file, setFile] = React.useState(""), pick = React.useRef(null), ready = text.trim() !== "" || file !== "";
+    const id = p["data-gui-node-id"];
+    return h(Box, { component: "form", "data-gui-node-id": id, "aria-label": W.label, onSubmit: (e) => e.preventDefault(),
+      sx: { border: 1, borderColor: "divider", borderRadius: "14px", bgcolor: "background.paper", p: { xs: 1.5, sm: 2 }, transition: "border-color .15s", "&:focus-within": { borderColor: "primary.main" } } },
+      h(Box, { component: "label", htmlFor: "wallet-who-paid-what", sx: { position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" } }, W.label),
+      h(G.Atoms.TextField, { id: "wallet-who-paid-what", multiline: true, minRows: 4, maxRows: 10, fullWidth: true, variant: "standard", placeholder: W.placeholder, value: text, onChange: (e) => setText(e.target.value),
+        slotProps: { input: { disableUnderline: true, "data-gui-node-id": id + ".text" } }, sx: { "& .MuiInputBase-root": { fontSize: "1.05rem", lineHeight: 1.6, alignItems: "flex-start" } } }),
+      h(Box, { sx: { display: "flex", alignItems: "center", gap: 1, mt: 1.5 } },
+        h("input", { ref: pick, type: "file", accept: "image/*", hidden: true, "data-gui-node-id": id + ".file", onChange: (e) => setFile((e.target.files && e.target.files[0] && e.target.files[0].name) || "") }),
+        h(Button, { type: "button", size: "small", variant: "outlined", "aria-label": W.photoLabel || W.photo, "data-gui-node-id": id + ".photo", onClick: () => pick.current && pick.current.click(),
+          startIcon: h(CameraGlyph), sx: { textTransform: "none", color: "text.primary", borderColor: "divider", borderRadius: "10px", px: 1.5, py: .75, flexShrink: 0, "&:hover": { borderColor: "primary.main" } } }, W.photo),
+        file && h(Box, { component: "span", title: file, sx: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontFamily: MONO, fontSize: 12, color: "text.secondary" } }, file),
+        h(Button, { type: "submit", variant: "contained", disabled: !ready, "data-gui-node-id": id + ".go", endIcon: h(ArrowGlyph),
+          sx: { ml: "auto", textTransform: "none", borderRadius: "10px", px: 2, py: .75, flexShrink: 0, boxShadow: "none" } }, W.go)));
+  }
   // ── content spec (registry types), same layout as the static page ──
   const cardSx = { display: "block", textDecoration: "none", color: "inherit", borderRadius: "14px", bgcolor: "background.paper", transition: "border-color .15s, box-shadow .15s",
     "&:hover": { borderColor: "primary.main", textDecoration: "none" } };
@@ -296,7 +377,19 @@
       : T(s.label, { fontSize: ".78rem", textTransform: "uppercase", letterSpacing: ".08em", color: "text.secondary", m: 0, mb: "18px" }, { component: "p" }),
     N("Box", { sx: gridSx(s.kind) }, s.items.map(s.kind === "demo" ? demoCard : docCard(s.kind))),
   ]);
-  const spec = N("Box", { sx: { minHeight: "100vh", bgcolor: "background.default", color: "text.primary", lineHeight: 1.6 } }, [
+  // /wallet/: ids on the .GUI layout tree, GUI.window.layout.{bars.top, content}; no left / right bars. The topbar is the same LandingTopBar as every docs page.
+  const L = "GUI.window.layout", LC = L + ".content", HERO = LC + ".hero";
+  const walletSpec = () => N("Box", { "data-gui-node-id": L, sx: { minHeight: "100vh", bgcolor: "background.default", color: "text.primary", lineHeight: 1.6 } }, [
+    N("LandingTopBar", { "data-gui-node-id": L + ".bars.top" }),
+    N("Box", { component: "main", "data-gui-node-id": LC, sx: { display: "flex", justifyContent: "center", px: { xs: 2, sm: 3 }, pt: { xs: 7, sm: 14 }, pb: 10 } }, [
+      N("Box", { component: "section", "data-gui-node-id": HERO, sx: { width: "100%", maxWidth: 640 } }, [
+        N("Typography", { component: "h1", "data-gui-node-id": HERO + ".title", sx: { fontSize: "clamp(2.2rem, 6vw, 3.4rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 800, m: 0, mb: 1.5 } }, [page.h1]),
+        page.lead && N("Typography", { component: "p", "data-gui-node-id": HERO + ".line", sx: { fontSize: "1rem", color: "text.secondary", m: 0, mb: 4 } }, [page.lead]),
+        N("WalletEntry", { "data-gui-node-id": HERO + ".entry" }),
+      ].filter(Boolean)),
+    ]),
+  ]);
+  const spec = page.wallet ? walletSpec() : N("Box", { sx: { minHeight: "100vh", bgcolor: "background.default", color: "text.primary", lineHeight: 1.6 } }, [
     N("LandingTopBar", {}),
     N("Box", { component: "main", sx: { width: "min(760px, calc(100% - 40px))", mx: "auto", pt: 1.5 } }, [
       N("Box", { component: "header", sx: { pt: 3.5, pb: 5 } }, [
@@ -322,7 +415,7 @@
   const INSPECTOR_ON = params.get("inspector") === "1";
   if (G.getInspectorEnabled() !== INSPECTOR_ON) G.setInspectorEnabled(INSPECTOR_ON);
   G.mount(spec, ROOT, {
-    gui: { ...G, Theme: PageTheme, registry: { ...(G.Registry || G.registry), LandingTopBar, LandingOrb, LandingCube } },
+    gui: { ...G, Theme: PageTheme, registry: { ...(G.Registry || G.registry), LandingTopBar, LandingOrb, LandingCube, WalletEntry } },
     devtools: { enabled: true, inspector: INSPECTOR_ON, adminView: false, inspectorToggleVisible: false },
   });
   html.classList.add("gui-on");
