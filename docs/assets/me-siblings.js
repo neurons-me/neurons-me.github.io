@@ -18,13 +18,9 @@
     "/smart-cities/": CITIES, "/.me/Demos/SmartCities/": CITIES,
     "/social-graphs/": [["AffinityModel", "/.me/Demos/AffinityModel/"], ["Split", "/.wallet/paypal/demos/split/"], ["Robots × Encrypted Audiences", "/social-graphs/robots-encrypted-audiences/"], ["Encrypted Audiences", "/encrypted-audiences/"]],
     "/.me/docs/Benchmarks/": [["Kernel", "/.me/docs/Benchmarks/benchmarks.html"], ["GTFS", "/.me/docs/Benchmarks/GTFS/"], ["Phases", "/.me/docs/Benchmarks/Phases/"], ["Secret-Scope", "/.me/docs/Benchmarks/Secret-Scope/"]],
-    // Tests hub = test-pages/index.html (permalink /.me/tests/): the CI suite pages it links to, plus its browser suites and demo/data pages.
-    "/.me/tests/": [["readme", "/.me/tests/readme/"], ["run 2026-10-26", "/.me/tests/runs/2026-10-26/"], ["contracts", "/.me/tests/contracts/"], ["paths", "/.me/tests/paths/"],
-      ["derivations", "/.me/tests/derivations/"], ["aggregates", "/.me/tests/aggregates/"], ["types", "/.me/tests/types/"], ["security", "/.me/tests/security/"],
-      ["identity-bound-secrets", "/.me/tests/identity-bound-secrets/"], ["umd", "/.me/tests/umd/"], ["demos", "/.me/tests/demos/"], ["phase2", "/.me/tests/phase2/"],
-      ["phase3", "/.me/tests/phase3/"], ["perf-fix", "/.me/tests/perf-fix/"],
-      // the hub's browser suites and demo/data pages (same order as the hub)
-      ["fire.test", "/.me/docs/Tests/fire.test.html"], ["fire.test results", "/.me/docs/Tests/fire.test.results.html"], ["docs/Tests index", "/.me/docs/Tests/"], ["isolation-between-identities", "/.me/docs/Tests/isolation-between-identities.html"], ["information-leakage", "/.me/docs/Tests/information-leakage.html"], ["crypto-tampering", "/.me/docs/Tests/crypto-tampering.html"], ["replay-and-restart", "/.me/docs/Tests/replay-and-restart.html"], ["derived-from-secret", "/.me/docs/Tests/derived-from-secret.html"], ["wrapped-secret", "/.me/docs/Tests/wrapped-secret.html"], ["GTFS Madrid universe", "/.me/Tests/gtfs-madrid-universe.html"], ["semantic-reactive", "/.me/docs/Tests/semantic-reactive.html"], ["madrid-knowledge", "/.me/docs/Tests/madrid-knowledge.html"], ["veracruz-port", "/.me/docs/Tests/veracruz-port.html"], ["Veracruz.Port (.GUI)", "/.me/Demos/SmartCities/Veracruz.Port/"]],
+    // Tests hub = test-pages/index.html (permalink /.me/tests/): five categories plus the last run (same order as the hub).
+    "/.me/tests/": [["Axioms", "/.me/tests/axioms/"], ["Identity", "/.me/tests/identity/"], ["Space Algebra", "/.me/tests/space-algebra/"],
+      ["Guarantees", "/.me/tests/guarantees/"], ["Security", "/.me/tests/security/"], ["Last run", "/.me/tests/runs/2026-10-26/"]],
   };
   var pathOf = function (u) { try { return decodeURI(new URL(u, location.href).pathname).replace(/index\.html?$/i, ""); } catch (e) { return null; } };
   var norm = function (t) { return String(t || "").toLowerCase().replace(/[^a-z0-9]/g, ""); };
