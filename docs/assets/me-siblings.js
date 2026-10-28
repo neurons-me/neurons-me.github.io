@@ -11,22 +11,28 @@
     ["CityDelivery", "/.me/Demos/SmartCities/CityDelivery/"], ["SelfCleaningCity", "/.me/Demos/SmartCities/SelfCleaningCity/"], ["GTFS Madrid", "/.me/Tests/gtfs-madrid-universe.html"]];
   // parent path → its children (one level). Aliases: /.me/Demos/Robots/ and /.me/Demos/SmartCities/ redirect to the hubs.
   var MAP = {
-    "/.me/": [["Docs", "/.me/docs/"], ["Demos", "/.me/Demos/"], ["Benchmarks", "/.me/docs/Benchmarks/"]],
+    "/.me/": [["Docs", "/.me/docs/"], ["Demos", "/.me/Demos/"], ["Benchmarks", "/.me/docs/Benchmarks/"], ["Tests", "/.me/tests/"]],
     "/.me/Demos/": [["SmartCities", "/smart-cities/"], ["Robots", "/robots/"], ["SocialGraphs", "/social-graphs/"], ["DigitalSpaceAlgebra", "/digital-space-algebra/"],
       ["WalletSplit", "/.me/Typescript/typedocs/examples/WalletSplit.html"], ["AffinityModel", "/.me/Demos/AffinityModel/"], ["Shops", "/.me/Typescript/typedocs/examples/Shops_Admin.html"]],
     "/robots/": ROBOTS, "/.me/Demos/Robots/": ROBOTS,
     "/smart-cities/": CITIES, "/.me/Demos/SmartCities/": CITIES,
     "/social-graphs/": [["AffinityModel", "/.me/Demos/AffinityModel/"], ["Split", "/.wallet/paypal/demos/split/"], ["Robots × Encrypted Audiences", "/social-graphs/robots-encrypted-audiences/"], ["Encrypted Audiences", "/encrypted-audiences/"]],
     "/.me/docs/Benchmarks/": [["Kernel", "/.me/docs/Benchmarks/benchmarks.html"], ["GTFS", "/.me/docs/Benchmarks/GTFS/"], ["Phases", "/.me/docs/Benchmarks/Phases/"], ["Secret-Scope", "/.me/docs/Benchmarks/Secret-Scope/"]],
+    // Tests hub = test-pages/index.html (permalink /.me/tests/): the CI suite pages it links to, plus the docs/Tests suite index.
+    "/.me/tests/": [["readme", "/.me/tests/readme/"], ["run 2026-10-26", "/.me/tests/runs/2026-10-26/"], ["contracts", "/.me/tests/contracts/"], ["paths", "/.me/tests/paths/"],
+      ["derivations", "/.me/tests/derivations/"], ["aggregates", "/.me/tests/aggregates/"], ["types", "/.me/tests/types/"], ["security", "/.me/tests/security/"],
+      ["identity-bound-secrets", "/.me/tests/identity-bound-secrets/"], ["umd", "/.me/tests/umd/"], ["demos", "/.me/tests/demos/"], ["phase2", "/.me/tests/phase2/"],
+      ["phase3", "/.me/tests/phase3/"], ["perf-fix", "/.me/tests/perf-fix/"], ["docs/Tests suites", "/.me/docs/Tests/"]],
   };
   var pathOf = function (u) { try { return decodeURI(new URL(u, location.href).pathname).replace(/index\.html?$/i, ""); } catch (e) { return null; } };
   var norm = function (t) { return String(t || "").toLowerCase().replace(/[^a-z0-9]/g, ""); };
   function list(P, i) {
     var parent = i > 0 && P[i - 1] && P[i - 1].href && MAP[pathOf(P[i - 1].href)];
-    if (!parent) return null;
     var here = pathOf(P[i].href || location.href), any = false;
-    var items = parent.map(function (x) { var cur = pathOf(ME + x[1]) === here || norm(x[0]) === norm(P[i].text); any = any || cur; return { text: x[0], href: ME + x[1], current: cur }; });
-    return any ? items : null;
+    var items = (parent || []).map(function (x) { var cur = pathOf(ME + x[1]) === here || norm(x[0]) === norm(P[i].text); any = any || cur; return { text: x[0], href: ME + x[1], current: cur }; });
+    if (any) return items;
+    // A top-level page shown deeper (me:// / Docs / Benchmarks): fall back to the me:// list when its path is in it.
+    return i > 0 && parent !== MAP["/.me/"] && MAP["/.me/"].some(function (x) { return pathOf(ME + x[1]) === here; }) ? list([{ href: ME + "/.me/" }, P[i]], 1) : null;
   }
   var h = React.createElement, G = window.GUI, Menu = G.Molecules.Menu, MenuItem = G.Molecules.MenuItem, Box = G.Atoms.Box, IconButton = G.Atoms.IconButton;
   var MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", n = 0;
