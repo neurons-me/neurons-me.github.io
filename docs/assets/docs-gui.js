@@ -55,13 +55,15 @@
   // VitePress navigates client-side: re-render the path on pushState/replaceState/popstate.
   ["pushState", "replaceState"].forEach((k) => { const o = history[k]; history[k] = function () { const r = o.apply(this, arguments); dispatchEvent(new Event("docs-gui:nav")); return r; }; });
   addEventListener("popstate", () => dispatchEvent(new Event("docs-gui:nav")));
+  // me:// sibling switcher: ▾ after a path segment lists the pages at the same level (shared map + menu: /assets/me-siblings.js, loaded on demand)
+  function SibSlot(p) { var f = React.useState(0)[1]; React.useEffect(function () { if (window.MeSiblings) return; var on = function () { f(1); }; addEventListener("me-siblings", on); if (!document.getElementById("me-siblings")) { var s = document.createElement("script"); s.id = "me-siblings"; s.src = "/assets/me-siblings.js?v=1"; document.head.appendChild(s); } return function () { removeEventListener("me-siblings", on); }; }, []); return window.MeSiblings ? window.MeSiblings.node(p.path, p.i) : null; }
   function MePath({ compact }) {
     const [known, setKnown] = React.useState(null);
     const [, setPath] = React.useState(location.pathname);
     React.useEffect(() => { knownUrls.then(setKnown); const f = () => setPath(location.pathname); addEventListener("docs-gui:nav", f); return () => removeEventListener("docs-gui:nav", f); }, []);
     const linkSx = { color: "text.secondary", textDecoration: "none", borderRadius: 1, px: 0.25, "&:hover": { color: "primary.main", textDecoration: "underline" } };
     const parts = [h(G.Box, { component: "a", key: "me", href: HOST + "/", sx: { ...linkSx, fontWeight: 700, color: "text.primary" } }, "me://")];
-    const cs = crumbs();
+    const cs = crumbs(), P = [{ text: "me://", href: HOST + "/" }].concat(cs.map((c) => ({ text: c.label, href: c.current ? null : c.url })));
     cs.forEach((c, i) => {
       if (i > 0) parts.push(h(G.Box, { component: "span", key: "s" + i, "aria-hidden": "true", sx: { color: "text.disabled", px: 0.25 } }, "/"));
       const exists = c.current || !known || known.has(c.url) || known.has(c.url.replace(/\/$/, "/index.html"));
@@ -69,6 +71,7 @@
         ? h(G.Box, { component: "span", key: "c" + i, "aria-current": "page", sx: { color: "text.primary", fontWeight: 600 } }, c.label)
         : exists ? h(G.Box, { component: "a", key: "c" + i, href: c.url, sx: linkSx }, c.label)
           : h(G.Box, { component: "span", key: "c" + i, sx: { color: "text.secondary", px: 0.25 } }, c.label));
+      parts.push(h(SibSlot, { key: "sib" + i, path: P, i: i + 1 }));
     });
     return h(G.Box, { component: "nav", "aria-label": "me:// path", "data-docs-mepath": "true",
       sx: { display: "flex", alignItems: "center", minWidth: 0, overflowX: "auto", whiteSpace: "nowrap", scrollbarWidth: "none",
