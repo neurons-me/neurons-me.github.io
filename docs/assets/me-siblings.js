@@ -11,7 +11,7 @@
     ["CityDelivery", "/.me/Demos/SmartCities/CityDelivery/"], ["SelfCleaningCity", "/.me/Demos/SmartCities/SelfCleaningCity/"], ["GTFS Madrid", "/.me/Tests/gtfs-madrid-universe.html"]];
   // parent path → its children (one level). Aliases: /.me/Demos/Robots/ and /.me/Demos/SmartCities/ redirect to the hubs.
   var MAP = {
-    "/.me/": [["Docs", "/.me/docs/"], ["Demos", "/.me/Demos/"], ["Benchmarks", "/.me/docs/Benchmarks/"], ["Tests", "/.me/tests/"]],
+    "/.me/": [["Docs", "/.me/docs/"], ["Demos", "/.me/Demos/"], ["Benchmarks", "/.me/docs/Benchmarks/"], ["Tests", "/.me/tests/"], ["LLMS", "/.me/LLMS/"]],
     "/.me/Demos/": [["SmartCities", "/smart-cities/"], ["Robots", "/robots/"], ["SocialGraphs", "/social-graphs/"], ["DigitalSpaceAlgebra", "/digital-space-algebra/"],
       ["WalletSplit", "/.me/Typescript/typedocs/examples/WalletSplit.html"], ["AffinityModel", "/.me/Demos/AffinityModel/"], ["Shops", "/.me/Typescript/typedocs/examples/Shops_Admin.html"]],
     "/robots/": ROBOTS, "/.me/Demos/Robots/": ROBOTS,
