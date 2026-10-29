@@ -29,6 +29,7 @@
   </script>
   <!-- No icon font: every icon is inline SVG; hide any icon-font span so its name never shows as text. -->
   <style>.material-symbols-rounded,.material-symbols-outlined,.material-icons{display:none!important} body{margin:0} .gui-boot #static-landing{display:none}  header .subtitle{margin:.4rem 0 0;font-size:1.05rem;opacity:.7}
+    .me-primary{color:var(--gui-color-primary,var(--accent,var(--blue)))}
   </style>
   <!-- Pinned dependencies (jsDelivr, exact versions, Subresource Integrity), same as ContextLab. -->
   <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
@@ -140,7 +141,7 @@
   </nav>
   <div class="wrap">
 <header>
-      <h1>Robots that understand .me</h1>
+      <h1>Robots that understand <span class="me-primary">.me</span></h1>
       <p class="subtitle">One object, four meanings, zero copies.</p>
     </header>
 
