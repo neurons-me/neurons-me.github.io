@@ -36,6 +36,8 @@
     }),
     sections: [...SRC.querySelectorAll(".wrap > section")].map((s) => {
       const grid = s.querySelector(".links");
+      if (!grid) return { kind: "mls", mls: [...s.querySelectorAll(".mls-card")].map((c) => { const t = c.querySelector(".mls-title");
+        return { title: txt(t), href: t.getAttribute("href"), desc: txt(c.querySelector(".item-desc")), links: [...c.querySelectorAll(".mls-links a")].map((a) => ({ text: txt(a), href: a.getAttribute("href") })) }; }) };
       return {
         title: txt(s.querySelector(".section-title")), label: txt(s.querySelector(".section-label")),
         kind: grid.classList.contains("demo-grid") ? "demo" : grid.classList.contains("docs-grid") ? "docs" : "list",
@@ -293,7 +295,9 @@
   ].filter(Boolean));
   const gridSx = (kind) => kind === "list" ? { display: "flex", flexDirection: "column", gap: "10px" }
     : { display: "grid", gridTemplateColumns: "1fr", gap: kind === "demo" ? "14px" : "10px", [WIDE]: { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" } };
-  const section = (s) => N("Box", { component: "section", sx: { py: 4, borderTop: 1, borderColor: "divider" } }, [
+  const section = (s) => s.kind === "mls" ? N("Box", { component: "section", sx: { py: 4, borderTop: 1, borderColor: "divider" } }, [
+    N("Box", { sx: { display: "grid", gridTemplateColumns: "1fr", gap: "10px", alignItems: "stretch", [WIDE]: { gridTemplateColumns: "repeat(3, minmax(0, 1fr))" } } }, s.mls.map((m) => mlsCard(m, true)))])
+  : N("Box", { component: "section", sx: { py: 4, borderTop: 1, borderColor: "divider" } }, [
     s.title ? T(s.title, { fontSize: "clamp(1.6rem, 4vw, 2.2rem)", lineHeight: 1.1, letterSpacing: "-.02em", fontWeight: 800, m: 0, mb: "18px" }, { component: "h2" })
       : T(s.label, { fontSize: ".78rem", textTransform: "uppercase", letterSpacing: ".08em", color: "text.secondary", m: 0, mb: "18px" }, { component: "p" }),
     N("Box", { sx: gridSx(s.kind) }, s.items.map(s.kind === "demo" ? demoCard : docCard(s.kind))),
