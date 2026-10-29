@@ -306,7 +306,7 @@
     N("LandingTopBar", {}),
     N("Box", { component: "main", sx: { width: "min(760px, calc(100% - 40px))", mx: "auto", pt: 1.5 } }, [
       N("Box", { component: "header", sx: { pt: 3.5, pb: 5 } }, [
-        T(page.h1.endsWith(".me") ? [page.h1.slice(0,-3), N("Box",{component:"span",sx:{color:"primary.main"}},[".me"])] : page.h1, { fontSize: "clamp(2.2rem, 6vw, 3.4rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 800, m: 0, mb: 1.75 }, { component: "h1" }),
+        T(page.h1.endsWith(".me") ? (() => { const w = page.h1.slice(0,-3).trimEnd().split(" "), last = w.pop(); return [w.join(" ") + " ", N("Box",{component:"span",sx:{whiteSpace:"nowrap"}},[last + " ", N("Box",{component:"span",sx:{color:"primary.main"}},[".me"])])]; })() : page.h1, { fontSize: "clamp(2.2rem, 6vw, 3.4rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 800, m: 0, mb: 1.75 }, { component: "h1" }),
         page.lead && T(page.lead, { fontSize: "1.1rem", color: "text.secondary", maxWidth: "56ch", m: 0 }, { component: "p" }),
         ...(page.mls.length > 1
           ? [N("Box", { sx: { display: "grid", gridTemplateColumns: "1fr", gap: "10px", mt: "18px", alignItems: "stretch", [WIDE]: { gridTemplateColumns: "repeat(3, minmax(0, 1fr))" } } }, page.mls.map((m) => mlsCard(m, true)))]
