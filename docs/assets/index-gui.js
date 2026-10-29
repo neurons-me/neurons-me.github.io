@@ -199,7 +199,7 @@
   ];
   const MEDIA = "https://neurons-me.github.io/neurons-me/media/";
   const DEMOS = [
-    ["Robots that Understand Context", "https://neurons-me.github.io/robots/", MEDIA + "robots_that_understand_context_gif.gif"],
+    ["Robots that understand .me", "https://neurons-me.github.io/robots/", "https://neurons-me.github.io/.me/Demos/Robots/Space/assets/space-robots-og-4.2.png"],
     ["Smart Cities", "https://neurons-me.github.io/smart-cities/", MEDIA + "smart_cities.gif"],
     ["Social Graphs", "https://neurons-me.github.io/social-graphs/", MEDIA + "SocialGraph.jpg"],
     ["Digital Space Algebra", "https://neurons-me.github.io/digital-space-algebra/", MEDIA + "Encrypted_Audience_Algebra.gif"],
