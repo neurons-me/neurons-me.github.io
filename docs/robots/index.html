@@ -28,7 +28,8 @@
     document.documentElement.classList.add("gui-boot");
   </script>
   <!-- No icon font: every icon is inline SVG; hide any icon-font span so its name never shows as text. -->
-  <style>.material-symbols-rounded,.material-symbols-outlined,.material-icons{display:none!important} body{margin:0} .gui-boot #static-landing{display:none}</style>
+  <style>.material-symbols-rounded,.material-symbols-outlined,.material-icons{display:none!important} body{margin:0} .gui-boot #static-landing{display:none}  header .subtitle{margin:.4rem 0 0;font-size:1.05rem;opacity:.7}
+  </style>
   <!-- Pinned dependencies (jsDelivr, exact versions, Subresource Integrity), same as ContextLab. -->
   <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
@@ -140,10 +141,10 @@
   <div class="wrap">
 <header>
       <h1>Robots that understand .me</h1>
+      <p class="subtitle">One object, four meanings, zero copies.</p>
     </header>
 
     <section>
-      <h2 class="section-title">Demos</h2>
       <div class="links demo-grid">
         <a class="item" href="https://neurons-me.github.io/robots/context-lab/">
           <img class="item-media" src="https://neurons-me.github.io/robots/assets/ROBOTS-CONTEXT-LAB.jpg" width="1280" height="720" alt="ContextLab for Robots — live robot map, explain() and controls" />
