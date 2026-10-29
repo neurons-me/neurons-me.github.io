@@ -16,7 +16,7 @@
       ["WalletSplit", "/.me/Typescript/typedocs/examples/WalletSplit.html"], ["AffinityModel", "/.me/Demos/AffinityModel/"], ["Shops", "/.me/Typescript/typedocs/examples/Shops_Admin.html"]],
     "/robots/": ROBOTS, "/.me/Demos/Robots/": ROBOTS,
     "/smart-cities/": CITIES, "/.me/Demos/SmartCities/": CITIES,
-    "/social-graphs/": [["AffinityModel", "/.me/Demos/AffinityModel/"], ["Split", "/.wallet/paypal/split/"], ["Robots × Encrypted Audiences", "/social-graphs/robots-encrypted-audiences/"], ["Encrypted Audiences", "/encrypted-audiences/"]],
+    "/social-graphs/": [["AffinityModel", "/.me/Demos/AffinityModel/"], [".wallet Split", "/.wallet/paypal/split/"], ["Robots × Encrypted Audiences", "/social-graphs/robots-encrypted-audiences/"], ["Encrypted Audiences", "/encrypted-audiences/"]],
     "/.me/docs/Benchmarks/": [["Kernel", "/.me/docs/Benchmarks/benchmarks.html"], ["GTFS", "/.me/docs/Benchmarks/GTFS/"], ["Phases", "/.me/docs/Benchmarks/Phases/"], ["Secret-Scope", "/.me/docs/Benchmarks/Secret-Scope/"]],
     // Tests hub = test-pages/index.html (permalink /.me/tests/): five categories plus the last run (same order as the hub).
     "/.me/tests/": [["Axioms", "/.me/tests/axioms/"], ["Identity", "/.me/tests/identity/"], ["Space Algebra", "/.me/tests/space-algebra/"],
