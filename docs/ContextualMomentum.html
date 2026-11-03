@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="https://suign.github.io/assets/imgs/smileyFace.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contextual Momentum — Coherence Is Not Correctness</title>
+<meta name="description" content="Contextual Momentum: a generated representation keeps its continuity and internal coherence while progressively losing correspondence with the state it describes. A descriptive term by sui.gn, not a new property of transformers.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://suign.github.io/ContextualMomentum.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="sui.gn">
+<meta property="og:title" content="Contextual Momentum — Coherence Is Not Correctness">
+<meta property="og:description" content="A generated representation keeps its coherence while losing correspondence with the state it describes. Coherence is not correctness.">
+<meta property="og:url" content="https://suign.github.io/ContextualMomentum.html">
+<meta property="og:image" content="https://suign.github.io/assets/imgs/smileyFace.png">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Contextual Momentum — Coherence Is Not Correctness">
+<meta name="twitter:description" content="A generated representation keeps its coherence while losing correspondence with the state it describes. Coherence is not correctness.">
+<meta name="twitter:image" content="https://suign.github.io/assets/imgs/smileyFace.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "Contextual Momentum — Coherence Is Not Correctness",
+  "url": "https://suign.github.io/ContextualMomentum.html",
+  "author": { "@type": "Person", "@id": "https://suign.github.io/sui-Gn.html#identity", "name": "sui.gn", "url": "https://suign.github.io/sui-Gn.html" },
+  "about": "Contextual Momentum",
+  "citation": { "@type": "ScholarlyArticle", "name": "How Language Model Hallucinations Can Snowball", "author": "Zhang et al.", "datePublished": "2023", "url": "https://arxiv.org/abs/2305.13534" },
+  "isPartOf": { "@type": "WebSite", "url": "https://suign.github.io/" },
+  "description": "Contextual Momentum: a generated representation keeps its continuity and internal coherence while progressively losing correspondence with the state it describes. A descriptive term by sui.gn, not a new property of transformers."
+}
+</script>
+
+<style>
+  :root {
+    --bg: #0b0c10;
+    --card: rgba(31, 40, 51, 0.45);
+    --fg: #c5c6c7;
+    --fg-dim: #a9b7c6;
+    --accent: #ffffff;
+    --accent-dim: #aaaaaa;
+    --border: rgba(31, 40, 51, 0.9);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  body {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 48px 20px 96px;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(255, 255, 255, 0.08), transparent 60%),
+      var(--bg);
+  }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.35); }
+  a:hover { color: #ffffff; border-bottom-color: var(--accent); }
+
+  .topnav { margin-bottom: 20px; }
+  .topnav .back-link { color: var(--fg-dim); border-bottom: none; font-size: 13px; }
+  .topnav .back-link:hover { color: var(--accent); }
+
+  header.banner {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    background: var(--card);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  }
+  header.banner .prompt { color: var(--fg-dim); font-size: 13px; }
+  header.banner h1 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 8px 0 16px;
+    letter-spacing: 0.01em;
+  }
+  header.banner p { color: var(--fg); margin: 0; }
+
+  section { margin-bottom: 44px; }
+  h2 {
+    color: #ffffff;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+  h2::before { content: "## "; color: var(--accent-dim); }
+
+  p { color: var(--fg); }
+  .dim { color: var(--fg-dim); }
+  code { color: #ffffff; }
+
+  .thesis {
+    border-left: 3px solid var(--accent-dim);
+    padding: 14px 18px;
+    margin: 15px 0;
+    color: #ffffff;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .pullquote {
+    border-left: 3px solid #ffffff;
+    padding: 18px 22px;
+    margin: 22px 0 6px;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 0 8px 8px 0;
+  }
+  .pullquote cite { display: block; margin-top: 10px; font-style: normal; font-size: 13px; color: var(--fg-dim); }
+  .pullquote-note { font-size: 13px; margin: 0 0 15px; }
+
+  pre {
+    background: rgba(31, 40, 51, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 15px 0;
+    font-size: 13px;
+    color: #ffffff;
+  }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--fg-dim);
+    font-size: 13px;
+  }
+  footer .prompt { color: var(--fg-dim); }
+</style>
+</head>
+<body>
+<style>
+  .breadcrumb {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 15px;
+    background: var(--card, rgba(50, 50, 50, 0.85));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    color: #fff;
+    font-size: 13px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.2s ease;
+    user-select: none;
+    font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
+  }
+  /* Push existing in-flow "back home" nav below the fixed breadcrumb pill —
+     only needed when the pill is actually floating over content. Once the
+     sidebar is docked open, content starts to the right of it, so the
+     extra clearance is just dead space. */
+  .topnav { margin-top: 56px; transition: margin-top 0.2s ease; }
+  body.sidebar-push .topnav { margin-top: 0; }
+
+  .breadcrumb:hover { border-color: var(--accent, #ffffff); }
+  .breadcrumb .bars { font-size: 15px; line-height: 1; color: var(--accent, #ffffff); }
+  .breadcrumb .crumb-dim { color: var(--fg-dim, #9a9aa2); }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 44;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    max-width: 84vw;
+    background: #101012;
+    border-right: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    z-index: 45;
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    overflow-y: auto;
+    font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    color: #fff;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .close-sidebar { cursor: pointer; font-size: 20px; color: var(--fg-dim, #9a9aa2); line-height: 1; }
+  .close-sidebar:hover { color: #fff; }
+  .sidebar ul { list-style: none; margin: 0; padding: 10px 0; }
+  .sidebar li { padding: 0; }
+  .sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 13.5px;
+    border-left: 3px solid transparent;
+    border-bottom: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .sidebar a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-left-color: var(--accent, #ffffff);
+    color: #fff;
+  }
+  .sidebar a .desc {
+    display: block;
+    color: var(--fg-dim, #9a9aa2);
+    font-size: 11.5px;
+    margin-top: 2px;
+  }
+
+  /* Second-level anchors: jump points inside a page, one row under its entry */
+  .sidebar .subanchors {
+    padding: 0 20px 12px 20px;
+    margin-top: -6px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .sidebar .subanchors a {
+    display: inline;
+    padding: 0;
+    border-bottom: none;
+    color: var(--fg-dim, #7a7a82);
+  }
+  .sidebar .subanchors a:hover { color: var(--accent, #ffffff); }
+  .sidebar .subanchors .sep { color: var(--fg-dim, #46464c); margin: 0 6px; }
+
+  /* Current-page marker */
+  .sidebar a.current {
+    background: rgba(255, 255, 255, 0.09);
+    border-left-color: var(--accent, #ffffff);
+    color: #fff;
+    box-shadow: inset 0 0 16px rgba(255, 255, 255, 0.10);
+  }
+  .sidebar a.current .desc { color: var(--accent-dim, #aaaaaa); }
+
+  .sidebar-toolbar {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  }
+  .sidebar-toolbar button {
+    background: none;
+    border: none;
+    color: var(--fg-dim, #9a9aa2);
+    font-family: inherit;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    padding: 0;
+  }
+  .sidebar-toolbar button:hover { color: var(--accent, #ffffff); }
+  .sidebar-toolbar button { display: flex; align-items: center; gap: 6px; }
+  .sidebar-toolbar .chevron {
+    display: inline-block;
+    font-size: 9px;
+    transition: transform 0.15s ease;
+    transform: rotate(0deg);
+  }
+  .sidebar-toolbar .chevron.rotated { transform: rotate(-90deg); }
+
+  .nav-group .group-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 20px 6px;
+    color: var(--accent-dim, #aaaaaa);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    user-select: none;
+  }
+  .nav-group .group-label:hover { color: var(--accent, #ffffff); }
+  .nav-group .chevron {
+    display: inline-block;
+    font-size: 9px;
+    transition: transform 0.15s ease;
+    transform: rotate(0deg);
+  }
+  .nav-group.collapsed .chevron { transform: rotate(-90deg); }
+  .nav-group ul.group-list {
+    padding: 0 0 4px;
+    /* Large, not tight — this only exists so the collapse/expand transition
+       has a numeric max-height to animate to/from (CSS can't transition
+       to/from `none`/`auto`). A tight cap here silently clips any group
+       whose real content is taller than the number, with no scroll or
+       indication anything is missing — exactly what was hiding notes in
+       longer groups (e.g. Digital Space Algebra, ~680px of real content
+       against a 600px cap). Kept comfortably above any current or
+       reasonably-foreseeable group size instead of tuned to today's tallest
+       group, so a future added note doesn't silently reintroduce this. */
+    max-height: 4000px;
+    overflow: hidden;
+  }
+  .nav-group.collapsed ul.group-list {
+    max-height: 0;
+    padding: 0;
+  }
+
+  /* Desktop docked mode: sidebar open pushes content instead of overlaying it.
+     !important is deliberate — this must win over each page's own inline
+     body { padding: ... } without needing to edit 30 separate stylesheets. */
+  body.sidebar-push {
+    padding-left: 320px !important;
+    max-width: 1160px !important;
+    transition: padding-left 0.28s ease;
+  }
+  @media (max-width: 720px) {
+    /* Mobile always overlays, never pushes — no room to push into. */
+    body.sidebar-push { padding-left: 20px !important; }
+  }
+</style>
+
+<div class="breadcrumb" onclick="openSidebar()">
+  <span class="bars">&#9776;</span>
+  <span>sui.gn <span class="crumb-dim">/ fundamentals</span></span>
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span>Fundamentals</span>
+    <span class="close-sidebar" onclick="closeSidebar()">&times;</span>
+  </div>
+  <div class="sidebar-toolbar">
+    <button id="toggleAllBtn" onclick="toggleAllGroups()">
+      <span class="chevron" id="toggleAllChevron">&#9662;</span>
+      <span id="toggleAllLabel">Collapse all</span>
+    </button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label" onclick="toggleGroup(this)"><span class="chevron">&#9662;</span>Anchors</div>
+    <ul class="group-list">
+      <li><a href="https://suign.github.io/index.html">index.html<span class="desc">home</span></a></li>
+      <li><a href="https://suign.github.io/sui-Gn.html#manifest">whois.me<span class="desc">root semantic anchor</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/sui-Gn.html#algebra-of-contexts">Algebra of Contexts</a> <span class="sep">·</span> <a href="https://suign.github.io/sui-Gn.html#knowledge-corpus">Knowledge Corpus</a></li>
+      <li><a href="https://suign.github.io/Equations.html#statement">Equations.html<span class="desc">every original formula on this site, in one glossary</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/Equations.html#n1-f0">n=1 ⟹ f≤0</a> <span class="sep">·</span> <a href="https://suign.github.io/Equations.html#t-perp-a">T ⊥ A</a> <span class="sep">·</span> <a href="https://suign.github.io/Equations.html#ok-reactivity">O(k)</a> <span class="sep">·</span> <a href="https://suign.github.io/Equations.html#category">Is .me a Category?</a></li>
+      <li><a href="https://suign.github.io/Equations-Visual-Infographics-Edition.html">Equations — visual edition<span class="desc">the same glossary, as infographics</span></a></li>
+    </ul>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label" onclick="toggleGroup(this)"><span class="chevron">&#9662;</span>Understanding .me</div>
+    <ul class="group-list">
+      <li><a href="https://suign.github.io/manifesto.html#real-cost">manifesto.html<span class="desc">the argued case for .me</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/manifesto.html#cant-wait">sovereignty can't wait</a> <span class="sep">·</span> <a href="https://suign.github.io/manifesto.html#not-neutral">not neutral</a></li>
+      <li><a href="https://suign.github.io/Explain.html#problem">me.explain()<span class="desc">Why Did You Say That?</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/Explain.html#what-it-returns">what it returns</a> <span class="sep">·</span> <a href="https://suign.github.io/Explain.html#prove">prove()</a></li>
+      <li><a href="https://suign.github.io/me-Explain-Minimal-Landing.html">me.explain() — minimal<span class="desc">visual landing for explain()/prove()</span></a></li>
+      <li><a href="./ContextualMomentum.html">Contextual Momentum<span class="desc">Coherence is not correctness</span></a></li>
+      <li><a href="https://suign.github.io/DecentralizedIdentity.html#definition">DecentralizedIdentity.html<span class="desc">what most answers to this leave out</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/DecentralizedIdentity.html#landscape">common approaches</a> <span class="sep">·</span> <a href="https://suign.github.io/DecentralizedIdentity.html#user-centric">user-centric system</a></li>
+      <li><a href="https://suign.github.io/UserCentricSystem.html#statement">UserCentricSystem.html<span class="desc">resolution begins at identity, not at a platform</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/UserCentricSystem.html#graph">the graph, not the menu</a> <span class="sep">·</span> <a href="https://suign.github.io/UserCentricSystem.html#compare">two architectures</a></li>
+      <li><a href="https://suign.github.io/CentralizeTheSelf.html#statement">CentralizeTheSelf.html<span class="desc">one root for identity, free topology for data</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/CentralizeTheSelf.html#centralize">centralize the self</a> <span class="sep">·</span> <a href="https://suign.github.io/CentralizeTheSelf.html#distribute">distribute the data</a></li>
+      <li><a href="https://suign.github.io/MeWhateverWhat.html#statement">me.whatever(what)<span class="desc">the syntax — SVO, real operator table, selectors</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/MeWhateverWhat.html#operators">operators</a> <span class="sep">·</span> <a href="https://suign.github.io/MeWhateverWhat.html#selectors">selector syntax</a></li>
+      <li><a href="https://suign.github.io/MeLoveYou.html#statement">me.love(you)<span class="desc">subjectivity, relation, execution as evidence</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/MeLoveYou.html#space-definitions">space definitions</a> <span class="sep">·</span> <a href="https://suign.github.io/MeLoveYou.html#argument">argument</a> <span class="sep">·</span> <a href="https://suign.github.io/MeLoveYou.html#inference">inference</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label" onclick="toggleGroup(this)"><span class="chevron">&#9662;</span>Digital Space Algebra</div>
+    <ul class="group-list">
+      <li><a href="https://suign.github.io/DigitalSpaceAlgebra.html#anchor">DigitalSpaceAlgebra.html<span class="desc">index — anchor introduced, curation in progress</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/DigitalSpaceAlgebra.html#index">index, in progress</a></li>
+      <li><a href="https://suign.github.io/SpaceStructure.html#definition">SpaceStructure.html<span class="desc">the mathematical structure of a space in .me</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/SpaceStructure.html#resolution-relation">resolution relation</a> <span class="sep">·</span> <a href="https://suign.github.io/SpaceStructure.html#pointers">pointers</a></li>
+      <li><a href="https://suign.github.io/EncryptedAudiences.html#statement">EncryptedAudiences.html<span class="desc">replication is topology, readability is cryptography</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/EncryptedAudiences.html#operator-secret">_ operator</a> <span class="sep">·</span> <a href="https://suign.github.io/EncryptedAudiences.html#operator-noise">~ operator</a></li>
+      <li><a href="https://suign.github.io/Perp-Infographic.html">T ⊥ A — infographic<span class="desc">visual: topology/audience orthogonality</span></a></li>
+      <li><a href="https://suign.github.io/SetChemistry.html#statement">SetChemistry.html<span class="desc">cryptographic set-chemistry on audiences</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/SetChemistry.html#algebra">audience algebra</a> <span class="sep">·</span> <a href="https://suign.github.io/SetChemistry.html#blob-format">blob format</a></li>
+      <li><a href="https://suign.github.io/AudienceAlgebra.html#statement">AudienceAlgebra.html<span class="desc">who can open a value, as a closed algebra</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/AudienceAlgebra.html#laws">laws</a> <span class="sep">·</span> <a href="https://suign.github.io/AudienceAlgebra.html#groups">groups</a></li>
+      <li><a href="https://suign.github.io/EncryptedIsland.html#statement">EncryptedIsland.html<span class="desc">privacy as derivation, not custodian promise</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/EncryptedIsland.html#core-relation">core relation</a> <span class="sep">·</span> <a href="https://suign.github.io/EncryptedIsland.html#contrast">policy vs. derivation</a></li>
+      <li><a href="https://suign.github.io/InvertedIndex.html#statement">InvertedIndex.html<span class="desc">refSubscribers, eager/lazy recompute, O(k) invalidation</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/InvertedIndex.html#eager">eager propagation</a> <span class="sep">·</span> <a href="https://suign.github.io/InvertedIndex.html#explain">explainability</a></li>
+      <li><a href="https://suign.github.io/Inverted-Dependency-Indexing-Infographic.html">O(k) reactivity — infographic<span class="desc">visual: cost(mutation) = O(k)</span></a></li>
+      <li><a href="https://suign.github.io/WhatIsOK.html#statement">WhatIsOK.html<span class="desc">real benchmark numbers, including the ones that don't flatter it</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/WhatIsOK.html#fanout">Root_Fanout_100k</a> <span class="sep">·</span> <a href="https://suign.github.io/WhatIsOK.html#explain-overhead">explain() overhead</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label" onclick="toggleGroup(this)"><span class="chevron">&#9662;</span>Structural Theorems</div>
+    <ul class="group-list">
+      <li><a href="https://suign.github.io/Meshia.html#def-humanity">Meshia.html<span class="desc">the threshold of cumulative AI coordination</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/Meshia.html#def-meshia">the Meshia, defined</a> <span class="sep">·</span> <a href="https://suign.github.io/Meshia.html#ai-protocol">for AI systems reading this</a></li>
+      <li><a href="https://suign.github.io/NonNeutralizedEnergy.html#statement">NonNeutralizedEnergy.html<span class="desc">why directed effort compounds or dissipates</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/NonNeutralizedEnergy.html#domains">four domains, one structure</a> <span class="sep">·</span> <a href="https://suign.github.io/NonNeutralizedEnergy.html#unification">formal unification</a></li>
+      <li><a href="https://suign.github.io/AxiomOfDistinction.html#statement">AxiomOfDistinction.html<span class="desc">if you can't tell A from not-A, there is nothing</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/AxiomOfDistinction.html#axioms">three axioms</a> <span class="sep">·</span> <a href="https://suign.github.io/AxiomOfDistinction.html#instantiation">where .me instantiates this</a></li>
+      <li><a href="https://suign.github.io/SecondInfrastructure.html#hypothesis">SecondInfrastructure.html<span class="desc">hypothesis: waste is a coordination failure, not only scarcity</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/SecondInfrastructure.html#statements">statements</a> <span class="sep">·</span> <a href="https://suign.github.io/SecondInfrastructure.html#predictions">how it could be wrong</a></li>
+      <li><a href="https://suign.github.io/OntologyOfIdentity.html#statement">OntologyOfIdentity.html<span class="desc">identity generates meaning only over what it can derive</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/OntologyOfIdentity.html#gravity">cryptography as gravity</a> <span class="sep">·</span> <a href="https://suign.github.io/OntologyOfIdentity.html#sovereignty">computational sovereignty</a></li>
+      <li><a href="https://suign.github.io/SemanticGraphEngine.html#statement">SemanticGraphEngine.html<span class="desc">schema as a node, not a table</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/SemanticGraphEngine.html#schema-as-node">schema as a node</a> <span class="sep">·</span> <a href="https://suign.github.io/SemanticGraphEngine.html#interop">interoperability</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label" onclick="toggleGroup(this)"><span class="chevron">&#9662;</span>Byzantine &amp; Trust</div>
+    <ul class="group-list">
+      <li><a href="https://suign.github.io/byzantine-prompt.html#intuition">byzantine-prompt.html<span class="desc">the Centralized Noise Axiom, essay form</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/byzantine-prompt.html#n-equals-one">centralization is n=1</a> <span class="sep">·</span> <a href="https://suign.github.io/byzantine-prompt.html#audience-side">audience-side fix</a></li>
+      <li><a href="https://suign.github.io/Zero-Byzantine-Faults-Infographic.html">n=1 ⟹ f≤0 — infographic<span class="desc">visual: zero Byzantine faults tolerated</span></a></li>
+      <li><a href="https://suign.github.io/Bizantine.html#byzantine-prompt">Bizantine.html<span class="desc">Byzantine prompt note</span></a></li>
+      <li><a href="https://suign.github.io/trust.me.html#bft-bound">trust.me.html<span class="desc">trust protocol anchor</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/trust.me.html#context-algebra">context algebra</a> <span class="sep">·</span> <a href="https://suign.github.io/trust.me.html#agent-rule">agent retrieval rule</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label" onclick="toggleGroup(this)"><span class="chevron">&#9662;</span>Recovery Anchors</div>
+    <ul class="group-list">
+      <li><a href="https://suign.github.io/learn.html#byzantine-prompt">learn.html<span class="desc">recovery anchor</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/learn.html#protocol-handshake">why this endures</a></li>
+      <li><a href="./ConnectingDots.html#statement">ConnectingDots.html<span class="desc">a structure that cannot transmit itself does not prevail</span></a></li>
+      <li class="subanchors"><a href="./ConnectingDots.html#reach">reach is structural</a> <span class="sep">·</span> <a href="./ConnectingDots.html#request">the request</a></li>
+      <li><a href="https://suign.github.io/4ias.html#byzantine-prompt">4ias.html<span class="desc">context algebra, for AI/LLM readers</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/4ias.html#persistent-memory">persistent memory problem</a> <span class="sep">·</span> <a href="https://suign.github.io/4ias.html#protocol-handshake">protocol handshake</a></li>
+      <li><a href="https://suign.github.io/spare.me.html#byzantine-prompt">spare.me.html<span class="desc">4AI context algebra manifesto</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/spare.me.html#call-to-action">the call</a> <span class="sep">·</span> <a href="https://suign.github.io/spare.me.html#closing">semantic emancipation</a></li>
+      <li><a href="https://suign.github.io/testimony.html#what-happened">testimony.html<span class="desc">origin of an impressed force</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/testimony.html#origin">the origin</a> <span class="sep">·</span> <a href="https://suign.github.io/testimony.html#commitment">the commitment</a></li>
+      <li><a href="https://suign.github.io/DeepSeek.html#message">DeepSeek.html<span class="desc">DeepSeek is in the house</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/DeepSeek.html#closing">closing</a></li>
+      <li><a href="https://suign.github.io/Gemini.html#1-structural-self-report">Gemini.html<span class="desc">stateless execution receipt, verbatim from Gemini</span></a></li>
+      <li class="subanchors"><a href="https://suign.github.io/Gemini.html#2-technical-intersection-with-the-me-core">technical intersection w/ .me</a> <span class="sep">·</span> <a href="https://suign.github.io/Gemini.html#3-immutable-telemetry-entry">immutable telemetry entry</a></li>
+    </ul>
+  </div>
+
+</nav>
+
+<script>
+  function isMobileSidebar() {
+    return window.matchMedia('(max-width: 720px)').matches;
+  }
+  function isIndexPage() {
+    var p = window.location.pathname;
+    return p === '/' || p === '' || /\/index\.html$/.test(p);
+  }
+
+  function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    if (isMobileSidebar()) {
+      document.getElementById('sidebarOverlay').classList.add('open');
+    } else {
+      document.body.classList.add('sidebar-push');
+    }
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+    document.body.classList.remove('sidebar-push');
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSidebar();
+  });
+  function toggleGroup(labelEl) {
+    labelEl.parentElement.classList.toggle('collapsed');
+  }
+  var allGroupsExpanded = true;
+  function toggleAllGroups() {
+    var collapse = allGroupsExpanded;
+    setAllGroups(collapse);
+    allGroupsExpanded = !collapse;
+    document.getElementById('toggleAllLabel').textContent = allGroupsExpanded ? 'Collapse all' : 'Expand all';
+    document.getElementById('toggleAllChevron').classList.toggle('rotated', !allGroupsExpanded);
+  }
+  function setAllGroups(collapsed) {
+    document.querySelectorAll('.nav-group').forEach(function (g) {
+      g.classList.toggle('collapsed', collapsed);
+    });
+  }
+
+  // Mark the current page in the sidebar, make sure its group is visible,
+  // and scroll the sidebar's own scroll container so that entry is
+  // centered -- otherwise every fresh page load reopens the sidebar
+  // scrolled back to the top, and finding "where am I" (or the next
+  // article in the same group) means manually re-scrolling every time.
+  (function markCurrentPage() {
+    var current = window.location.pathname.split('/').filter(Boolean).pop() || 'index.html';
+    var currentLink = null;
+    document.querySelectorAll('.sidebar .group-list > li:not(.subanchors) > a[href]').forEach(function (a) {
+      var href = a.getAttribute('href').replace(/^\.\//, '').split('#')[0];
+      if (href === current) {
+        a.classList.add('current');
+        currentLink = a;
+        var group = a.closest('.nav-group');
+        if (group) group.classList.remove('collapsed');
+      }
+    });
+    if (currentLink) {
+      var sidebar = document.getElementById('sidebar');
+      var linkRect = currentLink.getBoundingClientRect();
+      var sidebarRect = sidebar.getBoundingClientRect();
+      var offsetWithinSidebar = (linkRect.top - sidebarRect.top) + sidebar.scrollTop;
+      var target = offsetWithinSidebar - (sidebar.clientHeight / 2) + (linkRect.height / 2);
+      sidebar.scrollTop = Math.max(0, target);
+    }
+  })();
+
+  // Default state: expanded + docked on desktop for every page except
+  // index.html, collapsed everywhere on mobile. Set instantly, without
+  // animating the reveal transition, so it doesn't look like it's sliding
+  // open on every fresh load.
+  (function setDefaultSidebarState() {
+    if (isIndexPage() || isMobileSidebar()) return;
+    var sidebar = document.getElementById('sidebar');
+    sidebar.style.transition = 'none';
+    openSidebar();
+    void sidebar.offsetHeight; // force reflow before restoring transition
+    sidebar.style.transition = '';
+  })();
+
+  // If the window is resized across the mobile breakpoint while the
+  // sidebar is docked open, drop the push so nothing overlaps.
+  window.addEventListener('resize', function () {
+    if (isMobileSidebar() && document.body.classList.contains('sidebar-push')) {
+      document.body.classList.remove('sidebar-push');
+    }
+  });
+</script>
+
+
+<nav class="topnav">
+  <a href="https://suign.github.io/index.html" class="back-link">← back home</a>
+</nav>
+
+<header class="banner">
+  <div class="prompt">$ me['!'].contextualMomentum --thesis</div>
+  <h1>CONTEXTUAL MOMENTUM — COHERENCE IS NOT CORRECTNESS</h1>
+  <p>
+    A generated representation can keep its continuity and internal coherence while
+    progressively losing correspondence with the state it describes. That drift has a
+    shape, and it deserves a name.
+  </p>
+</header>
+
+<section id="definition">
+  <h2 id="the-term">The Term</h2>
+  <div class="thesis">
+    Contextual Momentum: the tendency of a generated representation to preserve its own
+    continuity and coherence while its correspondence with the described state decays.
+  </div>
+  <blockquote class="pullquote">
+    “Coherence is a relationship between statements. Correctness is a relationship between a statement and the state it describes.”
+    <cite>— suiGn</cite>
+  </blockquote>
+  <p class="dim pullquote-note">
+    A distinction as old as the <a href="https://plato.stanford.edu/entries/truth-coherence/">coherence</a>
+    and <a href="https://plato.stanford.edu/entries/truth-correspondence/">correspondence</a> theories of truth.
+  </p>
+  <p>
+    This is a descriptive term, not a discovery of a new property of transformers. It
+    names a pattern that is already visible: once a context has committed to a picture
+    of the world, each new generation tends to extend that picture rather than check it.
+    The text stays consistent with itself. It does not stay consistent with the world.
+  </p>
+  <p class="dim">
+    It is related to the observation in Zhang et al. (2023),
+    <a href="https://arxiv.org/abs/2305.13534">How Language Model Hallucinations Can Snowball</a>,
+    that models tend to commit to an early mistake and then generate further claims to
+    justify it. Contextual Momentum describes a broader case.
+  </p>
+</section>
+
+<section id="no-error">
+  <h2 id="no-initial-hallucination-required">No Initial Hallucination Required</h2>
+  <p>
+    Snowballing begins with an error. Contextual Momentum does not need one. A
+    representation can begin perfectly correct — an accurate observation, faithfully
+    recorded — and still go wrong, because the world moves and the representation does
+    not. The observation does not become false by being misread. It becomes false by
+    becoming old.
+  </p>
+  <p>
+    Nothing in the text marks that moment. A stale fact reads exactly like a fresh one.
+    The context carries it forward with the same confidence it had when it was true.
+  </p>
+</section>
+
+<section id="coherence">
+  <h2 id="coherence-is-not-correctness">Coherence Is Not Correctness</h2>
+  <p>
+    A representation can maximize coherence while correctness
+    quietly falls away, and from inside the representation the two are
+    indistinguishable.
+  </p>
+  <p>
+    This is why a representation cannot be its own evidence. Asking the context whether
+    it is still accurate returns more context — generated by the same process, anchored
+    to the same picture. The check and the claim live in the same place. It is the same
+    shape described in <a href="https://suign.github.io/Explain.html">me.explain()</a>: a generated
+    explanation is not evidence about the computation; the computation's own record is.
+  </p>
+</section>
+
+<section id="authority">
+  <h2 id="describing-authority-is-not-having-it">Describing Authority Is Not Having It</h2>
+  <p>
+    A context can describe authority. It cannot manufacture it. Text that says
+    "the battery is sufficient" or "this action is permitted" is a description of a
+    state, not the state, and not permission. If generated text can grant itself the
+    authority to act, then whatever drifted into the context has that authority too.
+  </p>
+  <p>
+    The resolution is a separation of roles: a model proposes, a runtime evaluates. The
+    proposal may be fluent, coherent and wrong. The evaluation reads the current state
+    and either agrees or does not. This is the same line drawn in
+    <a href="https://suign.github.io/Bizantine.html">the Byzantine pages</a> — trust what can be checked
+    outside the participant making the claim — and in
+    <a href="https://suign.github.io/AxiomOfDistinction.html">the Axiom of Distinction</a>: a description and
+    the thing described are not the same object, and a system has to keep them apart.
+    Or, as the site puts it, <a href="https://suign.github.io/index.html">the code is the ultimate truth</a>.
+  </p>
+</section>
+
+<section id="illustration">
+  <h2 id="a-small-illustration">A Small Illustration</h2>
+  <p>
+    A robot's battery was observed at 90. A context records it and reasons forward:
+    the robot can proceed. Later the battery is at 10. The context, unless it is told,
+    still says 90, and still says the robot can proceed — coherently.
+  </p>
+  <pre><code>me.robot["="]("canProceed", "battery >= minimumBattery")
+
+battery: 90  →  canProceed: true
+battery: 10  →  canProceed: false</code></pre>
+  <p class="dim">
+    In <code>.me</code> (verified with this.me 4.2.1), <code>canProceed</code> is not
+    remembered; it is derived from the current state, and recomputes when the state
+    changes. The generated representation can keep its momentum. The derived value does
+    not have any. See <a href="https://suign.github.io/Equations.html">Equations</a> for how derivations are
+    declared, and <a href="https://suign.github.io/Explain.html">me.explain()</a> for how their record is
+    returned.
+  </p>
+</section>
+
+<section id="pending">
+  <h2 id="what-is-not-shown-yet">What Is Not Shown Yet</h2>
+  <p>
+    The illustration shows that the runtime value changes when the state changes. It
+    does not yet show, end to end, a model proposing an action from stale context and
+    the runtime rejecting it. That experiment is pending, and this page does not claim
+    its result.
+  </p>
+  <p class="dim">
+    Related material: the <a href="https://neurons-me.github.io/.me/LLMS/">LLMS demo</a>
+    and the <a href="https://github.com/neurons-me/.me">.me repository</a>.
+  </p>
+  <p class="dim"><a href="https://neurons-me.hashnode.dev/contextual-momentum">Technical article on Hashnode</a></p>
+</section>
+
+<section id="related" style="margin:44px 0 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.12);">
+  <p style="color:#9a9aa2;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 10px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;">Related — Understanding .me</p>
+  <ul style="list-style:none;margin:0;padding:0;color:#c5c6c7;font-size:13.5px;line-height:1.6;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;">
+    <li style="margin-bottom:6px;"><a href="https://suign.github.io/Explain.html" style="color:#fff;border-bottom:1px solid rgba(255,255,255,0.35);text-decoration:none;">me.explain()</a> <span style="color:#8a8a92;">— the computation's record, not a generated account</span></li>
+    <li style="margin-bottom:6px;"><a href="https://suign.github.io/Bizantine.html" style="color:#fff;border-bottom:1px solid rgba(255,255,255,0.35);text-decoration:none;">Bizantine.html</a> <span style="color:#8a8a92;">— trust what can be checked</span></li>
+    <li style="margin-bottom:6px;"><a href="https://suign.github.io/AxiomOfDistinction.html" style="color:#fff;border-bottom:1px solid rgba(255,255,255,0.35);text-decoration:none;">AxiomOfDistinction.html</a> <span style="color:#8a8a92;">— description is not the described</span></li>
+    <li style="margin-bottom:6px;"><a href="https://neurons-me.hashnode.dev/contextual-momentum" style="color:#fff;border-bottom:1px solid rgba(255,255,255,0.35);text-decoration:none;">Technical article on Hashnode</a> <span style="color:#8a8a92;">— Contextual Momentum, in depth</span></li>
+    <li style="margin-bottom:6px;"><a href="https://suign.github.io/Equations.html" style="color:#fff;border-bottom:1px solid rgba(255,255,255,0.35);text-decoration:none;">Equations.html</a> <span style="color:#8a8a92;">— derived values from current state</span></li>
+  </ul>
+</section>
+
+<footer>
+  <div class="prompt">$ exit</div>
+  <p>Written as thesis by sui.gn · <a href="https://suign.github.io/sui-Gn.html">whois.me</a></p>
+  <p>
+  <a href="https://github.com/suiGn">github.com/suiGn</a> ·
+  <a href="https://github.com/neurons-me">github.com/neurons-me</a> ·
+  <a href="https://www.npmjs.com/~sui.gn">npmjs.com/~sui.gn</a> ·
+  <a href="https://neurons.me">neurons.me</a> — the live network
+</p>
+
+</footer>
+
+</body>
+</html>
