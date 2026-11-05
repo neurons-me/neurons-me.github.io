@@ -157,8 +157,8 @@
     "url": "https://neurons-me.github.io/netget/",
     "repo": "netget",
     "icon": {
-      "light": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png",
-      "dark": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png"
+      "light": "/assets/netget-mark.svg",
+      "dark": "/assets/netget-mark.svg"
     },
     "kind": "root"
   },

@@ -3,6 +3,7 @@
 // Link, Chip, SearchBar). Two small page-local types fill gaps the registry doesn't cover:
 //   ThemedImg     — picks a light/dark image from GUI.useThemeContext().mode (no GUI image atom has that)
 //   AudienceMark  — the two-circle SVG icon used on two Essays cards
+//   NetgetMark    — netget wordmark SVG (currentColor) for the Stack card; follows light/dark/theme
 (function () {
   // CDN failure → show the static fallback kept in <noscript id="static-index">.
   if (!window.GUI || !window.React || !window.ReactDOM || typeof window.GUI.mount !== "function") {
@@ -28,6 +29,26 @@
     return h("svg", { width, height, viewBox: "0 0 40 32", "aria-hidden": "true" },
       h("circle", { cx: 15, cy: 16, r: 13, fill: "#83d6ec", fillOpacity: 0.82 }),
       h("circle", { cx: 25, cy: 16, r: 13, fill: "#f19b9b", fillOpacity: 0.82 }));
+  }
+  // Stack card mark for netget: same geometry as /assets/netget-mark.svg (fill=currentColor so it
+  // tracks text.primary across light/dark and GuiThemes). No icon tile — the SVG itself is the media.
+  function NetgetMark({ sx }) {
+    return h(G.Box, {
+      component: "svg",
+      viewBox: "32 56 629 236",
+      role: "img",
+      "aria-hidden": "true",
+      preserveAspectRatio: "xMidYMid meet",
+      sx: { width: "100%", height: "auto", display: "block", color: "text.primary", fill: "currentColor",
+        aspectRatio: "629 / 236", flexShrink: 0, ...(sx || {}) },
+    },
+      h("path", { d: "M0,0 L618,0 L619,2 L619,237 L-11,237 L-11,1 Z M2,14 L2,223 L606,223 L605,14 Z ", transform: "translate(43,56)", fillRule: "evenodd" }),
+      h("path", { d: "M0,0 L26,0 L26,27 L39,27 L39,52 L52,52 L53,55 L53,77 L63,76 L63,0 L88,0 L88,155 L64,155 L63,130 L52,129 L52,105 L38,105 L38,77 L26,77 L26,155 L0,155 Z ", transform: "translate(70,97)" }),
+      h("path", { d: "M0,0 L72,0 L72,26 L25,27 L25,63 L61,64 L61,90 L51,91 L25,92 L24,128 L72,128 L72,155 L0,155 Z ", transform: "translate(174,97)" }),
+      h("path", { d: "M0,0 L1,0 L2,15 L1,27 L-21,28 L-22,156 L-46,156 L-46,27 L-71,27 L-71,1 Z ", transform: "translate(333,96)" }),
+      h("path", { d: "M0,0 L59,0 L59,14 L70,14 L70,44 L47,44 L47,26 L11,26 L11,59 L12,128 L48,129 L47,91 L31,91 L29,90 L29,65 L70,64 L70,140 L59,140 L59,154 L58,155 L1,155 L0,152 L1,140 L-15,140 L-14,14 L0,13 Z ", transform: "translate(362,97)" }),
+      h("path", { d: "M0,0 L74,0 L74,26 L24,26 L24,64 L62,64 L62,90 L57,91 L25,91 L24,128 L74,128 L74,155 L0,155 Z ", transform: "translate(447,97)" }),
+      h("path", { d: "M0,0 L86,0 L86,26 L56,26 L56,154 L55,155 L31,155 L30,27 L0,26 Z ", transform: "translate(538,97)" }));
   }
   // HeaderControls: GUISettings' light/dark toggle + a gear menu with the theme list, Inspector ON/OFF and Grid Layout ON/OFF,
   // rendered as a small row in the landing header instead of an app bar.
@@ -178,7 +199,7 @@
       h(G.Box, { sx: { flexShrink: 0, transform: "scale(.5)", [MOBILE]: { transform: "scale(.37)" } } },
         h(G.QRme, { value, diameter: 112, variant: "md", hoverFlip: false, clickFlip: false, defaultFace: "qr", showAvatarLabel: false })));
   }
-  const PAGE_TYPES = { ThemedImg, AudienceMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme };
+  const PAGE_TYPES = { ThemedImg, AudienceMark, NetgetMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme };
 
   // ── content (from docs/index.html @ 6bee309) ──
   const STACK = [
@@ -186,7 +207,7 @@
     ["cleaker", "Who am I, here.", "https://neurons-me.github.io/Cleaker/", { qr: "https://cleaker.me", light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
     ["monad", "Federated runtime surfaces.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
     [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
-    ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { light: CL + "v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png", dark: CL + "v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" }],
+    ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { netget: true }],
     ["mlearning.studio", "Datasets, GTFS and BigDaMa: machine learning on .me.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
     [".wallet", "Manage multiple blockchains with .me. npm: this.wallet.", "https://neurons-me.github.io/.wallet/", { light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
     ["Explore All.This", "Across the neurons.me ecosystem.", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
@@ -272,8 +293,20 @@
       N("Box", { sx: { position: "absolute", top: 14, right: 14, display: "flex", gap: 0.75 } },
         chips.map(([t, u]) => N("Chip", { label: t, component: "a", href: u, clickable: true, size: "small", color: "primary", variant: "outlined", sx: { fontWeight: 700, fontSize: "0.68rem", height: 22 } })))]);
   };
-  const stackCard = ([title, desc, href, img, allThis]) =>
-    N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2.5, py: 2.25,
+  const stackCard = ([title, desc, href, img, allThis]) => {
+    // netget: the SVG already spells NETGET — skip the title text and the icon tile; mark fills the media area.
+    if (img && img.netget) {
+      return N("Card", { component: "a", href, title: "netget", "aria-label": "netget — " + desc, variant: "outlined",
+        sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1.25, px: 2.5, py: 2.25, justifyContent: "center",
+          [MOBILE]: { alignItems: "stretch", textAlign: "left", gap: 0.75, px: 1.25, py: 1.5 } } }, [
+        N("Box", { sx: { width: "100%", px: 0.5, py: 0.75, display: "flex", alignItems: "center", justifyContent: "center",
+            [MOBILE]: { px: 0.25, py: 0.5 } } }, [
+          N("NetgetMark"),
+        ]),
+        N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
+      ]);
+    }
+    return N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2.5, py: 2.25,
         ...(allThis ? { borderColor: "text.disabled", background: "linear-gradient(180deg, rgba(127,127,127,0.02), rgba(127,127,127,0.06))" } : {}),
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5 } } }, [
       N("Box", { sx: { width: 68, height: 68, borderRadius: "14px", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
@@ -286,6 +319,7 @@
       N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, [MOBILE]: { fontSize: "0.8rem", overflowWrap: "anywhere" } } }, [title]),
       N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
     ]);
+  };
   const demoCard = ([title, href, img]) =>
     N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "row", alignItems: "stretch", minHeight: 140, overflow: "hidden", p: 0 } }, [
       // 2:3 like the portrait GIFs: the card is as tall as its image (~210px at 1280), as on the static page.

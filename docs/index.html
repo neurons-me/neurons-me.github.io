@@ -81,11 +81,12 @@
       border-color: #0f1720;
     }
     .card-icon { width: 56px; height: 56px; border-radius: 12px; background: rgba(15,106,120,0.09); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; overflow: hidden; }
-    .card-icon img { width: 44px; height: 44px; object-fit: contain; }
+    .card-icon img, .card-icon > svg { width: 44px; height: 44px; object-fit: contain; }
     .grid-stack .card-icon { width: 68px; height: 68px; border-radius: 14px; }
-    .grid-stack .card-icon img { width: 56px; height: 56px; }
+    .grid-stack .card-icon img, .grid-stack .card-icon > svg { width: 56px; height: 56px; }
+    .grid-stack .card-mark { width: 100%; height: auto; display: block; aspect-ratio: 629 / 236; padding: 6px 4px; color: inherit; fill: currentColor; }
     .grid-resources .card-icon { width: 50px; height: 50px; border-radius: 10px; }
-    .grid-resources .card-icon img { width: 38px; height: 38px; }
+    .grid-resources .card-icon img, .grid-resources .card-icon > svg { width: 38px; height: 38px; }
 
     .grid-resources {
       grid-template-columns: repeat(3, 1fr);
@@ -189,7 +190,8 @@
       .grid.grid-stack { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 10px; }
       .grid-stack .card { align-items: center; justify-content: flex-start; text-align: center; gap: 6px; padding: 12px 6px 10px; min-width: 0; }
       .grid-stack .card-icon { width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0; }
-      .grid-stack .card-icon img { width: 38px; height: 38px; }
+      .grid-stack .card-icon img, .grid-stack .card-icon > svg { width: 38px; height: 38px; }
+      .grid-stack .card-mark { padding: 4px 2px; }
       .grid-stack .card-title { font-size: 0.8rem; line-height: 1.2; overflow-wrap: anywhere; }
       .grid-stack .card-desc { display: none; }
     }
@@ -295,14 +297,16 @@
         <div class="card-desc">Generative User Interface.</div>
       </a>
 
-      <a class="card" href="https://neurons-me.github.io/netget/">
-        <div class="card-icon">
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778177581/ChatGPT_Image_May_7_2026_12_12_28_PM_xzkwtc.png" />
-            <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778254832/me.docs.axioms__1_-removebg-preview_xvdqof.png" alt="netget" />
-          </picture>
-        </div>
-        <div class="card-title">netget</div>
+      <a class="card" href="https://neurons-me.github.io/netget/" title="netget" aria-label="netget — A Gateway To the Web. Routes http:https Requests.">
+        <svg class="card-mark" xmlns="http://www.w3.org/2000/svg" viewBox="32 56 629 236" fill="currentColor" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+          <path d="M0,0 L618,0 L619,2 L619,237 L-11,237 L-11,1 Z M2,14 L2,223 L606,223 L605,14 Z " transform="translate(43,56)" fill-rule="evenodd"/>
+          <path d="M0,0 L26,0 L26,27 L39,27 L39,52 L52,52 L53,55 L53,77 L63,76 L63,0 L88,0 L88,155 L64,155 L63,130 L52,129 L52,105 L38,105 L38,77 L26,77 L26,155 L0,155 Z " transform="translate(70,97)"/>
+          <path d="M0,0 L72,0 L72,26 L25,27 L25,63 L61,64 L61,90 L51,91 L25,92 L24,128 L72,128 L72,155 L0,155 Z " transform="translate(174,97)"/>
+          <path d="M0,0 L1,0 L2,15 L1,27 L-21,28 L-22,156 L-46,156 L-46,27 L-71,27 L-71,1 Z " transform="translate(333,96)"/>
+          <path d="M0,0 L59,0 L59,14 L70,14 L70,44 L47,44 L47,26 L11,26 L11,59 L12,128 L48,129 L47,91 L31,91 L29,90 L29,65 L70,64 L70,140 L59,140 L59,154 L58,155 L1,155 L0,152 L1,140 L-15,140 L-14,14 L0,13 Z " transform="translate(362,97)"/>
+          <path d="M0,0 L74,0 L74,26 L24,26 L24,64 L62,64 L62,90 L57,91 L25,91 L24,128 L74,128 L74,155 L0,155 Z " transform="translate(447,97)"/>
+          <path d="M0,0 L86,0 L86,26 L56,26 L56,154 L55,155 L31,155 L30,27 L0,26 Z " transform="translate(538,97)"/>
+        </svg>
         <div class="card-desc">A Gateway To the Web. Routes http:https Requests.</div>
       </a>
 
