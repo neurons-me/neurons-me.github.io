@@ -3,7 +3,7 @@
 // Link, Chip, SearchBar). Two small page-local types fill gaps the registry doesn't cover:
 //   ThemedImg     — picks a light/dark image from GUI.useThemeContext().mode (no GUI image atom has that)
 //   AudienceMark  — the two-circle SVG icon used on two Essays cards
-//   NetgetMark    — netget wordmark SVG (currentColor) for the Stack card; follows light/dark/theme
+//   NetgetMark    — netget wordmark (PNG mask + currentColor) for the Stack card; follows theme
 (function () {
   // CDN failure → show the static fallback kept in <noscript id="static-index">.
   if (!window.GUI || !window.React || !window.ReactDOM || typeof window.GUI.mount !== "function") {
@@ -30,25 +30,26 @@
       h("circle", { cx: 15, cy: 16, r: 13, fill: "#83d6ec", fillOpacity: 0.82 }),
       h("circle", { cx: 25, cy: 16, r: 13, fill: "#f19b9b", fillOpacity: 0.82 }));
   }
-  // Stack card mark for netget: same geometry as /assets/netget-mark.svg (fill=currentColor so it
-  // tracks text.primary across light/dark and GuiThemes). No icon tile — the SVG itself is the media.
+  // Stack card mark for netget: original wordmark PNG used as a CSS mask so the letterforms
+  // stay exact and background-color: currentColor tracks text.primary across themes.
+  // No icon tile — the mark itself is the media.
   function NetgetMark({ sx }) {
+    const mask = "url(./assets/netget-mark.png)";
     return h(G.Box, {
-      component: "svg",
-      viewBox: "32 56 629 236",
       role: "img",
       "aria-hidden": "true",
-      preserveAspectRatio: "xMidYMid meet",
-      sx: { width: "100%", height: "auto", display: "block", color: "text.primary", fill: "currentColor",
-        aspectRatio: "629 / 236", flexShrink: 0, ...(sx || {}) },
-    },
-      h("path", { d: "M0,0 L618,0 L619,2 L619,237 L-11,237 L-11,1 Z M2,14 L2,223 L606,223 L605,14 Z ", transform: "translate(43,56)", fillRule: "evenodd" }),
-      h("path", { d: "M0,0 L26,0 L26,27 L39,27 L39,52 L52,52 L53,55 L53,77 L63,76 L63,0 L88,0 L88,155 L64,155 L63,130 L52,129 L52,105 L38,105 L38,77 L26,77 L26,155 L0,155 Z ", transform: "translate(70,97)" }),
-      h("path", { d: "M0,0 L72,0 L72,26 L25,27 L25,63 L61,64 L61,90 L51,91 L25,92 L24,128 L72,128 L72,155 L0,155 Z ", transform: "translate(174,97)" }),
-      h("path", { d: "M0,0 L1,0 L2,15 L1,27 L-21,28 L-22,156 L-46,156 L-46,27 L-71,27 L-71,1 Z ", transform: "translate(333,96)" }),
-      h("path", { d: "M0,0 L59,0 L59,14 L70,14 L70,44 L47,44 L47,26 L11,26 L11,59 L12,128 L48,129 L47,91 L31,91 L29,90 L29,65 L70,64 L70,140 L59,140 L59,154 L58,155 L1,155 L0,152 L1,140 L-15,140 L-14,14 L0,13 Z ", transform: "translate(362,97)" }),
-      h("path", { d: "M0,0 L74,0 L74,26 L24,26 L24,64 L62,64 L62,90 L57,91 L25,91 L24,128 L74,128 L74,155 L0,155 Z ", transform: "translate(447,97)" }),
-      h("path", { d: "M0,0 L86,0 L86,26 L56,26 L56,154 L55,155 L31,155 L30,27 L0,26 Z ", transform: "translate(538,97)" }));
+      sx: {
+        width: "100%", height: "auto", display: "block", flexShrink: 0,
+        aspectRatio: "631 / 237",
+        color: "text.primary",
+        bgcolor: "currentColor",
+        WebkitMaskImage: mask, WebkitMaskSize: "contain",
+        WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center",
+        maskImage: mask, maskSize: "contain",
+        maskRepeat: "no-repeat", maskPosition: "center",
+        ...(sx || {}),
+      },
+    });
   }
   // HeaderControls: GUISettings' light/dark toggle + a gear menu with the theme list, Inspector ON/OFF and Grid Layout ON/OFF,
   // rendered as a small row in the landing header instead of an app bar.

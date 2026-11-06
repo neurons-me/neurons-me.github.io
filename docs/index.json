@@ -157,8 +157,8 @@
     "url": "https://neurons-me.github.io/netget/",
     "repo": "netget",
     "icon": {
-      "light": "/assets/netget-mark.svg",
-      "dark": "/assets/netget-mark.svg"
+      "light": "/assets/netget-mark.png",
+      "dark": "/assets/netget-mark-on-dark.png"
     },
     "kind": "root"
   },
