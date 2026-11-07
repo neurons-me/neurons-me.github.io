@@ -100,6 +100,14 @@ cleaker(identity);  // no namespace given → defaults to cleaker.me</code></pre
     </table>
     <p>The second case is the normal one, not the exception — a namespace is not the URL bar. It is whatever the identity resolves to, wherever you're standing when you ask.</p>
 
+    <h2>What you see in each</h2>
+    <table>
+      <tr><td>Natively</td><td>you open <code>cleaker.me</code> at <code>cleaker.me</code>: the namespace's own interface, its QR in the center, ready to connect. Its links are routes — you browse the namespace itself, and each route opens in the content area.</td></tr>
+      <tr><td>From outside, a site with .GUI</td><td>the app draws its own bars; the namespace's links appear in them, after the app's. Choosing one opens it over the app, in the content area's place.</td></tr>
+      <tr><td>From outside, a site without .GUI</td><td>any page: Cleaker brings the bars and lays them over the page. The namespace's links open the same way, over the page, in the content area's place.</td></tr>
+    </table>
+    <p>From outside, the namespace never takes the page over: it opens on top of whatever route of that domain you are on, and closing it leaves the page exactly as it was. Only where the page <em>is</em> the namespace does its content area belong to it.</p>
+
     <footer>
       <table class="related">
         <tr><td><a href="https://neurons-me.github.io/Cleaker/typedocs/NRP-Namespaces">Cleaker — Namespace Grammar for NRP</a></td><td>The full namespace grammar behind <code>cleaker(me)</code>.</td></tr>
