@@ -39,32 +39,35 @@
   <script src="https://cdn.jsdelivr.net/npm/this.gui@4.2.0/dist/this.gui.umd.js" integrity="sha384-tAyskhiyJweQ9xXPVOSEJ0OQDE+lFsqRJvGRb8LVoqLbdNxYmJEhW21+fxcAYG0d" crossorigin="anonymous"></script>
   <style>html, body { margin: 0; } #root { min-height: 100vh; }</style>
   <style>
-    /* netget in the All.This search grid: only its letters (netget-letters-on-*.svg, in index.json), so the tile's own border is
-       the frame -- the same as the netget card on phones. SearchBar draws a 1px border inline, hence !important. */
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] { border: 2px solid currentColor !important; }
-    /* 66px, but never more than 85% of the tile: the cap is on the image's box (a % of the tile), the image fills it */
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span:first-child { width: 66px; max-width: 85%; }
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] img { width: 100% !important; height: auto !important; }
-    /* the grid: square tiles (as tall as they are wide) and every icon larger -- images 48px, the live orbs (.me, monad)
-       scaled to the same, the glyphs (Namespaces, SEED, Axioms) at a matching size */
+    /* The All.This search grid, "compact": square tiles, 4px padding, 2px between icon and name, the name 8px on one line,
+       so the icon gets most of the tile: 89% of what fits (53px in an 82px tile), not all of it. SearchBar sets its metrics inline, hence !important.
+       To move into .GUI's SearchBar as a density option, with the per-item cases below as fields of index.json. */
     /* three equal columns that never grow past the box: plain 1fr widens to fit a long word (an old index.json still
        cached in a browser gives netget a text path instead of an image), and with square tiles that blew the grid up */
     .index-search [role="listbox"] { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
-    .index-search [role="listbox"] > a { aspect-ratio: 1 / 1; min-width: 0; overflow: hidden; }
-    .index-search [role="listbox"] > a:not([href$="/Cleaker/"], [href$="/netget/"], [href="https://neurons.me"]) > span:first-child img { width: 48px !important; height: 48px !important; }
-    /* neurons.me draws its icon on a white plate: the plate and its icon scaled together */
-    .index-search [role="listbox"] > a[href="https://neurons.me"] > span:first-child { transform: scale(1.5); margin: 8px 0; }
-    .index-search [role="listbox"] > a > div:first-child { transform: scale(1.5); margin: 8px 0; }
-    .index-search [role="listbox"] > a > span:first-child:not(:has(img)) { font-size: 34px !important; line-height: 1 !important; max-width: 100%; overflow: hidden; }
+    .index-search [role="listbox"] > a { aspect-ratio: 1 / 1; min-width: 0; overflow: hidden; padding: 4px !important; gap: 2px !important; }
+    .index-search [role="listbox"] > a > :first-child + span { font-size: 8px !important; -webkit-line-clamp: 1 !important; max-width: 100%; }
+    /* the icon: images 53px; the live orbs (.me, monad) and neurons.me's white plate are drawn at 32px, so scaled to 53;
+       the glyphs (Namespaces, SEED, Axioms) at a matching size */
+    .index-search [role="listbox"] > a:not([href$="/netget/"], [href="https://neurons.me"], :has(img[src*="all.this_"])) > span:first-child img { width: 53px !important; height: 53px !important; }
+    .index-search [role="listbox"] > a > div:first-child,
+    .index-search [role="listbox"] > a[href="https://neurons.me"] > span:first-child { transform: scale(1.65); margin: 10.5px 0; }
+    .index-search [role="listbox"] > a > span:first-child:not(:has(img)) { font-size: 39px !important; line-height: 1.15 !important; max-width: 100%; }
+    /* npm: the vector icon (index.json), its old 32px PNG pixelated when enlarged */
+    /* All.This (its picture is wider than tall): 89% of the tile's width, cropped to fit, so more of the Mona Lisa shows */
+    .index-search [role="listbox"] > a:has(img[src*="all.this_"]) > span:first-child { width: 89%; }
+    .index-search [role="listbox"] > a:has(img[src*="all.this_"]) > span:first-child img { width: 100% !important; height: 53px !important; object-fit: cover !important; border-radius: 6px; }
+    /* netget: only its letters (netget-letters-on-*.svg, in index.json), the tile's own border is the frame, as on the phone
+       card; 62px but never more than 85% of the tile (the cap on the image's box, the image fills it); no name under them
+       (kept for screen readers, the image has no alt) */
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] { border: 2px solid currentColor !important; }
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span:first-child { width: 62px; max-width: 85%; }
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] img { width: 100% !important; height: auto !important; }
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span + span { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    /* cleaker: its name lighter, as under the QR on the phone card */
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/Cleaker/"] > span + span { font-weight: 500 !important; opacity: .7; }
     /* the input keeps a 150px minimum (an input's default 20 characters), so in a narrow box it pushed the "/" badge out */
     .index-search input { min-width: 0; }
-    /* cleaker as on the phone card: the QR (QR.me, cleaker-qr-on-*.png in index.json) fills the tile and its name sits small
-       underneath; less padding, so the larger QR fits the square tile */
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/Cleaker/"] { padding: 4px !important; gap: 2px !important; }
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/Cleaker/"] img { width: 60px !important; height: 60px !important; }
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/Cleaker/"] > span + span { font-size: 8px !important; font-weight: 500 !important; opacity: .7; }
-    /* the letters already say netget: no label under them (kept for screen readers, the image has no alt) */
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span + span { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   </style>
 <!-- Consent + Meta Pixel (the pixel loads only after the visitor accepts): /assets/js/consent.js -->
 <script src="/assets/js/consent.js" defer></script>
@@ -214,7 +217,6 @@
     .source-row .section-label { margin: 0; }
     .source-icons { display: flex; align-items: center; gap: 4px; }
     .source-icons a { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; opacity: 0.85; transition: opacity 120ms ease, background 120ms ease; }
-    .source-row .docs-link { font-size: 0.825rem; font-weight: 600; text-decoration: none; }
     .source-icons a:hover, .source-icons a:focus-visible { opacity: 1; background: rgba(15,106,120,0.09); }
     .source-icons img { width: 20px; height: 20px; object-fit: contain; display: block; }
     .grid-resources.grid-network { grid-template-columns: 1fr; }
@@ -302,7 +304,7 @@
       </div>
     </div>
 
-    <p class="section-label"><a href="https://neurons-me.github.io/docs/" style="color:inherit;text-decoration:none">Stack Docs</a></p>
+    <p class="section-label"><a href="https://neurons-me.github.io/docs/" style="color:inherit;text-decoration:none">Docs</a></p>
     <div class="grid grid-stack">
 
       <a class="card" href="https://neurons-me.github.io/.me/">
@@ -393,7 +395,6 @@
           </picture>
         </a>
       </nav>
-      <a class="docs-link" href="https://neurons-me.github.io/docs/">All project docs →</a>
     </div>
 
     <p class="section-label">Demos</p>
@@ -650,6 +651,6 @@ me("people[age>=18].name")</div>
 
   </div>
   </noscript>
-  <script src="./assets/index-gui.js?v=gui448"></script>
+  <script src="./assets/index-gui.js?v=gui450"></script>
 </body>
 </html>

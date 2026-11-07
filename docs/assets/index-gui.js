@@ -19,6 +19,9 @@
   const GREY = CL + "v1760629056/neurons-grey_hxjcom.png";
   const SI = (slug, light, dark) => ({ light: `https://cdn.simpleicons.org/${slug}/${light}`, dark: `https://cdn.simpleicons.org/${slug}/${dark || "ffffff"}` });
   const MOBILE = "@media (max-width:480px)", TABLET = "@media (max-width:720px)", NARROW = "@media (max-width:360px)";
+  // Stack card icons, "55%": the icon tile grew 55% of the way from its old size to the card's whole inner width
+  // (desktop 84 -> 109 of 130px, phones 48 -> 73 of ~93px); the image, orb and QR inside keep their old proportion to it.
+  const ICON = { tile: 109, img: 91, small: { tile: 73, img: 58 } };
 
   // ── page-local registry types ──
   function ThemedImg({ light, dark, src, alt, sx }) {
@@ -121,11 +124,11 @@
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
     // Index-side tuning of the widget (selectors follow its DOM: orb > [aria-hidden] ring box > ring, dot):
-    //  · orb 70px (40px on phones) and a gentler float (-3px, ×1.04) so it never leaves its 84/48px slot;
+    //  · orb ICON.img (ICON.small.img + 3 on phones) and a gentler float (-3px, ×1.04) so it never leaves its ICON.tile slot;
     //  · the widget's "glow" (opacity 0.3–0.5 pulse + white halo) replaced by a faint halo pulse, full opacity;
     //  · the ring at 80% of the orb (closer to its edge, farther from the dot), the dot at 22% of the ring, soft shadows;
     //  · ring box and ring inherit the orb's animated border-radius, so the ring morphs with the outer circle.
-    const box = small ? 48 : 84, orb = small ? 40 : 70;
+    const box = small ? ICON.small.tile : ICON.tile, orb = small ? ICON.small.img + 3 : ICON.img;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -178,7 +181,7 @@
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
-    const box = small ? 48 : 84, k = (small ? 40 : 70) / 60;
+    const box = small ? ICON.small.tile : ICON.tile, k = (small ? ICON.small.img + 3 : ICON.img) / 60;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -197,12 +200,12 @@
   // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the
   // page's theme and light/dark. No flip here: the whole card is the link.
   function CleakerQRme({ value, title }) {
-    // drawn at 112px (its module grid needs the room) and scaled into the 76px icon box; on phones it is the card's media
+    // drawn at 112px (its module grid needs the room) and scaled into the 99px icon box (ICON.tile); on phones it is the card's media
     // (78px drawn, 64px on the narrowest), a real QR with its name small underneath, not an icon in a tile
-    return h(G.Box, { sx: { width: 76, height: 76, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0,
+    return h(G.Box, { sx: { width: 99, height: 99, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0,
         [MOBILE]: { width: 78, height: 78 }, [NARROW]: { width: 64, height: 64 } } },
       // QR.me draws its frame past `diameter` (about 128px drawn for 112): the phone scales are taken from what is drawn
-      h(G.Box, { sx: { flexShrink: 0, transform: "scale(.62)", [MOBILE]: { transform: "scale(.61)" }, [NARROW]: { transform: "scale(.5)" } } },
+      h(G.Box, { sx: { flexShrink: 0, transform: "scale(.81)", [MOBILE]: { transform: "scale(.61)" }, [NARROW]: { transform: "scale(.5)" } } },
         h(G.QRme, { value, diameter: 112, variant: "md", hoverFlip: false, clickFlip: false, defaultFace: "qr", showAvatarLabel: false })));
   }
   const PAGE_TYPES = { ThemedImg, AudienceMark, NetgetMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme };
@@ -315,19 +318,20 @@
         N("Typography", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
       ]);
     }
-    return N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2.5, py: 2.25,
+    return N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2.5, py: 1.5,
         ...(allThis ? { borderColor: "text.disabled", background: "linear-gradient(180deg, rgba(127,127,127,0.02), rgba(127,127,127,0.06))" } : {}),
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5, ...(img.qr ? { gap: 0.25, py: 1, justifyContent: "center" } : {}) } } }, [
       // the .me and monad orbs stand on their own, without the icon tile behind them
-      N("Box", { sx: { width: 84, height: 84, borderRadius: "16px", bgcolor: img.monad || img.bubble ? "transparent" : "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-          [MOBILE]: img.qr ? { width: "auto", height: "auto", bgcolor: "transparent" } : { width: 48, height: 48, borderRadius: "10px" } } }, [
+      N("Box", { sx: { width: ICON.tile, height: ICON.tile, borderRadius: "18px", bgcolor: img.monad || img.bubble ? "transparent" : "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          [MOBILE]: img.qr ? { width: "auto", height: "auto", bgcolor: "transparent" } : { width: ICON.small.tile, height: ICON.small.tile, borderRadius: "14px" } } }, [
         img.qr && G.QRme ? N("CleakerQRme", { value: img.qr, title })
-          : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 70, height: 70, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
-          : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 70, height: 70, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
-          : N("ThemedImg", { ...img, alt: title, sx: { width: 70, height: 70, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } }),
+          : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
+          : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
+          : N("ThemedImg", { ...img, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } }),
       ]),
-      // the title a little farther from the larger icon (14px instead of the card's 8px gap); phones keep the compact gap
-      N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, mt: 0.75,
+      // the title 10px under the larger icon (2px over the card's 8px gap); less padding than before, so the card grows less
+      // than the icon; phones keep the compact gap
+      N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, mt: 0.25,
           [MOBILE]: img.qr ? { mt: 0, fontSize: "0.65rem", fontWeight: 600, lineHeight: 1.1, letterSpacing: "0.02em", color: "text.secondary" } : { mt: 0, fontSize: "0.8rem", overflowWrap: "anywhere" } } }, [title]),
       N("Typography", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
     ]);
@@ -340,19 +344,10 @@
         N("Typography", { component: "span", sx: { fontWeight: 900, fontSize: "clamp(0.95rem, 1vw + 0.75rem, 1.2rem)", lineHeight: 1.15, overflowWrap: "normal", wordBreak: "keep-all", hyphens: "none" } }, [title]),
       ]),
     ]);
-  // Docs + Source Code: two wide pill cards side by side (stacked on mobile). The Source Code pill is not itself a link:
-  // its npm / GitHub / PyPI / crates.io icons are.
+  // Source Code: a wide pill card (the Docs pill beside it was removed). It is not itself a link: its npm / GitHub /
+  // PyPI / crates.io icons are.
   const pillSx = { ...cardSx, display: "flex", alignItems: "center", gap: 1.5, px: 2.25, py: 1.25, minHeight: 64, borderRadius: "999px" };
-  const pillIcon = (inner) => N("Box", { sx: { width: 40, height: 40, borderRadius: "50%", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" } }, [inner]);
-  const sourceRow = N("Box", { component: "section", "aria-label": "Docs and source code", sx: { mt: 5, display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 2, [MOBILE]: { gridTemplateColumns: "1fr", gap: 1.25 } } }, [
-    N("Card", { component: "a", href: "https://neurons-me.github.io/docs/", variant: "outlined", sx: pillSx }, [
-      pillIcon(N("ThemedImg", { light: "/assets/docs-icon-light.webp?v=2", dark: "/assets/docs-icon.webp?v=2", alt: "", sx: { width: 34, height: 34, objectFit: "contain", display: "block" } })),
-      N("Box", { sx: { minWidth: 0, flex: 1 } }, [
-        N("Typography", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.25 } }, ["Docs"]),
-        N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.35 } }, ["All project docs: .me, cleaker, monad, .GUI, netget."]),
-      ]),
-      N("Typography", { component: "span", color: "primary.main", sx: { fontWeight: 700, fontSize: "1.1rem", pr: 0.5 } }, ["→"]),
-    ]),
+  const sourceRow = N("Box", { component: "section", "aria-label": "Source code", sx: { mt: 5, display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 2, [MOBILE]: { gridTemplateColumns: "1fr", gap: 1.25 } } }, [
     N("Card", { variant: "outlined", sx: { ...pillSx, cursor: "default", "&:hover": {} } }, [
       N("Box", { sx: { minWidth: 0, flex: 1, pl: 0.5 } }, [
         N("Typography", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.25 } }, ["Source Code"]),
@@ -396,7 +391,7 @@
       N("Typography", { component: "p", color: "text.secondary", sx: { fontSize: "0.9rem", mt: 0.5 } }, ["Go Algorithmic."]),
     ]),
     N("Box", { className: "index-search", sx: (t) => ({ ml: "auto", width: 280, maxWidth: "40vw", order: 2, [MOBILE]: { order: 4, ml: 0, width: "100%", maxWidth: "100%" }, ...searchThemeSx(t) }) }, [
-      N("SearchBar", { src: "https://neurons-me.github.io/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true }),
+      N("SearchBar", { src: "/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true }),
     ]),
     N("Box", { sx: { order: 3, [MOBILE]: { ml: "auto" } } }, [N("HeaderControls", {})]),
   ]);
@@ -404,7 +399,7 @@
     header,
     ...(top || []),
     N("Box", { component: "section" }, [
-      N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", color: "inherit", sx: { display: "inline-block", mb: 1.75, color: "text.secondary" } }, [label("Stack Docs")]),
+      N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", color: "inherit", sx: { display: "inline-block", mb: 1.75, color: "text.secondary" } }, [label("Docs")]),
       grid(4, STACK.map(stackCard), { gridAutoRows: "1fr", [MOBILE]: { gridTemplateColumns: "repeat(3, 1fr)", gap: 1.25 } }),
     ]),
     sourceRow,
