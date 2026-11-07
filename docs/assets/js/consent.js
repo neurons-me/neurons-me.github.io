@@ -1,8 +1,9 @@
 /*
- * neurons.me -- consent, and the Meta Pixel and Google Tag Manager that depend on it.
+ * neurons.me -- consent, and the Meta Pixel that depends on it.
  *
- * Those tags are NOT loaded until the visitor accepts: before that (and always after a rejection) nothing is requested from
- * Meta or Google, no Meta or Google cookie is set, nothing is sent. The choice is kept in this browser only (localStorage),
+ * Google Tag Manager (GTM-MZD5357B) is included in the page HTML so Google can detect it, and loads with the page.
+ * The Meta pixel is NOT loaded until the visitor accepts: before that (and always after a rejection) nothing is requested from
+ * Meta, no Meta cookie is set, nothing is sent. The choice is kept in this browser only (localStorage),
  * is never sent anywhere, and can be changed at any time from the "Privacy · Cookies" link that stays on every page.
  *
  * One file, loaded by one line on every page (the Jekyll layouts include it, the hand-written pages carry that line):
@@ -17,12 +18,12 @@
   var PRIVACY = '/privacy.html#' + (es ? 'cookies-es' : 'cookies-we-use');
   var T = es ? {
     title: 'Cookies y privacidad',
-    text: 'Usamos cookies de terceros (incluido Meta y Google) para analítica y medición de anuncios. Solo se cargan si las aceptas.',
+    text: 'Usamos Google Tag Manager en este sitio. También usamos el píxel de Meta para analítica y medición de anuncios; solo se carga si lo aceptas.',
     accept: 'Aceptar', reject: 'Rechazar', more: 'Más información',
     link: 'Privacidad · Cookies', now: 'Ahora: ', on: 'aceptado', off: 'rechazado', none: 'sin decidir'
   } : {
     title: 'Cookies and privacy',
-    text: 'We use third-party cookies (including Meta and Google) for analytics and ad measurement. They only load if you accept.',
+    text: 'We use Google Tag Manager on this site. We also use the Meta pixel for analytics and ad measurement; it only loads if you accept.',
     accept: 'Accept', reject: 'Reject', more: 'Learn more',
     link: 'Privacy · Cookies', now: 'Now: ', on: 'accepted', off: 'rejected', none: 'undecided'
   };
@@ -52,6 +53,7 @@
 
   function loadGtag() {
     if (document.getElementById('gtm-loader')) return;
+    if (document.querySelector('script[src*="googletagmanager.com/gtm.js?id=' + GTM_ID + '"]')) return;
     window.dataLayer = window.dataLayer || [];
     if (typeof window.gtag !== 'function') {
       window.gtag = function () { window.dataLayer.push(arguments); };
@@ -126,7 +128,7 @@
     write(marketing);
     closeBanner();
     if (marketing) { loadMarketing(); }
-    else if (marketingWasActive(before)) { clearMetaCookies(); clearGoogleCookies(); location.reload(); }
+    else if ((before && before.marketing) || window.fbq) { clearMetaCookies(); location.reload(); }
   }
 
   function showBanner() {

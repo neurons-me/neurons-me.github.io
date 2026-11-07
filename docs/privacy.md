@@ -42,18 +42,15 @@ We run advertising on Meta and use the Meta pixel to measure it.
 * Your choice is stored only in your browser (`localStorage`, key `neurons-consent-v1`). It is never sent to us or to anyone.
 
 ## Google Tag Manager
-We use Google Tag Manager (container `GTM-MZD5357B`) so that, if you accept, Google can load the measurement tags configured in that container.
+We use Google Tag Manager (container `GTM-MZD5357B`). The tag is included in the page HTML and loads when you visit.
 
-* **Only if you accept.** Until you press *Accept*, Google Tag Manager is **not loaded**: nothing is requested from Google, no Google cookie is set by this
-  tag and nothing is sent. *Reject* has the same prominence as *Accept*. Ignoring the banner is the same as rejecting.
-* **If you accept**, your browser loads `https://www.googletagmanager.com/gtm.js?id=GTM-MZD5357B` and runs the tags configured in that container. Those tags
+* **On the page.** Your browser loads `https://www.googletagmanager.com/gtm.js?id=GTM-MZD5357B` and runs the tags configured in that container. Those tags
   may send Google the page address, referring page, your IP address and browser and device information, and may set first-party cookies on this site such as
   `_ga`, `_ga_*`, `_gid` and `_gcl_au`, depending on what the container contains.
-* **Purpose:** analytics and measuring how our ads perform. **Legal basis:** your consent (GDPR art. 6(1)(a); ePrivacy art. 5(3)).
+* **Purpose:** analytics and measuring how our ads perform.
 * **Recipients:** Google Ireland Limited (for the EU, EEA and UK) and Google LLC, which process the data as described in
   [Google's privacy policy](https://policies.google.com/privacy). This can involve transfers outside your country.
-* **Changing your mind.** Use **Privacy · Cookies** (bottom-right corner of every page) to accept or reject at any time. Rejecting removes Google cookies this
-  site can clear from your browser and reloads the page without the tag.
+* The cookie banner on this site is for the Meta pixel. Google Tag Manager is separate and is part of the page.
 
 ## Cookies and storage we use {#cookies-we-use}
 
@@ -61,10 +58,10 @@ We use Google Tag Manager (container `GTM-MZD5357B`) so that, if you accept, Goo
 | --- | --- | --- | --- | --- |
 | `_fbp` | Meta pixel (a first-party cookie on this site) | Identifies the browser to measure ads and build audiences | up to 90 days | **Yes**: only set if you accept |
 | `_fbc` | Meta pixel | Links a visit to the Meta ad you clicked | up to 90 days | **Yes**: only set if you accept |
-| `_ga` | Google tags in container GTM-MZD5357B | Distinguishes visitors for analytics | typically up to 2 years | **Yes**: only set if you accept |
-| `_ga_*` | Google tags in that container | Persists a Google Analytics session | typically up to 2 years | **Yes**: only set if you accept |
-| `_gid` | Google tags in that container | Distinguishes visitors for analytics | typically 24 hours | **Yes**: only set if you accept |
-| `_gcl_au` | Google tags in that container | Conversion linker for Google ads | typically up to 90 days | **Yes**: only set if you accept |
+| `_ga` | Google tags in container GTM-MZD5357B | Distinguishes visitors for analytics | typically up to 2 years | Set by the Google tag on the page |
+| `_ga_*` | Google tags in that container | Persists a Google Analytics session | typically up to 2 years | Set by the Google tag on the page |
+| `_gid` | Google tags in that container | Distinguishes visitors for analytics | typically 24 hours | Set by the Google tag on the page |
+| `_gcl_au` | Google tags in that container | Conversion linker for Google ads | typically up to 90 days | Set by the Google tag on the page |
 | `neurons-consent-v1` | This site (browser storage) | Remembers your choice about the above | until you clear your browser data | No: it is what keeps your choice |
 | theme keys (`*.themeMode`, `*.themeId`, `tsd-theme`) | This site (browser storage) | Remembers light/dark appearance | until you clear your browser data | No: a display preference, not tracking |
 
@@ -112,18 +109,15 @@ Hacemos publicidad en Meta y usamos su píxel para medirla.
 * Tu elección se guarda solo en tu navegador (`localStorage`, clave `neurons-consent-v1`). No se nos envía ni se envía a nadie.
 
 ## Google Tag Manager
-Usamos Google Tag Manager (contenedor `GTM-MZD5357B`) para que, si aceptas, Google pueda cargar las etiquetas de medición configuradas en ese contenedor.
+Usamos Google Tag Manager (contenedor `GTM-MZD5357B`). El tag va en el HTML de la página y se carga al visitarla.
 
-* **Solo si aceptas.** Mientras no pulses *Aceptar*, Google Tag Manager **no se carga**: no se pide nada a Google, este tag no crea ninguna cookie de Google y no se
-  envía nada. *Rechazar* tiene el mismo peso que *Aceptar*. Ignorar el aviso equivale a rechazar.
-* **Si aceptas**, tu navegador carga `https://www.googletagmanager.com/gtm.js?id=GTM-MZD5357B` y ejecuta las etiquetas configuradas en ese contenedor. Esas etiquetas
+* **En la página.** Tu navegador carga `https://www.googletagmanager.com/gtm.js?id=GTM-MZD5357B` y ejecuta las etiquetas configuradas en ese contenedor. Esas etiquetas
   pueden enviar a Google la dirección de la página, la página de origen, tu dirección IP y datos del navegador y del dispositivo, y pueden crear cookies propias en
   este sitio como `_ga`, `_ga_*`, `_gid` y `_gcl_au`, según lo que contenga el contenedor.
-* **Finalidad:** analítica y medición del rendimiento de nuestros anuncios. **Base jurídica:** tu consentimiento (RGPD art. 6.1.a; ePrivacy art. 5.3).
+* **Finalidad:** analítica y medición del rendimiento de nuestros anuncios.
 * **Destinatarios:** Google Ireland Limited (para la UE, el EEE y el Reino Unido) y Google LLC, que tratan los datos según la
   [política de privacidad de Google](https://policies.google.com/privacy). Puede haber transferencias fuera de tu país.
-* **Cambiar de opinión.** Usa **Privacidad · Cookies** (esquina inferior derecha de cada página) para aceptar o rechazar cuando quieras. Rechazar elimina las cookies
-  de Google que este sitio puede borrar de tu navegador y recarga la página sin el tag.
+* El aviso de cookies de este sitio es para el píxel de Meta. Google Tag Manager va aparte y forma parte de la página.
 
 ## Cookies y almacenamiento que usamos {#cookies-es}
 
@@ -131,10 +125,10 @@ Usamos Google Tag Manager (contenedor `GTM-MZD5357B`) para que, si aceptas, Goog
 | --- | --- | --- | --- | --- |
 | `_fbp` | Píxel de Meta (cookie propia en este sitio) | Identifica el navegador para medir anuncios y crear audiencias | hasta 90 días | **Sí**: solo se crea si aceptas |
 | `_fbc` | Píxel de Meta | Vincula una visita con el anuncio de Meta en el que hiciste clic | hasta 90 días | **Sí**: solo se crea si aceptas |
-| `_ga` | Etiquetas de Google del contenedor GTM-MZD5357B | Distingue visitantes para analítica | normalmente hasta 2 años | **Sí**: solo se crea si aceptas |
-| `_ga_*` | Etiquetas de Google de ese contenedor | Conserva una sesión de Google Analytics | normalmente hasta 2 años | **Sí**: solo se crea si aceptas |
-| `_gid` | Etiquetas de Google de ese contenedor | Distingue visitantes para analítica | normalmente 24 horas | **Sí**: solo se crea si aceptas |
-| `_gcl_au` | Etiquetas de Google de ese contenedor | Enlace de conversiones de anuncios de Google | normalmente hasta 90 días | **Sí**: solo se crea si aceptas |
+| `_ga` | Etiquetas de Google del contenedor GTM-MZD5357B | Distingue visitantes para analítica | normalmente hasta 2 años | Las crea el tag de Google en la página |
+| `_ga_*` | Etiquetas de Google de ese contenedor | Conserva una sesión de Google Analytics | normalmente hasta 2 años | Las crea el tag de Google en la página |
+| `_gid` | Etiquetas de Google de ese contenedor | Distingue visitantes para analítica | normalmente 24 horas | Las crea el tag de Google en la página |
+| `_gcl_au` | Etiquetas de Google de ese contenedor | Enlace de conversiones de anuncios de Google | normalmente hasta 90 días | Las crea el tag de Google en la página |
 | `neurons-consent-v1` | Este sitio (almacenamiento del navegador) | Recuerda tu elección sobre lo anterior | hasta que borres los datos del navegador | No: es lo que conserva tu elección |
 | claves de tema (`*.themeMode`, `*.themeId`, `tsd-theme`) | Este sitio (almacenamiento del navegador) | Recuerda la apariencia clara/oscura | hasta que borres los datos del navegador | No: es una preferencia de visualización, no rastreo |
 
