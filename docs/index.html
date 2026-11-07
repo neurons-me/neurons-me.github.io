@@ -89,8 +89,9 @@
     }
     .card-icon { width: 56px; height: 56px; border-radius: 12px; background: rgba(15,106,120,0.09); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; overflow: hidden; }
     .card-icon img, .card-icon > svg { width: 44px; height: 44px; object-fit: contain; }
-    .grid-stack .card-icon { width: 68px; height: 68px; border-radius: 14px; }
-    .grid-stack .card-icon img, .grid-stack .card-icon > svg { width: 56px; height: 56px; }
+    .grid-stack .card-icon { width: 84px; height: 84px; border-radius: 16px; }
+    .grid-stack .card-icon + .card-title { margin-top: 6px; }
+    .grid-stack .card-icon img, .grid-stack .card-icon > svg { width: 70px; height: 70px; }
     .grid-stack .card-mark { width: 100%; height: auto; display: block; aspect-ratio: 631 / 237; padding: 6px 4px; box-sizing: content-box; color: inherit; background-color: currentColor; -webkit-mask: url("./assets/netget-mark.png") center / contain no-repeat; mask: url("./assets/netget-mark.png") center / contain no-repeat; }
     .grid-resources .card-icon { width: 50px; height: 50px; border-radius: 10px; }
     .grid-resources .card-icon img, .grid-resources .card-icon > svg { width: 38px; height: 38px; }
@@ -191,6 +192,7 @@
     .grid-resources.grid-network { grid-template-columns: 1fr; }
     .card-title { font-size: 0.95rem; font-weight: 700; }
     .card-desc { font-size: 0.825rem; color: #51606d; line-height: 1.5; }
+    .grid-stack .card-desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     /* Stack cards on mobile: compact, uniform 3-up grid with icon + title
        only (description hidden). Desktop/tablet layout is untouched. */
     @media (max-width: 480px) {
@@ -199,7 +201,12 @@
       .grid-stack .card-icon { width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0; }
       .grid-stack .card-icon img, .grid-stack .card-icon > svg { width: 38px; height: 38px; }
       .grid-stack .card-mark { padding: 4px 2px; }
+      /* netget on phones: its frame is the card's own border (same color as the letters, the frame's 2px at this size);
+         the letters alone (netget-letters.svg: the same canvas without the frame) keep their size and place. */
+      .grid-stack .card-netget { border: 2px solid currentColor; }
+      .grid-stack .card-netget .card-mark { -webkit-mask-image: url("./assets/netget-letters.svg"); mask-image: url("./assets/netget-letters.svg"); }
       .grid-stack .card-title { font-size: 0.8rem; line-height: 1.2; overflow-wrap: anywhere; }
+      .grid-stack .card-icon + .card-title { margin-top: 0; }
       .grid-stack .card-desc { display: none; }
     }
     footer { margin-top: 64px; padding: 24px 0; text-align: center; border-top: 1px solid rgba(15,23,32,0.08); }
@@ -294,7 +301,7 @@
           <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1778090977/monad.ai.profile-removebg-preview_np26yp.png" alt="monad" />
         </div>
         <div class="card-title">monad</div>
-        <div class="card-desc">Federated runtime surfaces.</div>
+        <div class="card-desc">Daemons.</div>
       </a>
 
       <a class="card" href="https://neurons-me.github.io/GUI/">
@@ -305,9 +312,9 @@
         <div class="card-desc">Generative User Interface.</div>
       </a>
 
-      <a class="card" href="https://neurons-me.github.io/netget/" title="netget" aria-label="netget — A Gateway To the Web. Routes http:https Requests.">
+      <a class="card card-netget" href="https://neurons-me.github.io/netget/" title="netget" aria-label="netget — The Gateway.">
         <span class="card-mark" role="img" aria-hidden="true"></span>
-        <div class="card-desc">A Gateway To the Web. Routes http:https Requests.</div>
+        <div class="card-desc">The Gateway.</div>
       </a>
 
       <a class="card" href="https://neurons-me.github.io/mlearning.studio/">
@@ -315,7 +322,7 @@
           <img src="/assets/mlearning-studio-icon.webp" alt="mlearning.studio" />
         </div>
         <div class="card-title">mlearning.studio</div>
-        <div class="card-desc">Datasets, GTFS and BigDaMa: machine learning on .me.</div>
+        <div class="card-desc">Datasets and training.</div>
       </a>
 
       <a class="card" href="https://neurons-me.github.io/.wallet/">
@@ -323,15 +330,15 @@
           <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765902981/this.wallet_giyxtt.webp" alt=".wallet" />
         </div>
         <div class="card-title">.wallet</div>
-        <div class="card-desc">Manage multiple blockchains with .me. npm: this.wallet.</div>
+        <div class="card-desc">A .wallet for .me</div>
       </a>
 
       <a class="card allthis-card" href="https://github.com/neurons-me">
         <div class="card-icon">
           <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765903003/all.this_sr55ml.webp" alt="All.This" />
         </div>
-        <div class="card-title">Explore All.This</div>
-        <div class="card-desc">Across the neurons.me ecosystem.</div>
+        <div class="card-title">All.This</div>
+        <div class="card-desc">Learn more...</div>
       </a>
 
     </div>
@@ -615,6 +622,6 @@ me("people[age>=18].name")</div>
 
   </div>
   </noscript>
-  <script src="./assets/index-gui.js?v=gui434"></script>
+  <script src="./assets/index-gui.js?v=gui444"></script>
 </body>
 </html>

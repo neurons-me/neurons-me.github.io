@@ -18,7 +18,7 @@
   const LOGO = CL + "v1760629064/neurons.me_b50f6a.png";
   const GREY = CL + "v1760629056/neurons-grey_hxjcom.png";
   const SI = (slug, light, dark) => ({ light: `https://cdn.simpleicons.org/${slug}/${light}`, dark: `https://cdn.simpleicons.org/${slug}/${dark || "ffffff"}` });
-  const MOBILE = "@media (max-width:480px)", TABLET = "@media (max-width:720px)";
+  const MOBILE = "@media (max-width:480px)", TABLET = "@media (max-width:720px)", NARROW = "@media (max-width:360px)";
 
   // ── page-local registry types ──
   function ThemedImg({ light, dark, src, alt, sx }) {
@@ -33,8 +33,10 @@
   // Stack card mark for netget: original wordmark PNG used as a CSS mask so the letterforms
   // stay exact and background-color: currentColor tracks text.primary across themes.
   // No icon tile — the mark itself is the media.
-  function NetgetMark({ sx }) {
-    const mask = "url(./assets/netget-mark.png)";
+  // `letters`: the same canvas without the frame (netget-letters.svg) -- on phones, where the card's border is the frame,
+  // so the letters keep exactly their size and place.
+  function NetgetMark({ sx, letters }) {
+    const mask = letters ? "url(./assets/netget-letters.svg)" : "url(./assets/netget-mark.png)";
     return h(G.Box, {
       role: "img",
       "aria-hidden": "true",
@@ -119,11 +121,11 @@
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
     // Index-side tuning of the widget (selectors follow its DOM: orb > [aria-hidden] ring box > ring, dot):
-    //  · orb 48px (34px on phones) and a gentler float (-3px, ×1.04) so it never leaves its 68/48px slot;
+    //  · orb 60px (34px on phones) and a gentler float (-3px, ×1.04) so it never leaves its 84/48px slot;
     //  · the widget's "glow" (opacity 0.3–0.5 pulse + white halo) replaced by a faint halo pulse, full opacity;
     //  · the ring at 80% of the orb (closer to its edge, farther from the dot), the dot at 22% of the ring, soft shadows;
     //  · ring box and ring inherit the orb's animated border-radius, so the ring morphs with the outer circle.
-    const box = small ? 48 : 68, orb = small ? 34 : 48;
+    const box = small ? 48 : 84, orb = small ? 34 : 60;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -176,7 +178,7 @@
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
-    const box = small ? 48 : 68, k = (small ? 34 : 48) / 60;
+    const box = small ? 48 : 84, k = (small ? 34 : 60) / 60;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -195,9 +197,12 @@
   // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the
   // page's theme and light/dark. No flip here: the whole card is the link.
   function CleakerQRme({ value, title }) {
-    // drawn at 112px (its module grid needs the room) and scaled into the 60px / 44px icon box
-    return h(G.Box, { sx: { width: 60, height: 60, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0, [MOBILE]: { width: 44, height: 44 } } },
-      h(G.Box, { sx: { flexShrink: 0, transform: "scale(.5)", [MOBILE]: { transform: "scale(.37)" } } },
+    // drawn at 112px (its module grid needs the room) and scaled into the 76px icon box; on phones it is the card's media
+    // (78px drawn, 64px on the narrowest), a real QR with its name small underneath, not an icon in a tile
+    return h(G.Box, { sx: { width: 76, height: 76, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0,
+        [MOBILE]: { width: 78, height: 78 }, [NARROW]: { width: 64, height: 64 } } },
+      // QR.me draws its frame past `diameter` (about 128px drawn for 112): the phone scales are taken from what is drawn
+      h(G.Box, { sx: { flexShrink: 0, transform: "scale(.62)", [MOBILE]: { transform: "scale(.61)" }, [NARROW]: { transform: "scale(.5)" } } },
         h(G.QRme, { value, diameter: 112, variant: "md", hoverFlip: false, clickFlip: false, defaultFace: "qr", showAvatarLabel: false })));
   }
   const PAGE_TYPES = { ThemedImg, AudienceMark, NetgetMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme };
@@ -206,12 +211,12 @@
   const STACK = [
     [".me", "Own your knowledge.", "https://neurons-me.github.io/.me/", { monad: true, light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
     ["cleaker", "Who am I, here.", "https://neurons-me.github.io/Cleaker/", { qr: "https://cleaker.me", light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
-    ["monad", "Federated runtime surfaces.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
+    ["monad", "Daemons.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
     [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
-    ["netget", "A Gateway To the Web. Routes http:https Requests.", "https://neurons-me.github.io/netget/", { netget: true }],
-    ["mlearning.studio", "Datasets, GTFS and BigDaMa: machine learning on .me.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
-    [".wallet", "Manage multiple blockchains with .me. npm: this.wallet.", "https://neurons-me.github.io/.wallet/", { light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
-    ["Explore All.This", "Across the neurons.me ecosystem.", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
+    ["netget", "The Gateway.", "https://neurons-me.github.io/netget/", { netget: true }],
+    ["mlearning.studio", "Datasets and training.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
+    [".wallet", "A .wallet for .me", "https://neurons-me.github.io/.wallet/", { light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
+    ["All.This", "Learn more...", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
   ];
   const SOURCES = [
     ["npm: @neurons.me", "https://www.npmjs.com/org/neurons.me", { light: "https://cdn.simpleicons.org/npm/CB3837" }],
@@ -293,31 +298,37 @@
       N("Box", { sx: { position: "absolute", top: 14, right: 14, display: "flex", gap: 0.75 } },
         chips.map(([t, u]) => N("Chip", { label: t, component: "a", href: u, clickable: true, size: "small", color: "primary", variant: "outlined", sx: { fontWeight: 700, fontSize: "0.68rem", height: 22 } })))]);
   };
+  // a Stack card's description: two lines at most (the row's cards keep one height); longer text ends in "…"
+  const TWO_LINES = { display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" };
   const stackCard = ([title, desc, href, img, allThis]) => {
     // netget: the SVG already spells NETGET — skip the title text and the icon tile; mark fills the media area.
     if (img && img.netget) {
       return N("Card", { component: "a", href, title: "netget", "aria-label": "netget — " + desc, variant: "outlined",
         sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1.25, px: 2.5, py: 2.25, justifyContent: "center",
-          [MOBILE]: { alignItems: "stretch", textAlign: "left", gap: 0.75, px: 1.25, py: 1.5 } } }, [
+          // phones: the mark's frame becomes the card's own border (the frame's 2px at this size, in the letters' color)
+          [MOBILE]: { alignItems: "stretch", textAlign: "left", gap: 0.75, px: 1.25, py: 1.5, borderWidth: "2px", borderColor: "text.primary" } } }, [
         N("Box", { sx: { width: "100%", px: 0.5, py: 0.75, display: "flex", alignItems: "center", justifyContent: "center",
             [MOBILE]: { px: 0.25, py: 0.5 } } }, [
-          N("NetgetMark"),
+          N("NetgetMark", { sx: { display: "block", [MOBILE]: { display: "none" } } }),
+          N("NetgetMark", { letters: true, sx: { display: "none", [MOBILE]: { display: "block" } } }),
         ]),
-        N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
+        N("Typography", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
       ]);
     }
     return N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2.5, py: 2.25,
         ...(allThis ? { borderColor: "text.disabled", background: "linear-gradient(180deg, rgba(127,127,127,0.02), rgba(127,127,127,0.06))" } : {}),
-        [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5 } } }, [
-      N("Box", { sx: { width: 68, height: 68, borderRadius: "14px", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-          [MOBILE]: { width: 48, height: 48, borderRadius: "10px" } } }, [
+        [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5, ...(img.qr ? { gap: 0.25, py: 1, justifyContent: "center" } : {}) } } }, [
+      N("Box", { sx: { width: 84, height: 84, borderRadius: "16px", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          [MOBILE]: img.qr ? { width: "auto", height: "auto", bgcolor: "transparent" } : { width: 48, height: 48, borderRadius: "10px" } } }, [
         img.qr && G.QRme ? N("CleakerQRme", { value: img.qr, title })
-          : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
-          : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
-          : N("ThemedImg", { ...img, alt: title, sx: { width: 56, height: 56, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } }),
+          : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 70, height: 70, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
+          : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 70, height: 70, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
+          : N("ThemedImg", { ...img, alt: title, sx: { width: 70, height: 70, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } }),
       ]),
-      N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, [MOBILE]: { fontSize: "0.8rem", overflowWrap: "anywhere" } } }, [title]),
-      N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
+      // the title a little farther from the larger icon (14px instead of the card's 8px gap); phones keep the compact gap
+      N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, mt: 0.75,
+          [MOBILE]: img.qr ? { mt: 0, fontSize: "0.65rem", fontWeight: 600, lineHeight: 1.1, letterSpacing: "0.02em", color: "text.secondary" } : { mt: 0, fontSize: "0.8rem", overflowWrap: "anywhere" } } }, [title]),
+      N("Typography", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
     ]);
   };
   const demoCard = ([title, href, img]) =>
