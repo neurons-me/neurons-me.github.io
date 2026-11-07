@@ -2,7 +2,7 @@
   {
     "id": "me",
     "title": ".me",
-    "desc": "Own your knowledge.",
+    "desc": "Who am I.",
     "url": "https://neurons-me.github.io/.me/",
     "repo": ".me",
     "icon": {
@@ -19,10 +19,13 @@
   {
     "id": "cleaker",
     "title": "cleaker",
-    "desc": "Who am I, here.",
+    "desc": "Here.",
     "url": "https://neurons-me.github.io/Cleaker/",
     "repo": "cleaker",
-    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765054949/cleaker.me_gusn1q.png",
+    "icon": {
+      "light": "https://neurons-me.github.io/assets/cleaker-qr-on-light.png",
+      "dark": "https://neurons-me.github.io/assets/cleaker-qr-on-dark.png"
+    },
     "kind": "root"
   },
   {
@@ -157,8 +160,8 @@
     "url": "https://neurons-me.github.io/netget/",
     "repo": "netget",
     "icon": {
-      "light": "/assets/netget-mark.png",
-      "dark": "/assets/netget-mark-on-dark.png"
+      "light": "https://neurons-me.github.io/assets/netget-letters-on-light.svg",
+      "dark": "https://neurons-me.github.io/assets/netget-letters-on-dark.svg"
     },
     "kind": "root"
   },
@@ -227,11 +230,11 @@
   },
   {
     "id": "nrp",
-    "title": "NRP: Namespace Resolution Protocol",
+    "title": "Namespaces",
     "desc": "How a me:// path resolves to a monad, hop by hop, across the mesh.",
     "url": "https://neurons-me.github.io/NRP/",
     "repo": null,
-    "icon": "𓅓",
+    "icon": "𓆣",
     "kind": "source"
   },
   {

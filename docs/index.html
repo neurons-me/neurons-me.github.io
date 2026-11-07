@@ -38,6 +38,34 @@
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/this.gui@4.2.0/dist/this.gui.umd.js" integrity="sha384-tAyskhiyJweQ9xXPVOSEJ0OQDE+lFsqRJvGRb8LVoqLbdNxYmJEhW21+fxcAYG0d" crossorigin="anonymous"></script>
   <style>html, body { margin: 0; } #root { min-height: 100vh; }</style>
+  <style>
+    /* netget in the All.This search grid: only its letters (netget-letters-on-*.svg, in index.json), so the tile's own border is
+       the frame -- the same as the netget card on phones. SearchBar draws a 1px border inline, hence !important. */
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] { border: 2px solid currentColor !important; }
+    /* 66px, but never more than 85% of the tile: the cap is on the image's box (a % of the tile), the image fills it */
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span:first-child { width: 66px; max-width: 85%; }
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] img { width: 100% !important; height: auto !important; }
+    /* the grid: square tiles (as tall as they are wide) and every icon larger -- images 48px, the live orbs (.me, monad)
+       scaled to the same, the glyphs (Namespaces, SEED, Axioms) at a matching size */
+    /* three equal columns that never grow past the box: plain 1fr widens to fit a long word (an old index.json still
+       cached in a browser gives netget a text path instead of an image), and with square tiles that blew the grid up */
+    .index-search [role="listbox"] { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    .index-search [role="listbox"] > a { aspect-ratio: 1 / 1; min-width: 0; overflow: hidden; }
+    .index-search [role="listbox"] > a:not([href$="/Cleaker/"], [href$="/netget/"], [href="https://neurons.me"]) > span:first-child img { width: 48px !important; height: 48px !important; }
+    /* neurons.me draws its icon on a white plate: the plate and its icon scaled together */
+    .index-search [role="listbox"] > a[href="https://neurons.me"] > span:first-child { transform: scale(1.5); margin: 8px 0; }
+    .index-search [role="listbox"] > a > div:first-child { transform: scale(1.5); margin: 8px 0; }
+    .index-search [role="listbox"] > a > span:first-child:not(:has(img)) { font-size: 34px !important; line-height: 1 !important; max-width: 100%; overflow: hidden; }
+    /* the input keeps a 150px minimum (an input's default 20 characters), so in a narrow box it pushed the "/" badge out */
+    .index-search input { min-width: 0; }
+    /* cleaker as on the phone card: the QR (QR.me, cleaker-qr-on-*.png in index.json) fills the tile and its name sits small
+       underneath; less padding, so the larger QR fits the square tile */
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/Cleaker/"] { padding: 4px !important; gap: 2px !important; }
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/Cleaker/"] img { width: 60px !important; height: 60px !important; }
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/Cleaker/"] > span + span { font-size: 8px !important; font-weight: 500 !important; opacity: .7; }
+    /* the letters already say netget: no label under them (kept for screen readers, the image has no alt) */
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span + span { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  </style>
 <!-- Consent + Meta Pixel (the pixel loads only after the visitor accepts): /assets/js/consent.js -->
 <script src="/assets/js/consent.js" defer></script>
 </head>
@@ -285,7 +313,7 @@
           </picture>
         </div>
         <div class="card-title">.me</div>
-        <div class="card-desc">Own your knowledge.</div>
+        <div class="card-desc">Who am I.</div>
       </a>
 
       <a class="card" href="https://neurons-me.github.io/Cleaker/">
@@ -293,7 +321,7 @@
           <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765054949/cleaker.me_gusn1q.png" alt="cleaker" />
         </div>
         <div class="card-title">cleaker</div>
-        <div class="card-desc">Who am I, here.</div>
+        <div class="card-desc">Here.</div>
       </a>
 
       <a class="card" href="https://neurons-me.github.io/monad/">
@@ -622,6 +650,6 @@ me("people[age>=18].name")</div>
 
   </div>
   </noscript>
-  <script src="./assets/index-gui.js?v=gui447"></script>
+  <script src="./assets/index-gui.js?v=gui448"></script>
 </body>
 </html>
