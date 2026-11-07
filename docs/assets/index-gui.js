@@ -121,11 +121,11 @@
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
     // Index-side tuning of the widget (selectors follow its DOM: orb > [aria-hidden] ring box > ring, dot):
-    //  · orb 60px (34px on phones) and a gentler float (-3px, ×1.04) so it never leaves its 84/48px slot;
+    //  · orb 70px (40px on phones) and a gentler float (-3px, ×1.04) so it never leaves its 84/48px slot;
     //  · the widget's "glow" (opacity 0.3–0.5 pulse + white halo) replaced by a faint halo pulse, full opacity;
     //  · the ring at 80% of the orb (closer to its edge, farther from the dot), the dot at 22% of the ring, soft shadows;
     //  · ring box and ring inherit the orb's animated border-radius, so the ring morphs with the outer circle.
-    const box = small ? 48 : 84, orb = small ? 34 : 60;
+    const box = small ? 48 : 84, orb = small ? 40 : 70;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -178,7 +178,7 @@
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
-    const box = small ? 48 : 84, k = (small ? 34 : 60) / 60;
+    const box = small ? 48 : 84, k = (small ? 40 : 70) / 60;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -318,7 +318,8 @@
     return N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2.5, py: 2.25,
         ...(allThis ? { borderColor: "text.disabled", background: "linear-gradient(180deg, rgba(127,127,127,0.02), rgba(127,127,127,0.06))" } : {}),
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5, ...(img.qr ? { gap: 0.25, py: 1, justifyContent: "center" } : {}) } } }, [
-      N("Box", { sx: { width: 84, height: 84, borderRadius: "16px", bgcolor: "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+      // the .me and monad orbs stand on their own, without the icon tile behind them
+      N("Box", { sx: { width: 84, height: 84, borderRadius: "16px", bgcolor: img.monad || img.bubble ? "transparent" : "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           [MOBILE]: img.qr ? { width: "auto", height: "auto", bgcolor: "transparent" } : { width: 48, height: 48, borderRadius: "10px" } } }, [
         img.qr && G.QRme ? N("CleakerQRme", { value: img.qr, title })
           : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: 70, height: 70, objectFit: "contain", [MOBILE]: { width: 38, height: 38 } } } })
