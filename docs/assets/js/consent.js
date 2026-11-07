@@ -1,9 +1,9 @@
 /*
- * neurons.me -- consent, and the Meta Pixel that depends on it.
+ * neurons.me -- consent, and the Meta Pixel and Google Tag Manager that depend on it.
  *
- * The pixel is NOT loaded until the visitor accepts: before that (and always after a rejection) nothing is requested from
- * Meta, no Meta cookie is set, nothing is sent. The choice is kept in this browser only (localStorage), is never sent anywhere,
- * and can be changed at any time from the "Privacy · Cookies" link that stays on every page.
+ * Those tags are NOT loaded until the visitor accepts: before that (and always after a rejection) nothing is requested from
+ * Meta or Google, no Meta or Google cookie is set, nothing is sent. The choice is kept in this browser only (localStorage),
+ * is never sent anywhere, and can be changed at any time from the "Privacy · Cookies" link that stays on every page.
  *
  * One file, loaded by one line on every page (the Jekyll layouts include it, the hand-written pages carry that line):
  *   <script src="/assets/js/consent.js" defer></script>
@@ -11,17 +11,18 @@
 (function () {
   'use strict';
   var PIXEL_ID = '2635461650224867';
+  var GTM_ID = 'GTM-MZD5357B';
   var KEY = 'neurons-consent-v1';
   var es = /^es\b/i.test((navigator.language || '') + '');
   var PRIVACY = '/privacy.html#' + (es ? 'cookies-es' : 'cookies-we-use');
   var T = es ? {
     title: 'Cookies y privacidad',
-    text: 'Usamos cookies de terceros (incluido Meta) para analítica y medición de anuncios. Solo se cargan si las aceptas.',
+    text: 'Usamos cookies de terceros (incluido Meta y Google) para analítica y medición de anuncios. Solo se cargan si las aceptas.',
     accept: 'Aceptar', reject: 'Rechazar', more: 'Más información',
     link: 'Privacidad · Cookies', now: 'Ahora: ', on: 'aceptado', off: 'rechazado', none: 'sin decidir'
   } : {
     title: 'Cookies and privacy',
-    text: 'We use third-party cookies (including Meta) for analytics and ad measurement. They only load if you accept.',
+    text: 'We use third-party cookies (including Meta and Google) for analytics and ad measurement. They only load if you accept.',
     accept: 'Accept', reject: 'Reject', more: 'Learn more',
     link: 'Privacy · Cookies', now: 'Now: ', on: 'accepted', off: 'rejected', none: 'undecided'
   };
@@ -49,15 +50,53 @@
     f.fbq('track', 'PageView');
   }
 
-  // Meta's cookies live on our own domain (set by its script): remove them when consent is withdrawn.
-  function clearMetaCookies() {
+  function loadGtag() {
+    if (document.getElementById('gtm-loader')) return;
+    window.dataLayer = window.dataLayer || [];
+    if (typeof window.gtag !== 'function') {
+      window.gtag = function () { window.dataLayer.push(arguments); };
+    }
+    window.gtag('js', new Date());
+    var t = document.createElement('script');
+    t.async = true; t.id = 'gtm-loader';
+    t.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+    var s = document.getElementsByTagName('script')[0];
+    (s && s.parentNode ? s.parentNode : document.head).insertBefore(t, s || null);
+  }
+
+  function loadMarketing() {
+    loadPixel();
+    loadGtag();
+  }
+
+  function cookieDomains() {
     var host = location.hostname.split('.');
     var domains = [location.hostname];
     for (var i = 1; i < host.length - 1; i += 1) domains.push('.' + host.slice(i).join('.'));
-    ['_fbp', '_fbc'].forEach(function (name) {
-      domains.forEach(function (d) { document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=' + d; });
-      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    return domains;
+  }
+
+  function expireCookie(name) {
+    cookieDomains().forEach(function (d) { document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=' + d; });
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+  }
+
+  // Meta's cookies live on our own domain (set by its script): remove them when consent is withdrawn.
+  function clearMetaCookies() {
+    ['_fbp', '_fbc'].forEach(expireCookie);
+  }
+
+  // Google cookies that tags in the GTM container may have set on our own domain.
+  function clearGoogleCookies() {
+    document.cookie.split(';').forEach(function (part) {
+      var name = part.replace(/^\s+/, '').split('=')[0];
+      if (!name) return;
+      if (name === '_gid' || name.indexOf('_ga') === 0 || name.indexOf('_gcl_') === 0) expireCookie(name);
     });
+  }
+
+  function marketingWasActive(before) {
+    return (before && before.marketing) || window.fbq || typeof window.gtag === 'function' || document.getElementById('gtm-loader');
   }
 
   var css =
@@ -86,8 +125,8 @@
     var before = read();
     write(marketing);
     closeBanner();
-    if (marketing) { loadPixel(); }
-    else if ((before && before.marketing) || window.fbq) { clearMetaCookies(); location.reload(); }  // nothing of Meta stays in this page
+    if (marketing) { loadMarketing(); }
+    else if (marketingWasActive(before)) { clearMetaCookies(); clearGoogleCookies(); location.reload(); }
   }
 
   function showBanner() {
@@ -114,7 +153,7 @@
     open.onclick = showBanner;
     document.body.appendChild(open);
     var c = read();
-    if (c && c.marketing) loadPixel();
+    if (c && c.marketing) loadMarketing();
     else if (!c) showBanner();
   }
 
