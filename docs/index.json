@@ -26,6 +26,7 @@
       "light": "https://neurons-me.github.io/assets/cleaker-qr-on-light.png",
       "dark": "https://neurons-me.github.io/assets/cleaker-qr-on-dark.png"
     },
+    "tile": { "label": "muted" },
     "kind": "root"
   },
   {
@@ -163,6 +164,7 @@
       "light": "https://neurons-me.github.io/assets/netget-letters-on-light.svg",
       "dark": "https://neurons-me.github.io/assets/netget-letters-on-dark.svg"
     },
+    "tile": { "width": 55, "hideLabel": true, "frame": true, "tint": true },
     "kind": "root"
   },
   {
@@ -180,7 +182,10 @@
     "desc": "Across the neurons.me ecosystem.",
     "url": "https://github.com/neurons-me",
     "repo": "all.this",
-    "icon": "https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765903003/all.this_sr55ml.webp",
+    "icon": {
+      "light": "https://neurons-me.github.io/assets/all-this-on-light.svg",
+      "dark": "https://neurons-me.github.io/assets/all-this-on-dark.svg"
+    },
     "kind": "root"
   },
   {

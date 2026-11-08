@@ -49,19 +49,16 @@
     .index-search [role="listbox"] > a > :first-child + span { font-size: 8px !important; -webkit-line-clamp: 1 !important; max-width: 100%; }
     /* the icon: images 53px; the live orbs (.me, monad) and neurons.me's white plate are drawn at 32px, so scaled to 53;
        the glyphs (Namespaces, SEED, Axioms) at a matching size */
-    .index-search [role="listbox"] > a:not([href$="/netget/"], [href="https://neurons.me"], :has(img[src*="all.this_"])) > span:first-child img { width: 53px !important; height: 53px !important; }
+    .index-search [role="listbox"] > a:not([href$="/netget/"], [href="https://neurons.me"]) > span:first-child img { width: 53px !important; height: 53px !important; }
     .index-search [role="listbox"] > a > div:first-child,
     .index-search [role="listbox"] > a[href="https://neurons.me"] > span:first-child { transform: scale(1.65); margin: 10.5px 0; }
     .index-search [role="listbox"] > a > span:first-child:not(:has(img)) { font-size: 39px !important; line-height: 1.15 !important; max-width: 100%; }
     /* npm: the vector icon (index.json), its old 32px PNG pixelated when enlarged */
-    /* All.This (its picture is wider than tall): 89% of the tile's width, cropped to fit, so more of the Mona Lisa shows */
-    .index-search [role="listbox"] > a:has(img[src*="all.this_"]) > span:first-child { width: 89%; }
-    .index-search [role="listbox"] > a:has(img[src*="all.this_"]) > span:first-child img { width: 100% !important; height: 53px !important; object-fit: cover !important; border-radius: 6px; }
     /* netget: only its letters (netget-letters-on-*.svg, in index.json), the tile's own border is the frame, as on the phone
        card; 62px but never more than 85% of the tile (the cap on the image's box, the image fills it); no name under them
        (kept for screen readers, the image has no alt) */
     .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] { border: 2px solid currentColor !important; }
-    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span:first-child { width: 62px; max-width: 85%; }
+    .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span:first-child { width: 55px; max-width: 85%; }
     .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] img { width: 100% !important; height: auto !important; }
     .index-search [role="listbox"] a[href="https://neurons-me.github.io/netget/"] > span + span { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     /* cleaker: its name lighter, as under the QR on the phone card */
@@ -365,10 +362,9 @@
 
       <a class="card allthis-card" href="https://github.com/neurons-me">
         <div class="card-icon">
-          <img src="https://res.cloudinary.com/dkwnxf6gm/image/upload/v1765903003/all.this_sr55ml.webp" alt="All.This" />
+          <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/all-this-on-dark.svg" /><img src="./assets/all-this-on-light.svg" alt="All.This" /></picture>
         </div>
         <div class="card-title">All.This</div>
-        <div class="card-desc">Learn more...</div>
       </a>
 
     </div>
@@ -651,6 +647,6 @@ me("people[age>=18].name")</div>
 
   </div>
   </noscript>
-  <script src="./assets/index-gui.js?v=gui441"></script>
+  <script src="./assets/index-gui.js?v=gui508"></script>
 </body>
 </html>
