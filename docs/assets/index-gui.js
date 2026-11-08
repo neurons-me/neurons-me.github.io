@@ -231,7 +231,9 @@
   // Inner texture of the monad bubble (the light behind its pixel grid: the widget's ::before blob, glass shading
   // and "rorschachLava" layers). "widget" = as GUI draws it; "A" matte + grain; "B" diffuse fog; "C" frosted fine dots.
   // ?monadTexture=A|B|C|widget overrides it for a look.
-  const MONAD_TEXTURE = "A";
+  // Default "widget": texture A was written for the glass layers. On core="flat" those layers are gone, so A's mask
+  // landed on the pixel grid and dissolved it. Keep A/B/C available as a query override.
+  const MONAD_TEXTURE = "widget";
   const monadTexture = (dark) => {
     const pick = new URLSearchParams(location.search).get("monadTexture"), opt = /^(A|B|C|widget)$/.test(pick || "") ? pick : MONAD_TEXTURE;
     if (opt === "widget") return {};
@@ -259,21 +261,20 @@
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
-    // the bubble 8% smaller than the .me orb (its glow and float reach farther), then 21% smaller again
-    const box = small ? ICON.small.tile : ICON.tile, k = (small ? ICON.small.img + 3 : ICON.img) * 0.92 * 0.79 / 60;
+    // the bubble 8% smaller than the .me orb (its glow and float reach farther), then 21% smaller again; drawn at native size (no CSS scale, so no blur)
+    const box = small ? ICON.small.tile : ICON.tile;
+    const display = Math.round((small ? ICON.small.img + 3 : ICON.img) * 0.92 * 0.79);
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
-    const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
+    const lift = { "0%,100%": 0, "25%": -2, "50%": -3, "75%": -2 };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
-        const halo = t.palette.mode === "dark" ? "159,246,255" : "0,90,122";
         return { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex", alignItems: "center", justifyContent: "center",
-          "@keyframes monadOrbFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p][0] / k}px) scale(${lift[p][1]})`, borderRadius: blob[p] }])),
-          "@keyframes monadOrbHalo": { "0%,100%": { boxShadow: `0 0 3px rgba(${halo},0.14)` }, "50%": { boxShadow: `0 0 5px rgba(${halo},0.22)` } },
+          "@keyframes monadOrbFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p]}px)`, borderRadius: blob[p] }])),
           "& .monad-tooltip": { display: "none" },
-          "& div:has(> div[aria-hidden=true])": { opacity: "1 !important", animation: "monadOrbFloat 6s ease-in-out infinite, monadOrbHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } },
+          "& div:has(> div[aria-hidden=true])": { opacity: "1 !important", animation: "monadOrbFloat 6s ease-in-out infinite !important", "&:hover": { transform: "none" } },
           ...monadTexture(t.palette.mode === "dark") };
       } },
-      h(G.Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } },
-        h(Monad, { variant: "bubble", kind: "monad", mode: "contained", core: "flat" })));
+      h(G.Box, { sx: { width: display, height: display, flexShrink: 0, display: "flex" } },
+        h(Monad, { variant: "bubble", kind: "monad", mode: "contained", core: "flat", size: display })));
   }
   // The .me QR on the cleaker card: GUI.QRme (registry "QR.me", this.gui 4.4.1), the same component as the namespace
   // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the

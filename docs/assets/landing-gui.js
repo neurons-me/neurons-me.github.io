@@ -1,4 +1,4 @@
-// .GUI (this.gui@4.4.2) for the hand-written landings (/robots/, /smart-cities/). Loaded by their index.html.
+// .GUI (this.gui@4.4.3) for the hand-written landings (/robots/, /smart-cities/). Loaded by their index.html.
 // The page's own static markup (#static-landing) is the single source of text, links and images: this script
 // reads it, renders the same content through GUI.mount (registry Card/Box/Typography/Link/Chip + a page-local
 // topbar like ContextLab's: me:// path, Docs, GitHub, theme picker, light/dark, gear with Inspector + Grid Layout),
@@ -179,20 +179,12 @@
           "& div[aria-hidden=true] > div:first-of-type": { borderRadius: "inherit !important", borderWidth: "4px !important", boxShadow: dark ? "0 0 4px rgba(180,230,230,0.22) !important" : "0 0 4px rgba(0,90,122,0.18) !important" },
           "& div[aria-hidden=true] > div:last-of-type": { width: "22% !important", height: "22% !important", boxShadow: dark ? "0 0 4px rgba(234,252,250,0.35) !important" : "0 0 4px rgba(0,90,122,0.3) !important" } };
       } }, h(Monad, { variant: "identity", kind: "me", seed: "jabellae", mode: "contained", size: Math.round(orb * 34 / 60) }));
-    const k = orb / 60;
-    return h(Box, { role: "img", "aria-label": alt, sx: (t) => {
-        const dark = t.palette.mode === "dark", halo = dark ? "159,246,255" : "0,90,122", tint = dark ? "255,255,255" : "0,60,80";
-        const INNER = `${ORB} > div[aria-hidden=true]:first-of-type`;
-        const grain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 ${dark ? 1 : 0} 0 0 0 0 ${dark ? 1 : 0.24} 0 0 0 0 ${dark ? 1 : 0.31} 0 0 0 ${dark ? 0.16 : 0.2} 0'/%3E%3C/filter%3E%3Crect width='64' height='64' filter='url(%23n)'/%3E%3C/svg%3E")`;
-        return { ...slot, "@keyframes lBubFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p][0] / k}px) scale(${lift[p][1]})`, borderRadius: blob[p] }])),
-          "@keyframes lBubHalo": { "0%,100%": { boxShadow: `0 0 3px rgba(${halo},0.14)` }, "50%": { boxShadow: `0 0 5px rgba(${halo},0.22)` } },
-          "& .monad-tooltip": { display: "none" },
-          [ORB]: { opacity: "1 !important", animation: "lBubFloat 6s ease-in-out infinite, lBubHalo 4.5s ease-in-out infinite !important", "&:hover": { transform: "none" } },
-          [INNER]: { inset: "9px !important", WebkitMaskImage: "radial-gradient(circle, #000 38%, transparent 70%)", maskImage: "radial-gradient(circle, #000 38%, transparent 70%)" },
-          [`${ORB}::before`]: { display: "none" },
-          [`${INNER} > div:first-of-type`]: { background: `${grain}, rgba(${tint},${dark ? 0.035 : 0.04}) !important`, backgroundSize: "32px 32px, auto", boxShadow: "none !important" },
-          [`${INNER} > div:last-of-type`]: { display: "none" } };
-      } }, h(Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } }, h(Monad, { variant: "bubble", kind: "monad", mode: "contained", core: "flat" })));
+    return h(Box, { role: "img", "aria-label": alt, sx: {
+        ...slot,
+        "@keyframes lBubFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p][0]}px)`, borderRadius: blob[p] }])),
+        "& .monad-tooltip": { display: "none" },
+        [ORB]: { opacity: "1 !important", animation: "lBubFloat 6s ease-in-out infinite !important", "&:hover": { transform: "none" } },
+      } }, h(Box, { sx: { width: orb, height: orb, flexShrink: 0, display: "flex" } }, h(Monad, { variant: "bubble", kind: "monad", mode: "contained", core: "flat", size: orb })));
   }
 
   // ── LandingCube: the .GUI RubiksCube widget (GUI.Widgets.RubiksCube from the this.gui UMD the page already loads),
