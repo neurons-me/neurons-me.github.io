@@ -22,6 +22,10 @@
   // Stack card icons, "55%": the icon tile grew 55% of the way from its old size to the card's whole inner width
   // (desktop 84 -> 109 of 130px, phones 48 -> 73 of ~93px); the image, orb and QR inside keep their old proportion to it.
   const ICON = { tile: 109, img: 91, small: { tile: 73, img: 58 } };
+  // An icon's tile as a hole in its card, not a layer on it: the page's own background (darker than the card in dark
+  // mode, lighter in light) with a faint inner shadow at the top edge, instead of the lighter action.hover.
+  const HOLE = { bgcolor: "background.default",
+    boxShadow: (t) => t.palette.mode === "dark" ? "inset 0 1px 3px rgba(0,0,0,0.45)" : "inset 0 1px 3px rgba(15,23,32,0.10)" };
 
   // ── page-local registry types ──
   function ThemedImg({ light, dark, src, alt, sx }) {
@@ -46,7 +50,8 @@
       sx: {
         width: "100%", height: "auto", display: "block", flexShrink: 0,
         aspectRatio: "631 / 237",
-        color: "text.primary",
+        // the selected .GUI theme's primary color (neurons.me, Seafoam, ...), not the text color
+        color: "primary.main",
         bgcolor: "currentColor",
         WebkitMaskImage: mask, WebkitMaskSize: "contain",
         WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center",
@@ -181,7 +186,8 @@
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
-    const box = small ? ICON.small.tile : ICON.tile, k = (small ? ICON.small.img + 3 : ICON.img) / 60;
+    // the bubble 8% smaller than the .me orb: it fills its tile more (its glow and float reach farther)
+    const box = small ? ICON.small.tile : ICON.tile, k = (small ? ICON.small.img + 3 : ICON.img) * 0.92 / 60;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -200,12 +206,12 @@
   // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the
   // page's theme and light/dark. No flip here: the whole card is the link.
   function CleakerQRme({ value, title }) {
-    // drawn at 112px (its module grid needs the room) and scaled into the 99px icon box (ICON.tile); on phones it is the card's media
+    // drawn at 112px (its module grid needs the room) and scaled into an ICON.img box, the share of its tile the images take, so its hole shows around it; on phones it is the card's media
     // (78px drawn, 64px on the narrowest), a real QR with its name small underneath, not an icon in a tile
-    return h(G.Box, { sx: { width: 99, height: 99, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0,
+    return h(G.Box, { sx: { width: ICON.img, height: ICON.img, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0,
         [MOBILE]: { width: 78, height: 78 }, [NARROW]: { width: 64, height: 64 } } },
       // QR.me draws its frame past `diameter` (about 128px drawn for 112): the phone scales are taken from what is drawn
-      h(G.Box, { sx: { flexShrink: 0, transform: "scale(.81)", [MOBILE]: { transform: "scale(.61)" }, [NARROW]: { transform: "scale(.5)" } } },
+      h(G.Box, { sx: { flexShrink: 0, transform: "scale(.74)", [MOBILE]: { transform: "scale(.61)" }, [NARROW]: { transform: "scale(.5)" } } },
         h(G.QRme, { value, diameter: 112, variant: "md", hoverFlip: false, clickFlip: false, defaultFace: "qr", showAvatarLabel: false })));
   }
   const PAGE_TYPES = { ThemedImg, AudienceMark, NetgetMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme };
@@ -215,10 +221,10 @@
     [".me", "Who am I.", "https://neurons-me.github.io/.me/", { monad: true, light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
     ["cleaker", "Here.", "https://neurons-me.github.io/Cleaker/", { qr: "https://cleaker.me", light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
     ["monad", "Daemons.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
-    [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png" }],
+    [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png", zoom: 1.3 }],
     ["netget", "The Gateway.", "https://neurons-me.github.io/netget/", { netget: true }],
     ["mlearning.studio", "Datasets and training.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
-    [".wallet", "A .wallet for .me", "https://neurons-me.github.io/.wallet/", { light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
+    [".wallet", "for .me", "https://neurons-me.github.io/.wallet/", { wallet: true, light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
     ["All.This", "Learn more...", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
   ];
   const SOURCES = [
@@ -271,11 +277,13 @@
   const section = (title, grid) => N("Box", { component: "section", sx: { mt: 5 } }, [label(title, { mb: 1.75 }), grid]);
   const grid = (cols, children, extra) => N("Box", { sx: {
     display: "grid", gap: 2,
-    gridTemplateColumns: `repeat(${cols}, 1fr)`,
-    ...(cols > 2 ? { [TABLET]: { gridTemplateColumns: "repeat(2, 1fr)" } } : {}),
+    // minmax(0, 1fr), not 1fr: a plain 1fr column grows to its longest unbreakable word (an essay's file name), and that
+    // widened the whole page column past the screen, cutting off every section on narrow windows
+    gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+    ...(cols > 2 ? { [TABLET]: { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" } } : {}),
     [MOBILE]: { gridTemplateColumns: "1fr" },
     ...(extra || {}) } }, children);
-  const cardSx = { textDecoration: "none", color: "inherit", height: "100%", borderRadius: "12px",
+  const cardSx = { textDecoration: "none", color: "inherit", height: "100%", borderRadius: "12px", minWidth: 0, overflowWrap: "anywhere",
     transition: "box-shadow 130ms ease, border-color 130ms ease, transform 130ms ease",
     "&:hover": { borderColor: "primary.main", boxShadow: 3, transform: "translateY(-1px)", textDecoration: "none" } };
   const descNode = (d) => N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.4 } },
@@ -286,7 +294,7 @@
       : icon.mark ? N("AudienceMark", icon.small ? { width: 34, height: 27 } : {})
       : N("Typography", { component: "span", sx: { fontSize: icon.size || "1.6rem", lineHeight: 1 } }, [icon.glyph]);
     return N("Box", { sx: { width: 50, height: 50, borderRadius: "10px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden",
-      bgcolor: icon.plate || "action.hover" } }, [inner]);
+      ...(icon.plate ? { bgcolor: icon.plate } : HOLE) } }, [inner]);
   };
   const resourceCard = ([title, desc, href, icon, chips]) => {
     const card = N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", alignItems: "center", gap: 1.75, px: 2, py: 1.75, minHeight: 78 } }, [
@@ -303,31 +311,56 @@
   };
   // a Stack card's description: two lines at most (the row's cards keep one height); longer text ends in "…"
   const TWO_LINES = { display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" };
+  // .wallet: what a wallet holds, drawn as a .me graph. "+" (the wallet, open to more) is the root node in the tile's
+  // bottom-left corner, over the "." of ".wallet"; its nodes branch from it within 90 degrees (up to right) on a quarter
+  // ellipse that uses the tile's width. Currencies are coins in the theme's primary color, symbol cut out in the page's
+  // own color: the dollar ($, and its stablecoins), Ethereum (the chain .wallet speaks today, the largest), Bitcoin
+  // faded (not implemented yet). Institutions are another kind of node: PayPal (the provider .wallet integrates today,
+  // its monogram) as a square card that keeps PayPal's own colors (a brand, not a currency), on a dashed edge -- a relation, not something held.
+  // Stripe or a bank join as more squares.
+  const WALLET_SVG = '<svg viewBox="0 0 120 100" preserveAspectRatio="xMinYMax meet" xmlns="http://www.w3.org/2000/svg"><line class="wl-line" x1="12.4" y1="78.1" x2="18.8" y2="32.2"/><line class="wl-line" x1="17.5" y1="80.4" x2="48.5" y2="44.4"/><g opacity=".4"><line class="wl-line" x1="20.2" y1="84.1" x2="79.4" y2="59.4"/></g><line class="wl-line" x1="21.0" y1="87.6" x2="89.0" y2="84.9" stroke-dasharray="3 2.4"/><circle class="wl-root" cx="11" cy="88" r="10" fill="none" stroke-width="2.2"/><path class="wl-root-plus" d="M6 88 h10 M11 83 v10" stroke-width="2.6" stroke-linecap="round"/><circle class="wl-edge" cx="20.8" cy="18.8" r="14"/><circle class="wl-coin" cx="20.8" cy="17.4" r="14"/><circle cx="20.8" cy="17.4" r="12.0" fill="none" class="wl-ring" stroke-width="0.89"/><text class="wl-sym" x="20.8" y="17.4" text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="19.1">$</text><circle class="wl-edge" cx="62.2" cy="30.5" r="20"/><circle class="wl-coin" cx="62.2" cy="28.5" r="20"/><circle cx="62.2" cy="28.5" r="17.1" fill="none" class="wl-ring" stroke-width="1.27"/><g transform="translate(62.2 28.5) scale(0.909)"><path class="wl-sym" d="M0 -14 L9 1 L0 6 L-9 1 Z"/><path class="wl-sym" d="M0 8.5 L9 3.2 L0 15 L-9 3.2 Z" opacity=".85"/></g><g opacity=".4"><circle class="wl-edge" cx="93.2" cy="55.0" r="14"/><circle class="wl-coin" cx="93.2" cy="53.6" r="14"/><circle cx="93.2" cy="53.6" r="12.0" fill="none" class="wl-ring" stroke-width="0.89"/><text class="wl-sym" x="93.2" y="53.6" text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="19.1">₿</text></g><rect class="wl-pp-edge" x="91.4" y="72.8" width="27" height="27" rx="6.5"/><rect class="wl-pp" x="91.4" y="70.8" width="27" height="27" rx="6.5"/><g transform="translate(95.6 74.8) scale(0.372)"><path fill-rule="evenodd" d="M38.168 13.352c-1.596-.842-3.535-1.346-5.644-1.346h-12.6l-4.218 26.92H6.413L12 3.032h15.05c5.065 0 9.056 2.827 10.518 6.755a9.643 9.643 0 0 1 .6 3.565Z" class="pp1"/><path d="M43.527 23.671A12.848 12.848 0 0 1 30.814 34.44h-5.188L23.459 47.9h-9.235l1.482-8.973 1.747-11.148.363-2.312h7.468c7.753 0 12.884-6.562 12.884-12.114l.005.002c3.817 1.964 6.038 5.944 5.354 10.317Z" class="pp2"/><path d="M38.167 13.352c-1.596-.841-3.534-1.346-5.644-1.346H19.924l-2.11 13.46h7.47c7.752 0 12.883-6.562 12.883-12.114Z" class="pp3"/></g></svg>';
+  const WalletTile = () => N("Box", { "aria-hidden": "true", sx: { width: "100%", height: ICON.tile, borderRadius: "18px", ...HOLE, flexShrink: 0, p: "6px", boxSizing: "border-box",
+      "& svg": { width: "100%", height: "100%", display: "block" },
+      // PayPal keeps its own colors (a brand, not a currency), in its two official versions: light mode, its
+      // monogram's three blues on a white square; dark mode, its dark blue square with the monogram in white
+      "& .wl-pp": { fill: (t) => t.palette.mode === "dark" ? "#002991" : "#ffffff" },
+      "& .wl-pp-edge": { fill: (t) => t.palette.mode === "dark" ? "#00124a" : "#9aa6b2" },
+      "& .pp1": { fill: (t) => t.palette.mode === "dark" ? "#ffffff" : "#002991" },
+      "& .pp2": { fill: (t) => t.palette.mode === "dark" ? "rgba(255,255,255,0.55)" : "#60CDFF" },
+      "& .pp3": { fill: (t) => t.palette.mode === "dark" ? "rgba(255,255,255,0.8)" : "#008CFF" },
+      "& .wl-coin": { fill: (t) => t.palette.primary.main },
+      "& .wl-edge": { fill: (t) => t.palette.primary.main, filter: "brightness(0.6)" },
+      "& .wl-ring": { stroke: (t) => t.palette.background.default, strokeOpacity: 0.35 },
+      "& .wl-sym": { fill: (t) => t.palette.background.default },
+      "& .wl-line": { stroke: (t) => t.palette.text.secondary, strokeOpacity: 0.55, strokeWidth: 1.3 },
+      "& .wl-root, & .wl-root-plus": { stroke: (t) => t.palette.primary.main },
+      [MOBILE]: { width: ICON.small.tile, height: ICON.small.tile, borderRadius: "14px" } },
+    dangerouslySetInnerHTML: { __html: WALLET_SVG } });
   const stackCard = ([title, desc, href, img, allThis]) => {
-    // netget: the SVG already spells NETGET — skip the title text and the icon tile; mark fills the media area.
+    // netget: the SVG already spells NETGET — no title text; on desktop its mark sits in a hole like the other icons.
     if (img && img.netget) {
+      // netget, at every width: only its letters, centered and as wide as the card allows, on no background (the page
+      // shows through), and the card's own border
+      // (3px, the theme's primary color, as the letters) is the mark's frame. No title or description: the letters say
+      // netget, and "The Gateway." stays in the link's label.
       return N("Card", { component: "a", href, title: "netget", "aria-label": "netget — " + desc, variant: "outlined",
-        sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1.25, px: 2.5, py: 2.25, justifyContent: "center",
-          // phones: the mark's frame becomes the card's own border (the frame's 2px at this size, in the letters' color)
-          [MOBILE]: { alignItems: "stretch", textAlign: "left", gap: 0.75, px: 1.25, py: 1.5, borderWidth: "2px", borderColor: "text.primary" } } }, [
-        N("Box", { sx: { width: "100%", px: 0.5, py: 0.75, display: "flex", alignItems: "center", justifyContent: "center",
-            [MOBILE]: { px: 0.25, py: 0.5 } } }, [
-          N("NetgetMark", { sx: { display: "block", [MOBILE]: { display: "none" } } }),
-          N("NetgetMark", { letters: true, sx: { display: "none", [MOBILE]: { display: "block" } } }),
-        ]),
-        N("Typography", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
+        sx: { ...cardSx, display: "flex", flexDirection: "column", alignItems: "stretch", justifyContent: "center", px: 1.25,
+          borderWidth: "3px", borderColor: "primary.main", bgcolor: "transparent", backgroundImage: "none", [MOBILE]: { px: 0.5, py: 1.5 } } }, [
+        N("NetgetMark", { letters: true, sx: { display: "block" } }),
       ]);
     }
-    return N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2.5, py: 1.5,
+    return N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2, pt: 1.5, pb: 1,
         ...(allThis ? { borderColor: "text.disabled", background: "linear-gradient(180deg, rgba(127,127,127,0.02), rgba(127,127,127,0.06))" } : {}),
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5, ...(img.qr ? { gap: 0.25, py: 1, justifyContent: "center" } : {}) } } }, [
-      // the .me and monad orbs stand on their own, without the icon tile behind them
-      N("Box", { sx: { width: ICON.tile, height: ICON.tile, borderRadius: "18px", bgcolor: img.monad || img.bubble ? "transparent" : "action.hover", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-          [MOBILE]: img.qr ? { width: "auto", height: "auto", bgcolor: "transparent" } : { width: ICON.small.tile, height: ICON.small.tile, borderRadius: "14px" } } }, [
+      // every icon in the same tile, a hole in its card (HOLE): the orbs (.me, monad) and the QR included -- the same
+      // container for every object, so they can stand as one kind of card anywhere (a network view, a video stream)
+      img.wallet ? WalletTile() : N("Box", { sx: { width: ICON.tile, height: ICON.tile, borderRadius: "18px", ...HOLE, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          [MOBILE]: img.qr ? { width: "auto", height: "auto", p: "4px", borderRadius: "14px" } : { width: ICON.small.tile, height: ICON.small.tile, borderRadius: "14px" } } }, [
         img.qr && G.QRme ? N("CleakerQRme", { value: img.qr, title })
           : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
           : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
-          : N("ThemedImg", { ...img, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } }),
+          // zoom: an image drawn with a wide transparent margin (.GUI uses ~70% of its canvas) scaled up, so it looks as big as the others
+          : N("ThemedImg", { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", ...(img.zoom ? { transform: `scale(${img.zoom})` } : {}), [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } }),
       ]),
       // the title 10px under the larger icon (2px over the card's 8px gap); less padding than before, so the card grows less
       // than the icon; phones keep the compact gap
@@ -355,7 +388,7 @@
       ]),
       N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 0.75 } },
         SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
-          sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 38, height: 38, borderRadius: "50%", bgcolor: "action.hover", opacity: 0.9, "&:hover": { opacity: 1, bgcolor: "action.selected" } } },
+          sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 38, height: 38, borderRadius: "50%", ...HOLE, opacity: 0.9, "&:hover": { opacity: 1, bgcolor: "action.selected" } } },
           [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
     ]),
   ]);
@@ -378,6 +411,14 @@
       "& [role=option]": { color: I(P.text.primary), borderColor: I(P.divider) },
       "& [role=option]:hover, & [role=option][aria-selected=true]": { background: I(P.action.hover) },
       "& [role=option] > span:nth-of-type(2) > span:nth-of-type(2), & [role=option] > span:nth-of-type(3)": { color: I(P.text.secondary) },
+      // netget's tile in the quick grid: its letters and border in the theme's primary color, as on its Docs card. The
+      // tile's <img> (netget-letters-on-*.svg, a fixed fill) keeps the size and goes invisible; the same letters are
+      // painted over it as a mask in the theme color (the cropped letters, so they line up with the image).
+      '& [role=listbox] a[href$="/netget/"]': { borderColor: I(P.primary.main) },
+      '& [role=listbox] a[href$="/netget/"] > span:first-child': { backgroundColor: P.primary.main,
+        WebkitMaskImage: "url(./assets/netget-letters-on-dark.svg)", maskImage: "url(./assets/netget-letters-on-dark.svg)",
+        WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" },
+      '& [role=listbox] a[href$="/netget/"] > span:first-child img': { opacity: 0 },
     };
   };
   // Landing header (replaces the app TopBar): big logo + title + tagline, search on the same row
@@ -400,7 +441,12 @@
     ...(top || []),
     N("Box", { component: "section" }, [
       N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", color: "inherit", sx: { display: "inline-block", mb: 1.75, color: "text.secondary" } }, [label("Docs")]),
-      grid(4, STACK.map(stackCard), { gridAutoRows: "1fr", [MOBILE]: { gridTemplateColumns: "repeat(3, 1fr)", gap: 1.25 } }),
+      // as many cards as fit, at least 150px each (the 109px icon + padding), at most 4: 4 -> 3 -> 2 as the window narrows,
+      // never a jump from 4 to 2; phones keep their own compact three
+      grid(4, STACK.map(stackCard), { gridAutoRows: "1fr",
+        gridTemplateColumns: "repeat(auto-fill, minmax(max(150px, calc((100% - 48px) / 4)), 1fr))",
+        [TABLET]: { gridTemplateColumns: "repeat(auto-fill, minmax(max(150px, calc((100% - 48px) / 4)), 1fr))" },
+        [MOBILE]: { gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 1.25 } }),
     ]),
     sourceRow,
     section("Demos", grid(3, DEMOS.map(demoCard))),
