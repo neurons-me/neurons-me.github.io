@@ -221,9 +221,9 @@
     [".me", "Who am I.", "https://neurons-me.github.io/.me/", { monad: true, light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
     ["cleaker", "Here.", "https://neurons-me.github.io/Cleaker/", { qr: "https://cleaker.me", light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
     ["monad", "Daemons.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
-    [".GUI", "Generative User Interface.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png", zoom: 1.3 }],
+    [".GUI", "Generative UI.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png", zoom: 1.3 }],
     ["netget", "The Gateway.", "https://neurons-me.github.io/netget/", { netget: true }],
-    ["mlearning.studio", "Datasets and training.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
+    ["mlearning.studio", "Training data.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
     [".wallet", "for .me", "https://neurons-me.github.io/.wallet/", { wallet: true, light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
     ["All.This", "Learn more...", "https://github.com/neurons-me", { light: CL + "v1765903003/all.this_sr55ml.webp" }, true],
   ];
@@ -377,20 +377,18 @@
         N("Typography", { component: "span", sx: { fontWeight: 900, fontSize: "clamp(0.95rem, 1vw + 0.75rem, 1.2rem)", lineHeight: 1.15, overflowWrap: "normal", wordBreak: "keep-all", hyphens: "none" } }, [title]),
       ]),
     ]);
-  // Source Code: a wide pill card (the Docs pill beside it was removed). It is not itself a link: its npm / GitHub /
-  // PyPI / crates.io icons are.
-  const pillSx = { ...cardSx, display: "flex", alignItems: "center", gap: 1.5, px: 2.25, py: 1.25, minHeight: 64, borderRadius: "999px" };
-  const sourceRow = N("Box", { component: "section", "aria-label": "Source code", sx: { mt: 5, display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 2, [MOBILE]: { gridTemplateColumns: "1fr", gap: 1.25 } } }, [
-    N("Card", { variant: "outlined", sx: { ...pillSx, cursor: "default", "&:hover": {} } }, [
-      N("Box", { sx: { minWidth: 0, flex: 1, pl: 0.5 } }, [
-        N("Typography", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.25 } }, ["Source Code"]),
-        N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.35 } }, ["npm · GitHub · PyPI · crates.io"]),
-      ]),
-      N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 0.75 } },
-        SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
-          sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 38, height: 38, borderRadius: "50%", ...HOLE, opacity: 0.9, "&:hover": { opacity: 1, bgcolor: "action.selected" } } },
-          [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
-    ]),
+  // Source Code: no card of its own -- its registry icons (npm, GitHub, PyPI, crates.io; the icons say which, so no text
+  // names them) sit at the right end of the Demos heading, on the same line, under a "Source Code" label like the
+  // section's own.
+  const sourceNav = N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap", justifyContent: "flex-end" } }, [
+    label("Source Code", { mb: 0, mr: 0.5 }),
+    ...SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
+      sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 34, height: 34, borderRadius: "50%", ...HOLE, opacity: 0.9, "&:hover": { opacity: 1, bgcolor: "action.selected" } } },
+      [N("ThemedImg", { ...img, sx: { width: 18, height: 18, objectFit: "contain", display: "block" } })])),
+  ]);
+  const demosSection = N("Box", { component: "section", sx: { mt: 5 } }, [
+    N("Box", { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1.5, flexWrap: "wrap", mb: 1.75 } }, [label("Demos", { mb: 0 }), sourceNav]),
+    grid(3, DEMOS.map(demoCard)),
   ]);
 
   // GUI 4.1.0's SearchBar paints itself with inline styles from two fixed palettes (light: #fff / #0f1720 / teal,
@@ -448,8 +446,7 @@
         [TABLET]: { gridTemplateColumns: "repeat(auto-fill, minmax(max(150px, calc((100% - 48px) / 4)), 1fr))" },
         [MOBILE]: { gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 1.25 } }),
     ]),
-    sourceRow,
-    section("Demos", grid(3, DEMOS.map(demoCard))),
+    demosSection,
     section("Architecture & Benchmarks", grid(2, ARCH.concat(BENCH).map(resourceCard))),
     section("NRP & Axioms", grid(2, NRP.map(resourceCard))),
     section("Essays & Notation", grid(2, ESSAYS.map(resourceCard))),
