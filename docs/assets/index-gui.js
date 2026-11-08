@@ -255,7 +255,8 @@
       const tile = boxRef.current && boxRef.current.parentElement;
       if (!tile || typeof ResizeObserver === "undefined") return undefined;
       // the edge text runs below QR.me's own 128px box (about 16px more), so the height counts it
-      const measure = () => { const r = tile.getBoundingClientRect(); setFit(Math.max(0.5, Math.min(1.18, (r.width - 8) / 128, (r.height - 8) / 146))); };
+      // ~20px of the tile's dark around the QR on every side, so it sits in its own space rather than against the edge
+      const measure = () => { const r = tile.getBoundingClientRect(); setFit(Math.max(0.45, Math.min(1, (r.width - 40) / 128, (r.height - 40) / 146))); };
       measure();
       const ro = new ResizeObserver(measure); ro.observe(tile);
       return () => ro.disconnect();
@@ -502,14 +503,15 @@
     return N("Card", { ...(meCard ? { component: "div" } : { component: "a", href }), ...(img.qr ? { "aria-label": title + " — " + desc, title } : {}), variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2, pt: 1.5, pb: 1,
         ...(meCard ? { cursor: "default", "&:hover": { transform: "none" } } : {}),
         // cleaker: the card is its QR.me alone (it already says cleaker.me around its edge), centered
-        ...(img.qr ? { alignItems: "center", justifyContent: "center", p: "6px" } : {}),
+        ...(img.qr ? { alignItems: "center", justifyContent: "center", p: "3px" } : {}),
         ...(allThis ? { borderColor: "text.disabled", background: "linear-gradient(180deg, rgba(127,127,127,0.02), rgba(127,127,127,0.06))" } : {}),
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5, ...(img.qr ? { gap: 0.25, py: 1, justifyContent: "center" } : {}) } } }, [
       // every icon in the same tile, a hole in its card (HOLE): the orbs (.me, monad) and the QR included -- the same
       // container for every object, so they can stand as one kind of card anywhere (a network view, a video stream)
       img.wallet ? WalletTile() : img.graph ? AllThisTile() : N("Box", { sx: { width: ICON.tile, height: ICON.tile, borderRadius: "18px", ...HOLE, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           // cleaker has no title or description: its tile is the whole card
-          ...(img.qr ? { width: "100%", height: "auto", flex: 1, alignSelf: "stretch" } : {}),
+          // its dark reaches nearly to the card's corners (3px in, corners following the card's 12px)
+          ...(img.qr ? { width: "100%", height: "auto", flex: 1, alignSelf: "stretch", borderRadius: "10px" } : {}),
           [MOBILE]: img.qr ? { width: "auto", height: "auto", p: "4px", borderRadius: "14px" } : { width: ICON.small.tile, height: ICON.small.tile, borderRadius: "14px" } } }, [
         img.qr && G.QRme ? N("CleakerQRme", { value: img.qr, title })
           : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
