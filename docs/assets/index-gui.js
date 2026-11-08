@@ -200,9 +200,9 @@
           ...monadTexture(t.palette.mode === "dark") };
       } },
       h(G.Box, { sx: { width: 60, height: 60, flexShrink: 0, transform: `scale(${k})`, display: "flex" } },
-        h(Monad, { variant: "bubble", kind: "monad", mode: "contained" })));
+        h(Monad, { variant: "bubble", kind: "monad", mode: "contained", core: "flat" })));
   }
-  // The .me QR on the cleaker card: GUI.QRme (registry "QR.me", this.gui 4.2.0), the same component as the namespace
+  // The .me QR on the cleaker card: GUI.QRme (registry "QR.me", this.gui 4.4.1), the same component as the namespace
   // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the
   // page's theme and light/dark. No flip here: the whole card is the link.
   function CleakerQRme({ value, title }) {

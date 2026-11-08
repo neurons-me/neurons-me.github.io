@@ -12,11 +12,11 @@
   var JS = [
     ["https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js", "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"],
     ["https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js", "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"],
-    ["https://cdn.jsdelivr.net/npm/this.gui@4.2.0/dist/this.gui.umd.js", "sha384-tAyskhiyJweQ9xXPVOSEJ0OQDE+lFsqRJvGRb8LVoqLbdNxYmJEhW21+fxcAYG0d"],
+    ["https://cdn.jsdelivr.net/npm/this.gui@4.4.1/dist/this.gui.umd.js", "sha384-OZx86v8qCNNkYnyDgQeAH07PwqdOSw3peEXABwQqb0dmXV1u1rPETLUI1BicbEbY"],
     [HOST + "/assets/docs-gui.js?v=" + V, null],
   ];
   css(HOST + "/assets/docs-gui.css?v=" + V);
-  css("https://cdn.jsdelivr.net/npm/this.gui@4.2.0/dist/material-symbols.css", "sha384-dvUfVVY6nb2ef6F+dRTsSozZpefoOvMox4Ay4fQP86bSU+6yHovoYYKaRtwS+mca");
+  css("https://cdn.jsdelivr.net/npm/this.gui@4.4.1/dist/material-symbols.css", "sha384-dvUfVVY6nb2ef6F+dRTsSozZpefoOvMox4Ay4fQP86bSU+6yHovoYYKaRtwS+mca");
   (function next(i) { // in order; a failed CDN script stops the chain and the generator's own UI stays
     if (i >= JS.length) return;
     var s = document.createElement("script"); s.src = JS[i][0]; s.async = false;
