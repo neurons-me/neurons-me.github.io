@@ -1,4 +1,4 @@
-// Robots that understand context: .GUI page (this.gui@4.4.1, SRI-pinned in index.html, sha256-checked below)
+// Robots that understand context: .GUI page (this.gui@4.4.2, SRI-pinned in index.html, sha256-checked below)
 // over the real, unmodified this.me@4.2.0 kernel from npm (jsDelivr, unpkg fallback; sha256-checked before import).
 //
 //   KERNEL (this.me):  robots-context-lab.js runs the steps of Robots_Contexts.ts on one kernel; every value shown
@@ -12,7 +12,7 @@ import { runScript, ROBOTS } from "./robots-context-lab.js";
 
 const KERNEL = { version: "4.2.0", sha256: "8cc94d5273b05728713e7c06bcba6ab0d88c85d2a748dc885e7bca745605a61a",
   urls: ["https://cdn.jsdelivr.net/npm/this.me@4.2.0/dist/me.es.js", "https://unpkg.com/this.me@4.2.0/dist/me.es.js"] };
-const GUI_PIN = { url: "https://cdn.jsdelivr.net/npm/this.gui@4.4.1/dist/this.gui.umd.js", sha256: "b9c0b2768e1ecfdc1291cb822e9cb93a743590fb7aad6c5d0eb7cf72b81d1784" };
+const GUI_PIN = { url: "https://cdn.jsdelivr.net/npm/this.gui@4.4.2/dist/this.gui.umd.js", sha256: "a993dd3ceb1f75fe360b375b34bd1184d321b0c9939763bc37d5a74069a3f707" };
 const SRC_URL = "https://raw.githubusercontent.com/neurons-me/.me/main/Typescript/tests/Demos/Robots_Contexts.ts";
 const SRC_LINK = "https://github.com/neurons-me/.me/blob/main/Typescript/tests/Demos/Robots_Contexts.ts";
 
