@@ -36,7 +36,45 @@
   const ME_LIB = { src: "https://cdn.jsdelivr.net/npm/this.me@4.2.1/dist/me.umd.js", integrity: "sha384-ElnWCZOb324gqFJ2M/Fxy4CZ6Si131WIbR54iYomzEbTloUDLfBzZ05qi1nZ7+4G" };
   const ME_NAMESPACE = "cleaker.me";
   const meStore = { username: "", held: null, listeners: new Set() };
-  const meSet = (patch) => { Object.assign(meStore, patch); meStore.listeners.forEach((f) => f()); };
+  // ── a card that grows, the others pushed aside ──
+  // A card can ask for more of the grid (cleaker: 1x2, twice as tall, once name.cleaker.me no longer fits along the
+  // edge of its 1x1 QR). The grid flows the other cards on (grid-auto-flow: dense), each keeping its size, and they slide from
+  // where they were to where they go (FLIP: their places are taken just before the change, then each is animated from
+  // the old place to the new one).
+  // grows little by little: while name.cleaker.me fits along the edge of the card's QR (up to ~17 characters) the card
+  // keeps its size; past that, its side grows with the label (one character ~ 1/17 of the card), the QR drawn larger so
+  // the label still fits its edge. The Docs row is a wrapping flex row: the card at the end of a full row moves down.
+  // Two phases. The QR first grows inside its own card (drawn larger for the longer label, its dark margin shrinking
+  // from ~28px to ~12px); only once it fills the card (a label ~25% past what fits at first) does the card grow, a few
+  // pixels a character, pushing the others.
+  const FITS = 17, IN_CARD = 1.25;
+  const qrGrowthOf = (st) => { const handle = handleOf(st.held ? st.held.name : st.username); const len = handle ? handle.length + 1 + ME_NAMESPACE.length : 0; return Math.min(2.6, Math.max(1, len / FITS)); };
+  // Off for now: cleaker keeps a card's size (its QR fixed, its edge saying only cleaker.me), so nothing grows or is
+  // pushed. The mechanism (GrowCard, StackBeside, the FLIP push) stays for a card that needs the room.
+  const GROW_ENABLED = false;
+  const growthOf = (st) => GROW_ENABLED ? Math.max(1, qrGrowthOf(st) / IN_CARD) : 1;
+  const grownOf = (st) => qrGrowthOf(st) > 1;
+  const flip = { rects: null };
+  const docsGrid = () => document.querySelector("[data-docs-row]");
+  const snapshotDocs = () => { const g = docsGrid(); if (g) flip.rects = new Map([...g.querySelectorAll(".MuiCard-root")].map((c) => [c, c.getBoundingClientRect()])); };
+  const playFlip = () => {
+    const rects = flip.rects; flip.rects = null;
+    if (!rects || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+    rects.forEach((r, el) => {
+      // from where (and how big) it was to where it is: the others slide, the card that grew (or shrank) also scales
+      const n = el.getBoundingClientRect(), dx = r.left - n.left, dy = r.top - n.top;
+      const sx = n.width ? r.width / n.width : 1, sy = n.height ? r.height / n.height : 1;
+      if (!(dx || dy || Math.abs(sx - 1) > 0.01 || Math.abs(sy - 1) > 0.01) || !el.animate) return;
+      el.animate([{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, transformOrigin: "top left" }, { transform: "none", transformOrigin: "top left" }],
+        { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)" });
+    });
+  };
+  const meSet = (patch) => {
+    const was = growthOf(meStore);
+    Object.assign(meStore, patch);
+    if (growthOf(meStore) !== was) snapshotDocs();
+    meStore.listeners.forEach((f) => f());
+  };
   function useMeStore() {
     const [, bump] = React.useState(0);
     React.useEffect(() => { const f = () => bump((n) => n + 1); meStore.listeners.add(f); return () => { meStore.listeners.delete(f); }; }, []);
@@ -221,8 +259,8 @@
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
     if (!Monad) return h(ThemedImg, fallback);
-    // the bubble 8% smaller than the .me orb: it fills its tile more (its glow and float reach farther)
-    const box = small ? ICON.small.tile : ICON.tile, k = (small ? ICON.small.img + 3 : ICON.img) * 0.92 / 60;
+    // the bubble 8% smaller than the .me orb (its glow and float reach farther), then 21% smaller again
+    const box = small ? ICON.small.tile : ICON.tile, k = (small ? ICON.small.img + 3 : ICON.img) * 0.92 * 0.79 / 60;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
     return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
@@ -246,21 +284,31 @@
     const st = useMeStore();
     const handle = handleOf(st.held ? st.held.name : st.username);
     const where = handle ? `${handle}.${ME_NAMESPACE}` : ME_NAMESPACE;
-    value = `https://${where}`;
+    // the QR holds the namespace itself (name.cleaker.me), no https:// -- fewer modules, so it stays small
+    value = where;
     // the QR's scale from its tile: up to 1.18x of the ~128px QR.me draws, less when the tile is narrower (the Docs grid
     // makes cards 150-212px wide), so it always fits with a few px around it
+    const grown = grownOf(st);
     const boxRef = React.useRef(null);
-    const [fit, setFit] = React.useState(1.18);
+    const [fit, setFit] = React.useState(0.9);
     React.useLayoutEffect(() => {
       const tile = boxRef.current && boxRef.current.parentElement;
-      if (!tile || typeof ResizeObserver === "undefined") return undefined;
-      // the edge text runs below QR.me's own 128px box (about 16px more), so the height counts it
-      // ~20px of the tile's dark around the QR on every side, so it sits in its own space rather than against the edge
-      const measure = () => { const r = tile.getBoundingClientRect(); setFit(Math.max(0.45, Math.min(1, (r.width - 40) / 128, (r.height - 40) / 146))); };
+      const inner = boxRef.current && boxRef.current.firstElementChild;
+      if (!tile || !inner || typeof ResizeObserver === "undefined") return undefined;
+      // scaled from what QR.me actually draws (its layout size, before the transform; larger as it encodes more), the
+      // edge text under it counted (~18px), with ~28px of the tile's dark around it on every side
+      const measure = () => {
+        // layout sizes (clientWidth/offsetWidth), not getBoundingClientRect: while the card grows it is animated with a
+        // scale transform, and a measure taken mid-animation would read it still small
+        const r = { width: tile.clientWidth, height: tile.clientHeight }, w = inner.offsetWidth || 128, hh = (inner.offsetHeight || 128) + 18;
+        // its margin: ~28px around the QR at first, shrinking to ~12px as it grows inside the card
+        const g = GROW_ENABLED ? qrGrowthOf(st) : 1, m = Math.max(24, 56 - (g - 1) / (IN_CARD - 1) * 32);
+        setFit(Math.max(0.3, Math.min(0.9 * g, (r.width - m) / w, (r.height - m) / hh)));
+      };
       measure();
-      const ro = new ResizeObserver(measure); ro.observe(tile);
+      const ro = new ResizeObserver(measure); ro.observe(tile); ro.observe(inner);
       return () => ro.disconnect();
-    }, []);
+    }, [grown, qrGrowthOf(st), growthOf(st)]);
     // drawn at 112px (its module grid needs the room) and scaled into an ICON.img box, the share of its tile the images take, so its hole shows around it; on phones it is the card's media
     // (78px drawn, 64px on the narrowest), a real QR with its name small underneath, not an icon in a tile
     // QR.me draws about 128px (4px a module at least) with its edge text at ~11px; scaled to its tile (up to 1.18x) it
@@ -268,11 +316,15 @@
     return h(G.Box, { ref: boxRef, sx: { width: 132, height: 132, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0,
         [MOBILE]: { width: 78, height: 78 }, [NARROW]: { width: 64, height: 64 } } },
       // QR.me draws its frame past `diameter` (about 128px drawn for 112): the phone scales are taken from what is drawn
-      h(G.Box, { sx: { flexShrink: 0, transform: `translateY(${-8 * fit}px) scale(${fit})` } },
+      h(G.Box, { sx: { flexShrink: 0, transform: `translateY(${-8 * fit}px) scale(${fit})`, transition: "transform 380ms cubic-bezier(.2,.8,.2,1)" } },
         // the card IS the QR.me: the namespace around its edge (cleaker.me, or name.cleaker.me as it is typed, the root
         // in bold), and on hover it turns over to cleaker's own picture
-        h(G.QRme, { value, diameter: 112, variant: "md", hoverFlip: true, clickFlip: false, defaultFace: "qr", showAvatarLabel: false,
-          perimeterLabel: where, perimeterRootLabel: ME_NAMESPACE, username: handle || "cleaker", avatarSrc: CLEAKER_FACE, avatarAlt: "cleaker" })));
+        // drawn larger for a longer label, so its edge text still fits one line: QR.me's edge font is the square root of
+        // the diameter, a character ~0.6 of it, so a label of n characters (+ its status dot) needs a diameter of about
+        // (0.66 (n + 2))^2 -- the 0.66 leaves room for QR.me snapping to whole pixels a module
+        h(G.QRme, { value, diameter: GROW_ENABLED && where.length > FITS ? Math.round(Math.pow(0.66 * (where.length + 2), 2)) : 112, variant: "md", hoverFlip: true, clickFlip: false, defaultFace: "qr", showAvatarLabel: false,
+          // its edge says only cleaker.me: short, never wrapping a corner; the name is in the .me card, where it is typed
+          perimeterLabel: ME_NAMESPACE, perimeterRootLabel: ME_NAMESPACE, username: handle || "cleaker", avatarSrc: CLEAKER_FACE, avatarAlt: "cleaker" })));
   }
   // The .me card's "Who am I.": a name field; selecting it brings a secret field under it. Enter with both builds the
   // .me (see the secret-mode note above); held, the card shows the name, a short fingerprint and "destroy".
@@ -332,7 +384,34 @@
       error ? h(G.Box, { key: "err", component: "span", sx: { color: "error.main", fontSize: "0.7rem" } }, error) : null,
     ]);
   }
-  const PAGE_TYPES = { ThemedImg, AudienceMark, NetgetMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme, MeIdentityField };
+  function GrowCard({ children, style }) {
+    const st = useMeStore();
+    const f = growthOf(st);
+    React.useLayoutEffect(() => { playFlip(); }, [f]);
+    // the card fills its slot (its own height: 100% would read as auto here and leave it short)
+    return h(G.Box, { style: { ...(style || {}), "--grow": f }, sx: { display: "flex", "& > *": { flex: 1, minWidth: 0, height: "auto !important", alignSelf: "stretch" } } }, children);
+  }
+  // .me and netget. While cleaker keeps a card's height they are two ordinary cards in the row (display: contents; each
+  // keeps its place through `order`, netget first in the second row). Once cleaker is tall enough to fit a netget button
+  // under .me (.me up to 212px with its secret field, + 16 + 44), they stack in the first column, as tall as cleaker:
+  // .me at its own height, netget filling the rest -- a button at first, growing as cleaker grows, so the space under .me
+  // is used instead of left empty. Not on phones.
+  const STACK_AT = (212 + 16 + 44) / 188;
+  function StackBeside({ children }) {
+    const st = useMeStore();
+    const f = growthOf(st);
+    const stacked = f >= STACK_AT;
+    return h(G.Box, { "data-stack": "", style: { "--stack-h": f, order: 0 }, sx: stacked
+      ? { display: "flex", flexDirection: "column", gap: 2, flex: "0 0 calc((100cqw - 48px) / 4)", height: "calc(188px * var(--stack-h))", minWidth: 0,
+          "@container (max-width: 647.98px)": { flex: "0 0 calc((100cqw - 32px) / 3)" },
+          "@container (max-width: 481.98px)": { flex: "0 0 calc((100cqw - 16px) / 2)" },
+          // over the row's own card sizing (which reaches these too, for the unstacked case)
+          "& > *:first-of-type": { flex: "0 0 auto !important", minHeight: "188px !important" },
+          "& > *:last-of-type": { flex: "1 1 auto !important", height: "auto !important", minHeight: "44px !important", py: 0.5 },
+          [MOBILE]: { display: "contents" } }
+      : { display: "contents" } }, children);
+  }
+  const PAGE_TYPES = { ThemedImg, AudienceMark, NetgetMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme, MeIdentityField, GrowCard, StackBeside };
 
   // ── content (from docs/index.html @ 6bee309) ──
   const STACK = [
@@ -495,12 +574,13 @@
       return N("Card", { component: "a", href, title: "netget", "aria-label": "netget — " + desc, variant: "outlined",
         sx: { ...cardSx, display: "flex", flexDirection: "column", alignItems: "stretch", justifyContent: "center", px: 1.25,
           borderWidth: "3px", borderColor: "primary.main", bgcolor: "transparent", backgroundImage: "none", [MOBILE]: { px: 0.5, py: 1.5 } } }, [
-        N("NetgetMark", { letters: true, sx: { display: "block" } }),
+        // the letters fit whatever height the card has: a full card, or a button under monad beside a grown cleaker
+        N("NetgetMark", { letters: true, sx: { display: "block", maxHeight: "100%", minHeight: 0, flexShrink: 1 } }),
       ]);
     }
     // the .me card holds fields, so it is not itself a link (a click in a field would navigate): its title is
     const meCard = !!(img && img.monad);
-    return N("Card", { ...(meCard ? { component: "div" } : { component: "a", href }), ...(img.qr ? { "aria-label": title + " — " + desc, title } : {}), variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2, pt: 1.5, pb: 1,
+    const card = N("Card", { ...(meCard ? { component: "div" } : { component: "a", href }), ...(img.qr ? { "aria-label": title + " — " + desc, title } : {}), variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2, pt: 1.5, pb: 1,
         ...(meCard ? { cursor: "default", "&:hover": { transform: "none" } } : {}),
         // cleaker: the card is its QR.me alone (it already says cleaker.me around its edge), centered
         ...(img.qr ? { alignItems: "center", justifyContent: "center", p: "3px" } : {}),
@@ -530,6 +610,8 @@
         : meCard ? N("Box", { sx: { minWidth: 0, [MOBILE]: { display: "none" } } }, [N("MeIdentityField", {})])
         : N("Typography", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
     ].filter(Boolean));
+    // cleaker grows (GrowCard) when a name is typed: its QR then holds name.cleaker.me
+    return img.qr ? N("GrowCard", {}, [card]) : card;
   };
   const demoCard = ([title, href, img]) =>
     N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "row", alignItems: "stretch", minHeight: 140, overflow: "hidden", p: 0 } }, [
@@ -596,10 +678,23 @@
       N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", color: "inherit", sx: { display: "inline-block", mb: 1.75, color: "text.secondary" } }, [label("Docs")]),
       // as many cards as fit, at least 150px each (the 109px icon + padding), at most 4: 4 -> 3 -> 2 as the window narrows,
       // never a jump from 4 to 2; phones keep their own compact three
-      grid(4, STACK.map(stackCard), { gridAutoRows: "1fr",
-        gridTemplateColumns: "repeat(auto-fill, minmax(max(150px, calc((100% - 48px) / 4)), 1fr))",
-        [TABLET]: { gridTemplateColumns: "repeat(auto-fill, minmax(max(150px, calc((100% - 48px) / 4)), 1fr))" },
-        [MOBILE]: { gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 1.25 } }),
+      // a wrapping row, not a grid: a card can grow by any amount (cleaker, as its name gets longer) and the cards after
+      // it flow on, the one at the end of a full row moving down; every card keeps its own size. Widths as the grid had:
+      // 4 a row, 3 below 648px of row, 2 below 482px; phones 3 compact.
+      N("Box", { "data-docs-row": "", sx: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: 2, containerType: "inline-size",
+        [MOBILE]: { gap: 1.25 },
+        "& > *:not([data-stack]), & > [data-stack][style] > *": { boxSizing: "border-box", minWidth: 0, maxWidth: "100%",
+          flex: "0 0 calc((100cqw - 48px) / 4 * var(--grow, 1))", minHeight: "calc(188px * var(--grow, 1))",
+          "@container (max-width: 647.98px)": { flex: "0 0 calc((100cqw - 32px) / 3 * var(--grow, 1))" },
+          "@container (max-width: 481.98px)": { flex: "0 0 calc((100cqw - 16px) / 2 * var(--grow, 1))" },
+          // phones: the compact three a row (wins over the 2-a-row container rule above, which a phone's row also matches)
+          [MOBILE]: { flex: "0 0 calc((100cqw - 20px) / 3 * var(--grow, 1)) !important", minHeight: "calc(137px * var(--grow, 1))" } } } },
+        (() => {
+          // each card's place in the row as `order` (STACK's order), so netget can sit in .me's column when stacked and
+          // still be the first card of the second row otherwise
+          const cards = STACK.map(stackCard).map((c, i) => ({ ...c, props: { ...c.props, style: { ...(c.props.style || {}), order: i } } }));
+          return [N("StackBeside", {}, [cards[0], cards[4]]), cards[1], cards[2], cards[3], ...cards.slice(5)];
+        })()),
     ]),
     demosSection,
     section("Architecture & Benchmarks", grid(2, ARCH.concat(BENCH).map(resourceCard))),
