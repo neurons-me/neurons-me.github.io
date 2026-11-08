@@ -186,6 +186,7 @@
       "light": "https://neurons-me.github.io/assets/all-this-on-light.svg",
       "dark": "https://neurons-me.github.io/assets/all-this-on-dark.svg"
     },
+    "tile": { "fit": "cover" },
     "kind": "root"
   },
   {
