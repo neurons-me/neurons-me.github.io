@@ -300,10 +300,17 @@
       const measure = () => {
         // layout sizes (clientWidth/offsetWidth), not getBoundingClientRect: while the card grows it is animated with a
         // scale transform, and a measure taken mid-animation would read it still small
-        const r = { width: tile.clientWidth, height: tile.clientHeight }, w = inner.offsetWidth || 128, hh = (inner.offsetHeight || 128) + 18;
+        // the QR's own face (QR.me's root box also reserves room all around for its edge text, which only runs under it),
+        // plus that text's line below
+        const face = inner.querySelector('[data-gui-component="QR.me"]') || inner;
+        const r = { width: tile.clientWidth, height: tile.clientHeight }, w = face.offsetWidth || 112, hh = (face.offsetHeight || 112) + 22;
         // its margin: ~28px around the QR at first, shrinking to ~12px as it grows inside the card
-        const g = GROW_ENABLED ? qrGrowthOf(st) : 1, m = Math.max(24, 56 - (g - 1) / (IN_CARD - 1) * 32);
-        setFit(Math.max(0.3, Math.min(0.9 * g, (r.width - m) / w, (r.height - m) / hh)));
+        // ~21% larger than it was: its dark margin 10% of the tile (at most ~16px a side; phones keep it small too) and
+        // a cap of 0.94 of what QR.me draws (~102px on desktop, 21% over the 84 it had)
+        // phones: the QR takes nearly the whole card (2px of dark a side, no cap)
+        const phone = window.matchMedia && window.matchMedia("(max-width:480px)").matches;
+        const g = GROW_ENABLED ? qrGrowthOf(st) : 1, m = phone ? 4 : Math.min(32, Math.round(Math.min(r.width, r.height) * 0.1));
+        setFit(Math.max(0.3, Math.min(phone ? 3 : 0.94 * g, (r.width - m) / w, (r.height - m) / hh)));
       };
       measure();
       const ro = new ResizeObserver(measure); ro.observe(tile); ro.observe(inner);
@@ -575,7 +582,7 @@
         sx: { ...cardSx, display: "flex", flexDirection: "column", alignItems: "stretch", justifyContent: "center", px: 1.25,
           borderWidth: "3px", borderColor: "primary.main", bgcolor: "transparent", backgroundImage: "none", [MOBILE]: { px: 0.5, py: 1.5 } } }, [
         // the letters fit whatever height the card has: a full card, or a button under monad beside a grown cleaker
-        N("NetgetMark", { letters: true, sx: { display: "block", maxHeight: "100%", minHeight: 0, flexShrink: 1 } }),
+        N("NetgetMark", { letters: true, sx: { display: "block", width: "78% !important", alignSelf: "center", maxHeight: "100%", minHeight: 0, flexShrink: 1 } }),
       ]);
     }
     // the .me card holds fields, so it is not itself a link (a click in a field would navigate): its title is
@@ -602,7 +609,12 @@
       // the title 10px under the larger icon (2px over the card's 8px gap); less padding than before, so the card grows less
       // than the icon; phones keep the compact gap
       img.qr ? null : N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, mt: 0.25, ...(allThis ? { textAlign: "center" } : {}),
-          [MOBILE]: img.qr ? { mt: 0, fontSize: "0.65rem", fontWeight: 600, lineHeight: 1.1, letterSpacing: "0.02em", color: "text.secondary" } : { mt: 0, fontSize: "0.8rem", overflowWrap: "anywhere" } } },
+          [MOBILE]: img.qr ? { mt: 0, fontSize: "0.65rem", fontWeight: 600, lineHeight: 1.1, letterSpacing: "0.02em", color: "text.secondary" }
+            : title.length > 12
+              // a long title (mlearning.studio) on one line: its size from the card's width (a third of the row, less its
+              // padding), ~0.56em a character, at most the others' 0.8rem
+              ? { mt: 0, whiteSpace: "nowrap", fontSize: `min(0.8rem, calc(((100cqw - 20px) / 3 - 12px) / ${(title.length * 0.56).toFixed(2)}))` }
+              : { mt: 0, fontSize: "0.8rem", overflowWrap: "anywhere" } } },
         [meCard ? N("Link", { href, underline: "hover", color: "inherit" }, [title]) : title]),
       // All.This has no description: its picture grows into that room and the title sits at the card's bottom
       img.graph || img.qr ? null
@@ -624,11 +636,24 @@
   // Source Code: no card of its own -- its registry icons (npm, GitHub, PyPI, crates.io; the icons say which, so no text
   // names them) sit at the right end of the Demos heading, on the same line, under a "Source Code" label like the
   // section's own.
-  const sourceNav = N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap", justifyContent: "flex-end" } }, [
+  const sourceNav = N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap", justifyContent: "flex-end", [MOBILE]: { display: "none" } } }, [
     label("Source Code", { mb: 0, mr: 0.5 }),
     ...SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
       sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 34, height: 34, borderRadius: "50%", ...HOLE, opacity: 0.9, "&:hover": { opacity: 1, bgcolor: "action.selected" } } },
       [N("ThemedImg", { ...img, sx: { width: 18, height: 18, objectFit: "contain", display: "block" } })])),
+  ]);
+  // phones: Source Code is a card in the Docs row instead, the ninth slot the three-a-row leaves empty -- its four
+  // registry icons two by two in the same tile as every other card, "Source Code" as its title. Desktop keeps it
+  // beside Demos (four a row leaves no empty slot there).
+  const sourceCard = N("Box", { component: "nav", "aria-label": "Source code", style: { order: 99 },
+      sx: { display: "none", [MOBILE]: { display: "flex", flexDirection: "column", alignItems: "center", gap: 0.5, py: 1, px: 0.75,
+        border: 1, borderColor: "divider", borderRadius: "12px", bgcolor: "background.paper" } } }, [
+    N("Box", { sx: { width: "100%", height: 83, borderRadius: "14px", ...HOLE, flexShrink: 0, boxSizing: "border-box", p: "6px",
+        display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px", placeItems: "center" } },
+      SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
+        sx: { display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%", borderRadius: "50%", "&:hover": { bgcolor: "action.selected" } } },
+        [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
+    N("Typography", { variant: "subtitle1", sx: { fontWeight: 700, fontSize: "0.8rem", lineHeight: 1.25, mt: 0, whiteSpace: "nowrap" } }, ["Source Code"]),
   ]);
   const demosSection = N("Box", { component: "section", sx: { mt: 5 } }, [
     N("Box", { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1.5, flexWrap: "wrap", mb: 1.75 } }, [label("Demos", { mb: 0 }), sourceNav]),
@@ -688,12 +713,12 @@
           "@container (max-width: 647.98px)": { flex: "0 0 calc((100cqw - 32px) / 3 * var(--grow, 1))" },
           "@container (max-width: 481.98px)": { flex: "0 0 calc((100cqw - 16px) / 2 * var(--grow, 1))" },
           // phones: the compact three a row (wins over the 2-a-row container rule above, which a phone's row also matches)
-          [MOBILE]: { flex: "0 0 calc((100cqw - 20px) / 3 * var(--grow, 1)) !important", minHeight: "calc(137px * var(--grow, 1))" } } } },
+          [MOBILE]: { flex: "0 0 calc((100cqw - 20px) / 3 * var(--grow, 1)) !important", minHeight: "calc(120px * var(--grow, 1))" } } } },
         (() => {
           // each card's place in the row as `order` (STACK's order), so netget can sit in .me's column when stacked and
           // still be the first card of the second row otherwise
           const cards = STACK.map(stackCard).map((c, i) => ({ ...c, props: { ...c.props, style: { ...(c.props.style || {}), order: i } } }));
-          return [N("StackBeside", {}, [cards[0], cards[4]]), cards[1], cards[2], cards[3], ...cards.slice(5)];
+          return [N("StackBeside", {}, [cards[0], cards[4]]), cards[1], cards[2], cards[3], ...cards.slice(5), sourceCard];
         })()),
     ]),
     demosSection,
