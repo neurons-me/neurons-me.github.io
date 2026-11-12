@@ -14,7 +14,21 @@
   }
   const G = window.GUI, h = React.createElement;
   const params = new URLSearchParams(location.search);
-  const N = (type, props, children) => ({ type, props: props || {}, ...(children ? { children } : {}) });
+  const nodeAttrs = (p) => {
+    const a = {};
+    if (p && p["data-gui-node-id"] != null) a["data-gui-node-id"] = p["data-gui-node-id"];
+    if (p && p["data-gui-component"] != null) a["data-gui-component"] = p["data-gui-component"];
+    return a;
+  };
+  const N = (type, id, props, children, provenance) => {
+    const p = { ...(props || {}) };
+    if (id != null && id !== "") p["data-gui-node-id"] = id;
+    const node = { type, props: p };
+    if (children !== undefined && children !== null && children !== false) node.children = children;
+    if (provenance) node.provenance = provenance;
+    return node;
+  };
+  const slugOf = (s) => String(s).toLowerCase().replace(/^\.+/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "item";
   const CL = "https://res.cloudinary.com/dkwnxf6gm/image/upload/";
   const LOGO = CL + "v1760629064/neurons.me_b50f6a.png";
   const GREY = CL + "v1760629056/neurons-grey_hxjcom.png";
@@ -99,12 +113,14 @@
   };
 
   // ── page-local registry types ──
-  function ThemedImg({ light, dark, src, alt, sx }) {
+  function ThemedImg(p) {
+    const { light, dark, src, alt, sx } = p;
     const mode = G.useThemeContext().mode;
-    return h(G.Box, { component: "img", src: src || (mode === "dark" && dark ? dark : light), alt: alt || "", sx });
+    return h(G.Box, { ...nodeAttrs(p), component: "img", src: src || (mode === "dark" && dark ? dark : light), alt: alt || "", sx });
   }
-  function AudienceMark({ width = 38, height = 30 }) {
-    return h("svg", { width, height, viewBox: "0 0 40 32", "aria-hidden": "true" },
+  function AudienceMark(p) {
+    const { width = 38, height = 30 } = p;
+    return h("svg", { ...nodeAttrs(p), width, height, viewBox: "0 0 40 32", "aria-hidden": "true" },
       h("circle", { cx: 15, cy: 16, r: 13, fill: "#83d6ec", fillOpacity: 0.82 }),
       h("circle", { cx: 25, cy: 16, r: 13, fill: "#f19b9b", fillOpacity: 0.82 }));
   }
@@ -113,9 +129,11 @@
   // No icon tile — the mark itself is the media.
   // `letters`: the same canvas without the frame (netget-letters.svg) -- on phones, where the card's border is the frame,
   // so the letters keep exactly their size and place.
-  function NetgetMark({ sx, letters }) {
+  function NetgetMark(p) {
+    const { sx, letters } = p;
     const mask = letters ? "url(./assets/netget-letters.svg)" : "url(./assets/netget-mark.png)";
     return h(G.Box, {
+      ...nodeAttrs(p),
       role: "img",
       "aria-hidden": "true",
       sx: {
@@ -182,11 +200,11 @@
           h(M.ListItemIcon, null, h(G.Icon, { name: it.icon })),
           h(M.ListItemText, null, it.label)))));
   }
-  function HeaderControls() {
+  function HeaderControls(p) {
     const els = SETTINGS({ includeBrand: false, includeSettingsMenu: false }).topBarRight({ slot: "topBarRight", collectionId: "GUISettings" });
     // data-gui-inspector-control: GUI's inspector skips click-to-select inside these, so the switches
     // still work while the Inspector is ON (same flag GUI puts on its own Theme/Dev Tools launchers).
-    return h(G.Box, { "data-gui-inspector-control": "true", sx: { display: "inline-flex", alignItems: "center", gap: 0.25, color: "text.secondary" } },
+    return h(G.Box, { ...nodeAttrs(p), "data-gui-inspector-control": "true", sx: { display: "inline-flex", alignItems: "center", gap: 0.25, color: "text.secondary" } },
       els.map((el, i) => h(G.Box, { key: i, title: el.props.tooltip, sx: { display: "inline-flex" } }, el.props.element)),
       h(G.Box, { key: "settings", sx: { display: "inline-flex" } }, h(SettingsMenu)));
   }
@@ -194,13 +212,14 @@
   // All.This/monad.ai/monad.ai → Identity: variant "identity", kind "me", seed "jabellae"), contained in the card's
   // icon box instead of floating. Its hover QR tooltip is hidden here (the card is a link), and the box isolates
   // its z-index 1400 so menus stay on top. Without the widget (older bundle) the .me logo stays.
-  function MeMonad({ fallback }) {
+  function MeMonad(p) {
+    const { fallback } = p;
     const Monad = (G.Widgets && G.Widgets.Monad) || G.Monad;
     const st = useMeStore();
     const seedOf = st.held ? st.held.hash : "jabellae";
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
-    if (!Monad) return h(ThemedImg, fallback);
+    if (!Monad) return h(ThemedImg, { ...fallback, ...nodeAttrs(p) });
     // Index-side tuning of the widget (selectors follow its DOM: orb > [aria-hidden] ring box > ring, dot):
     //  · orb ICON.img (ICON.small.img + 3 on phones) and a gentler float (-3px, ×1.04) so it never leaves its ICON.tile slot;
     //  · the widget's "glow" (opacity 0.3–0.5 pulse + white halo) replaced by a faint halo pulse, full opacity;
@@ -209,7 +228,7 @@
     const box = small ? ICON.small.tile : ICON.tile, orb = small ? ICON.small.img + 3 : ICON.img;
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": [0, 1], "25%": [-2, 1.02], "50%": [-3, 1.04], "75%": [-2, 1.02] };
-    return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
+    return h(G.Box, { ...nodeAttrs(p), role: "img", "aria-label": fallback.alt, sx: (t) => {
         const dark = t.palette.mode === "dark", halo = dark ? "255,255,255" : "0,90,122";
         return { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex",
           "@keyframes meOrbFloat": Object.fromEntries(Object.keys(blob).map((k) => [k, { transform: `translateY(${lift[k][0]}px) scale(${lift[k][1]})`, borderRadius: blob[k] }])),
@@ -257,17 +276,18 @@
       [`${INNER} > div:first-of-type`]: { background: `radial-gradient(rgba(${tint},${dark ? 0.16 : 0.18}) 0.55px, transparent 0.9px) 0 0 / 2.5px 2.5px, rgba(${tint},${dark ? 0.03 : 0.035}) !important`, boxShadow: "none !important", backdropFilter: "blur(2px)" },
       [`${INNER} > div:last-of-type`]: { background: `repeating-linear-gradient(0deg, rgba(${tint},0.035) 0 0.6px, transparent 0.6px 2px) !important`, mixBlendMode: "normal !important", opacity: "1 !important" } };
   };
-  function MonadBubble({ fallback }) {
+  function MonadBubble(p) {
+    const { fallback } = p;
     const Monad = (G.Widgets && G.Widgets.Monad) || G.Monad;
     const q = "(max-width:480px)", [small, setSmall] = React.useState(() => window.matchMedia(q).matches);
     React.useEffect(() => { const m = window.matchMedia(q), on = () => setSmall(m.matches); m.addEventListener("change", on); return () => m.removeEventListener("change", on); }, []);
-    if (!Monad) return h(ThemedImg, fallback);
+    if (!Monad) return h(ThemedImg, { ...fallback, ...nodeAttrs(p) });
     // the bubble 8% smaller than the .me orb (its glow and float reach farther), then 21% smaller again; drawn at native size (no CSS scale, so no blur)
     const box = small ? ICON.small.tile : ICON.tile;
     const display = Math.round((small ? ICON.small.img + 3 : ICON.img) * 0.92 * 0.79);
     const blob = { "0%,100%": "50%", "25%": "55% 45% 60% 40% / 60% 55% 45% 40%", "50%": "50% 60% 40% 55% / 55% 40% 60% 45%", "75%": "45% 55% 40% 60% / 40% 60% 55% 50%" };
     const lift = { "0%,100%": 0, "25%": -2, "50%": -3, "75%": -2 };
-    return h(G.Box, { role: "img", "aria-label": fallback.alt, sx: (t) => {
+    return h(G.Box, { ...nodeAttrs(p), role: "img", "aria-label": fallback.alt, sx: (t) => {
         return { position: "relative", zIndex: 0, isolation: "isolate", width: box, height: box, display: "flex", alignItems: "center", justifyContent: "center",
           "@keyframes monadOrbFloat": Object.fromEntries(Object.keys(blob).map((p) => [p, { transform: `translateY(${lift[p]}px)`, borderRadius: blob[p] }])),
           "& .monad-tooltip": { display: "none" },
@@ -281,7 +301,8 @@
   // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the
   // page's theme and light/dark. No flip here: the whole card is the link.
   const CLEAKER_FACE = CL + "v1765054949/cleaker.me_gusn1q.png";
-  function CleakerQRme({ value, title }) {
+  function CleakerQRme(p) {
+    let { value, title } = p;
     // the name typed into the .me card, as its namespace: name.cleaker.me (reflected, not validated)
     const st = useMeStore();
     const handle = handleOf(st.held ? st.held.name : st.username);
@@ -319,7 +340,7 @@
     // drawn at 112px (its module grid needs the room) and scaled uniformly into the tile; SVG stays sharp as it grows.
     // the mark is taken out of flow (position: absolute) so its unscaled 147px box cannot stretch a compact card;
     // on phones the wrapper keeps a fixed layout size and the visual scale fills the card.
-    return h(G.Box, { ref: boxRef, sx: { width: "100%", height: "100%", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0, minHeight: 0, minWidth: 0,
+    return h(G.Box, { ...nodeAttrs(p), ref: boxRef, sx: { width: "100%", height: "100%", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0, minHeight: 0, minWidth: 0,
         [MOBILE]: { width: 78, height: 78 }, [NARROW]: { width: 64, height: 64 } } },
       h(G.Box, { sx: { position: "absolute", left: "50%", top: "50%", flexShrink: 0, aspectRatio: "1 / 1", transform: `translate(-50%, -50%) scale(${fit})`, transformOrigin: "center center", transition: "transform 380ms cubic-bezier(.2,.8,.2,1)" } },
         // the card IS the QR.me: the namespace around its edge (cleaker.me, or name.cleaker.me as it is typed, the root
@@ -333,7 +354,7 @@
   }
   // The .me card's "Who am I.": a name field; selecting it brings a secret field under it. Enter with both builds the
   // .me (see the secret-mode note above); held, the card shows the name, a short fingerprint and "destroy".
-  function MeIdentityField() {
+  function MeIdentityField(p) {
     const st = useMeStore();
     const [focused, setFocused] = React.useState(false);
     const [secret, setSecret] = React.useState("");
@@ -362,7 +383,7 @@
       }
     };
     if (st.held) {
-      return h(G.Box, { sx: { display: "flex", alignItems: "center", gap: 1, minWidth: 0, fontSize: "0.825rem", lineHeight: 1.5 } }, [
+      return h(G.Box, { ...nodeAttrs(p), sx: { display: "flex", alignItems: "center", gap: 1, minWidth: 0, fontSize: "0.825rem", lineHeight: 1.5 } }, [
         h(G.Box, { key: "who", sx: { minWidth: 0, flex: 1, overflow: "hidden" } }, [
           h(G.Box, { key: "n", component: "span", sx: { display: "block", color: "text.primary", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, st.held.name),
           h(G.Box, { key: "h", component: "span", title: st.held.hash, sx: { display: "block", color: "text.secondary", fontFamily: "monospace", fontSize: "0.7rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, st.held.hash.slice(0, 8) + "…" + st.held.hash.slice(-4)),
@@ -373,7 +394,7 @@
       ]);
     }
     const showSecret = focused || !!st.username || !!secret;
-    return h(G.Box, { sx: { display: "flex", flexDirection: "column", gap: 0.5, minWidth: 0 },
+    return h(G.Box, { ...nodeAttrs(p), sx: { display: "flex", flexDirection: "column", gap: 0.5, minWidth: 0 },
         onFocus: () => setFocused(true),
         onBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false); } }, [
       h(G.Box, { key: "name", component: "input", type: "text", value: st.username, placeholder: "username", "aria-label": "username",
@@ -389,12 +410,13 @@
       error ? h(G.Box, { key: "err", component: "span", sx: { color: "error.main", fontSize: "0.7rem" } }, error) : null,
     ]);
   }
-  function GrowCard({ children, style }) {
+  function GrowCard(p) {
+    const { children, style } = p;
     const st = useMeStore();
     const f = growthOf(st);
     React.useLayoutEffect(() => { playFlip(); }, [f]);
     // the card fills its slot (its own height: 100% would read as auto here and leave it short)
-    return h(G.Box, { style: { ...(style || {}), "--grow": f }, sx: { display: "flex", "& > *": { flex: 1, minWidth: 0, height: "auto !important", alignSelf: "stretch" } } }, children);
+    return h(G.Box, { ...nodeAttrs(p), style: { ...(style || {}), "--grow": f }, sx: { display: "flex", "& > *": { flex: 1, minWidth: 0, height: "auto !important", alignSelf: "stretch" } } }, children);
   }
   // .me and netget. While cleaker keeps a card's height they are two ordinary cards in the row (display: contents; each
   // keeps its place through `order`, netget first in the second row). Once cleaker is tall enough to fit a netget button
@@ -402,11 +424,12 @@
   // .me at its own height, netget filling the rest -- a button at first, growing as cleaker grows, so the space under .me
   // is used instead of left empty. Not on phones.
   const STACK_AT = (212 + 16 + 44) / 188;
-  function StackBeside({ children }) {
+  function StackBeside(p) {
+    const { children } = p;
     const st = useMeStore();
     const f = growthOf(st);
     const stacked = f >= STACK_AT;
-    return h(G.Box, { "data-stack": "", style: { "--stack-h": f, order: 0 }, sx: stacked
+    return h(G.Box, { ...nodeAttrs(p), "data-stack": "", style: { "--stack-h": f, order: 0 }, sx: stacked
       ? { display: "flex", flexDirection: "column", gap: 2, flex: "0 0 calc((100cqw - 48px) / 4)", height: "calc(188px * var(--stack-h))", minWidth: 0,
           "@container (max-width: 647.98px)": { flex: "0 0 calc((100cqw - 32px) / 3)" },
           "@container (max-width: 481.98px)": { flex: "0 0 calc((100cqw - 16px) / 2)" },
@@ -475,10 +498,10 @@
   const NETWORK = [["neurons.me", "The live network. Run a monad. Claim your namespace.", "https://neurons.me", { img: { light: CL + "v1760629040/media.neurons.me_copy_tgilfg.png" }, plate: "#e8edf2" }]];
 
   // ── builders ──
-  const label = (text, extra) => N("Typography", { variant: "overline", component: "h2", color: "text.secondary",
+  const label = (id, text, extra) => N("Typography", id, { variant: "overline", component: "h2", color: "text.secondary",
     sx: { display: "block", letterSpacing: "0.14em", fontWeight: 700, lineHeight: 1.6, fontSize: "0.7rem", ...(extra || {}) } }, [text]);
-  const section = (title, grid) => N("Box", { component: "section", sx: { mt: 5 } }, [label(title, { mb: 1.75 }), grid]);
-  const grid = (cols, children, extra) => N("Box", { sx: {
+  const section = (id, title, child) => N("Box", "section/" + id, { component: "section", sx: { mt: 5 } }, [label("section/" + id + "/label", title, { mb: 1.75 }), child]);
+  const grid = (id, cols, children, extra) => N("Box", id, { sx: {
     display: "grid", gap: 2,
     // minmax(0, 1fr), not 1fr: a plain 1fr column grows to its longest unbreakable word (an essay's file name), and that
     // widened the whole page column past the screen, cutting off every section on narrow windows
@@ -489,28 +512,29 @@
   const cardSx = { textDecoration: "none", color: "inherit", height: "100%", borderRadius: "12px", minWidth: 0, overflowWrap: "anywhere",
     transition: "box-shadow 130ms ease, border-color 130ms ease, transform 130ms ease",
     "&:hover": { borderColor: "primary.main", boxShadow: 3, transform: "translateY(-1px)", textDecoration: "none" } };
-  const descNode = (d) => N("Typography", { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.4 } },
-    (Array.isArray(d) ? d : [d]).map((x) => typeof x === "string" ? x
-      : N("Box", { component: "code", sx: { fontFamily: "monospace", fontSize: "0.95em", px: 0.5, borderRadius: 1, bgcolor: "action.hover" } }, [x.code])));
-  const iconBox = (icon) => {
-    const inner = icon.img ? N("ThemedImg", { ...icon.img, sx: { width: 38, height: 38, objectFit: "contain" } })
-      : icon.mark ? N("AudienceMark", icon.small ? { width: 34, height: 27 } : {})
-      : N("Typography", { component: "span", sx: { fontSize: icon.size || "1.6rem", lineHeight: 1 } }, [icon.glyph]);
-    return N("Box", { sx: { width: 50, height: 50, borderRadius: "10px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden",
+  const descNode = (id, d) => N("Typography", id, { variant: "body2", color: "text.secondary", sx: { fontSize: "0.78rem", lineHeight: 1.4 } },
+    (Array.isArray(d) ? d : [d]).map((x, i) => typeof x === "string" ? x
+      : N("Box", id + "/code" + (i ? i : ""), { component: "code", sx: { fontFamily: "monospace", fontSize: "0.95em", px: 0.5, borderRadius: 1, bgcolor: "action.hover" } }, [x.code])));
+  const iconBox = (id, icon) => {
+    const inner = icon.img ? N("ThemedImg", id + "/img", { ...icon.img, sx: { width: 38, height: 38, objectFit: "contain" } })
+      : icon.mark ? N("AudienceMark", id + "/mark", icon.small ? { width: 34, height: 27 } : {})
+      : N("Typography", id + "/glyph", { component: "span", sx: { fontSize: icon.size || "1.6rem", lineHeight: 1 } }, [icon.glyph]);
+    return N("Box", id, { sx: { width: 50, height: 50, borderRadius: "10px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden",
       ...(icon.plate ? { bgcolor: icon.plate } : HOLE) } }, [inner]);
   };
-  const resourceCard = ([title, desc, href, icon, chips]) => {
-    const card = N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", alignItems: "center", gap: 1.75, px: 2, py: 1.75, minHeight: 78 } }, [
-      iconBox(icon),
-      N("Box", { sx: { display: "flex", flexDirection: "column", minWidth: 0, flex: 1, gap: 0.25, ...(chips ? { pr: 8 } : {}) } }, [
-        N("Typography", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.3 } }, [title]),
-        descNode(desc),
+  const resourceCard = (prefix) => ([title, desc, href, icon, chips]) => {
+    const id = prefix + "/" + slugOf(title);
+    const card = N("Card", id, { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", alignItems: "center", gap: 1.75, px: 2, py: 1.75, minHeight: 78 } }, [
+      iconBox(id + "/icon", icon),
+      N("Box", id + "/body", { sx: { display: "flex", flexDirection: "column", minWidth: 0, flex: 1, gap: 0.25, ...(chips ? { pr: 8 } : {}) } }, [
+        N("Typography", id + "/title", { variant: "subtitle2", sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.3 } }, [title]),
+        descNode(id + "/desc", desc),
       ]),
     ]);
     if (!chips) return card;
-    return N("Box", { sx: { position: "relative" } }, [card,
-      N("Box", { sx: { position: "absolute", top: 14, right: 14, display: "flex", gap: 0.75 } },
-        chips.map(([t, u]) => N("Chip", { label: t, component: "a", href: u, clickable: true, size: "small", color: "primary", variant: "outlined", sx: { fontWeight: 700, fontSize: "0.68rem", height: 22 } })))]);
+    return N("Box", id + "/wrap", { sx: { position: "relative" } }, [card,
+      N("Box", id + "/chips", { sx: { position: "absolute", top: 14, right: 14, display: "flex", gap: 0.75 } },
+        chips.map(([t, u]) => N("Chip", id + "/chip/" + slugOf(t), { label: t, component: "a", href: u, clickable: true, size: "small", color: "primary", variant: "outlined", sx: { fontWeight: 700, fontSize: "0.68rem", height: 22 } })))]);
   };
   // a Stack card's description: two lines at most (the row's cards keep one height); longer text ends in "…"
   const TWO_LINES = { display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" };
@@ -522,7 +546,7 @@
   // its monogram) as a square card that keeps PayPal's own colors (a brand, not a currency), on a dashed edge -- a relation, not something held.
   // Stripe or a bank join as more squares.
   const WALLET_SVG = '<svg viewBox="0 0 120 100" preserveAspectRatio="xMinYMax meet" xmlns="http://www.w3.org/2000/svg"><line class="wl-line" x1="12.4" y1="78.1" x2="18.8" y2="32.2"/><line class="wl-line" x1="17.5" y1="80.4" x2="48.5" y2="44.4"/><g opacity=".4"><line class="wl-line" x1="20.2" y1="84.1" x2="79.4" y2="59.4"/></g><line class="wl-line" x1="21.0" y1="87.6" x2="89.0" y2="84.9" stroke-dasharray="3 2.4"/><circle class="wl-root" cx="11" cy="88" r="10" fill="none" stroke-width="2.2"/><path class="wl-root-plus" d="M6 88 h10 M11 83 v10" stroke-width="2.6" stroke-linecap="round"/><circle class="wl-edge" cx="20.8" cy="18.8" r="14"/><circle class="wl-coin" cx="20.8" cy="17.4" r="14"/><circle cx="20.8" cy="17.4" r="12.0" fill="none" class="wl-ring" stroke-width="0.89"/><text class="wl-sym" x="20.8" y="17.4" text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="19.1">$</text><circle class="wl-edge" cx="62.2" cy="30.5" r="20"/><circle class="wl-coin" cx="62.2" cy="28.5" r="20"/><circle cx="62.2" cy="28.5" r="17.1" fill="none" class="wl-ring" stroke-width="1.27"/><g transform="translate(62.2 28.5) scale(0.909)"><path class="wl-sym" d="M0 -14 L9 1 L0 6 L-9 1 Z"/><path class="wl-sym" d="M0 8.5 L9 3.2 L0 15 L-9 3.2 Z" opacity=".85"/></g><g opacity=".4"><circle class="wl-edge" cx="93.2" cy="55.0" r="14"/><circle class="wl-coin" cx="93.2" cy="53.6" r="14"/><circle cx="93.2" cy="53.6" r="12.0" fill="none" class="wl-ring" stroke-width="0.89"/><text class="wl-sym" x="93.2" y="53.6" text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="19.1">₿</text></g><rect class="wl-pp-edge" x="91.4" y="72.8" width="27" height="27" rx="6.5"/><rect class="wl-pp" x="91.4" y="70.8" width="27" height="27" rx="6.5"/><g transform="translate(95.6 74.8) scale(0.372)"><path fill-rule="evenodd" d="M38.168 13.352c-1.596-.842-3.535-1.346-5.644-1.346h-12.6l-4.218 26.92H6.413L12 3.032h15.05c5.065 0 9.056 2.827 10.518 6.755a9.643 9.643 0 0 1 .6 3.565Z" class="pp1"/><path d="M43.527 23.671A12.848 12.848 0 0 1 30.814 34.44h-5.188L23.459 47.9h-9.235l1.482-8.973 1.747-11.148.363-2.312h7.468c7.753 0 12.884-6.562 12.884-12.114l.005.002c3.817 1.964 6.038 5.944 5.354 10.317Z" class="pp2"/><path d="M38.167 13.352c-1.596-.841-3.534-1.346-5.644-1.346H19.924l-2.11 13.46h7.47c7.752 0 12.883-6.562 12.883-12.114Z" class="pp3"/></g></svg>';
-  const WalletTile = () => N("Box", { "aria-hidden": "true", sx: { width: "100%", height: ICON.tile, borderRadius: "18px", ...HOLE, flexShrink: 0, p: "6px", boxSizing: "border-box",
+  const WalletTile = (id) => N("Box", id, { "aria-hidden": "true", sx: { width: "100%", height: ICON.tile, borderRadius: "18px", ...HOLE, flexShrink: 0, p: "6px", boxSizing: "border-box",
       "& svg": { width: "100%", height: "100%", display: "block" },
       // PayPal keeps its own colors (a brand, not a currency), in its two official versions: light mode, its
       // monogram's three blues on a white square; dark mode, its dark blue square with the monogram in white
@@ -549,7 +573,7 @@
   // The tile fills the room the card has left (no description under All.This) but never sets the card's height: the
   // drawing is laid over the tile (absolute), so on a wide card its proportion (taller than wide) cannot stretch the
   // row -- and with it every card, since a row of cards is as tall as its tallest.
-  const AllThisTile = () => N("Box", { "aria-hidden": "true", sx: { position: "relative", width: "100%", flex: 1, minHeight: ICON.tile, borderRadius: "18px", ...HOLE, flexShrink: 0,
+  const AllThisTile = (id) => N("Box", id, { "aria-hidden": "true", sx: { position: "relative", width: "100%", flex: 1, minHeight: ICON.tile, borderRadius: "18px", ...HOLE, flexShrink: 0,
       // the drawing covers the whole tile (preserveAspectRatio slice): it is drawn wider than any tile, its outer sides
       // bleed (stars, cubes, specks), so a square tile trims only those and a wide one shows them
       overflow: "hidden",
@@ -591,7 +615,8 @@
     // 1px smaller than the maximum that fits, so the cluster sits a little looser in the card.
     return Math.max(1, s - 1);
   }
-  function ThemeBadgeGrid({ currentId, pickTheme, Avatar, IconButton, phone }) {
+  function ThemeBadgeGrid(p) {
+    const { currentId, pickTheme, Avatar, IconButton, phone } = p;
     const ref = React.useRef(null);
     const itemRefs = React.useRef([]);
     const rests = React.useRef(null);
@@ -695,6 +720,7 @@
       clearSpread();
     };
     return h(G.Box, {
+      ...nodeAttrs(p),
       ref, role: "listbox", "aria-label": "Themes",
       onClick: (e) => e.stopPropagation(),
       onMouseMove: live ? onMove : undefined,
@@ -727,7 +753,8 @@
     }));
   }
 
-  function GuiPlayCard({ style, className }) {
+  function GuiPlayCard(p) {
+    const { style, className } = p;
     const theme = G.useThemeContext();
     const sel = G.useOptionalSelection ? G.useOptionalSelection() : null;
     const [phone, setPhone] = React.useState(() => window.matchMedia("(max-width:480px)").matches);
@@ -758,6 +785,7 @@
       sx: { p: 0.5, borderRadius: 1, ...(opts.on ? { bgcolor: "action.selected" } : {}) },
     }, h(G.Icon, { name: opts.icon, fontSize: 18 }));
     return h(Card, {
+      ...nodeAttrs(p),
       variant: "outlined",
       style, className,
       "data-gui-inspector-control": "true",
@@ -794,23 +822,24 @@
   PAGE_TYPES.GuiPlayCard = GuiPlayCard;
 
   const stackCard = ([title, desc, href, img, allThis]) => {
-    if (img && img.gui) return N("GuiPlayCard", {});
+    const id = "cards/" + slugOf(title);
+    if (img && img.gui) return N("GuiPlayCard", id, {});
     // netget: the SVG already spells NETGET — no title text; on desktop its mark sits in a hole like the other icons.
     if (img && img.netget) {
       // netget, at every width: only its letters, centered and as wide as the card allows, on no background (the page
       // shows through), and the card's own border
       // (3px, the theme's primary color, as the letters) is the mark's frame. No title or description: the letters say
       // netget, and "The Gateway." stays in the link's label.
-      return N("Card", { component: "a", href, title: "netget", "aria-label": "netget — " + desc, variant: "outlined",
+      return N("Card", id, { component: "a", href, title: "netget", "aria-label": "netget — " + desc, variant: "outlined",
         sx: { ...cardSx, display: "flex", flexDirection: "column", alignItems: "stretch", justifyContent: "center", px: 1.25,
           borderWidth: "3px", borderColor: "primary.main", bgcolor: "transparent", backgroundImage: "none", [MOBILE]: { px: 0.5, py: 1.5 } } }, [
         // the letters fit whatever height the card has: a full card, or a button under monad beside a grown cleaker
-        N("NetgetMark", { letters: true, sx: { display: "block", width: "78% !important", alignSelf: "center", maxHeight: "100%", minHeight: 0, flexShrink: 1 } }),
+        N("NetgetMark", id + "/mark", { letters: true, sx: { display: "block", width: "78% !important", alignSelf: "center", maxHeight: "100%", minHeight: 0, flexShrink: 1 } }),
       ]);
     }
     // the .me card holds fields, so it is not itself a link (a click in a field would navigate): its title is
     const meCard = !!(img && img.monad);
-    const card = N("Card", { ...(meCard ? { component: "div" } : { component: "a", href }), ...(img.qr ? { "aria-label": title + " — " + desc, title } : {}), variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2, pt: 1.5, pb: 1,
+    const card = N("Card", img.qr ? id + "/card" : id, { ...(meCard ? { component: "div" } : { component: "a", href }), ...(img.qr ? { "aria-label": title + " — " + desc, title } : {}), variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "column", gap: 1, px: 2, pt: 1.5, pb: 1,
         ...(meCard ? { cursor: "default", "&:hover": { transform: "none" } } : {}),
         // cleaker: the card is its QR.me alone (it already says cleaker.me around its edge), centered
         ...(img.qr ? { alignItems: "center", justifyContent: "center", p: "3px" } : {}),
@@ -818,69 +847,71 @@
         [MOBILE]: { alignItems: "center", textAlign: "center", gap: 0.75, px: 0.75, py: 1.5, ...(img.qr ? { gap: 0.25, py: 1, justifyContent: "center" } : {}) } } }, [
       // every icon in the same tile, a hole in its card (HOLE): the orbs (.me, monad) and the QR included -- the same
       // container for every object, so they can stand as one kind of card anywhere (a network view, a video stream)
-      img.wallet ? WalletTile() : img.graph ? AllThisTile() : N("Box", { sx: { width: ICON.tile, height: ICON.tile, borderRadius: "18px", ...HOLE, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+      img.wallet ? WalletTile(id + "/tile") : img.graph ? AllThisTile(id + "/tile") : N("Box", id + "/tile", { sx: { width: ICON.tile, height: ICON.tile, borderRadius: "18px", ...HOLE, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           // cleaker has no title or description: its tile is the whole card
           // its dark reaches nearly to the card's corners (3px in, corners following the card's 12px)
           ...(img.qr ? { width: "100%", height: "auto", flex: 1, alignSelf: "stretch", borderRadius: "10px" } : {}),
           [MOBILE]: img.qr ? { width: "auto", height: "auto", p: "4px", borderRadius: "14px" } : { width: ICON.small.tile, height: ICON.small.tile, borderRadius: "14px" } } }, [
-        img.qr && G.QRme ? N("CleakerQRme", { value: img.qr, title })
-          : img.bubble ? N("MonadBubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
-          : img.monad ? N("MeMonad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
+        img.qr && G.QRme ? N("CleakerQRme", id + "/qr", { value: img.qr, title })
+          : img.bubble ? N("MonadBubble", id + "/bubble", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
+          : img.monad ? N("MeMonad", id + "/monad", { fallback: { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } } })
           // zoom: an image drawn with a wide transparent margin (.GUI uses ~70% of its canvas) scaled up, so it looks as big as the others
-          : N("ThemedImg", { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", ...(img.zoom ? { transform: `scale(${img.zoom})` } : {}), [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } }),
+          : N("ThemedImg", id + "/img", { light: img.light, dark: img.dark, alt: title, sx: { width: ICON.img, height: ICON.img, objectFit: "contain", ...(img.zoom ? { transform: `scale(${img.zoom})` } : {}), [MOBILE]: { width: ICON.small.img, height: ICON.small.img } } }),
       ]),
       // the title 10px under the larger icon (2px over the card's 8px gap); less padding than before, so the card grows less
       // than the icon; phones keep the compact gap
-      img.qr ? null : N("Typography", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, mt: 0.25, ...(allThis ? { textAlign: "center" } : {}),
+      img.qr ? null : N("Typography", id + "/title", { variant: "subtitle1", sx: { fontWeight: allThis ? 800 : 700, fontSize: "0.95rem", lineHeight: 1.25, mt: 0.25, ...(allThis ? { textAlign: "center" } : {}),
           [MOBILE]: img.qr ? { mt: 0, fontSize: "0.65rem", fontWeight: 600, lineHeight: 1.1, letterSpacing: "0.02em", color: "text.secondary" }
             : title.length > 12
               // a long title (mlearning.studio) on one line: its size from the card's width (a third of the row, less its
               // padding), ~0.56em a character, at most the others' 0.8rem
               ? { mt: 0, whiteSpace: "nowrap", fontSize: `min(0.8rem, calc(((100cqw - 20px) / 3 - 12px) / ${(title.length * 0.56).toFixed(2)}))` }
               : { mt: 0, fontSize: "0.8rem", overflowWrap: "anywhere" } } },
-        [meCard ? N("Link", { href, underline: "hover", color: "inherit" }, [title]) : title]),
+        [meCard ? N("Link", id + "/title-link", { href, underline: "hover", color: "inherit" }, [title]) : title]),
       // All.This has no description: its picture grows into that room and the title sits at the card's bottom
       img.graph || img.qr ? null
         // .me: "Who am I." is where you say who you are (MeIdentityField: name, then secret)
-        : meCard ? N("Box", { sx: { minWidth: 0, [MOBILE]: { display: "none" } } }, [N("MeIdentityField", {})])
-        : N("Typography", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
+        : meCard ? N("Box", id + "/who", { sx: { minWidth: 0, [MOBILE]: { display: "none" } } }, [N("MeIdentityField", id + "/field", {})])
+        : N("Typography", id + "/desc", { variant: "body2", color: "text.secondary", sx: { ...TWO_LINES, fontSize: "0.825rem", lineHeight: 1.5, [MOBILE]: { display: "none" } } }, [desc]),
     ].filter(Boolean));
     // cleaker grows (GrowCard) when a name is typed: its QR then holds name.cleaker.me
-    return img.qr ? N("GrowCard", {}, [card]) : card;
+    return img.qr ? N("GrowCard", id, {}, [card]) : card;
   };
-  const demoCard = ([title, href, img]) =>
-    N("Card", { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "row", alignItems: "stretch", minHeight: 140, overflow: "hidden", p: 0 } }, [
+  const demoCard = ([title, href, img]) => {
+    const id = "cards/demos/" + slugOf(title);
+    return N("Card", id, { component: "a", href, variant: "outlined", sx: { ...cardSx, display: "flex", flexDirection: "row", alignItems: "stretch", minHeight: 140, overflow: "hidden", p: 0 } }, [
       // 2:3 like the portrait GIFs: the card is as tall as its image (~210px at 1280), as on the static page.
-      N("Box", { component: "img", src: img, alt: "", sx: { width: "clamp(140px, 45%, 240px)", height: "auto", aspectRatio: "2 / 3", minHeight: 140, objectFit: "cover", flexShrink: 0, display: "block" } }),
-      N("Box", { sx: { display: "flex", alignItems: "center", flex: 1, minWidth: 0, p: "clamp(14px, 2vw, 20px) clamp(20px, 3vw, 40px) clamp(14px, 2vw, 20px) clamp(14px, 2vw, 24px)" } }, [
-        N("Typography", { component: "span", sx: { fontWeight: 900, fontSize: "clamp(0.95rem, 1vw + 0.75rem, 1.2rem)", lineHeight: 1.15, overflowWrap: "normal", wordBreak: "keep-all", hyphens: "none" } }, [title]),
+      N("Box", id + "/img", { component: "img", src: img, alt: "", sx: { width: "clamp(140px, 45%, 240px)", height: "auto", aspectRatio: "2 / 3", minHeight: 140, objectFit: "cover", flexShrink: 0, display: "block" } }),
+      N("Box", id + "/body", { sx: { display: "flex", alignItems: "center", flex: 1, minWidth: 0, p: "clamp(14px, 2vw, 20px) clamp(20px, 3vw, 40px) clamp(14px, 2vw, 20px) clamp(14px, 2vw, 24px)" } }, [
+        N("Typography", id + "/title", { component: "span", sx: { fontWeight: 900, fontSize: "clamp(0.95rem, 1vw + 0.75rem, 1.2rem)", lineHeight: 1.15, overflowWrap: "normal", wordBreak: "keep-all", hyphens: "none" } }, [title]),
       ]),
     ]);
+  };
   // Source Code: no card of its own -- its registry icons (npm, GitHub, PyPI, crates.io; the icons say which, so no text
   // names them) sit at the right end of the Demos heading, on the same line, under a "Source Code" label like the
   // section's own.
-  const sourceNav = N("Box", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap", justifyContent: "flex-end", [MOBILE]: { display: "none" } } }, [
-    label("Source Code", { mb: 0, mr: 0.5 }),
-    ...SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
+  const sourceNav = N("Box", "section/demos/source", { component: "nav", "aria-label": "Source code", sx: { display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap", justifyContent: "flex-end", [MOBILE]: { display: "none" } } }, [
+    label("section/demos/source/label", "Source Code", { mb: 0, mr: 0.5 }),
+    ...SOURCES.map(([aria, href, img]) => N("Link", "section/demos/source/" + slugOf(aria), { href, ariaLabel: aria, title: aria, underline: "none",
       sx: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 34, height: 34, borderRadius: "50%", ...HOLE, opacity: 0.9, "&:hover": { opacity: 1, bgcolor: "action.selected" } } },
-      [N("ThemedImg", { ...img, sx: { width: 18, height: 18, objectFit: "contain", display: "block" } })])),
+      [N("ThemedImg", "section/demos/source/" + slugOf(aria) + "/img", { ...img, sx: { width: 18, height: 18, objectFit: "contain", display: "block" } })])),
   ]);
   // phones: Source Code is a card in the Docs row instead, the ninth slot the three-a-row leaves empty -- its four
   // registry icons two by two in the same tile as every other card, "Source Code" as its title. Desktop keeps it
   // beside Demos (four a row leaves no empty slot there).
-  const sourceCard = N("Box", { component: "nav", "aria-label": "Source code", style: { order: 99 },
+  const sourceCard = N("Box", "cards/source", { component: "nav", "aria-label": "Source code", style: { order: 99 },
       sx: { display: "none", [MOBILE]: { display: "flex", flexDirection: "column", alignItems: "center", gap: 0.5, py: 1, px: 0.75,
         border: 1, borderColor: "divider", borderRadius: "12px", bgcolor: "background.paper" } } }, [
-    N("Box", { sx: { width: "100%", height: 83, borderRadius: "14px", ...HOLE, flexShrink: 0, boxSizing: "border-box", p: "6px",
+    N("Box", "cards/source/tile", { sx: { width: "100%", height: 83, borderRadius: "14px", ...HOLE, flexShrink: 0, boxSizing: "border-box", p: "6px",
         display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px", placeItems: "center" } },
-      SOURCES.map(([aria, href, img]) => N("Link", { href, ariaLabel: aria, title: aria, underline: "none",
+      SOURCES.map(([aria, href, img]) => N("Link", "cards/source/" + slugOf(aria), { href, ariaLabel: aria, title: aria, underline: "none",
         sx: { display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%", borderRadius: "50%", "&:hover": { bgcolor: "action.selected" } } },
-        [N("ThemedImg", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
-    N("Typography", { variant: "subtitle1", sx: { fontWeight: 700, fontSize: "0.8rem", lineHeight: 1.25, mt: 0, whiteSpace: "nowrap" } }, ["Source Code"]),
+        [N("ThemedImg", "cards/source/" + slugOf(aria) + "/img", { ...img, sx: { width: 20, height: 20, objectFit: "contain", display: "block" } })]))),
+    N("Typography", "cards/source/title", { variant: "subtitle1", sx: { fontWeight: 700, fontSize: "0.8rem", lineHeight: 1.25, mt: 0, whiteSpace: "nowrap" } }, ["Source Code"]),
   ]);
-  const demosSection = N("Box", { component: "section", sx: { mt: 5 } }, [
-    N("Box", { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1.5, flexWrap: "wrap", mb: 1.75 } }, [label("Demos", { mb: 0 }), sourceNav]),
-    grid(3, DEMOS.map(demoCard)),
+  const demosSection = N("Box", "section/demos", { component: "section", sx: { mt: 5 } }, [
+    N("Box", "section/demos/header", { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1.5, flexWrap: "wrap", mb: 1.75 } }, [label("section/demos/label", "Demos", { mb: 0 }), sourceNav]),
+    grid("section/demos/grid", 3, DEMOS.map(demoCard)),
   ]);
 
   // GUI 4.1.0's SearchBar paints itself with inline styles from two fixed palettes (light: #fff / #0f1720 / teal,
@@ -906,29 +937,29 @@
   };
   // Landing header (replaces the app TopBar): big logo + title + tagline, search on the same row
   // (full width below it at <=480px, like the old page), small theme/settings controls.
-  const header = N("Box", { component: "header", sx: { display: "flex", alignItems: "center", gap: 1.75, flexWrap: "wrap", mb: 5 } }, [
-    N("Link", { href: "https://neurons-me.github.io/", ariaLabel: "neurons.me home", underline: "none", sx: { display: "inline-flex", flexShrink: 0 } }, [
-      N("Box", { component: "img", src: LOGO, alt: "neurons.me", sx: { width: 44, height: 44, objectFit: "contain", display: "block" } }),
+  const header = N("Box", "hero", { component: "header", sx: { display: "flex", alignItems: "center", gap: 1.75, flexWrap: "wrap", mb: 5 } }, [
+    N("Link", "hero/logo", { href: "https://neurons-me.github.io/", ariaLabel: "neurons.me home", underline: "none", sx: { display: "inline-flex", flexShrink: 0 } }, [
+      N("Box", "hero/logo/img", { component: "img", src: LOGO, alt: "neurons.me", sx: { width: 44, height: 44, objectFit: "contain", display: "block" } }),
     ]),
-    N("Box", { sx: { minWidth: 0 } }, [
-      N("Typography", { component: "h1", sx: { fontSize: "1.6rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1, color: "text.primary" } }, ["neurons.me"]),
-      N("Typography", { component: "p", color: "text.secondary", sx: { fontSize: "0.9rem", mt: 0.5 } }, ["Go Algorithmic."]),
+    N("Box", "hero/titles", { sx: { minWidth: 0 } }, [
+      N("Typography", "hero/title", { component: "h1", sx: { fontSize: "1.6rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1, color: "text.primary" } }, ["neurons.me"]),
+      N("Typography", "hero/tagline", { component: "p", color: "text.secondary", sx: { fontSize: "0.9rem", mt: 0.5 } }, ["Go Algorithmic."]),
     ]),
-    N("Box", { className: "index-search", sx: (t) => ({ ml: "auto", width: 280, maxWidth: "40vw", order: 2, [MOBILE]: { order: 4, ml: 0, width: "100%", maxWidth: "100%" }, ...searchThemeSx(t) }) }, [
-      N("SearchBar", { src: "/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true, density: "compact", colors: "theme" }),
+    N("Box", "search", { className: "index-search", sx: (t) => ({ ml: "auto", width: 280, maxWidth: "40vw", order: 2, [MOBILE]: { order: 4, ml: 0, width: "100%", maxWidth: "100%" }, ...searchThemeSx(t) }) }, [
+      N("SearchBar", "search/bar", { src: "/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true, density: "compact", colors: "theme" }),
     ]),
   ]);
-  const mainSections = (top) => N("Box", { component: "main", sx: { maxWidth: 960, mx: "auto", px: { xs: 2, sm: 4 }, pt: { xs: 4, sm: 7 }, pb: 6 } }, [
+  const mainSections = (top) => N("Box", "main", { component: "main", sx: { maxWidth: 960, mx: "auto", px: { xs: 2, sm: 4 }, pt: { xs: 4, sm: 7 }, pb: 6 } }, [
     header,
     ...(top || []),
-    N("Box", { component: "section" }, [
-      N("Link", { href: "https://neurons-me.github.io/docs/", underline: "hover", color: "inherit", sx: { display: "inline-block", mb: 1.75, color: "text.secondary" } }, [label("Docs")]),
+    N("Box", "section/docs", { component: "section" }, [
+      N("Link", "section/docs/label-link", { href: "https://neurons-me.github.io/docs/", underline: "hover", color: "inherit", sx: { display: "inline-block", mb: 1.75, color: "text.secondary" } }, [label("section/docs/label", "Docs")]),
       // as many cards as fit, at least 150px each (the 109px icon + padding), at most 4: 4 -> 3 -> 2 as the window narrows,
       // never a jump from 4 to 2; phones keep their own compact three
       // a wrapping row, not a grid: a card can grow by any amount (cleaker, as its name gets longer) and the cards after
       // it flow on, the one at the end of a full row moving down; every card keeps its own size. Widths as the grid had:
       // 4 a row, 3 below 648px of row, 2 below 482px; phones 3 compact.
-      N("Box", { "data-docs-row": "", sx: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: 2, containerType: "inline-size",
+      N("Box", "section/docs/row", { "data-docs-row": "", sx: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: 2, containerType: "inline-size",
         [MOBILE]: { gap: 1.25 },
         "& > *:not([data-stack]), & > [data-stack][style] > *": { boxSizing: "border-box", minWidth: 0, maxWidth: "100%",
           flex: "0 0 calc((100cqw - 48px) / 4 * var(--grow, 1))", minHeight: "calc(188px * var(--grow, 1))",
@@ -940,14 +971,14 @@
           // each card's place in the row as `order` (STACK's order), so netget can sit in .me's column when stacked and
           // still be the first card of the second row otherwise
           const cards = STACK.map(stackCard).map((c, i) => ({ ...c, props: { ...c.props, style: { ...(c.props.style || {}), order: i } } }));
-          return [N("StackBeside", {}, [cards[0], cards[4]]), cards[1], cards[2], cards[3], ...cards.slice(5), sourceCard];
+          return [N("StackBeside", "cards/me-netget", {}, [cards[0], cards[4]]), cards[1], cards[2], cards[3], ...cards.slice(5), sourceCard];
         })()),
     ]),
     demosSection,
-    section("Architecture & Benchmarks", grid(2, ARCH.concat(BENCH).map(resourceCard))),
-    section("NRP & Axioms", grid(2, NRP.map(resourceCard))),
-    section("Essays & Notation", grid(2, ESSAYS.map(resourceCard))),
-    section("Network", N("Box", { sx: { display: "grid", gridTemplateColumns: "1fr" } }, NETWORK.map(resourceCard))),
+    section("architecture", "Architecture & Benchmarks", grid("section/architecture/grid", 2, ARCH.concat(BENCH).map(resourceCard("cards/architecture")))),
+    section("nrp", "NRP & Axioms", grid("section/nrp/grid", 2, NRP.map(resourceCard("cards/nrp")))),
+    section("essays", "Essays & Notation", grid("section/essays/grid", 2, ESSAYS.map(resourceCard("cards/essays")))),
+    section("network", "Network", N("Box", "section/network/grid", { sx: { display: "grid", gridTemplateColumns: "1fr" } }, NETWORK.map(resourceCard("cards/network")))),
   ]);
 
   const content = mainSections();
@@ -962,25 +993,6 @@
   const APP_SURFACE = "neurons-me.github.io";
   const APP_POSITION = CLEAKER_NS + " @ " + APP_SURFACE;
   // No left rail: Monad and the other categories are already listed in the home content.
-
-  function renderSpec(node, key) {
-    if (node == null || node === false) return null;
-    if (typeof node === "string" || typeof node === "number") return node;
-    if (Array.isArray(node)) return node.map((n, i) => renderSpec(n, i));
-    if (React.isValidElement && React.isValidElement(node)) return node;
-    if (typeof node !== "object") return null;
-    const typeName = node.type;
-    const registry = (G.Registry || G.registry || {});
-    const reg = registry[typeName];
-    // Registry entries are {type, meta, resolve} specs, not components. Prefer G[Name] (the React component).
-    const resolved = (reg && typeof reg.resolve === "function") ? null : (typeof reg === "function" || (reg && reg.$$typeof) ? reg : null);
-    const type = PAGE_TYPES[typeName] || G[typeName] || resolved || (G.Components && G.Components[typeName]) || (G.Atoms && G.Atoms[typeName]) || (G.Molecules && G.Molecules[typeName]) || typeName;
-    const props = { ...(node.props || {}) };
-    if (key != null && props.key == null) props.key = key;
-    const ch = node.children;
-    const kids = ch == null ? null : Array.isArray(ch) ? ch.map((n, i) => renderSpec(n, i)) : [renderSpec(ch)];
-    return kids ? h(type, props, ...kids) : h(type, props);
-  }
 
   function BrandWhere({ where }) {
     return h(G.Box, { component: "span", title: APP_POSITION, "data-gui-node-id": "GUI.window.layout.marks.brand.where",
@@ -1055,7 +1067,7 @@
     ].filter(Boolean));
   }
 
-  function HomeApp() {
+  function HomeApp(p) {
     const [narrow, setNarrow] = React.useState(() => window.matchMedia("(max-width: 599px)").matches);
     const [qrMenuOpen, setQrMenuOpen] = React.useState(false);
     const qrCellRef = React.useRef(null);
@@ -1126,8 +1138,8 @@
         elementsLeft: [...(marks.topStart || [])],
         ...((marks.topEnd && marks.topEnd.length) ? { elementsRight: marks.topEnd } : {}),
       },
-    }, renderSpec(content));
-    return h(G.Box, { sx: { minHeight: "100vh", bgcolor: "background.default", color: "text.primary" } }, [
+    }, p.children);
+    return h(G.Box, { ...nodeAttrs(p), sx: { minHeight: "100vh", bgcolor: "background.default", color: "text.primary" } }, [
       shell,
       marks.float && FloatingMark ? h(FloatingMark, { corner: marks.float.corner }, marks.float.element) : null,
       qrMenuOpen ? h(QrToolsMenu, { onClose: () => setQrMenuOpen(false), menuRef }) : null,
@@ -1160,7 +1172,7 @@
   const GRID_ON = params.get("grid") === "1"; // like ?inspector=1: page-level start state for screenshots/links
   if (G.getInspectorEnabled() !== INSPECTOR_ON) G.setInspectorEnabled(INSPECTOR_ON);
   const ROOT = document.getElementById("root");
-  const spec = N("HomeApp", {});
+  const spec = N("HomeApp", "page", {}, [content]);
   const mountPage = () => G.mount(spec, ROOT, {
     gui: { ...G, Theme: PageTheme, registry: { ...G.Registry, ...PAGE_TYPES, HomeApp } },
     devtools: { enabled: true, inspector: INSPECTOR_ON, adminView: false, inspectorToggleVisible: false },
