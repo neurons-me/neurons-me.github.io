@@ -615,14 +615,52 @@
     // 1px smaller than the maximum that fits, so the cluster sits a little looser in the card.
     return Math.max(1, s - 1);
   }
+  function ThemeBadge(p) {
+    const { themeId, name, badgeUrl } = p;
+    const theme = G.useThemeContext();
+    const on = !!(theme && theme.themeId === themeId);
+    const A = G.Atoms || {};
+    const IconButton = A.IconButton || G.IconButton;
+    const Avatar = A.Avatar || G.Avatar;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const phone = window.matchMedia("(max-width:480px)").matches;
+    const live = !phone && !reduce && window.matchMedia("(hover: hover)").matches;
+    // Wrapper holds data-gui-node-id (grid outline stays in the cell). The button keeps the
+    // selection ring and is the element ThemeBadgeGrid translates, so hover is not fighting the outline.
+    return h(G.Box, { ...nodeAttrs(p), sx: { width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "visible" } },
+      h(IconButton || "button", {
+        size: "small", role: "option", "aria-selected": on, type: "button",
+        "aria-label": "Theme " + name, title: name,
+        onClick: (e) => {
+          e.preventDefault(); e.stopPropagation();
+          if (theme && typeof theme.setThemeId === "function" && themeId !== theme.themeId) theme.setThemeId(themeId);
+        },
+        sx: {
+          p: 0, width: "100%", height: "100%", minWidth: 0, borderRadius: "50%", overflow: "visible",
+          position: "relative", zIndex: on ? 2 : 1, boxSizing: "border-box", flexShrink: 0,
+          outline: on ? "2px solid" : "2px solid transparent",
+          outlineColor: on ? "primary.main" : "transparent", outlineOffset: 1,
+          transition: reduce ? "none" : "transform 180ms ease-out",
+          willChange: live ? "transform" : "auto",
+          "&:hover": { bgcolor: "transparent" },
+        },
+      }, Avatar ? h(Avatar, { src: badgeUrl, alt: "", sx: { width: "100%", height: "100%" } }) : (name && name[0])));
+  }
+
   function ThemeBadgeGrid(p) {
-    const { currentId, pickTheme, Avatar, IconButton, phone } = p;
+    const [phone, setPhone] = React.useState(() => window.matchMedia("(max-width:480px)").matches);
     const ref = React.useRef(null);
     const itemRefs = React.useRef([]);
     const rests = React.useRef(null);
     const raf = React.useRef(0);
     const [reduce, setReduce] = React.useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     const [size, setSize] = React.useState(() => phone ? 28 : 42);
+    React.useEffect(() => {
+      const mq = window.matchMedia("(max-width:480px)");
+      const on = () => setPhone(mq.matches);
+      if (mq.addEventListener) mq.addEventListener("change", on); else mq.addListener(on);
+      return () => { if (mq.removeEventListener) mq.removeEventListener("change", on); else mq.removeListener(on); };
+    }, []);
     React.useEffect(() => {
       const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
       const on = () => setReduce(mq.matches);
@@ -648,6 +686,7 @@
     }, [phone]);
     React.useEffect(() => { rests.current = null; }, [size]);
     const live = !phone && !reduce && window.matchMedia("(hover: hover)").matches;
+    const itemsOf = () => (ref.current ? [...ref.current.querySelectorAll('[role="option"]')] : []);
     const contentBox = (el) => {
       const card = (el && el.closest && el.closest("[data-gui-card='gui-play']")) || el;
       const r = card.getBoundingClientRect();
@@ -660,11 +699,12 @@
     };
     const clearSpread = () => {
       rests.current = null;
-      itemRefs.current.forEach((el) => {
+      itemsOf().forEach((el) => {
         if (!el) return;
         el.style.transform = "";
         el.style.zIndex = "";
       });
+      itemRefs.current = [];
     };
     const onMove = (e) => {
       if (!live || !ref.current) return;
@@ -672,7 +712,8 @@
       if (raf.current) cancelAnimationFrame(raf.current);
       raf.current = requestAnimationFrame(() => {
         if (!ref.current) return;
-        const items = itemRefs.current;
+        const items = itemsOf();
+        itemRefs.current = items;
         if (!rests.current) {
           // Snapshot rest centers in viewport coordinates, before any transform.
           rests.current = items.map((el) => {
@@ -684,7 +725,7 @@
         const { grow, push, sigma, inset } = BADGE;
         const box = contentBox(ref.current);
         const left = box.left + inset, right = box.right - inset, top = box.top + inset, bottom = box.bottom - inset;
-        for (let i = 0; i < THEMES.length; i++) {
+        for (let i = 0; i < items.length; i++) {
           const el = items[i], c = rests.current[i];
           if (!el || !c) continue;
           const dx = c.x - x, dy = c.y - y;
@@ -732,31 +773,26 @@
         justifyContent: "center", justifyItems: "center", alignItems: "center", alignContent: "center",
         overflow: "visible", position: "relative", py: 0.15,
       },
-    }, THEMES.map((t, i) => {
-      const on = t.themeId === currentId;
-      const name = t.themeName || t.themeId;
-      return h(IconButton || "button", {
-        key: t.themeId, size: "small", role: "option", "aria-selected": on, type: "button",
-        "aria-label": "Theme " + name, title: name,
-        ref: (el) => { itemRefs.current[i] = el; },
-        onClick: (e) => { e.preventDefault(); e.stopPropagation(); pickTheme(t.themeId); },
-        sx: {
-          p: 0, width: size, height: size, minWidth: size, borderRadius: "50%", overflow: "visible",
-          position: "relative", zIndex: on ? 2 : 1, boxSizing: "border-box", flexShrink: 0,
-          outline: on ? "2px solid" : "2px solid transparent",
-          outlineColor: on ? "primary.main" : "transparent", outlineOffset: 1,
-          transition: reduce ? "none" : "transform 180ms ease-out",
-          willChange: live ? "transform" : "auto",
-          "&:hover": { bgcolor: "transparent" },
-        },
-      }, Avatar ? h(Avatar, { src: t.badgeUrl, alt: "", sx: { width: size, height: size } }) : name[0]);
-    }));
+    }, p.children);
   }
 
-  function GuiPlayCard(p) {
-    const { style, className } = p;
-    const theme = G.useThemeContext();
-    const sel = G.useOptionalSelection ? G.useOptionalSelection() : null;
+  function GuiPlayLink(p) {
+    // Registry Link.resolve drops data-gui-node-id; stamp it here on the host <a>.
+    return h(G.Link, {
+      ...nodeAttrs(p),
+      href: p.href, underline: p.underline, color: p.color, title: p.title,
+      "aria-label": p["aria-label"] || p.ariaLabel,
+      sx: p.sx,
+    }, p.children);
+  }
+
+  function GuiPlayGear(p) {
+    return h(G.Link, { ...nodeAttrs(p), href: GUI_DOCS, "aria-label": ".GUI docs", title: ".GUI docs",
+      sx: { display: "inline-flex", alignItems: "center", color: "primary.main", lineHeight: 0, "&:hover": { opacity: 0.85 } } },
+      h(G.Icon, { name: "settings", fontSize: 18 }));
+  }
+
+  function usePhone() {
     const [phone, setPhone] = React.useState(() => window.matchMedia("(max-width:480px)").matches);
     React.useEffect(() => {
       const mq = window.matchMedia("(max-width:480px)");
@@ -764,26 +800,48 @@
       if (mq.addEventListener) mq.addEventListener("change", on); else mq.addListener(on);
       return () => { if (mq.removeEventListener) mq.removeEventListener("change", on); else mq.removeListener(on); };
     }, []);
-    const [insp, setInsp] = React.useState(() => Boolean(G.getInspectorEnabled && G.getInspectorEnabled()));
-    const grid = Boolean(sel && sel.gridEnabled);
-    const currentId = theme && theme.themeId;
-    const pickTheme = (id) => { if (theme && typeof theme.setThemeId === "function" && id !== currentId) theme.setThemeId(id); };
-    const toggleInsp = () => {
-      if (typeof G.toggleInspector === "function") G.toggleInspector();
-      else if (typeof G.setInspectorEnabled === "function") G.setInspectorEnabled(!insp);
-      setInsp(Boolean(G.getInspectorEnabled && G.getInspectorEnabled()));
-    };
-    const toggleGrid = () => { if (sel && typeof sel.setGridEnabled === "function") sel.setGridEnabled(!grid); };
+    return phone;
+  }
+
+  function GuiPlayMode(p) {
+    const phone = usePhone();
+    if (!G.ThemeModeToggle) return null;
+    return h(G.Box, { ...nodeAttrs(p), sx: { display: "inline-flex", alignItems: "center" } },
+      h(G.ThemeModeToggle, { variant: phone ? "minimal" : "switchMinimal", iconSize: "small", "aria-label": "Toggle light and dark" }));
+  }
+
+  function guiToolButton(p, opts) {
     const A = G.Atoms || {};
     const IconButton = A.IconButton || G.IconButton;
-    const Avatar = A.Avatar || G.Avatar;
-    const Card = G.Card || (G.Components && G.Components.Card) || A.Card;
-    const toolBtn = (opts) => h(IconButton || "button", {
+    return h(IconButton || "button", {
+      ...nodeAttrs(p),
       type: "button", size: "small", color: opts.on ? "primary" : "inherit",
       "aria-label": opts.label, "aria-pressed": !!opts.on, title: opts.label,
       onClick: (e) => { e.preventDefault(); e.stopPropagation(); opts.onClick(e); },
       sx: { p: 0.5, borderRadius: 1, ...(opts.on ? { bgcolor: "action.selected" } : {}) },
     }, h(G.Icon, { name: opts.icon, fontSize: 18 }));
+  }
+
+  function GuiPlayInspector(p) {
+    const [insp, setInsp] = React.useState(() => Boolean(G.getInspectorEnabled && G.getInspectorEnabled()));
+    const toggleInsp = () => {
+      if (typeof G.toggleInspector === "function") G.toggleInspector();
+      else if (typeof G.setInspectorEnabled === "function") G.setInspectorEnabled(!insp);
+      setInsp(Boolean(G.getInspectorEnabled && G.getInspectorEnabled()));
+    };
+    return guiToolButton(p, { label: insp ? "Inspector on" : "Inspector off", icon: "code", on: insp, onClick: toggleInsp });
+  }
+
+  function GuiPlayGrid(p) {
+    const sel = G.useOptionalSelection ? G.useOptionalSelection() : null;
+    if (!sel) return null;
+    const grid = Boolean(sel.gridEnabled);
+    return guiToolButton(p, { label: grid ? "Grid on" : "Grid off", icon: "grid_on", on: grid, onClick: () => { if (typeof sel.setGridEnabled === "function") sel.setGridEnabled(!grid); } });
+  }
+
+  function GuiPlayCard(p) {
+    const { style, className, children } = p;
+    const Card = G.Card || (G.Components && G.Components.Card) || (G.Atoms && G.Atoms.Card);
     return h(Card, {
       ...nodeAttrs(p),
       variant: "outlined",
@@ -796,34 +854,40 @@
         "&:hover": { borderColor: "primary.main", boxShadow: 3, transform: "none", textDecoration: "none" },
         [MOBILE]: { px: 0.75, py: 1, gap: 0.5 },
       },
-    }, [
-      h(G.Box, { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 0.75, minWidth: 0 } }, [
-        // title and the Docs + gear row all go to /GUI/ (https://neurons-me.github.io/GUI/; /.GUI is 404)
-        h(G.Link, { href: GUI_DOCS, underline: "hover", color: "inherit", "aria-label": ".GUI docs",
-          sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.2, minWidth: 0, [MOBILE]: { fontSize: "0.8rem" } } }, [".GUI"]),
-        h(G.Box, { sx: { display: "inline-flex", alignItems: "center", gap: 0.5, flexShrink: 0 } }, [
-          h(G.Link, { href: GUI_DOCS, underline: "hover", color: "primary", "aria-label": ".GUI docs", sx: { fontSize: "0.75rem", fontWeight: 700 } }, ["Docs"]),
-          h(G.Link, { href: GUI_DOCS, "aria-label": ".GUI docs", title: ".GUI docs",
-            sx: { display: "inline-flex", alignItems: "center", color: "primary.main", lineHeight: 0, "&:hover": { opacity: 0.85 } } },
-            h(G.Icon, { name: "settings", fontSize: 18 })),
-        ]),
-      ]),
-      h(ThemeBadgeGrid, { currentId, pickTheme, Avatar, IconButton, phone }),
-      h(G.Box, { onClick: (e) => e.stopPropagation(), sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 0.25, mt: 0.25 } }, [
-        G.ThemeModeToggle ? h(G.ThemeModeToggle, { variant: phone ? "minimal" : "switchMinimal", iconSize: "small", "aria-label": "Toggle light and dark" }) : null,
-        h(G.Box, { sx: { display: "flex", alignItems: "center" } }, [
-          toolBtn({ label: insp ? "Inspector on" : "Inspector off", icon: "code", on: insp, onClick: toggleInsp }),
-          sel ? toolBtn({ label: grid ? "Grid on" : "Grid off", icon: "grid_on", on: grid, onClick: toggleGrid }) : null,
-        ].filter(Boolean)),
-      ].filter(Boolean)),
-    ]);
+    }, children);
   }
 
+  const guiPlaySpec = () => N("GuiPlayCard", "cards/gui", {}, [
+    N("Box", "cards/gui/header", { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 0.75, minWidth: 0 } }, [
+      N("GuiPlayLink", "cards/gui/title", { href: GUI_DOCS, underline: "hover", color: "inherit", "aria-label": ".GUI docs",
+        sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.2, minWidth: 0, [MOBILE]: { fontSize: "0.8rem" } } }, [".GUI"]),
+      N("Box", "cards/gui/links", { sx: { display: "inline-flex", alignItems: "center", gap: 0.5, flexShrink: 0 } }, [
+        N("GuiPlayLink", "cards/gui/docs", { href: GUI_DOCS, underline: "hover", color: "primary", "aria-label": ".GUI docs", sx: { fontSize: "0.75rem", fontWeight: 700 } }, ["Docs"]),
+        N("GuiPlayGear", "cards/gui/gear", {}),
+      ]),
+    ]),
+    N("ThemeBadgeGrid", "cards/gui/themes", {}, THEMES.map((t) => N("ThemeBadge", "cards/gui/themes/" + t.themeId, { themeId: t.themeId, name: t.themeName || t.themeId, badgeUrl: t.badgeUrl }))),
+    N("Box", "cards/gui/tools", { onClick: (e) => e.stopPropagation(), sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 0.25, mt: 0.25 } }, [
+      N("GuiPlayMode", "cards/gui/mode", {}),
+      N("Box", "cards/gui/toggles", { sx: { display: "flex", alignItems: "center" } }, [
+        N("GuiPlayInspector", "cards/gui/inspector", {}),
+        N("GuiPlayGrid", "cards/gui/grid", {}),
+      ]),
+    ]),
+  ]);
+
+  PAGE_TYPES.ThemeBadge = ThemeBadge;
+  PAGE_TYPES.ThemeBadgeGrid = ThemeBadgeGrid;
+  PAGE_TYPES.GuiPlayLink = GuiPlayLink;
+  PAGE_TYPES.GuiPlayGear = GuiPlayGear;
+  PAGE_TYPES.GuiPlayMode = GuiPlayMode;
+  PAGE_TYPES.GuiPlayInspector = GuiPlayInspector;
+  PAGE_TYPES.GuiPlayGrid = GuiPlayGrid;
   PAGE_TYPES.GuiPlayCard = GuiPlayCard;
 
   const stackCard = ([title, desc, href, img, allThis]) => {
     const id = "cards/" + slugOf(title);
-    if (img && img.gui) return N("GuiPlayCard", id, {});
+    if (img && img.gui) return guiPlaySpec();
     // netget: the SVG already spells NETGET — no title text; on desktop its mark sits in a hole like the other icons.
     if (img && img.netget) {
       // netget, at every width: only its letters, centered and as wide as the card allows, on no background (the page
