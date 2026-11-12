@@ -572,6 +572,161 @@
     dangerouslySetInnerHTML: { __html: ALLTHIS_SVG } });
   // Live docs path: https://neurons-me.github.io/GUI/ (200). https://neurons-me.github.io/.GUI/ is 404.
   const GUI_DOCS = "https://neurons-me.github.io/GUI/";
+  // The .GUI card's theme badges: a 4×2 cluster sized from the card's inner width,
+  // as large as will fit with a small even gap (no overlap), always inside the padding.
+  // On a fine pointer, the nearest badge grows a little and its neighbors ease aside —
+  // transforms only, and every box is clamped to the card's content box so edge icons
+  // never push out past the card. Leaving the grid, prefers-reduced-motion, or a coarse
+  // pointer (phones) keeps the rest state; the badges stay tappable.
+  const BADGE = { max: 44, min: 16, gap: 6, inset: 0.5, grow: 0.15, push: 14, sigma: 38 };
+  function badgeSizeFor(inner) {
+    const { max, min, gap, grow } = BADGE;
+    const available = Math.max(0, inner);
+    // Leave enough side room that a 1.15 hover scale still fits in the content box.
+    let s = Math.floor((available - 3 * gap) / (4 + grow));
+    if (s > max) s = max;
+    if (s < min) s = min;
+    while (s > 1 && 4 * s + 3 * gap + s * grow > available) s--;
+    if (s < 1) s = 1;
+    // 1px smaller than the maximum that fits, so the cluster sits a little looser in the card.
+    return Math.max(1, s - 1);
+  }
+  function ThemeBadgeGrid({ currentId, pickTheme, Avatar, IconButton, phone }) {
+    const ref = React.useRef(null);
+    const itemRefs = React.useRef([]);
+    const rests = React.useRef(null);
+    const raf = React.useRef(0);
+    const [reduce, setReduce] = React.useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const [size, setSize] = React.useState(() => phone ? 28 : 42);
+    React.useEffect(() => {
+      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const on = () => setReduce(mq.matches);
+      if (mq.addEventListener) mq.addEventListener("change", on); else mq.addListener(on);
+      return () => {
+        if (mq.removeEventListener) mq.removeEventListener("change", on); else mq.removeListener(on);
+        if (raf.current) cancelAnimationFrame(raf.current);
+      };
+    }, []);
+    React.useLayoutEffect(() => {
+      const el = ref.current;
+      if (!el) return;
+      const fit = () => {
+        // getBoundingClientRect (not integer clientWidth) so a 97.6px phone card does not round up and overflow.
+        const next = badgeSizeFor(el.getBoundingClientRect().width);
+        setSize((prev) => (prev === next ? prev : next));
+      };
+      fit();
+      if (typeof ResizeObserver !== "function") return undefined;
+      const ro = new ResizeObserver(fit);
+      ro.observe(el);
+      return () => ro.disconnect();
+    }, [phone]);
+    React.useEffect(() => { rests.current = null; }, [size]);
+    const live = !phone && !reduce && window.matchMedia("(hover: hover)").matches;
+    const contentBox = (el) => {
+      const card = (el && el.closest && el.closest("[data-gui-card='gui-play']")) || el;
+      const r = card.getBoundingClientRect();
+      const cs = getComputedStyle(card);
+      const L = (parseFloat(cs.borderLeftWidth) || 0) + (parseFloat(cs.paddingLeft) || 0);
+      const R = (parseFloat(cs.borderRightWidth) || 0) + (parseFloat(cs.paddingRight) || 0);
+      const T = (parseFloat(cs.borderTopWidth) || 0) + (parseFloat(cs.paddingTop) || 0);
+      const B = (parseFloat(cs.borderBottomWidth) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      return { left: r.left + L, top: r.top + T, right: r.right - R, bottom: r.bottom - B };
+    };
+    const clearSpread = () => {
+      rests.current = null;
+      itemRefs.current.forEach((el) => {
+        if (!el) return;
+        el.style.transform = "";
+        el.style.zIndex = "";
+      });
+    };
+    const onMove = (e) => {
+      if (!live || !ref.current) return;
+      const x = e.clientX, y = e.clientY;
+      if (raf.current) cancelAnimationFrame(raf.current);
+      raf.current = requestAnimationFrame(() => {
+        if (!ref.current) return;
+        const items = itemRefs.current;
+        if (!rests.current) {
+          // Snapshot rest centers in viewport coordinates, before any transform.
+          rests.current = items.map((el) => {
+            if (!el) return null;
+            const r = el.getBoundingClientRect();
+            return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+          });
+        }
+        const { grow, push, sigma, inset } = BADGE;
+        const box = contentBox(ref.current);
+        const left = box.left + inset, right = box.right - inset, top = box.top + inset, bottom = box.bottom - inset;
+        for (let i = 0; i < THEMES.length; i++) {
+          const el = items[i], c = rests.current[i];
+          if (!el || !c) continue;
+          const dx = c.x - x, dy = c.y - y;
+          const dist = Math.hypot(dx, dy);
+          const g = Math.exp(-(dist * dist) / (2 * sigma * sigma));
+          const ring = (dist / sigma) * g;
+          const inv = dist > 0.5 ? 1 / dist : 0;
+          let scale = 1 + grow * g;
+          const maxS = Math.min(
+            (2 * Math.max(0, c.x - left)) / size,
+            (2 * Math.max(0, right - c.x)) / size,
+            (2 * Math.max(0, c.y - top)) / size,
+            (2 * Math.max(0, bottom - c.y)) / size
+          );
+          if (scale > maxS) scale = Math.max(1, maxS);
+          let nx = c.x + dx * inv * push * ring;
+          let ny = c.y + dy * inv * push * ring;
+          const half = size * scale / 2;
+          const minX = left + half, maxX = right - half;
+          const minY = top + half, maxY = bottom - half;
+          if (minX <= maxX) nx = Math.min(maxX, Math.max(minX, nx));
+          else nx = (left + right) / 2;
+          if (minY <= maxY) ny = Math.min(maxY, Math.max(minY, ny));
+          else ny = (top + bottom) / 2;
+          el.style.transform = "translate(" + (nx - c.x) + "px, " + (ny - c.y) + "px) scale(" + scale + ")";
+          el.style.zIndex = String(Math.round(10 + g * 20));
+        }
+      });
+    };
+    const onLeave = () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+      raf.current = 0;
+      clearSpread();
+    };
+    return h(G.Box, {
+      ref, role: "listbox", "aria-label": "Themes",
+      onClick: (e) => e.stopPropagation(),
+      onMouseMove: live ? onMove : undefined,
+      onMouseLeave: live ? onLeave : undefined,
+      sx: {
+        // Gap is a px string so MUI's spacing helper does not treat it as theme.spacing().
+        display: "grid", gridTemplateColumns: "repeat(4, " + size + "px)",
+        gridAutoRows: size + "px", gap: BADGE.gap + "px",
+        justifyContent: "center", justifyItems: "center", alignItems: "center", alignContent: "center",
+        overflow: "visible", position: "relative", py: 0.15,
+      },
+    }, THEMES.map((t, i) => {
+      const on = t.themeId === currentId;
+      const name = t.themeName || t.themeId;
+      return h(IconButton || "button", {
+        key: t.themeId, size: "small", role: "option", "aria-selected": on, type: "button",
+        "aria-label": "Theme " + name, title: name,
+        ref: (el) => { itemRefs.current[i] = el; },
+        onClick: (e) => { e.preventDefault(); e.stopPropagation(); pickTheme(t.themeId); },
+        sx: {
+          p: 0, width: size, height: size, minWidth: size, borderRadius: "50%", overflow: "visible",
+          position: "relative", zIndex: on ? 2 : 1, boxSizing: "border-box", flexShrink: 0,
+          outline: on ? "2px solid" : "2px solid transparent",
+          outlineColor: on ? "primary.main" : "transparent", outlineOffset: 1,
+          transition: reduce ? "none" : "transform 180ms ease-out",
+          willChange: live ? "transform" : "auto",
+          "&:hover": { bgcolor: "transparent" },
+        },
+      }, Avatar ? h(Avatar, { src: t.badgeUrl, alt: "", sx: { width: size, height: size } }) : name[0]);
+    }));
+  }
+
   function GuiPlayCard({ style, className }) {
     const theme = G.useThemeContext();
     const sel = G.useOptionalSelection ? G.useOptionalSelection() : null;
@@ -609,6 +764,7 @@
       "data-gui-card": "gui-play",
       sx: {
         ...cardSx, cursor: "default", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 0.75, px: 1.5, pt: 1.25, pb: 1,
+        overflow: "hidden",
         "&:hover": { borderColor: "primary.main", boxShadow: 3, transform: "none", textDecoration: "none" },
         [MOBILE]: { px: 0.75, py: 1, gap: 0.5 },
       },
@@ -624,17 +780,7 @@
             h(G.Icon, { name: "settings", fontSize: 18 })),
         ]),
       ]),
-      h(G.Box, { role: "listbox", "aria-label": "Themes", onClick: (e) => e.stopPropagation(),
-        sx: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 0.5, justifyItems: "center" } },
-        THEMES.map((t) => {
-          const on = t.themeId === currentId;
-          const name = t.themeName || t.themeId;
-          return h(IconButton || "button", {
-            key: t.themeId, size: "small", role: "option", "aria-selected": on, type: "button",
-            "aria-label": "Theme " + name, title: name, onClick: (e) => { e.preventDefault(); e.stopPropagation(); pickTheme(t.themeId); },
-            sx: { p: 0.25, borderRadius: "50%", outline: on ? "2px solid" : "2px solid transparent", outlineColor: on ? "primary.main" : "transparent", outlineOffset: 1 },
-          }, Avatar ? h(Avatar, { src: t.badgeUrl, alt: "", sx: { width: 22, height: 22 } }) : name[0]);
-        })),
+      h(ThemeBadgeGrid, { currentId, pickTheme, Avatar, IconButton, phone }),
       h(G.Box, { onClick: (e) => e.stopPropagation(), sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 0.25, mt: 0.25 } }, [
         G.ThemeModeToggle ? h(G.ThemeModeToggle, { variant: phone ? "minimal" : "switchMinimal", iconSize: "small", "aria-label": "Toggle light and dark" }) : null,
         h(G.Box, { sx: { display: "flex", alignItems: "center" } }, [
