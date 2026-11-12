@@ -49,6 +49,14 @@
     (s && s.parentNode ? s.parentNode : b.head).insertBefore(t, s || null);
     f.fbq('init', PIXEL_ID);
     f.fbq('track', 'PageView');
+    window.__neuronsPixelReady = true;
+    var q = window.__neuronsPixelReadyQueue;
+    if (q && q.length) {
+      window.__neuronsPixelReadyQueue = [];
+      for (var i = 0; i < q.length; i++) {
+        try { q[i](); } catch (e) {}
+      }
+    }
   }
 
   function loadGtag() {

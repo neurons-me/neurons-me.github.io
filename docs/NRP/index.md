@@ -9,6 +9,8 @@ crumb: NRP
 docs_url: https://neurons-me.github.io/docs/
 github_url: https://github.com/neurons-me/neurons-me.github.io/tree/main/docs/NRP
 canonical: https://neurons-me.github.io/NRP/
+view_content_name: "NRP - Protocol"
+view_content_category: "Docs"
 ---
 
 # NRP — Namespace Resolution Protocol

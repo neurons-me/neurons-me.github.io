@@ -45,6 +45,7 @@
   <link rel="apple-touch-icon" href="{{ favicon_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/me-theme.css' | relative_url }}">
   {% include meta-pixel.html %}
+  {% include view-content.html %}
 </head>
 <body>
   {% assign brand_label = site.me_theme.brand | default: site.title | default: '.me' %}

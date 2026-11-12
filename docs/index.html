@@ -40,7 +40,22 @@
   <script src="https://cdn.jsdelivr.net/npm/this.gui@4.4.5/dist/this.gui.umd.js" integrity="sha384-VHXWVjH6v0Gm95tlBwrpUMvDh+qemyoMyZO7qU+rhKP8uw4jaVAZ6e78JF9q5/BS" crossorigin="anonymous"></script>
   <style>html, body { margin: 0; } #root { min-height: 100vh; }</style>
 <!-- Consent + Meta Pixel (the pixel loads only after the visitor accepts): /assets/js/consent.js -->
-<script src="/assets/js/consent.js" defer></script>
+<script src="/assets/js/consent.js?v=2" defer></script>
+<!-- ViewContent: per-page Meta event; declared on this page only. -->
+<script>
+(function () {
+  var params = { content_name: 'Home - .me', content_category: 'Home' };
+  var sent = false;
+  function fire() {
+    if (sent || typeof window.fbq !== 'function') return;
+    sent = true;
+    window.fbq('track', 'ViewContent', params);
+  }
+  window.__neuronsPixelReadyQueue = window.__neuronsPixelReadyQueue || [];
+  window.__neuronsPixelReadyQueue.push(fire);
+  if (window.__neuronsPixelReady) fire();
+})();
+</script>
 </head>
 <body>
   <div id="root"></div>
