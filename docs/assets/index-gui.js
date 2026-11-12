@@ -1,4 +1,5 @@
-// neurons.me index (https://neurons-me.github.io/) on .GUI 4.2.0. Loaded by docs/index.html.
+// neurons.me index (https://neurons-me.github.io/) on .GUI 4.4.5. Loaded by docs/index.html.
+// Case 2 AppShell layout (namespace cleaker.me, brand neurons.me @ neurons-me.github.io).
 // Everything renders through GUI.mount + GUI registry types (Layout/Footer, Card, Box, Typography,
 // Link, Chip, SearchBar). Two small page-local types fill gaps the registry doesn't cover:
 //   ThemedImg     — picks a light/dark image from GUI.useThemeContext().mode (no GUI image atom has that)
@@ -287,44 +288,40 @@
     const where = handle ? `${handle}.${ME_NAMESPACE}` : ME_NAMESPACE;
     // the QR holds the namespace itself (name.cleaker.me), no https:// -- fewer modules, so it stays small
     value = where;
-    // the QR's scale from its tile: up to 1.18x of the ~128px QR.me draws, less when the tile is narrower (the Docs grid
-    // makes cards 150-212px wide), so it always fits with a few px around it
+    // uniform scale into the card's tile: the whole mark (QR + "cleaker.me" under it) stays square, no stretch, with a
+    // quiet zone around it (~8px a side on desktop, ~2px on phones so it still fills a compact card). No 0.94 cap — on
+    // a wide card (212×188 at 1280) that left the QR small in the hole; the limit is the tile's shorter side.
     const grown = grownOf(st);
     const boxRef = React.useRef(null);
-    const [fit, setFit] = React.useState(0.9);
+    const [fit, setFit] = React.useState(1);
     React.useLayoutEffect(() => {
       const tile = boxRef.current && boxRef.current.parentElement;
       const inner = boxRef.current && boxRef.current.firstElementChild;
       if (!tile || !inner || typeof ResizeObserver === "undefined") return undefined;
-      // scaled from what QR.me actually draws (its layout size, before the transform; larger as it encodes more), the
-      // edge text under it counted (~18px), with ~28px of the tile's dark around it on every side
       const measure = () => {
         // layout sizes (clientWidth/offsetWidth), not getBoundingClientRect: while the card grows it is animated with a
         // scale transform, and a measure taken mid-animation would read it still small
-        // the QR's own face (QR.me's root box also reserves room all around for its edge text, which only runs under it),
-        // plus that text's line below
-        const face = inner.querySelector('[data-gui-component="QR.me"]') || inner;
-        const r = { width: tile.clientWidth, height: tile.clientHeight }, w = face.offsetWidth || 112, hh = (face.offsetHeight || 112) + 22;
-        // its margin: ~28px around the QR at first, shrinking to ~12px as it grows inside the card
-        // ~21% larger than it was: its dark margin 10% of the tile (at most ~16px a side; phones keep it small too) and
-        // a cap of 0.94 of what QR.me draws (~102px on desktop, 21% over the 84 it had)
-        // phones: the QR takes nearly the whole card (2px of dark a side, no cap)
         const phone = window.matchMedia && window.matchMedia("(max-width:480px)").matches;
-        const g = GROW_ENABLED ? qrGrowthOf(st) : 1, m = phone ? 4 : Math.min(32, Math.round(Math.min(r.width, r.height) * 0.1));
-        setFit(Math.max(0.3, Math.min(phone ? 3 : 0.94 * g, (r.width - m) / w, (r.height - m) / hh)));
+        // phones: measure the card, not the auto-sized tile, so the QR can reach nearly to the card's edge as it did
+        const box = (phone && tile.closest("a")) || tile;
+        const r = { width: box.clientWidth, height: box.clientHeight };
+        // the inner box is the unscaled mark (QR.me + its edge label); both sides, so scale stays uniform
+        const w = inner.offsetWidth || 112, hh = inner.offsetHeight || w;
+        const g = GROW_ENABLED ? qrGrowthOf(st) : 1;
+        // `pad` is the total quiet zone (both sides together)
+        const pad = phone ? 4 : 16;
+        setFit(Math.max(0.3, Math.min(phone ? 3 : 2 * g, (r.width - pad) / w, (r.height - pad) / hh)));
       };
       measure();
       const ro = new ResizeObserver(measure); ro.observe(tile); ro.observe(inner);
       return () => ro.disconnect();
     }, [grown, qrGrowthOf(st), growthOf(st)]);
-    // drawn at 112px (its module grid needs the room) and scaled into an ICON.img box, the share of its tile the images take, so its hole shows around it; on phones it is the card's media
-    // (78px drawn, 64px on the narrowest), a real QR with its name small underneath, not an icon in a tile
-    // QR.me draws about 128px (4px a module at least) with its edge text at ~11px; scaled to its tile (up to 1.18x) it
-    // fills the cleaker card with room around it, the namespace (cleaker.me) up to ~13px
-    return h(G.Box, { ref: boxRef, sx: { width: 132, height: 132, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0,
+    // drawn at 112px (its module grid needs the room) and scaled uniformly into the tile; SVG stays sharp as it grows.
+    // the mark is taken out of flow (position: absolute) so its unscaled 147px box cannot stretch a compact card;
+    // on phones the wrapper keeps a fixed layout size and the visual scale fills the card.
+    return h(G.Box, { ref: boxRef, sx: { width: "100%", height: "100%", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0, minHeight: 0, minWidth: 0,
         [MOBILE]: { width: 78, height: 78 }, [NARROW]: { width: 64, height: 64 } } },
-      // QR.me draws its frame past `diameter` (about 128px drawn for 112): the phone scales are taken from what is drawn
-      h(G.Box, { sx: { flexShrink: 0, transform: `translateY(${-8 * fit}px) scale(${fit})`, transition: "transform 380ms cubic-bezier(.2,.8,.2,1)" } },
+      h(G.Box, { sx: { position: "absolute", left: "50%", top: "50%", flexShrink: 0, aspectRatio: "1 / 1", transform: `translate(-50%, -50%) scale(${fit})`, transformOrigin: "center center", transition: "transform 380ms cubic-bezier(.2,.8,.2,1)" } },
         // the card IS the QR.me: the namespace around its edge (cleaker.me, or name.cleaker.me as it is typed, the root
         // in bold), and on hover it turns over to cleaker's own picture
         // drawn larger for a longer label, so its edge text still fits one line: QR.me's edge font is the square root of
@@ -379,7 +376,7 @@
     return h(G.Box, { sx: { display: "flex", flexDirection: "column", gap: 0.5, minWidth: 0 },
         onFocus: () => setFocused(true),
         onBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false); } }, [
-      h(G.Box, { key: "name", component: "input", type: "text", value: st.username, placeholder: "Who am I.", "aria-label": "Who am I (your name)",
+      h(G.Box, { key: "name", component: "input", type: "text", value: st.username, placeholder: "username", "aria-label": "username",
         autoComplete: "username", spellCheck: false, autoCapitalize: "none",
         onChange: (e) => meSet({ username: e.target.value }),
         onKeyDown: (e) => { if (e.key === "Enter" && secretRef.current) secretRef.current.focus(); },
@@ -420,13 +417,14 @@
       : { display: "contents" } }, children);
   }
   const PAGE_TYPES = { ThemedImg, AudienceMark, NetgetMark, HeaderControls, MeMonad, MonadBubble, CleakerQRme, MeIdentityField, GrowCard, StackBeside };
+  // GuiPlayCard is assigned after it is defined (it needs cardSx).
 
   // ── content (from docs/index.html @ 6bee309) ──
   const STACK = [
     [".me", "Who am I.", "https://neurons-me.github.io/.me/", { monad: true, light: CL + "v1761149332/this.me-removebg-preview_2_j1eoiy.png", dark: CL + "v1760758662/this.me-removebg-preview_fvyeda.png" }],
     ["cleaker", "Here.", "https://neurons-me.github.io/Cleaker/", { qr: "https://cleaker.me", light: CL + "v1765054949/cleaker.me_gusn1q.png" }],
     ["monad", "Daemons.", "https://neurons-me.github.io/monad/", { bubble: true, light: CL + "v1778090977/monad.ai.profile-removebg-preview_np26yp.png" }],
-    [".GUI", "Generative UI.", "https://neurons-me.github.io/GUI/", { light: CL + "v1760629119/this.gui.neurons.me_mkapde.png", zoom: 1.3 }],
+    [".GUI", "Generative UI.", "https://neurons-me.github.io/GUI/", { gui: true }],
     ["netget", "The Gateway.", "https://neurons-me.github.io/netget/", { netget: true }],
     ["mlearning.studio", "Training data.", "https://neurons-me.github.io/mlearning.studio/", { light: "/assets/mlearning-studio-icon.webp" }],
     [".wallet", "for .me", "https://neurons-me.github.io/.wallet/", { wallet: true, light: CL + "v1765902981/this.wallet_giyxtt.webp" }],
@@ -572,7 +570,85 @@
       "& .at-core": { fill: (t) => t.palette.mode === "dark" ? "#ffffff" : t.palette.background.paper },
       [MOBILE]: { width: ICON.small.tile, height: ICON.small.tile, minHeight: ICON.small.tile, flex: "none", borderRadius: "14px" } },
     dangerouslySetInnerHTML: { __html: ALLTHIS_SVG } });
+  // Live docs path: https://neurons-me.github.io/GUI/ (200). https://neurons-me.github.io/.GUI/ is 404.
+  const GUI_DOCS = "https://neurons-me.github.io/GUI/";
+  function GuiPlayCard({ style, className }) {
+    const theme = G.useThemeContext();
+    const sel = G.useOptionalSelection ? G.useOptionalSelection() : null;
+    const [phone, setPhone] = React.useState(() => window.matchMedia("(max-width:480px)").matches);
+    React.useEffect(() => {
+      const mq = window.matchMedia("(max-width:480px)");
+      const on = () => setPhone(mq.matches);
+      if (mq.addEventListener) mq.addEventListener("change", on); else mq.addListener(on);
+      return () => { if (mq.removeEventListener) mq.removeEventListener("change", on); else mq.removeListener(on); };
+    }, []);
+    const [insp, setInsp] = React.useState(() => Boolean(G.getInspectorEnabled && G.getInspectorEnabled()));
+    const grid = Boolean(sel && sel.gridEnabled);
+    const currentId = theme && theme.themeId;
+    const pickTheme = (id) => { if (theme && typeof theme.setThemeId === "function" && id !== currentId) theme.setThemeId(id); };
+    const toggleInsp = () => {
+      if (typeof G.toggleInspector === "function") G.toggleInspector();
+      else if (typeof G.setInspectorEnabled === "function") G.setInspectorEnabled(!insp);
+      setInsp(Boolean(G.getInspectorEnabled && G.getInspectorEnabled()));
+    };
+    const toggleGrid = () => { if (sel && typeof sel.setGridEnabled === "function") sel.setGridEnabled(!grid); };
+    const A = G.Atoms || {};
+    const IconButton = A.IconButton || G.IconButton;
+    const Avatar = A.Avatar || G.Avatar;
+    const Card = G.Card || (G.Components && G.Components.Card) || A.Card;
+    const toolBtn = (opts) => h(IconButton || "button", {
+      type: "button", size: "small", color: opts.on ? "primary" : "inherit",
+      "aria-label": opts.label, "aria-pressed": !!opts.on, title: opts.label,
+      onClick: (e) => { e.preventDefault(); e.stopPropagation(); opts.onClick(e); },
+      sx: { p: 0.5, borderRadius: 1, ...(opts.on ? { bgcolor: "action.selected" } : {}) },
+    }, h(G.Icon, { name: opts.icon, fontSize: 18 }));
+    return h(Card, {
+      variant: "outlined",
+      style, className,
+      "data-gui-inspector-control": "true",
+      "data-gui-card": "gui-play",
+      sx: {
+        ...cardSx, cursor: "default", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 0.75, px: 1.5, pt: 1.25, pb: 1,
+        "&:hover": { borderColor: "primary.main", boxShadow: 3, transform: "none", textDecoration: "none" },
+        [MOBILE]: { px: 0.75, py: 1, gap: 0.5 },
+      },
+    }, [
+      h(G.Box, { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 0.75, minWidth: 0 } }, [
+        // title and the Docs + gear row all go to /GUI/ (https://neurons-me.github.io/GUI/; /.GUI is 404)
+        h(G.Link, { href: GUI_DOCS, underline: "hover", color: "inherit", "aria-label": ".GUI docs",
+          sx: { fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.2, minWidth: 0, [MOBILE]: { fontSize: "0.8rem" } } }, [".GUI"]),
+        h(G.Box, { sx: { display: "inline-flex", alignItems: "center", gap: 0.5, flexShrink: 0 } }, [
+          h(G.Link, { href: GUI_DOCS, underline: "hover", color: "primary", "aria-label": ".GUI docs", sx: { fontSize: "0.75rem", fontWeight: 700 } }, ["Docs"]),
+          h(G.Link, { href: GUI_DOCS, "aria-label": ".GUI docs", title: ".GUI docs",
+            sx: { display: "inline-flex", alignItems: "center", color: "primary.main", lineHeight: 0, "&:hover": { opacity: 0.85 } } },
+            h(G.Icon, { name: "settings", fontSize: 18 })),
+        ]),
+      ]),
+      h(G.Box, { role: "listbox", "aria-label": "Themes", onClick: (e) => e.stopPropagation(),
+        sx: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 0.5, justifyItems: "center" } },
+        THEMES.map((t) => {
+          const on = t.themeId === currentId;
+          const name = t.themeName || t.themeId;
+          return h(IconButton || "button", {
+            key: t.themeId, size: "small", role: "option", "aria-selected": on, type: "button",
+            "aria-label": "Theme " + name, title: name, onClick: (e) => { e.preventDefault(); e.stopPropagation(); pickTheme(t.themeId); },
+            sx: { p: 0.25, borderRadius: "50%", outline: on ? "2px solid" : "2px solid transparent", outlineColor: on ? "primary.main" : "transparent", outlineOffset: 1 },
+          }, Avatar ? h(Avatar, { src: t.badgeUrl, alt: "", sx: { width: 22, height: 22 } }) : name[0]);
+        })),
+      h(G.Box, { onClick: (e) => e.stopPropagation(), sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 0.25, mt: 0.25 } }, [
+        G.ThemeModeToggle ? h(G.ThemeModeToggle, { variant: phone ? "minimal" : "switchMinimal", iconSize: "small", "aria-label": "Toggle light and dark" }) : null,
+        h(G.Box, { sx: { display: "flex", alignItems: "center" } }, [
+          toolBtn({ label: insp ? "Inspector on" : "Inspector off", icon: "code", on: insp, onClick: toggleInsp }),
+          sel ? toolBtn({ label: grid ? "Grid on" : "Grid off", icon: "grid_on", on: grid, onClick: toggleGrid }) : null,
+        ].filter(Boolean)),
+      ].filter(Boolean)),
+    ]);
+  }
+
+  PAGE_TYPES.GuiPlayCard = GuiPlayCard;
+
   const stackCard = ([title, desc, href, img, allThis]) => {
+    if (img && img.gui) return N("GuiPlayCard", {});
     // netget: the SVG already spells NETGET — no title text; on desktop its mark sits in a hole like the other icons.
     if (img && img.netget) {
       // netget, at every width: only its letters, centered and as wide as the card allows, on no background (the page
@@ -695,7 +771,6 @@
     N("Box", { className: "index-search", sx: (t) => ({ ml: "auto", width: 280, maxWidth: "40vw", order: 2, [MOBILE]: { order: 4, ml: 0, width: "100%", maxWidth: "100%" }, ...searchThemeSx(t) }) }, [
       N("SearchBar", { src: "/index.json", placeholder: "Search in All.This", themeMode: "auto", enableSlashShortcut: true, density: "compact", colors: "theme" }),
     ]),
-    N("Box", { sx: { order: 3, [MOBILE]: { ml: "auto" } } }, [N("HeaderControls", {})]),
   ]);
   const mainSections = (top) => N("Box", { component: "main", sx: { maxWidth: 960, mx: "auto", px: { xs: 2, sm: 4 }, pt: { xs: 4, sm: 7 }, pb: 6 } }, [
     header,
@@ -731,33 +806,217 @@
 
   const content = mainSections();
   const SETTINGS = (o) => G.GUISettings({ includeAdminViewToggle: false, includeRuntimeControlsToggle: false, includeThemesLink: false, brandLogoSrc: GREY, brandHref: "https://neurons.me", ...o });
-  const spec = N("Layout", {
-    TopBar: false, LeftBar: false, RightBar: false,
-    Footer: { brandLogo: GREY, brandHref: "https://neurons.me", brandLabel: "neurons.me", position: "static" },
-  }, [content]);
 
-  // theme: neurons.me; first visit follows the OS setting (GUI.Theme alone doesn't), ?mode= overrides for screenshots
+  // Case 2 (Getting Started/Namespace · "2 · Namespace + site with .GUI"): this site is a .GUI app,
+  // reached through the namespace cleaker.me. AppShell itself ships on this.gui/runtime (ESM), not the
+  // UMD, so the home composes the same shell from the UMD exports (Layout, SiteBrand, QrBadge,
+  // NamespaceRoutePanel, placeMarks). Namespace routes open over the home view; "/" / Home never opens that panel.
+  const APP_NAMESPACE = "apps.neurons-me.github.io";
+  const CLEAKER_NS = "cleaker.me";
+  const APP_SURFACE = "neurons-me.github.io";
+  const APP_POSITION = CLEAKER_NS + " @ " + APP_SURFACE;
+  // No left rail: Monad and the other categories are already listed in the home content.
+
+  function renderSpec(node, key) {
+    if (node == null || node === false) return null;
+    if (typeof node === "string" || typeof node === "number") return node;
+    if (Array.isArray(node)) return node.map((n, i) => renderSpec(n, i));
+    if (React.isValidElement && React.isValidElement(node)) return node;
+    if (typeof node !== "object") return null;
+    const typeName = node.type;
+    const registry = (G.Registry || G.registry || {});
+    const reg = registry[typeName];
+    // Registry entries are {type, meta, resolve} specs, not components. Prefer G[Name] (the React component).
+    const resolved = (reg && typeof reg.resolve === "function") ? null : (typeof reg === "function" || (reg && reg.$$typeof) ? reg : null);
+    const type = PAGE_TYPES[typeName] || G[typeName] || resolved || (G.Components && G.Components[typeName]) || (G.Atoms && G.Atoms[typeName]) || (G.Molecules && G.Molecules[typeName]) || typeName;
+    const props = { ...(node.props || {}) };
+    if (key != null && props.key == null) props.key = key;
+    const ch = node.children;
+    const kids = ch == null ? null : Array.isArray(ch) ? ch.map((n, i) => renderSpec(n, i)) : [renderSpec(ch)];
+    return kids ? h(type, props, ...kids) : h(type, props);
+  }
+
+  function BrandWhere({ where }) {
+    return h(G.Box, { component: "span", title: APP_POSITION, "data-gui-node-id": "GUI.window.layout.marks.brand.where",
+      sx: { fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", fontSize: 13, color: "text.secondary", whiteSpace: "nowrap" } }, where);
+  }
+  function IdentityLabel({ text }) {
+    return h(G.Box, { component: "span", title: APP_POSITION, "data-gui-node-id": "GUI.window.layout.bars.top.namespace",
+      "data-gui-component": "namespace",
+      sx: { fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", fontSize: 13, fontWeight: 600, color: "text.primary", whiteSpace: "nowrap" } }, text);
+  }
+
+  // 4.4.5 UMD does not export CleakerQrMenu / panelPositionFor. Namespace passes
+  // layout.left (Monad etc.) and layout.search into CleakerQrMenu, but the menu
+  // never renders those fields (only layout.brand, in the position grid). Theme
+  // is not a menu slot at all (ThemeLauncher lives in the left-rail footer).
+  // This site-side menu is the closest composition: ThemeModeToggle + SearchBar +
+  // Monad, opened from the identity QR, without a second neurons.me brain in the top bar.
+  const MONAD_HREF = "https://neurons-me.github.io/monad/";
+  function QrToolsMenu({ onClose, menuRef }) {
+    const Paper = G.Paper;
+    const Box = G.Box;
+    const Typography = G.Typography;
+    const Icon = G.Icon;
+    const ThemeModeToggle = G.ThemeModeToggle;
+    const Link = G.Link;
+    return h(Paper, {
+      ref: menuRef,
+      elevation: 0,
+      role: "dialog",
+      "aria-label": "QR menu",
+      "data-gui-node-id": "GUI.window.layout.marks.identity.menu",
+      sx: {
+        position: "fixed",
+        top: 52,
+        right: 0,
+        left: "auto",
+        zIndex: (th) => (th.zIndex && th.zIndex.modal || 1300) + 1,
+        p: 1.25,
+        width: 272,
+        maxWidth: "calc(100vw - 16px)",
+        display: "flex",
+        flexDirection: "column",
+        gap: 1.25,
+        bgcolor: "background.default",
+        backgroundImage: "none",
+        border: "1px solid",
+        borderColor: "divider",
+        boxShadow: "none",
+        borderRadius: "12px",
+      },
+    }, [
+      h(Box, { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, pr: 0.25 } }, [
+        h(Typography, { variant: "caption", sx: { fontWeight: 600, fontSize: "0.85rem" } }, ["Theme"]),
+        ThemeModeToggle ? h(ThemeModeToggle, { variant: "switchMinimal", iconSize: "small", "aria-label": "Toggle light and dark" }) : null,
+        h(Box, {
+          component: "button", type: "button", "aria-label": "Close", title: "Close", onClick: onClose,
+          sx: { display: "flex", p: 0.5, ml: "auto", border: 0, borderRadius: 1, background: "transparent", color: "text.secondary", cursor: "pointer", "&:hover": { bgcolor: "action.hover", color: "text.primary" } },
+        }, Icon ? h(Icon, { name: "close", fontSize: "1.25rem" }) : "×"),
+      ]),
+      h(Link || "a", {
+        href: MONAD_HREF,
+        underline: "none",
+        color: "inherit",
+        "aria-label": "monad",
+        title: "monad",
+        "data-gui-node-id": "GUI.window.layout.marks.identity.menu.monad",
+        sx: { display: "flex", alignItems: "center", gap: 1, p: 0.75, px: 1, border: "1px solid", borderColor: "divider", borderRadius: 1, color: "inherit", textDecoration: "none", "&:hover": { bgcolor: "action.hover" } },
+      }, [
+        Icon ? h(Icon, { name: "orb:monad", fontSize: 20 }) : null,
+        h(Typography, { variant: "body2", sx: { fontWeight: 600 } }, ["monad"]),
+      ]),
+    ].filter(Boolean));
+  }
+
+  function HomeApp() {
+    const [narrow, setNarrow] = React.useState(() => window.matchMedia("(max-width: 599px)").matches);
+    const [qrMenuOpen, setQrMenuOpen] = React.useState(false);
+    const qrCellRef = React.useRef(null);
+    const menuRef = React.useRef(null);
+    React.useEffect(() => {
+      const mq = window.matchMedia("(max-width: 599px)");
+      const on = () => setNarrow(mq.matches);
+      if (mq.addEventListener) mq.addEventListener("change", on); else mq.addListener(on);
+      return () => { if (mq.removeEventListener) mq.removeEventListener("change", on); else mq.removeListener(on); };
+    }, []);
+    React.useEffect(() => {
+      if (!qrMenuOpen) return;
+      const onPtr = (e) => {
+        const t = e.target;
+        if (qrCellRef.current && qrCellRef.current.contains(t)) return;
+        if (menuRef.current && menuRef.current.contains(t)) return;
+        setQrMenuOpen(false);
+      };
+      const onKey = (e) => { if (e.key === "Escape") setQrMenuOpen(false); };
+      document.addEventListener("pointerdown", onPtr);
+      document.addEventListener("keydown", onKey);
+      return () => {
+        document.removeEventListener("pointerdown", onPtr);
+        document.removeEventListener("keydown", onKey);
+      };
+    }, [qrMenuOpen]);
+    const Layout = G.Layout || (G.Registry && G.Registry.Layout);
+    const SiteBrand = G.SiteBrand;
+    const QrBadge = G.QrBadge;
+    const BarBrandCell = G.BarBrandCell;
+    const FloatingMark = G.FloatingMark;
+    const placeMarks = G.placeMarks;
+    const marksInBars = G.marksInBars;
+    const goHomeNav = (e) => { if (e && e.preventDefault) e.preventDefault(); };
+    const brand = SiteBrand
+      ? h(SiteBrand, { label: "neurons.me", href: "/", logo: LOGO, onClick: goHomeNav })
+      : h("a", { href: "/", title: "neurons.me", onClick: goHomeNav }, h("img", { src: LOGO, alt: "neurons.me", width: 28, height: 28 }));
+    const qrValue = "https://" + CLEAKER_NS + "/?at=" + encodeURIComponent(window.location.origin);
+    const qr = QrBadge
+      ? h(QrBadge, { value: qrValue, clickFlip: false, hoverFlip: false, cursor: "pointer" })
+      : h(G.QRme, { variant: "topbar", value: qrValue, clickFlip: false, hoverFlip: false, cursor: "pointer" });
+    // Pure QR at top-right (no "cleaker.me" label; name stays on title/aria). Brand takes the other end.
+    const identity = h(BarBrandCell || G.Box, {
+      ref: qrCellRef,
+      component: "button", type: "button", title: CLEAKER_NS, "aria-label": CLEAKER_NS,
+      "aria-haspopup": "dialog", "aria-expanded": qrMenuOpen,
+      onClick: (e) => { if (e && e.preventDefault) e.preventDefault(); setQrMenuOpen((open) => !open); },
+      "data-gui-node-id": "GUI.window.layout.marks.identity",
+      sx: { width: 48, height: 48, minWidth: 48, flex: "none", p: 0, m: 0, border: 0, background: "none", color: "inherit", cursor: "pointer" },
+    }, qr);
+    const placement = typeof placeMarks === "function"
+      ? placeMarks({ identity: "top-right", bars: { top: true, left: false }, narrow, brand: true })
+      : { identity: "top.end", brand: "top.start" };
+    const marks = typeof marksInBars === "function"
+      ? marksInBars(placement, {
+          identity,
+          brand,
+          brandText: h(BrandWhere, { where: "@" + APP_SURFACE }),
+        }, { topText: true })
+      : { topStart: [{ type: "action", props: { element: brand } }], topEnd: [{ type: "action", props: { element: identity } }], leftFooter: [], float: null };
+    const shell = h(Layout, {
+      TopBar: {
+        hideBrand: true,
+        noBorder: true,
+        toolbarSx: { pl: 0.25 },
+        // Brand stays in the layout (placeMarks / top.start) but is visually hidden so only the hero logo shows.
+        elementsLeftSx: { pl: 1, visibility: "hidden", pointerEvents: "none" },
+        elementsLeft: [...(marks.topStart || [])],
+        ...((marks.topEnd && marks.topEnd.length) ? { elementsRight: marks.topEnd } : {}),
+      },
+    }, renderSpec(content));
+    return h(G.Box, { sx: { minHeight: "100vh", bgcolor: "background.default", color: "text.primary" } }, [
+      shell,
+      marks.float && FloatingMark ? h(FloatingMark, { corner: marks.float.corner }, marks.float.element) : null,
+      qrMenuOpen ? h(QrToolsMenu, { onClose: () => setQrMenuOpen(false), menuRef }) : null,
+    ].filter(Boolean));
+  }
+
+  // theme: default neurons.me; first visit follows prefers-color-scheme (do not pre-seed themeMode).
+  // ?mode= is an explicit choice and is persisted, same as the in-shell toggle.
   const KEY = "neurons-index-gui.themeMode";
-  let stored = null; try { stored = localStorage.getItem(KEY); } catch (e) {}
-  const mode = params.get("mode") || stored || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  try { if (params.get("mode")) localStorage.setItem(KEY, mode); } catch (e) {}
-  // Theme id: ?theme=<id> (a GUI.GuiThemes id) picks one and persists it; otherwise a first visit gets neurons.me.
+  const askedMode = params.get("mode");
+  try { if (askedMode === "dark" || askedMode === "light") localStorage.setItem(KEY, askedMode); } catch (e) {}
+  // Theme id: ?theme=<id> picks one and persists it; otherwise a first visit gets neurons.me.
   // Seeding the page-scoped key keeps Theme from falling back to the shared this.gui:themeId another .GUI page on
-  // this origin may have set (GUI storybook / Veracruz.Port).
+  // this origin may have set (GUI storybook / Veracruz.Port). Never seeds seafoam.
   const ID_KEY = (window.__thisGuiThemeScope && window.__thisGuiThemeScope.themeIdKey) || "neurons-index-gui.themeId";
   const askedTheme = params.get("theme");
   try {
     if (askedTheme && THEMES.some((t) => t.themeId === askedTheme)) localStorage.setItem(ID_KEY, askedTheme);
     else if (!localStorage.getItem(ID_KEY)) localStorage.setItem(ID_KEY, "neurons.me");
   } catch (e) {}
-  const PageTheme = ({ children }) => h(G.Theme, { initialThemeId: "neurons.me", initialMode: mode }, children);
+  // Do not pass initialMode unless ?mode= (or a stored toggle) is an explicit choice; otherwise Theme follows the OS.
+  const PageTheme = ({ children }) => {
+    const stored = (() => { try { return localStorage.getItem(KEY); } catch (e) { return null; } })();
+    const props = { initialThemeId: "neurons.me" };
+    if (stored === "dark" || stored === "light") props.initialMode = stored;
+    return h(G.Theme, props, children);
+  };
 
   const INSPECTOR_ON = params.get("inspector") === "1";
   const GRID_ON = params.get("grid") === "1"; // like ?inspector=1: page-level start state for screenshots/links
   if (G.getInspectorEnabled() !== INSPECTOR_ON) G.setInspectorEnabled(INSPECTOR_ON);
   const ROOT = document.getElementById("root");
+  const spec = N("HomeApp", {});
   const mountPage = () => G.mount(spec, ROOT, {
-    gui: { ...G, Theme: PageTheme, registry: { ...G.Registry, ...PAGE_TYPES } },
+    gui: { ...G, Theme: PageTheme, registry: { ...G.Registry, ...PAGE_TYPES, HomeApp } },
     devtools: { enabled: true, inspector: INSPECTOR_ON, adminView: false, inspectorToggleVisible: false },
   });
   window.__handle = mountPage();
