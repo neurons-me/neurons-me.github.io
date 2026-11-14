@@ -299,8 +299,9 @@
   }
   // ── the QR's namespace, live ──
   // Public reads only, against cleaker.me itself (it answers any origin): with a name, whether name.cleaker.me is claimed
-  // (GET /api/v1/write-head -- 200 claimed, 404 CLAIM_NOT_FOUND free); without one, whether cleaker.me answers at all
-  // (GET /__surface). Only the namespace already drawn in the QR is sent -- never the secret, the .me or its hash.
+  // (GET /api/v1/claim-status -> { claimed } -- it says nothing about the identity); without one, whether cleaker.me
+  // answers at all (GET /__surface). Only the namespace already drawn in the QR is sent -- never the secret, the .me or
+  // its hash.
   // Shown through QR.me's own status: green dot claimed/online, grey free, dimmed when cleaker.me does not answer.
   const CLEAKER_ORIGIN = "https://" + ME_NAMESPACE;
   const STATUS_TTL_MS = 30000;
@@ -309,14 +310,15 @@
     const hit = statusCache.get(where);
     if (hit && Date.now() - hit.at < STATUS_TTL_MS) return hit.value;
     const root = where === ME_NAMESPACE;
-    const url = root ? `${CLEAKER_ORIGIN}/__surface` : `${CLEAKER_ORIGIN}/api/v1/write-head?namespace=${encodeURIComponent(where)}`;
+    const url = root ? `${CLEAKER_ORIGIN}/__surface` : `${CLEAKER_ORIGIN}/api/v1/claim-status?namespace=${encodeURIComponent(where)}`;
     let value;
     try {
       const res = await fetch(url, { headers: { accept: "application/json" }, credentials: "omit", cache: "no-store", signal });
       const body = await res.json().catch(() => null);
       const error = body && (body.error || (body.target && body.target.error));
-      if (res.ok) value = { status: "confirmed", label: root ? `${where} is online` : `${where} is claimed` };
-      else if (!root && res.status === 404 && error === "CLAIM_NOT_FOUND") value = { status: "idle", label: `${where} is free` };
+      if (res.ok && root) value = { status: "confirmed", label: `${where} is online` };
+      else if (res.ok && body && body.claimed === true) value = { status: "confirmed", label: `${where} is claimed` };
+      else if (res.ok && body && body.claimed === false) value = { status: "idle", label: `${where} is free` };
       else value = { status: "error", label: `${where}: ${res.status}${error ? " " + error : ""}` };
     } catch (e) {
       if (signal && signal.aborted) throw e;
