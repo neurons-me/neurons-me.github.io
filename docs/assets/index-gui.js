@@ -297,6 +297,48 @@
       h(G.Box, { sx: { width: display, height: display, flexShrink: 0, display: "flex" } },
         h(Monad, { variant: "bubble", kind: "monad", mode: "contained", core: "flat", size: display })));
   }
+  // ── the QR's namespace, live ──
+  // Public reads only, against cleaker.me itself (it answers any origin): with a name, whether name.cleaker.me is claimed
+  // (GET /api/v1/write-head -- 200 claimed, 404 CLAIM_NOT_FOUND free); without one, whether cleaker.me answers at all
+  // (GET /__surface). Only the namespace already drawn in the QR is sent -- never the secret, the .me or its hash.
+  // Shown through QR.me's own status: green dot claimed/online, grey free, dimmed when cleaker.me does not answer.
+  const CLEAKER_ORIGIN = "https://" + ME_NAMESPACE;
+  const STATUS_TTL_MS = 30000;
+  const statusCache = new Map();
+  async function namespaceStatus(where, signal) {
+    const hit = statusCache.get(where);
+    if (hit && Date.now() - hit.at < STATUS_TTL_MS) return hit.value;
+    const root = where === ME_NAMESPACE;
+    const url = root ? `${CLEAKER_ORIGIN}/__surface` : `${CLEAKER_ORIGIN}/api/v1/write-head?namespace=${encodeURIComponent(where)}`;
+    let value;
+    try {
+      const res = await fetch(url, { headers: { accept: "application/json" }, credentials: "omit", cache: "no-store", signal });
+      const body = await res.json().catch(() => null);
+      const error = body && (body.error || (body.target && body.target.error));
+      if (res.ok) value = { status: "confirmed", label: root ? `${where} is online` : `${where} is claimed` };
+      else if (!root && res.status === 404 && error === "CLAIM_NOT_FOUND") value = { status: "idle", label: `${where} is free` };
+      else value = { status: "error", label: `${where}: ${res.status}${error ? " " + error : ""}` };
+    } catch (e) {
+      if (signal && signal.aborted) throw e;
+      value = { status: "off", label: `${ME_NAMESPACE} is not answering` };
+    }
+    statusCache.set(where, { at: Date.now(), value });
+    return value;
+  }
+  function useNamespaceStatus(where) {
+    const [state, setState] = React.useState({ where, status: "checking", label: `checking ${where}` });
+    React.useEffect(() => {
+      const ctrl = new AbortController();
+      setState({ where, status: "checking", label: `checking ${where}` });
+      // typing changes the name on every key: ask once it settles
+      const timer = setTimeout(() => {
+        namespaceStatus(where, ctrl.signal).then((v) => { if (!ctrl.signal.aborted) setState({ where, ...v }); }, () => {});
+      }, 450);
+      return () => { clearTimeout(timer); ctrl.abort(); };
+    }, [where]);
+    return state.where === where ? state : { where, status: "checking", label: `checking ${where}` };
+  }
+
   // The .me QR on the cleaker card: GUI.QRme (registry "QR.me", this.gui 4.4.1), the same component as the namespace
   // landing on cleaker.me (GUI.content.landing.qr.code). It paints from the .GUI theme palette, so it follows the
   // page's theme and light/dark. No flip here: the whole card is the link.
@@ -309,6 +351,8 @@
     const where = handle ? `${handle}.${ME_NAMESPACE}` : ME_NAMESPACE;
     // the QR holds the namespace itself (name.cleaker.me), no https:// -- fewer modules, so it stays small
     value = where;
+    // and is resolved live: claimed / free / cleaker.me not answering (public reads, see useNamespaceStatus)
+    const live = useNamespaceStatus(where);
     // uniform scale into the card's tile: the whole mark (QR + "cleaker.me" under it) stays square, no stretch, with a
     // quiet zone around it (~8px a side on desktop, ~2px on phones so it still fills a compact card). No 0.94 cap — on
     // a wide card (212×188 at 1280) that left the QR small in the hole; the limit is the tile's shorter side.
@@ -340,7 +384,7 @@
     // drawn at 112px (its module grid needs the room) and scaled uniformly into the tile; SVG stays sharp as it grows.
     // the mark is taken out of flow (position: absolute) so its unscaled 147px box cannot stretch a compact card;
     // on phones the wrapper keeps a fixed layout size and the visual scale fills the card.
-    return h(G.Box, { ...nodeAttrs(p), ref: boxRef, sx: { width: "100%", height: "100%", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0, minHeight: 0, minWidth: 0,
+    return h(G.Box, { ...nodeAttrs(p), ref: boxRef, title: live.label, "data-ns-status": live.status, sx: { width: "100%", height: "100%", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 0, minHeight: 0, minWidth: 0,
         [MOBILE]: { width: 78, height: 78 }, [NARROW]: { width: 64, height: 64 } } },
       h(G.Box, { sx: { position: "absolute", left: "50%", top: "50%", flexShrink: 0, aspectRatio: "1 / 1", transform: `translate(-50%, -50%) scale(${fit})`, transformOrigin: "center center", transition: "transform 380ms cubic-bezier(.2,.8,.2,1)" } },
         // the card IS the QR.me: the namespace around its edge (cleaker.me, or name.cleaker.me as it is typed, the root
@@ -350,7 +394,8 @@
         // (0.66 (n + 2))^2 -- the 0.66 leaves room for QR.me snapping to whole pixels a module
         h(G.QRme, { value, diameter: GROW_ENABLED && where.length > FITS ? Math.round(Math.pow(0.66 * (where.length + 2), 2)) : 112, variant: "md", hoverFlip: true, clickFlip: false, defaultFace: "qr", showAvatarLabel: false,
           // its edge says only cleaker.me: short, never wrapping a corner; the name is in the .me card, where it is typed
-          perimeterLabel: ME_NAMESPACE, perimeterRootLabel: ME_NAMESPACE, username: handle || "cleaker", avatarSrc: CLEAKER_FACE, avatarAlt: "cleaker" })));
+          perimeterLabel: ME_NAMESPACE, perimeterRootLabel: ME_NAMESPACE, username: handle || "cleaker", avatarSrc: CLEAKER_FACE, avatarAlt: "cleaker",
+          status: live.status, statusLabel: live.label })));
   }
   // The .me card's "Who am I.": a name field; selecting it brings a secret field under it. Enter with both builds the
   // .me (see the secret-mode note above); held, the card shows the name, a short fingerprint and "destroy".
